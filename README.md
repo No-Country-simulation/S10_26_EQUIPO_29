@@ -8,7 +8,7 @@
 </h1>
 
 
-<img src="./img-1.svg" alt="IMG 1" width="100%"/>
+
 
 
 
