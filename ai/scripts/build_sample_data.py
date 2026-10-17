@@ -18,8 +18,8 @@ from ai.schemas import Repo
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 README_DIR = DATA_DIR / "readmes"
 
-# Clasificación manual (B0). Es la referencia contra la que se evaluará
-# la clasificación con LLM en B3.
+# Clasificación manual. Es la referencia contra la que se evaluará
+# más adelante la clasificación automática con un LLM.
 CATEGORIES: dict[str, list[str]] = {
     "keycloak/keycloak": ["Auth"],
     "ory/kratos": ["Auth"],

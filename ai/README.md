@@ -8,7 +8,7 @@ y sus tests. No depende de otras carpetas del repo.
 
 ## Estado
 
-**B0 · Cimientos.** Mientras la ingesta no esté lista, la IA trabaja con
+**Datos de ejemplo.** Mientras la ingesta no esté lista, la IA trabaja con
 datos de ejemplo: 20 repos reales descargados de la API de GitHub.
 
 ## Estructura
@@ -55,7 +55,7 @@ Se usa `python -m` para que la raíz del repo esté en la ruta de importación
 | `github_id` | `int` | Sí | Id numérico de GitHub; no cambia si el repo se renombra |
 | `description` | `str` | No | |
 | `topics` | `list[str]` | No (`[]`) | |
-| `categories` | `list[Categoria]` | Sí (mín. 1) | Auth, DB, Payments, AI, Analytics, Search. En B0 se asignan a mano |
+| `categories` | `list[Categoria]` | Sí (mín. 1) | Auth, DB, Payments, AI, Analytics, Search. Por ahora se asignan a mano |
 | `language` | `str` | No | |
 | `license` | `str` | No | Identificador SPDX. Puede ser `NOASSERTION` |
 | `stars` | `int ≥ 0` | Sí | |

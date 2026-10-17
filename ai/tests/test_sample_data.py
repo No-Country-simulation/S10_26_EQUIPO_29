@@ -40,7 +40,8 @@ def test_cantidad_de_repos(repos):
 
 
 def test_ids_unicos(repos):
-    # El guard de grounding (B2) depende de que repo_id identifique un solo repo.
+    # El asistente solo puede citar repos del catálogo, y para comprobarlo
+    # cada repo_id tiene que identificar un solo repo.
     repo_ids = [r.repo_id for r in repos]
     github_ids = [r.github_id for r in repos]
     assert len(repo_ids) == len(set(repo_ids)), "repo_id duplicado"

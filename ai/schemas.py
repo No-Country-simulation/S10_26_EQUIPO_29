@@ -10,7 +10,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 # Las seis categorías funcionales del brief. Una sola fuente de verdad:
-# B1 y B2 reutilizarán este mismo tipo.
+# La búsqueda y el asistente reutilizarán este mismo tipo.
 Categoria = Literal["Auth", "DB", "Payments", "AI", "Analytics", "Search"]
 
 
@@ -30,7 +30,7 @@ class Repo(BaseModel):
         description="id numérico de GitHub. No cambia si el repo se renombra.",
     )
 
-    # --- Para encontrarlo (B1) ---
+    # --- Para encontrarlo (búsqueda semántica) ---
     description: str | None = Field(
         default=None,
         description="Opcional por ahora; pendiente de acordar con Jeison.",
@@ -38,10 +38,10 @@ class Repo(BaseModel):
     topics: list[str] = Field(default_factory=list)
     categories: list[Categoria] = Field(
         min_length=1,
-        description="Una o más categorías de la lista oficial. En B0 se asignan a mano.",
+        description="Una o más categorías de la lista oficial. Por ahora se asignan a mano.",
     )
 
-    # --- Para filtrarlo y justificarlo (B1/B2) ---
+    # --- Para filtrarlo y justificar la recomendación ---
     language: str | None = None
     license: str | None = Field(
         default=None,
