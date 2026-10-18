@@ -4,35 +4,24 @@ Correr desde la raíz del repo, con el entorno activo:
     python -m pytest ai/tests -v
 """
 
-import json
-from pathlib import Path
 from typing import get_args
 
 import pytest
-from pydantic import TypeAdapter
 
+from ai.catalog import DATA_DIR, load_repos
 from ai.schemas import Categoria, Repo
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-REPO_LIST = TypeAdapter(list[Repo])
-
 
 @pytest.fixture(scope="module")
-def raw_repos() -> list[dict]:
-    """Contenido de repos.json tal cual, sin validar."""
-    return json.loads((DATA_DIR / "repos.json").read_text(encoding="utf-8"))
+def repos() -> list[Repo]:
+    """Carga de los repos del catálogo."""
+    return load_repos()
 
 
-@pytest.fixture(scope="module")
-def repos(raw_repos) -> list[Repo]:
-    """Los mismos datos, ya validados como objetos `Repo`."""
-    return REPO_LIST.validate_python(raw_repos)
-
-
-def test_datos_cumplen_el_esquema(raw_repos):
-    # Si algún repo no cumple, Pydantic lanza ValidationError y el test falla
-    # mostrando todos los errores.
-    REPO_LIST.validate_python(raw_repos)
+def test_datos_cumplen_el_esquema():
+    # Si algún repo no cumple o JSON mal formado, Pydantic lanza ValidationError
+    # y el test falla mostrando todos los errores.
+    load_repos()
 
 
 def test_cantidad_de_repos(repos):
