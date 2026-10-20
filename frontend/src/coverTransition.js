@@ -4,6 +4,17 @@ const geometry=r=>({left:`${r.left}px`,top:`${r.top}px`,width:`${r.width}px`,hei
 function textStyle(el){const s=getComputedStyle(el);return {fontFamily:s.fontFamily,fontSize:s.fontSize,fontWeight:s.fontWeight,fontStyle:s.fontStyle,lineHeight:s.lineHeight,letterSpacing:s.letterSpacing,color:s.color};}
 export function captureCover(el){
  if(!el)return null;
+ const card=el.closest('.tool-card');
+ if(card){
+  card.dispatchEvent(new Event('cardpressreset'));
+  const surface=card.querySelector('.card-surface');
+  surface.style.setProperty('transition','none');
+  surface.style.setProperty('scale','1');
+  surface.getBoundingClientRect();
+  surface.style.removeProperty('scale');
+  surface.style.removeProperty('transition');
+ }
+
  const style=getComputedStyle(el),items=[];
  function add(key,node){if(!node)return;const s=getComputedStyle(node),r=bounds(node);if(r.width<2||r.height<2)return;items.push({key,node:node.cloneNode(true),rect:r,style:{...textStyle(node),filter:s.filter,opacity:s.opacity,background:s.background,borderRadius:s.borderRadius,padding:s.padding,objectFit:s.objectFit,textAlign:s.textAlign}});}
  add('title',el.querySelector('h1,h3'));

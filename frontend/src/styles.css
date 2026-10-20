@@ -324,3 +324,38 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 .tool-card-details>.tool-actions>a:first-child{border:1px solid #ffffff29;border-right:0;border-radius:0 0 0 24px}
 .tool-card-details>.tool-actions>a:first-child:is(:hover,:focus-visible){border-color:#fff}
 .tool-card-details>.tool-actions>:focus-visible{outline-offset:-5px}
+
+/* Independent compact architecture result between composer and catalog. */
+#landing-view[data-has-proposal="true"] .hero-inner{padding-bottom:32px}
+#landing-view[data-has-proposal="true"] .hero{padding-bottom:0}
+.proposal-slot{display:grid;grid-template-rows:0fr;background:#101010;position:relative;z-index:2;transition:grid-template-rows 420ms cubic-bezier(.22,1,.36,1)}
+.proposal-slot.has-content{grid-template-rows:1fr}
+.proposal-slot-inner{overflow:hidden;min-height:0}
+.proposal-width{max-width:804px;padding:0 24px 128px;margin:auto}
+.proposal-slot:not(.has-content) .proposal-width{padding-bottom:0}
+.architecture-result,.proposal-pending{background:#181818;border:1px solid #ffffff1c;border-radius:24px;padding:28px;text-align:left;animation:result-in 350ms ease-out}
+.result-heading{display:flex;gap:20px;align-items:flex-start;justify-content:space-between}
+.result-heading h2{font-size:23px;font-weight:500;margin:0 0 10px;letter-spacing:-.7px}
+.result-heading p,.architecture-detail>p{font-size:13px;line-height:1.7;color:#a5a5a5;margin:0}
+.result-tools{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}
+.result-tools span{border:1px solid #ffffff1a;border-radius:999px;padding:7px 12px;font-size:12px;color:#dedede;background:#ffffff04}
+.result-footer{display:flex;gap:16px;justify-content:space-between;align-items:center}
+.result-footer>span{font-size:10px;line-height:1.6;color:#777;max-width:240px}
+.explore-architecture{display:inline-flex;align-items:center;justify-content:center;gap:9px;flex-shrink:0;padding:12px 16px;border:1px solid #ffffff29;border-radius:999px;font-size:12px}
+.explore-architecture svg{transition:transform 250ms ease}.explore-architecture svg.is-open{transform:rotate(180deg)}
+.architecture-disclosure{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows 420ms cubic-bezier(.22,1,.36,1),opacity 220ms ease}
+.architecture-disclosure.is-open{grid-template-rows:1fr;opacity:1}.architecture-disclosure>div{min-height:0;overflow:hidden}
+.architecture-detail{border-top:1px solid #ffffff12;margin-top:26px;padding-top:26px}.architecture-detail h3{font-size:14px;font-weight:500;margin:0 0 18px}
+.architecture-map{display:flex;align-items:center;gap:12px;margin-bottom:18px}.architecture-map>div{flex:1;min-width:0;padding:18px 12px;border:1px solid #ffffff18;border-radius:12px;font-size:14px;font-weight:500}.architecture-map span{display:block;font-size:10px;color:#929292;font-weight:400;margin-top:8px}.architecture-map>svg{flex-shrink:0;color:#666}
+.identity-connection{display:flex;align-items:flex-start;gap:12px;color:#999;margin:0 0 28px;padding:14px;background:#ffffff04;border-radius:12px}.identity-connection>svg{flex-shrink:0;margin-top:3px}.identity-connection p{margin:0;font-size:12px;line-height:1.7}.identity-connection strong{color:#ddd;font-weight:500}
+.proposal-pending{display:flex;align-items:center;gap:12px;font-size:13px;color:#aaa}
+@keyframes result-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.proposal-width{padding:0 20px 104px}.architecture-result,.proposal-pending{padding:20px}.result-footer{align-items:stretch;flex-direction:column}.result-footer>span{max-width:none}.architecture-map{flex-direction:column}.architecture-map>div{width:100%}.architecture-map>svg{transform:rotate(90deg)}.result-heading h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.proposal-slot,.architecture-disclosure,.explore-architecture svg{transition:none}.architecture-result,.proposal-pending{animation:none}}
+
+/* Press feedback has independent scale ownership, preserving tilt and reveal. */
+.card-surface{scale:1;transform-origin:center;transition:transform 550ms cubic-bezier(.22,1,.36,1),scale 320ms cubic-bezier(.22,1,.36,1)}
+.card-surface[data-hover="true"]{transition-duration:180ms,320ms}
+.card-surface[data-pressed="true"]{scale:.975;transition-duration:550ms,160ms;transition-timing-function:cubic-bezier(.22,1,.36,1),cubic-bezier(.4,0,.2,1)}
+.card-surface[data-pressed="true"][data-hover="true"]{transition-duration:180ms,160ms}
+@media(prefers-reduced-motion:reduce){.card-surface,.card-surface[data-pressed="true"]{scale:1;transition:none}}

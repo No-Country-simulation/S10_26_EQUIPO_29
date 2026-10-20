@@ -47,3 +47,13 @@ Las consultas no se envían a servicios externos. Las métricas, puntuaciones de
 - `worker/` y `.openai/hosting.json`: soporte para una futura publicación en Sites.
 
 Se usa Inter, se conserva el logotipo original de OpenBridge y las secciones comienzan directamente con su título, sin antetítulos.
+
+## Mock de catálogo
+
+`src/mocks/catalog.fixtures.json` reúne los diez registros ficticios (nueve herramientas y Default). Cada registro contiene identidad, descripción, categoría, lenguaje, licencia, estrellas, actividad, mantenimiento, repositorio, health score, issues y documentación. `dataSource: mock` y `syncedAt` describen los fixtures, no una consulta real a GitHub. `activity` conserva por ahora el texto ilustrativo existente.
+
+`src/data/catalog.mjs` expone `mockCatalog.list()` → `{items,total}` y `mockCatalog.getById(id)` → registro o `null`. Son funciones locales asíncronas, no endpoints HTTP implementados ni contratos finales de backend. Las respuestas son copias independientes. `src/tools.js` adapta los mismos registros para catálogo y detalle sin cambiar su presentación. Paletas y assets siguen siendo configuración visual.
+
+## Interacciones de la maqueta
+
+La propuesta fija aparece en una sección independiente debajo del input, con un resumen y un control para expandir el mapa y la justificación. Las cards se contraen al presionar (160 ms) y recuperan su tamaño suavemente (320 ms), conservando el tilt y el soporte de movimiento reducido.
