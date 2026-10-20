@@ -50,11 +50,12 @@ export const MetalBorder=memo(function MetalBorder(){
     // Disturb the material inside the fixed mask, never the input or its outline.
     const inset=.035*energy,vw=video.videoWidth,vh=video.videoHeight;
     const x=inset*(.5+.5*Math.sin(elapsed/260)),y=inset*(.5+.5*Math.sin(elapsed/370+.8));
-    ctx.filter=energy>.001?`saturate(${1+.8*energy}) brightness(${1+.28*energy})`:'none';
+    // Map every reflection to blue/cyan while retaining the video's light and motion.
+    ctx.filter=`grayscale(1) sepia(1) saturate(4) hue-rotate(165deg) brightness(${1+.28*energy})`;
     ctx.drawImage(video,x*vw,y*vh,vw*(1-inset),vh*(1-inset),0,0,output.width,output.height);
     ctx.filter='none';
    }
-   else {ctx.fillStyle='#ddd';ctx.fillRect(0,0,output.width,output.height);}
+   else {ctx.fillStyle='#78caff';ctx.fillRect(0,0,output.width,output.height);}
    ctx.globalCompositeOperation='source-over';
   }
   function stop(){clearTimeout(timer);cancelAnimationFrame(raf);raf=0;if(vfc&&video.cancelVideoFrameCallback)video.cancelVideoFrameCallback(vfc);vfc=0;video.pause();last=0;}

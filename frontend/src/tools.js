@@ -8,9 +8,12 @@ export const tools=[
 ['Qdrant','Bases de datos','Búsqueda vectorial para recuperar información relevante y construir aplicaciones con IA.','Rust','Apache-2.0',21000,'Hace 2 días',true,'qdrant/qdrant','#ef809b'],
 ['Umami','Analítica','Métricas esenciales de tu sitio en una interfaz simple, con opción de alojamiento propio.','TypeScript','MIT',22300,'Hace 6 días',true,'umami-software/umami','#e6e6e6'],
 ['Typesense','Búsqueda','Un motor de búsqueda para crear experiencias de descubrimiento en tus aplicaciones.','C++','GPL-3.0',16200,'Hace 90 días',false,'typesense/typesense','#f4c88e']
-].map(([name,category,description,language,license,stars,activity,maintained,repo,color])=>({id:name.toLowerCase(),name,category,description,language,license,stars,activity,maintained,repo,color}));
+,
+['Default','IA','Ejemplo visual de una herramienta sin logo: iniciales, colores neutros y la misma estructura del catálogo.','Por definir','Por definir',0,'Sin datos',false,null,'#ffffff']
+].map(([name,category,description,language,license,stars,activity,maintained,repo,color])=>({id:name==='Default'?'herramienta-de-ejemplo':name.toLowerCase().replace(/\s+/g,'-'),name,category,description,language,license,stars,activity,maintained,repo,color}));
 // Health scores and open issue counts are fictional prototype data.
 export const cardDetails = {
+ 'Default': { healthScore: 0, openIssues: 0, tag: 'Ejemplo', version: 'Sin datos', docs: null },
  PostgreSQL: { healthScore: 94, openIssues: 28, tag: 'Relacional', version: '15.2.4', docs: 'https://www.postgresql.org/docs/' },
  Keycloak: { healthScore: 72, openIssues: 342, tag: 'Identidad', docs: 'https://www.keycloak.org/documentation' },
  Meilisearch: { healthScore: 48, openIssues: 116, tag: 'Texto completo', docs: 'https://www.meilisearch.com/docs' },
@@ -36,3 +39,4 @@ export const brandPalettes = {
  Typesense: { start: '#302011', end: '#815020', tag: '#875323' }
 };
 export const defaultBrand = { start: '#222222', end: '#303030', tag: '#454545' };
+

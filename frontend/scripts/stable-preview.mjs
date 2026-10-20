@@ -29,11 +29,9 @@ function copyTree(source, destination) {
     writeFileSync(destination, bytes);
   }
 }
-for (const name of ['package.json', 'package-lock.json', 'index.html', 'src', 'public']) {
+for (const name of ['package.json', 'package-lock.json', 'next.config.mjs', 'postcss.config.mjs', '.openai', 'worker', 'scripts', 'src', 'public']) {
   copyTree(path.join(root, name), path.join(runtime, name));
 }
-// Own config: no source watcher, no config restart, no cloud-hosted modules.
-writeFileSync(path.join(runtime, 'preview.config.mjs'), `import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nexport default defineConfig({plugins:[react()],build:{outDir:'candidate'}});\n`);
 function run(command, args) {
   const result = spawnSync(command, args, { cwd: runtime, stdio: 'inherit' });
   if (result.error) throw result.error;
@@ -41,19 +39,18 @@ function run(command, args) {
 }
 const lockHash = createHash('sha256').update(readFileSync(path.join(runtime, 'package-lock.json'))).digest('hex');
 const stamp = path.join(runtime, '.installed-lock');
-if (!existsSync(stamp) || readFileSync(stamp, 'utf8') !== lockHash || !existsSync(path.join(runtime, 'node_modules/vite/bin/vite.js'))) {
+if (!existsSync(stamp) || readFileSync(stamp, 'utf8') !== lockHash || !existsSync(path.join(runtime, 'node_modules/next/dist/bin/next'))) {
   run('npm', ['ci', '--no-audit', '--no-fund']);
   writeFileSync(stamp, lockHash);
 }
-const vite = path.join(runtime, 'node_modules/vite/bin/vite.js');
-run(process.execPath, [vite, 'build', '--config', 'preview.config.mjs']);
+run('npm', ['run', 'build']);
 const published = path.join(runtime, 'published');
 const previous = path.join(runtime, 'previous');
 rmSync(previous, { recursive: true, force: true });
 if (existsSync(published)) renameSync(published, previous);
-renameSync(path.join(runtime, 'candidate'), published);
+renameSync(path.join(runtime, 'dist/client'), published);
 console.log(`Vista previa compilada: ${runtime}`);
 if (process.argv.includes('--build-only')) process.exit(0);
-const server = spawn(process.execPath, [vite, 'preview', '--config', 'preview.config.mjs', '--outDir', 'published', '--host', '127.0.0.1', '--port', '4173', '--strictPort'], { cwd: runtime, stdio: 'inherit' });
+const server = spawn(process.execPath, [path.join(runtime,'scripts/serve-preview.mjs'),published], {cwd:runtime,stdio:'inherit'});
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.kill(signal));
 server.on('exit', code => process.exit(code || 0));

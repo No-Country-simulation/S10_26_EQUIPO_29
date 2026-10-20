@@ -1,14 +1,15 @@
-import {tools,cardDetails,brandPalettes,defaultBrand} from './tools';
+import {tools,cardDetails} from './tools';
+import {useBrandIdentity,markBrandFailed} from './brandIdentity';
 import {ToolDetail} from './ToolDetail';
 import {useToolNavigation} from './useToolNavigation';
 import {useCardTilt} from './useCardTilt';
 import {useAnimatedCatalog} from './useAnimatedCatalog';
 import {RevealHeading,usePageReveal} from './PageReveal';
 import {MetalBorder} from './MetalBorder';
+import {ElasticScrollbar} from './ElasticScrollbar';
 import {HeroLights} from './HeroLights';
 import React, {useState, useRef, useEffect} from 'react';
-import {Activity, ArrowUpRight, ArrowRight, Search, SlidersHorizontal, X, Database, ShieldCheck, CreditCard, BrainCircuit, ChartNoAxesCombined, SearchCheck, LoaderCircle} from 'lucide-react';
-import '@fontsource-variable/inter';
+import {UserRound, Star, GitCommitHorizontal, Scale, Activity, ArrowUp, ArrowUpRight, ArrowRight, Search, SlidersHorizontal, X, Database, ShieldCheck, CreditCard, BrainCircuit, ChartNoAxesCombined, SearchCheck, LoaderCircle} from 'lucide-react';
 const promptExamples = [
  'Diseña un SaaS multi-tenant con aislamiento de datos, SSO mediante OIDC y RBAC por organización.',
  'Propón una arquitectura orientada a eventos con colas, reintentos e idempotencia para procesar pagos.',
@@ -63,37 +64,33 @@ const icons={'Autenticación':ShieldCheck,'Bases de datos':Database,'Pagos':Cred
 
 function ToolCard({ tool, onOpen }) {
  const tiltRef = useCardTilt();
- const logo = `/assets/brands/${tool.name.toLowerCase()}.svg`;
+ const identity=useBrandIdentity(tool);
+ const logo=identity.logo;
  const detail = cardDetails[tool.name];
  const healthTone = detail.healthScore >= 80 ? 'good' : detail.healthScore >= 60 ? 'moderate' : 'low';
  const healthLabel = {good:'Salud alta',moderate:'Salud media',low:'Salud baja'}[healthTone];
- const brand = brandPalettes[tool.name] || defaultBrand;
- const extraTags = [...new Set(detail.extraTags || [])].filter(tag => ![tool.category, detail.tag, tool.language].includes(tag));
+ const brand = identity.palette;
  const postgres = tool.name === 'PostgreSQL';
  const metrics = [
-  ['Última versión', detail.version || 'Por confirmar'],
-  ['Estrellas', tool.stars.toLocaleString('es-CL')],
-  ['Issues abiertas', detail.openIssues.toLocaleString('es-CL')],
-  ['Actividad', tool.activity],
-  ['Licencia', tool.license]
+  ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],
+  ['Última actualización', tool.activity, GitCommitHorizontal],
+  ['Licencia', tool.license, Scale],
+  ['Mantenedor', tool.maintained ? 'Activo' : 'Por confirmar', UserRound]
  ];
  return <article data-tool-id={tool.id} onClick={e=>{if(!e.target.closest('a,button,summary,details')&&!window.getSelection()?.toString())onOpen(tool.id,e.currentTarget.querySelector('.detail-link'));}} ref={tiltRef} className="tool-card" aria-label={tool.name} style={{
   '--brand-start': brand.start, '--brand-end': brand.end, '--brand-tag': brand.tag
  }}>
   <div className="card-surface">
   <div className="tool-card-intro">
-   {postgres ? <div className="card-watermark" aria-hidden="true"><img src="/assets/cards/postgres-watermark.svg" alt=""/></div> : <img className="brand-watermark" src={logo} alt="" aria-hidden="true"/>}
+   {identity.watermark && (postgres ? <div className="card-watermark" aria-hidden="true"><img src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=""/></div> : <img className="brand-watermark" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt="" aria-hidden="true"/>)}
    <div className="tool-card-title">
-    {postgres ? <div className="tool-logo"><img src="/assets/cards/postgres-logo.svg" alt=""/></div> : <img className={tool.name === 'Lago' ? 'brand-logo brand-wordmark' : 'brand-logo'} src={logo} alt=""/>}
-    <h3 className={tool.name === 'Lago' ? 'sr-only' : undefined}>{tool.name}</h3>
+    {identity.fallback ? <span className="brand-initials" aria-hidden="true">{identity.initials}</span> : postgres ? <div className="tool-logo"><img src={logo} onError={()=>markBrandFailed(logo)} alt=""/></div> : <img className={identity.wordmark ? 'brand-logo brand-wordmark' : 'brand-logo'} src={logo} onError={()=>markBrandFailed(logo)} alt=""/>}
+    <h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>
    </div>
    <div className="tool-tags">
-    <span>{tool.category}</span><span>{detail.tag}</span>
+    <span>{tool.category}</span>
     <span className="language-tag" title="Lenguaje principal del repositorio">{tool.language}</span>
-    {extraTags.length > 0 && <details className="tag-overflow">
-     <summary aria-label={`Ver ${extraTags.length} etiquetas adicionales de ${tool.name}`}>+{extraTags.length}</summary>
-     <ul aria-label="Etiquetas adicionales">{extraTags.map(tag=><li key={tag}>{tag}</li>)}</ul>
-    </details>}
+
    </div>
    <p>{tool.description}</p>
   </div>
@@ -104,13 +101,13 @@ function ToolCard({ tool, onOpen }) {
     <strong aria-hidden="true">{detail.healthScore}<span>/100</span></strong>
    </span>
    </div>
-   <dl className="tool-metrics">{metrics.map(([label,value],index)=><React.Fragment key={label}>
+   <dl className="tool-metrics">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>
     {index > 0 && <div className="metric-divider" aria-hidden="true"><img src="/assets/cards/divider.svg" alt=""/></div>}
-    <div className="tool-metric"><dt>{label}</dt><dd>{value}</dd></div>
+    <div className="tool-metric"><dt><Icon size={14} strokeWidth={1.75} aria-hidden="true"/><span>{label}</span></dt><dd>{value}</dd></div>
    </React.Fragment>)}</dl>
    <div className="tool-actions">
     <a className="detail-link" href={'#herramienta/'+tool.id} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget);}}} aria-label={'Ver detalle de '+tool.name}>Ver detalle <ArrowRight size={14}/></a>
-    <a href={'https://github.com/'+tool.repo} target="_blank" rel="noopener noreferrer" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio ↗</a>
+    {tool.repo ? <a href={'https://github.com/'+tool.repo} target="_blank" rel="noopener noreferrer" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio ↗</a> : <button type="button" className="example-repository" aria-disabled="true" title="Ejemplo visual: no tiene un repositorio real" aria-label="Repositorio no disponible para Default">Repositorio ↗</button>}
    </div>
   </div>
   <div className="card-glare" aria-hidden="true"/>
@@ -134,13 +131,13 @@ export function App(){
  function submit(e){e.preventDefault();if(!query.trim()){setError('Describe la aplicación que quieres construir para empezar.');input.current.focus();return;}setError('');setPhase('loading');timer.current=setTimeout(()=>setPhase('done'),1100);}
  return <><a href="#asistente" className="skip">Ir al contenido</a><header><div className="nav wrap"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><nav aria-label="Principal"><a href="#asistente" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#asistente');}}}>Asistente</a><a href="#catalogo" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#catalogo');}}}>Catálogo</a></nav></div></header>
  <main hidden={isDetail} id="landing-view"><section className="hero" id="asistente"><HeroLights inputRef={input}/><div className="hero-inner"><RevealHeading as="h1" text="¿Qué quieres construir?" mobileBreak/><p className="intro">Tu próxima aplicación empieza con las herramientas adecuadas.<br className="desktop-break"/> Describe tu idea y explora cómo conectarlas.</p>
- <form className={'composer '+(error?'invalid':'')} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={3000} disabled={phase==='loading'} onChange={e=>{setQuery(e.target.value);setError('');}} placeholder={placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error}/><div className="composer-footer"><button className="primary" disabled={phase==='loading'} type="submit">{phase==='loading'?<><LoaderCircle className="spin" size={17}/> Generando…</>:<>Generar propuesta <ArrowRight size={17}/></>}</button></div></form>
+ <form className={'composer '+(error?'invalid':'')} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={3000} disabled={phase==='loading'} onChange={e=>{setQuery(e.target.value);setError('');}} placeholder={placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" disabled={phase==='loading'} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}>{phase==='loading'?<LoaderCircle className="spin" size={22} aria-hidden="true"/>:<ArrowUp size={24} strokeWidth={2} aria-hidden="true"/>}</button></div></form>
  <p id="prompt-error" className="error" role="alert">{error}</p>
  </div></section>
  <div className="catalog-shell"><div className="wrap"><div aria-live="polite" aria-busy={phase==='loading'}>{phase==='loading'&&<div className="loading"><LoaderCircle className="spin" size={18}/> Preparando la propuesta de demostración…</div>}{phase==='done'&&<section className="proposal"><div className="section-top"><div><RevealHeading text="Un estudio de yoga, conectado."/></div><button className="icon-button" aria-label="Cerrar propuesta" onClick={()=>setPhase('idle')}><X size={20}/></button></div><p>Esta respuesta fija ilustra el caso de reservas de yoga; no es un análisis de tu consulta.</p><div className="stack">{[['React','Interfaz y calendario'],['FastAPI','Reglas de reservas y cupos'],['PostgreSQL','Clases, horarios y reservas'],['Keycloak','Identidad y acceso']].map(([n,d])=><div key={n}><strong>{n}</strong><span>{d}</span></div>)}</div><div className="architecture">React <ArrowRight size={16}/> FastAPI <ArrowRight size={16}/> PostgreSQL</div><p className="small">Keycloak gestiona la identidad; la API valida permisos. Las transacciones y reglas de la aplicación deben impedir superar los cupos. Alojamiento propio, sin pagos en esta primera versión.</p><a className="text-link" href="#catalogo" onClick={()=>{clear();setSearch('PostgreSQL');}}>Explorar PostgreSQL en el catálogo <ArrowRight size={15}/></a></section>}</div>
  <section className="catalog" id="catalogo"><div className="section-top"><div><RevealHeading text="Explora el ecosistema open source"/></div></div>
  <div className="search-row"><div className="search-box"><Search size={19}/><label htmlFor="search" className="sr-only">Buscar herramientas</label><input id="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Buscar herramientas por nombre o descripción…"/>{search&&<button className="icon-button" aria-label="Borrar búsqueda" onClick={()=>setSearch('')}><X size={16}/></button>}</div><button className={'filter-button '+(filters?'selected':'')} aria-expanded={filters} aria-controls="filters" onClick={()=>setFilters(!filters)}><SlidersHorizontal size={16}/> Filtros {active>0&&<span className="badge">{active}</span>}</button></div>
- <div className="categories" aria-label="Categorías">{categories.map(c=><button key={c} aria-pressed={category===c} className={category===c?'active':''} onClick={()=>setCategory(c)}>{c}</button>)}</div>
+ <div className="categories" aria-label="Categorías">{categories.map(c=><button key={c} aria-pressed={category===c} className={'category-chip'+(category===c?' active':'')} onClick={e=>{const chip=e.currentTarget,rect=chip.getBoundingClientRect(),radius=Math.hypot(rect.width,rect.height)/2+1;chip.style.setProperty('--chip-radius',radius+'px');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)chip.animate([{clipPath:'circle(0px at 50% 50%)'},{clipPath:`circle(${radius}px at 50% 50%)`}],{pseudoElement:'::before',duration:280,easing:'cubic-bezier(.22,1,.36,1)'});setCategory(c);}}>{c}</button>)}</div>
  {filters && (
   <div className="filters" id="filters">
    <label>Lenguaje
@@ -170,5 +167,5 @@ export function App(){
  <div className="results-meta"><span aria-live="polite">{filtered.length} {filtered.length===1?'herramienta':'herramientas'}{category!=='Todas'?' en '+category:''}</span>{(active>0||search||category!=='Todas')&&<button onClick={clear}>Limpiar filtros <X size={13}/></button>}</div>
  <div className="grid">{displayed.map(tool=><ToolCard key={tool.name} tool={tool} onOpen={navigation.open}/>)}</div>
  {filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><p>Prueba otro término o quita alguno de los filtros.</p><button onClick={clear} className="primary">Ver todas las herramientas</button></div>}
- </section><footer><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><a href="#asistente">Volver al asistente <ArrowUpRight size={14}/></a></footer></div></div></main>{isDetail&&<ToolDetail id={navigation.id} onBack={navigation.back}/>}</>;
+ </section><footer><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><a href="#asistente">Volver al asistente <ArrowUpRight size={14}/></a></footer></div></div></main>{isDetail&&<ToolDetail id={navigation.id} onBack={navigation.back}/>}<ElasticScrollbar routeKey={navigation.id}/></>;
 }

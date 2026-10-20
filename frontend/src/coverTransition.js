@@ -5,11 +5,11 @@ function textStyle(el){const s=getComputedStyle(el);return {fontFamily:s.fontFam
 export function captureCover(el){
  if(!el)return null;
  const style=getComputedStyle(el),items=[];
- function add(key,node){if(!node)return;const s=getComputedStyle(node),r=bounds(node);if(r.width<2||r.height<2)return;items.push({key,node:node.cloneNode(true),rect:r,style:{...textStyle(node),filter:s.filter,opacity:s.opacity,background:s.background,borderRadius:s.borderRadius,padding:s.padding,objectFit:s.objectFit}});}
+ function add(key,node){if(!node)return;const s=getComputedStyle(node),r=bounds(node);if(r.width<2||r.height<2)return;items.push({key,node:node.cloneNode(true),rect:r,style:{...textStyle(node),filter:s.filter,opacity:s.opacity,background:s.background,borderRadius:s.borderRadius,padding:s.padding,objectFit:s.objectFit,textAlign:s.textAlign}});}
  add('title',el.querySelector('h1,h3'));
- add('logo',el.querySelector('.tool-logo img,.brand-logo,.detail-identity>img'));
+ add('logo',el.querySelector('.tool-logo img,.brand-logo,.brand-initials,.detail-identity>img'));
  add('watermark',el.querySelector('.card-watermark img,.brand-watermark,.detail-watermark'));
- el.querySelectorAll('.tool-tags>span').forEach((tag,i)=>add(`tag-${i}`,tag));
+ el.querySelectorAll('.tool-tags>span').forEach(tag=>add(`tag-${tag.textContent.trim()}`,tag));
  // Preserve each word's painted position across different paragraph wrapping.
  const paragraph=el.querySelector('p');
  if(paragraph){
