@@ -327,8 +327,8 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 
 /* Independent compact architecture result between composer and catalog. */
 #landing-view[data-has-proposal="true"] .hero-inner{padding-bottom:32px}
-#landing-view[data-has-proposal="true"] .hero{padding-bottom:0}
-.proposal-slot{display:grid;grid-template-rows:0fr;background:#101010;position:relative;z-index:2;transition:grid-template-rows 420ms cubic-bezier(.22,1,.36,1)}
+#landing-view[data-has-proposal="true"] .hero{padding-bottom:40px}
+.proposal-slot{display:grid;grid-template-rows:0fr;background:transparent;position:relative;z-index:2;transition:grid-template-rows 420ms cubic-bezier(.22,1,.36,1)}
 .proposal-slot.has-content{grid-template-rows:1fr}
 .proposal-slot-inner{overflow:hidden;min-height:0}
 .proposal-width{max-width:804px;padding:0 24px 128px;margin:auto}
@@ -359,3 +359,151 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 .card-surface[data-pressed="true"]{scale:.975;transition-duration:550ms,160ms;transition-timing-function:cubic-bezier(.22,1,.36,1),cubic-bezier(.4,0,.2,1)}
 .card-surface[data-pressed="true"][data-hover="true"]{transition-duration:180ms,160ms}
 @media(prefers-reduced-motion:reduce){.card-surface,.card-surface[data-pressed="true"]{scale:1;transition:none}}
+
+/* Architecture canvas replaces the summary; composer moves down in normal flow. */
+.hero-inner.has-architecture{max-width:1064px;padding-top:42px;padding-bottom:128px!important}
+.hero-inner.has-architecture h1{font-size:38px;letter-spacing:-1.5px;margin:12px 0}
+.hero-inner.has-architecture .intro{font-size:14px;margin-bottom:16px}
+.hero-inner.has-architecture .composer{max-width:756px;margin:auto}
+.hero-inner.has-architecture .composer textarea{min-height:32px;max-height:160px;padding-bottom:0}
+.hero-inner.has-architecture .composer{position:relative;padding:18px 74px 18px 20px;min-height:80px}
+.hero-inner.has-architecture .composer-footer{position:absolute;right:18px;bottom:18px}
+.architecture-demo-note{font-size:10px;color:#959cad;text-align:left;max-width:756px;margin:10px auto 0}
+.architecture-stage{display:grid;grid-template-rows:0fr;transition:grid-template-rows 650ms cubic-bezier(.22,1,.36,1)}
+.architecture-stage.is-visible{grid-template-rows:1fr}.architecture-stage-clip{min-height:0;overflow:hidden}
+.architecture-building{height:400px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#a9b4c9}
+.architecture-canvas{position:relative;height:400px;text-align:left;margin-bottom:18px}
+.architecture-canvas canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.architecture-boundary{position:absolute;left:0;right:0;top:190px;bottom:12px;border:1px dashed #819abc66;border-radius:20px;pointer-events:none}
+.architecture-boundary>span{position:absolute;top:14px;left:18px;color:#b7c8de;font-size:11px}
+.architecture-node{position:absolute;display:flex;align-items:center;gap:14px;text-align:left;width:202px;min-height:110px;padding:18px;background:#15191ff5;border:1px solid #7188a15c;border-radius:12px;z-index:1;transition:border-color 160ms,background 160ms;animation:node-in 400ms ease-out backwards;animation-delay:var(--node-delay)}
+.architecture-node:hover,.architecture-node.is-selected{background:#1d2633;border-color:#8bc9ff}.architecture-node:focus-visible{outline-offset:3px}
+.architecture-node::before{display:none!important}.architecture-node>img{width:34px;height:34px;object-fit:contain;flex-shrink:0}.architecture-node>svg{flex-shrink:0;color:#74d6ed}.node-fastapi>svg{color:#26c6a4}
+.node-copy{display:grid;gap:6px;min-width:0}.node-copy strong{font-size:13px;font-weight:500}.node-copy>span{font-size:10px;color:#b2bbc9;line-height:1.5}.node-copy small{font-size:9px;color:#c4ccd8;background:#ffffff0d;border:1px solid #ffffff12;border-radius:999px;padding:3px 9px;justify-self:start;margin-top:2px}
+.node-keycloak{top:18px;left:calc(50% - 101px)}.node-react{left:6%;top:250px}.node-fastapi{left:calc(50% - 101px);top:250px}.node-postgresql{right:6%;top:250px}
+.connection-label{position:absolute;z-index:3;font-size:10px;line-height:1.5;color:#c4d2e5;text-align:center;pointer-events:none;max-width:150px;text-shadow:0 1px 4px #080b13}
+.connection-auth{left:21%;top:150px}.connection-token{left:64%;top:150px}.connection-rest{left:31%;top:270px;width:100px}.connection-sql{right:28%;top:270px;width:120px}
+.architecture-node-info{max-width:756px;margin:0 auto 18px;display:flex;align-items:center;gap:18px;text-align:left;min-height:0}.architecture-node-info:empty{display:none}.architecture-node-info p{font-size:12px;color:#b1bbca;line-height:1.7;margin:0}.architecture-node-info strong{color:#eee;font-weight:500}.architecture-node-info a{display:inline-flex;gap:5px;align-items:center;white-space:nowrap;font-size:11px;color:#a5caff}
+@keyframes node-in{from{opacity:0}to{opacity:1}}
+@media(max-width:900px) and (min-width:761px){.architecture-node{width:180px;padding:14px;gap:10px}.node-react{left:2%}.node-postgresql{right:2%}.node-fastapi,.node-keycloak{left:calc(50% - 90px)}.connection-rest{left:28%}.connection-sql{right:25%}}
+@media(max-width:760px){.hero-inner.has-architecture{padding-top:30px;padding-bottom:104px!important}.hero-inner.has-architecture h1{font-size:30px}.architecture-canvas{height:660px}.architecture-node{width:210px;left:calc(50% - 105px);right:auto;min-height:104px}.node-keycloak{top:10px}.node-react{top:184px}.node-fastapi{top:358px}.node-postgresql{top:532px}.architecture-boundary{top:150px;left:36px;right:36px;bottom:6px}.architecture-boundary>span{font-size:9px;left:12px;top:8px}.connection-auth{left:0;top:134px;max-width:110px}.connection-token{right:0;left:auto;top:310px;max-width:95px}.connection-rest{top:310px;left:calc(50% - 118px);width:110px}.connection-sql{top:484px;right:auto;left:calc(50% - 118px);width:110px}.architecture-building{height:660px}.architecture-node-info{flex-direction:column;align-items:flex-start;gap:8px}.hero-inner.has-architecture .composer textarea{font-size:13px}.architecture-demo-note{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.architecture-stage{transition:none}.architecture-node{animation:none}}
+.hero .architecture-canvas button.architecture-node{position:absolute;isolation:isolate;color:#fff}
+.hero .architecture-canvas button.architecture-node::before{display:none}
+.architecture-node.node-keycloak>img{filter:brightness(0) invert(1)}
+
+/* Native-scroll depth: catalog floats above a slower decorative hero plane. */
+.hero .hero-lights{inset:-96px 0;translate:0 var(--hero-parallax-y,0px)}
+.hero[data-parallax-moving="true"] .hero-lights{will-change:translate}
+.catalog-shell{margin-top:-120px;box-shadow:0 -18px 50px #00000020}
+@media(max-width:640px){.catalog-shell{margin-top:-88px}}
+@media(prefers-reduced-motion:reduce){.hero .hero-lights{translate:none;will-change:auto}}
+
+/* Gentle upward-scroll pull, independent of child card transforms. */
+.catalog-shell{translate:0 var(--catalog-pull-y,0px)}
+.catalog-shell[data-bouncing="true"]{will-change:translate}
+@media(prefers-reduced-motion:reduce){.catalog-shell{translate:none;will-change:auto}}
+
+/* Full-width brand signature at the end of the catalog. */
+.catalog-footer{display:block;padding:40px 0;margin-top:52px}
+.catalog-footer>.brand{display:block;position:static;width:100%;height:auto;margin:0}
+.catalog-footer .openbridge-logo{position:static;width:100%;height:auto;transform:none;opacity:.16}
+@media(max-width:520px){.catalog-footer{padding:28px 0;margin-top:36px}}
+
+/* Coordinated prompt presentation: one continuous reflow, stable mounted content. */
+.hero-inner{transition:max-width var(--prompt-layout-duration,560ms) var(--prompt-ease),padding-top var(--prompt-layout-duration,560ms) var(--prompt-ease),padding-bottom var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.prompt-heading{display:grid;align-items:center;margin-bottom:0;min-height:84px}
+.prompt-heading>div,.prompt-heading>h1{grid-area:1/1;transition:opacity var(--prompt-title-duration,180ms) ease;min-width:0}
+.prompt-heading-result{opacity:0;pointer-events:none;font-size:38px;letter-spacing:-1.5px;margin:12px 0!important;font-weight:300}
+.prompt-heading-initial{opacity:1}.has-architecture .prompt-heading-initial{opacity:0;pointer-events:none}.has-architecture .prompt-heading-result{opacity:1}
+.hero-inner.has-architecture .prompt-heading-initial h1{font-size:52px;letter-spacing:-2.6px;margin:22px 0 19px}
+.prompt-intro{display:grid;margin-bottom:28px;transition:margin-bottom var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.prompt-intro .intro{grid-area:1/1;margin:0!important;transition:opacity var(--prompt-title-duration,180ms) ease}.intro-result{opacity:0;pointer-events:none}.has-architecture .intro-initial{opacity:0;pointer-events:none}.has-architecture .intro-result{opacity:1}.has-architecture .prompt-intro{margin-bottom:16px}
+.hero-inner .composer{max-width:756px;margin-left:auto;margin-right:auto;transition:height var(--prompt-layout-duration,560ms) var(--prompt-ease),padding var(--prompt-layout-duration,560ms) var(--prompt-ease),border-color 450ms ease}
+.hero-inner.has-architecture .composer{height:var(--composer-height,80px);box-sizing:border-box;padding:18px}
+.hero-inner .composer textarea{transition:min-height var(--prompt-layout-duration,560ms) var(--prompt-ease),height var(--prompt-layout-duration,560ms) var(--prompt-ease),padding-bottom var(--prompt-layout-duration,560ms) var(--prompt-ease),padding-right var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.hero-inner.has-architecture .composer textarea{height:32px;min-height:32px;padding-right:56px;max-height:160px}
+.hero-inner .composer-footer{position:relative;transition:height var(--prompt-layout-duration,560ms) var(--prompt-ease),margin-top var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.hero-inner.has-architecture .composer-footer{position:relative;right:auto;bottom:auto;height:0;margin-top:0}
+.hero-inner.has-architecture .composer-footer button{position:relative;translate:0 -26px}
+.submit-symbol{display:grid;place-items:center;width:24px;height:24px}.submit-symbol>svg{grid-area:1/1;transition:opacity var(--prompt-button-duration,120ms) ease}.submit-spinner{opacity:0}.is-loading .submit-arrow{opacity:0}.is-loading .submit-spinner{opacity:1}
+.prompt-feedback{display:grid;grid-template-rows:0fr;opacity:0;max-width:756px;margin:0 auto;transition:grid-template-rows var(--prompt-layout-duration,560ms) var(--prompt-ease),opacity var(--prompt-statusIn-duration,160ms) ease,margin-top var(--prompt-layout-duration,560ms) var(--prompt-ease);position:relative}
+.has-architecture .prompt-feedback{grid-template-rows:1fr;opacity:1;margin-top:10px}
+.prompt-feedback .architecture-demo-note{min-height:0;overflow:hidden;margin:0;font-size:10px;line-height:16px}
+.prompt-update-status{position:absolute;top:100%;margin:5px 0 0;font-size:10px;color:#acb8ca;opacity:0;transition:opacity var(--prompt-statusIn-duration,160ms) ease}.prompt-update-status.is-visible{opacity:1}
+.architecture-stage{transition:grid-template-rows var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.architecture-surface{position:relative;height:400px;margin-bottom:18px}
+.architecture-canvas{height:100%;margin-bottom:0}
+.architecture-building{position:absolute;inset:0;height:100%;opacity:0;pointer-events:none;transition:opacity var(--prompt-statusOut-duration,140ms) ease}.architecture-building.is-visible{opacity:1;transition-duration:var(--prompt-statusIn-duration,160ms)}
+.hero .architecture-canvas button.architecture-node{animation:architecture-node-arrive var(--prompt-node-duration,300ms) var(--prompt-ease) both;animation-delay:var(--node-delay)}
+.connection-label{animation:architecture-label-arrive var(--prompt-statusIn-duration,160ms) ease both;animation-delay:var(--edge-delay)}
+.architecture-boundary{animation:architecture-label-arrive 240ms ease both}
+.architecture-info-slot{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows 240ms var(--prompt-ease),opacity var(--prompt-statusIn-duration,160ms) ease}.architecture-info-slot.is-visible{grid-template-rows:1fr;opacity:1}.architecture-info-slot>div{min-height:0;overflow:hidden}
+@keyframes architecture-node-arrive{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+@keyframes architecture-label-arrive{from{opacity:0}to{opacity:1}}
+@media(max-width:760px){.architecture-surface{height:660px}.prompt-heading-result{font-size:30px}.hero-inner.has-architecture .prompt-heading-initial h1{font-size:38px;letter-spacing:-1.6px;margin:18px 0 19px}.prompt-heading{min-height:74px}.has-architecture .prompt-intro .intro{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.hero-inner,.hero-inner .composer,.hero-inner .composer textarea,.hero-inner .composer-footer,.prompt-heading>div,.prompt-heading>h1,.prompt-intro,.prompt-intro .intro,.prompt-feedback,.submit-symbol>svg,.architecture-stage,.architecture-building,.architecture-info-slot,.prompt-update-status{transition:none!important}.hero .architecture-canvas button.architecture-node,.connection-label,.architecture-boundary{animation:none!important}}
+.hero-inner .composer-footer{height:44px}
+.hero-inner .composer-footer button{translate:0 0;transition:translate var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+@media(prefers-reduced-motion:reduce){.hero-inner .composer-footer button{transition:none}}
+/* Clip decorative overflow without creating a focus-scroll container. */
+.hero{overflow:clip}
+.prompt-heading{height:99px;min-height:0;grid-template-rows:minmax(0,1fr);overflow:clip;transition:height var(--prompt-layout-duration,560ms) var(--prompt-ease)}
+.has-architecture .prompt-heading{height:66px}
+@media(max-width:640px){.prompt-heading{height:122px;min-height:0}.has-architecture .prompt-heading{height:66px}}
+@media(prefers-reduced-motion:reduce){.prompt-heading{transition:none}}
+#landing-view[data-layout-moving="true"]{overflow-anchor:none}
+.submit-spinner{animation-play-state:paused}.is-loading .submit-spinner{animation-play-state:running}
+
+/* Neutral submit surface with material reflected across its fill. */
+.hero .composer-footer button.prompt-submit{background:#30343a;border:1px solid #ffffff1c;color:#f3f5f7;overflow:hidden}
+.hero .composer-footer button.prompt-submit::before{display:none}
+.hero .composer-footer button.prompt-submit:is(:hover,:focus-visible){background:#393e45;border-color:#ffffff29;color:#fff}
+.hero .composer-footer button.prompt-submit:active{background:#2b2f35}
+.prompt-fill{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 300ms ease;z-index:0;border-radius:inherit}
+@media(hover:hover){.prompt-submit:hover .prompt-fill{opacity:1;transition-duration:160ms}}
+.prompt-submit .submit-symbol{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.prompt-fill{transition:none}}
+
+/* Reframe the reference's scale .28 sphere to fill the 44px circular control. */
+.prompt-fill{display:block;overflow:hidden}
+.prompt-metal-material{position:absolute!important;width:357.143%;height:357.143%;left:50%;top:64.286%;transform:translate(-50%,-50%);border-radius:0}
+.prompt-metal-material canvas{display:block}
+
+/* Luminous material: soft color mixing and a wider lateral spill on hover. */
+.hero .composer-footer button.prompt-submit{transition:translate var(--prompt-layout-duration,560ms) var(--prompt-ease),box-shadow 240ms ease,border-color 160ms ease;background-clip:padding-box}
+.prompt-metal-material canvas{filter:blur(.65px)}
+@media(hover:hover){.hero .composer-footer button.prompt-submit:hover{border-color:transparent;box-shadow:-2px 0 6px -2px #22cfff38,2px 0 7px -2px #3388ff40,0 0 3px #65dfff20}}
+@media(prefers-reduced-motion:reduce){.hero .composer-footer button.prompt-submit{transition:none}}
+
+/* Center-out reveal: brisk first expansion, long soft settling, no visible rim. */
+.hero .composer-footer button.prompt-submit{border:0;isolation:isolate}
+.prompt-fill{opacity:0;transition:opacity 240ms ease}
+.prompt-metal-reveal{position:absolute;inset:0;overflow:hidden;border-radius:38% 62% 57% 43% / 62% 42% 58% 38%;transform:scale(.025) rotate(-18deg);transform-origin:center;transition:transform 320ms cubic-bezier(.4,0,.2,1),border-radius 320ms ease}
+/* Overscan removes the sphere's reflective circumference; light is in the fill. */
+.prompt-metal-material{width:400%;height:400%;top:66%}
+@media(hover:hover){
+ .prompt-submit:hover .prompt-fill{opacity:1;transition-duration:180ms}
+ .prompt-submit:hover .prompt-metal-reveal{transform:scale(1) rotate(0deg);border-radius:50%;transition:transform 680ms cubic-bezier(.16,1,.3,1),border-radius 760ms cubic-bezier(.22,1,.36,1)}
+ .hero .composer-footer button.prompt-submit:hover{transition:translate var(--prompt-layout-duration,560ms) var(--prompt-ease),box-shadow 680ms cubic-bezier(.16,1,.3,1)}
+}
+@media(prefers-reduced-motion:reduce){.prompt-metal-reveal,.prompt-submit:hover .prompt-metal-reveal{transform:none;transition:none;border-radius:50%}.prompt-fill{transition:none}}
+
+/* Live Paper material source; only its masked 2px border is composited onscreen. */
+.metal-border-source{position:absolute;left:0;top:0;width:256px;height:256px;opacity:0;pointer-events:none}
+.metal-border-source canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+
+/* Colored spill catches the existing ordered texture instead of a uniform neon halo. */
+.metal-border-reflection{filter:blur(14px) brightness(6) saturate(1.1);mix-blend-mode:screen;mask-image:url('/assets/hero/dither-grid.svg');mask-repeat:repeat;mask-size:16px 16px;opacity:.85}
+.metal-border-core{z-index:1}
+@media(prefers-reduced-motion:reduce){.metal-border-reflection{display:none}}
+
+/* Contract-driven results keep the current canvas and prompt presentation. */
+.hero .architecture-canvas button.node-contract{width:202px;min-height:110px;transition:left 560ms cubic-bezier(.22,1,.36,1),top 560ms cubic-bezier(.22,1,.36,1),background 160ms,border-color 160ms}
+.node-contract small{overflow-wrap:anywhere}.node-contract img{filter:brightness(0) invert(1)}
+.assistant-outcome{height:100%;max-width:620px;margin:auto;display:flex;flex-direction:column;justify-content:center;text-align:left;padding:28px;color:#c4cbd6;animation:architecture-node-arrive 300ms ease both}
+.assistant-outcome h2{font-size:22px;color:#f3f5f8;margin:0 0 18px}.assistant-outcome p,.assistant-outcome li{font-size:14px;line-height:1.7}.assistant-outcome ol{padding-left:22px}.assistant-outcome li+li{margin-top:10px}
+.assistant-context{text-align:left;max-width:756px;margin:0 auto 18px;display:grid;gap:10px;font-size:12px;color:#aeb9c9}.assistant-context summary{cursor:pointer}.assistant-context li{line-height:1.7;margin:6px 0}
+.has-architecture .prompt-heading{height:auto;min-height:66px}.prompt-heading-result{overflow-wrap:anywhere}.has-architecture .prompt-intro{height:auto;min-height:28px}.prompt-intro .intro-result{overflow-wrap:anywhere}
+@media(max-width:760px){.hero .architecture-canvas button.node-contract{width:210px}.assistant-outcome{padding:20px}.assistant-outcome h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.hero .architecture-canvas button.node-contract{transition:none}.assistant-outcome{animation:none}}

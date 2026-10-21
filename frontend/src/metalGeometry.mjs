@@ -31,3 +31,10 @@ export function metalEntryEnergy(elapsed){
  const t=Math.max(0,Math.min(elapsed/4000,1));
  return Math.sin(Math.min(Math.max(elapsed,0)/900,1)*Math.PI/2)*(1-t)**2;
 }
+
+// Integrated shader time: full entry speed, then a continuous settle to slow drift.
+export function metalShaderTime(elapsed){
+ const t=Math.max(0,elapsed),entry=Math.min(t,1800),after=Math.max(0,t-1800);
+ const u=Math.min(after/1600,1);
+ return entry*.72+after*.06+(.72-.06)*1600*(1-(1-u)**4)/4;
+}

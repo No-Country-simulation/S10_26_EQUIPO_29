@@ -1,0 +1,102 @@
+{
+  "ok": {
+    "id": "demo-assistant-ok",
+    "status": "ok",
+    "title": "Tu estudio de yoga, conectado.",
+    "summary": "Una interfaz para consultar clases y reservar cupos, con autenticación centralizada y una API que protege las reservas.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak",
+        "role": "Autenticación",
+        "full_name": "keycloak/keycloak",
+        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+      },
+      {
+        "key": "c2",
+        "label": "Tu interfaz",
+        "role": "Frontend de reservas",
+        "full_name": null,
+        "rationale": "Muestra clases, disponibilidad y formularios de reserva. Es parte de tu aplicación."
+      },
+      {
+        "key": "c3",
+        "label": "Tu API",
+        "role": "Reglas de reservas",
+        "full_name": null,
+        "rationale": "Valida permisos, cupos y reglas del negocio antes de guardar una reserva."
+      },
+      {
+        "key": "c4",
+        "label": "PostgreSQL",
+        "role": "Base de datos",
+        "full_name": "postgres/postgres",
+        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+      }
+    ],
+    "connections": [
+      {
+        "from_key": "c2",
+        "to_key": "c1",
+        "protocol": "OIDC",
+        "description": "Inicio de sesión"
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c1",
+        "protocol": "JWT",
+        "description": "Validación de tokens"
+      },
+      {
+        "from_key": "c2",
+        "to_key": "c3",
+        "protocol": "REST",
+        "description": "Consulta y creación de reservas"
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c4",
+        "protocol": "SQL",
+        "description": "Lectura y escritura de datos"
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "needs_clarification": {
+    "id": "demo-assistant-clarification",
+    "status": "needs_clarification",
+    "title": "Precisemos tu idea",
+    "summary": "Necesito algunos detalles antes de proponer una arquitectura.",
+    "components": [],
+    "connections": [],
+    "assumptions": [],
+    "limitations": [],
+    "clarification_questions": [
+      "¿Quiénes usarán la aplicación y qué necesitan hacer?",
+      "¿Cuántas personas esperas que la usen y dónde se alojará?"
+    ],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "no_evidence": {
+    "id": "demo-assistant-no-evidence",
+    "status": "no_evidence",
+    "title": "No hay evidencia suficiente",
+    "summary": "El catálogo de ejemplo no ofrece evidencia suficiente para recomendar un stack para esta consulta.",
+    "components": [],
+    "connections": [],
+    "assumptions": [],
+    "limitations": [
+      "No se propondrán herramientas sin respaldo en el catálogo."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  }
+}

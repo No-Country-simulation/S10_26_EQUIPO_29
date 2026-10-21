@@ -15,7 +15,7 @@ export function usePageReveal(contentKey){
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   const groups=[
    ['.nav > .brand, .nav nav a',60],
-   ['.hero-inner > h1, .hero-inner > .intro, .hero-inner > .composer',100],
+   ['.hero-inner > h1, .prompt-heading-initial > h1, .hero-inner > .intro, .hero-inner > .composer',100],
    ['#catalogo > .section-top h2, #catalogo .search-box, #catalogo .filter-button',0],
    ['.categories > button',35],
    ['.filters > label',45],
