@@ -2,7 +2,7 @@
   "ok": {
     "id": "demo-assistant-ok",
     "status": "ok",
-    "title": "Tu stack para un estudio de yoga",
+    "title": "Tu estudio de yoga, conectado.",
     "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
     "components": [
       {
@@ -74,7 +74,7 @@
   "ok_extended": {
     "id": "demo-assistant-extended",
     "status": "ok",
-    "title": "Tu stack para un estudio de yoga",
+    "title": "Tu estudio de yoga, conectado.",
     "summary": "Un ejemplo ampliado de seis herramientas: interfaz web, API, identidad, datos, caché y métricas. Cada pieza tiene una función y una justificación.",
     "components": [
       {

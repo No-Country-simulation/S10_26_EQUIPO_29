@@ -10,9 +10,10 @@ export const MetalBorder=memo(function MetalBorder(){
   const host=root.current,form=host.parentElement,materialHost=source.current,output=canvas.current;
   const ctx=output.getContext('2d'),mask=document.createElement('canvas'),mc=mask.getContext('2d'),reveal=document.createElement('canvas'),rc=reveal.getContext('2d'),glow=document.createElement('canvas'),gc=glow.getContext('2d');
   const reflected=reflection.current,light=reflected.getContext('2d');
-  if(!ctx||!mc||!rc||!gc||!light)return;
+  const red=document.createElement('canvas'),redCtx=red.getContext('2d');red.width=red.height=256;
+  if(!ctx||!mc||!rc||!gc||!light||!redCtx)return;
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
-  let focused=false,visible=true,failed=false,active=false,running=false;
+  let focused=false,visible=true,failed=false,active=false,running=false,hasError=false,errorMix=0;
   let raf=0,last=0,elapsed=0,progress=0,entry=0,w=1,h=1,dpr=1,geometry,paths=[],maskProgress=-1,disposed=false;
   const pad=64;
   let shader;
@@ -51,7 +52,7 @@ export const MetalBorder=memo(function MetalBorder(){
 
   }
   function draw(){
-   if(!geometry)return;
+   if(!geometry||disposed)return;
    ctx.clearRect(0,0,output.width,output.height);
    buildMask();
    const energy=(failed||motion.matches)?0:metalEntryEnergy(elapsed);
@@ -60,13 +61,23 @@ export const MetalBorder=memo(function MetalBorder(){
    if(!failed&&!motion.matches){ctx.globalAlpha=Math.min(1,intensity*(.88+.12*(1-Math.min(elapsed/4000,1))**3+.18*energy));ctx.drawImage(glow,0,0);}
    ctx.globalAlpha=(failed||motion.matches)?.45:intensity;ctx.drawImage(mask,0,0);ctx.globalAlpha=1;
    ctx.globalCompositeOperation='source-in';
-   if(shader&&!failed&&!motion.matches){
+   if(shader&&!failed&&!motion.matches&&shader.canvasElement.width>0&&shader.canvasElement.height>0){
     ctx.filter='blur(.65px)';
     const material=shader.canvasElement;
     // Sample the interior material so its own rectangular silhouette never becomes a second rim.
     ctx.drawImage(material,material.width*.25,material.height*.25,material.width*.5,material.height*.5,0,0,output.width,output.height);
     ctx.filter='none';
-   }else{ctx.fillStyle='#78caff';ctx.fillRect(0,0,output.width,output.height);}
+    if(errorMix>0){
+     // Preserve shader luminance while fixing hue to red (no amber/chromatic fringe).
+     redCtx.clearRect(0,0,256,256);redCtx.filter='grayscale(1) brightness(1.5)';
+     redCtx.drawImage(material,0,0,256,256);redCtx.filter='none';
+     redCtx.globalCompositeOperation='multiply';redCtx.fillStyle='#ff5149';redCtx.fillRect(0,0,256,256);
+     redCtx.globalCompositeOperation='destination-in';redCtx.drawImage(material,0,0,256,256);redCtx.globalCompositeOperation='source-over';
+     ctx.globalCompositeOperation='source-atop';ctx.globalAlpha=errorMix;ctx.filter='blur(.65px)';
+     ctx.drawImage(red,64,64,128,128,0,0,output.width,output.height);
+     ctx.globalAlpha=1;ctx.filter='none';
+    }
+   }else{ctx.fillStyle=hasError?'#ff625a':'#78caff';ctx.fillRect(0,0,output.width,output.height);}
    ctx.globalCompositeOperation='source-over';
    // Reuse the exact colored border frame, so nearby texture catches its passing reflections.
    light.clearRect(0,0,reflected.width,reflected.height);
@@ -80,7 +91,9 @@ export const MetalBorder=memo(function MetalBorder(){
   function stop(){cancelAnimationFrame(raf);raf=0;last=0;}
   function tick(now){
    if(!running||disposed)return;
-   if(last)elapsed+=now-last;last=now;
+   const delta=last?now-last:0;elapsed+=delta;last=now;
+   errorMix+=(Number(hasError)-errorMix)*(1-Math.exp(-delta/100));
+   if(Math.abs(Number(hasError)-errorMix)<.001)errorMix=Number(hasError);
    // One animation clock draws the shader before copying it through the cached border mask.
    shader?.setFrame(12000+metalShaderTime(elapsed));
    progress=metalEase(Math.min(elapsed/1800,1));host.dataset.progress=progress.toFixed(4);
@@ -88,15 +101,19 @@ export const MetalBorder=memo(function MetalBorder(){
    raf=requestAnimationFrame(tick);
   }
   function sync(){
-   stop();active=focused&&!form.classList.contains('invalid');host.dataset.active=String(active);
+   stop();hasError=form.dataset.error==='true'||form.classList.contains('invalid');
+   const nextActive=focused||hasError;
+   if(nextActive&&!active){elapsed=0;progress=0;maskProgress=-1;errorMix=Number(hasError);host.dataset.entry=String(++entry);}
+   active=nextActive;host.dataset.active=String(active);host.dataset.tone=hasError?'error':'default';
    running=active&&visible&&!document.hidden&&!motion.matches&&!failed;host.dataset.running=String(running);
-   if((motion.matches||failed)&&active){progress=1;host.dataset.phase='static';draw();}
+   if((motion.matches||failed)&&active){errorMix=Number(hasError);progress=1;host.dataset.phase='static';draw();}
    else if(running)tick(performance.now());
   }
-  function enter(){if(!focused){focused=true;elapsed=0;progress=0;maskProgress=-1;host.dataset.entry=String(++entry);draw();}sync();}
+  function enter(){focused=true;sync();}
   function leave(e){if(!form.contains(e.relatedTarget)){focused=false;sync();}}
   const resize=new ResizeObserver(()=>{
    const rect=form.getBoundingClientRect();
+   if(rect.width<=0||rect.height<=0)return;
    w=rect.width;h=rect.height;dpr=Math.min(devicePixelRatio||1,1.5);
    reflected.width=output.width=mask.width=reveal.width=glow.width=Math.ceil((w+pad*2)*dpr);reflected.height=output.height=mask.height=reveal.height=glow.height=Math.ceil((h+pad*2)*dpr);
    output.style.left=output.style.top=-pad+'px';output.style.width=(w+pad*2)+'px';output.style.height=(h+pad*2)+'px';
@@ -107,7 +124,7 @@ export const MetalBorder=memo(function MetalBorder(){
   });
   const intersection=new IntersectionObserver(([e])=>{visible=e.isIntersecting;sync();});
   const invalid=new MutationObserver(sync);
-  resize.observe(form);intersection.observe(form);invalid.observe(form,{attributes:true,attributeFilter:['class']});
+  resize.observe(form);intersection.observe(form);invalid.observe(form,{attributes:true,attributeFilter:['class','data-error']});
   form.addEventListener('focusin',enter);form.addEventListener('focusout',leave);
   document.addEventListener('visibilitychange',sync);motion.addEventListener('change',sync);
   if(form.contains(document.activeElement))enter();else sync();

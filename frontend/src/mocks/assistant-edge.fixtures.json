@@ -1,0 +1,191 @@
+{
+  "malformed": {
+    "id": "demo-assistant-ok",
+    "status": "ok",
+    "title": "Tu estudio de yoga, conectado.",
+    "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
+    "components": "not-an-array",
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "unknown_tool": {
+    "id": "demo-unknown-tool",
+    "status": "ok",
+    "title": "Tu estudio de yoga, conectado.",
+    "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak",
+        "role": "Autenticación",
+        "full_name": "not-in-catalog/missing-tool",
+        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+      },
+      {
+        "key": "c2",
+        "label": "Next.js",
+        "role": "Interfaz web de reservas",
+        "full_name": "vercel/next.js",
+        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+      },
+      {
+        "key": "c3",
+        "label": "FastAPI",
+        "role": "API de reservas",
+        "full_name": "fastapi/fastapi",
+        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+      },
+      {
+        "key": "c4",
+        "label": "PostgreSQL",
+        "role": "Base de datos",
+        "full_name": "postgres/postgres",
+        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "without_integrations": {
+    "id": "demo-without-integrations",
+    "status": "ok",
+    "title": "Tu estudio de yoga, conectado.",
+    "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak",
+        "role": "Autenticación",
+        "full_name": "keycloak/keycloak",
+        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+      },
+      {
+        "key": "c2",
+        "label": "Next.js",
+        "role": "Interfaz web de reservas",
+        "full_name": "vercel/next.js",
+        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+      },
+      {
+        "key": "c3",
+        "label": "FastAPI",
+        "role": "API de reservas",
+        "full_name": "fastapi/fastapi",
+        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+      },
+      {
+        "key": "c4",
+        "label": "PostgreSQL",
+        "role": "Base de datos",
+        "full_name": "postgres/postgres",
+        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "one_tool": {
+    "id": "demo-one-tool",
+    "status": "ok",
+    "title": "Acceso centralizado con Keycloak",
+    "summary": "Un servicio de identidad para centralizar el acceso a una aplicación existente.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak",
+        "role": "Autenticación",
+        "full_name": "keycloak/keycloak",
+        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "long_content": {
+    "id": "demo-long-content",
+    "status": "ok",
+    "title": "Reservas de yoga para varias sedes, equipos y horarios compartidos",
+    "summary": "Una propuesta de seis herramientas para gestionar reservas en distintas sedes, separar el acceso de alumnos y administradores, confirmar cupos de forma consistente y observar el comportamiento del servicio. El equipo deberá definir las reglas de cancelación, las zonas horarias de las sedes y las responsabilidades de cada organización antes de llevar el ejemplo a producción.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak: identidad y acceso para alumnos, profesores y administradores de múltiples organizaciones",
+        "role": "Identidad y permisos de acceso para varias organizaciones con políticas diferentes",
+        "full_name": "keycloak/keycloak",
+        "rationale": "Centraliza el acceso de alumnos, profesores y administradores. Permite separar organizaciones y definir roles para cada sede, manteniendo un punto común de autenticación. El equipo debe configurar clientes, redirecciones permitidas, audiencias y expiración de tokens; además, debe implementar las comprobaciones de autorización en cada operación de negocio. Una sesión válida no sustituye la validación de permisos sobre una reserva concreta. También hay que decidir cómo se revoca el acceso de una persona que cambia de sede o deja de pertenecer a una organización."
+      },
+      {
+        "key": "c2",
+        "label": "Next.js",
+        "role": "Interfaz web de reservas",
+        "full_name": "vercel/next.js",
+        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+      },
+      {
+        "key": "c3",
+        "label": "FastAPI",
+        "role": "API de reservas",
+        "full_name": "fastapi/fastapi",
+        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+      },
+      {
+        "key": "c4",
+        "label": "PostgreSQL",
+        "role": "Base de datos",
+        "full_name": "postgres/postgres",
+        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+      },
+      {
+        "key": "c5",
+        "label": "Valkey",
+        "role": "Caché de consultas",
+        "full_name": "valkey-io/valkey",
+        "rationale": "Permite almacenar temporalmente consultas frecuentes de disponibilidad. La confirmación de cupos permanece en la base de datos; la estrategia de invalidación debe definirla el equipo."
+      },
+      {
+        "key": "c6",
+        "label": "Prometheus",
+        "role": "Métricas del servicio",
+        "full_name": "prometheus/prometheus",
+        "rationale": "Recopila métricas de la API para observar latencia, volumen de solicitudes y errores. Requiere instrumentar el servicio y configurar las consultas y alertas relevantes. Por ejemplo, se pueden observar operaciones con identificadores largos como reserva_de_clase_para_organizaciones_con_multiples_sedes_y_horarios_compartidos_sin_recortar_el_contenido."
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  }
+}

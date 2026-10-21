@@ -15,7 +15,9 @@ import {ElasticScrollbar} from './ElasticScrollbar';
 import {HeroLights} from './HeroLights';
 import {promptMotion,promptPresentation,initialPresentation} from './promptPresentation.mjs';
 import {usePromptLayout} from './usePromptLayout';
-import {mockAssistant,validateAssistantQuery,assistantLimits} from './data/assistant.mjs';
+import {validateAssistantQuery,assistantLimits} from './data/assistant.mjs';
+import {requestAssistant} from './data/assistantRequest.mjs';
+import {assistantScenarioOptions} from './mocks/assistant-scenarios.mjs';
 import React, {useState, useRef, useEffect, useReducer} from 'react';
 import {UserRound, Star, GitCommitHorizontal, Scale, Activity, ArrowUp, ArrowUpRight, ArrowRight, ChevronDown, Search, SlidersHorizontal, X, Database, ShieldCheck, CreditCard, BrainCircuit, ChartNoAxesCombined, SearchCheck, LoaderCircle} from 'lucide-react';
 const promptExamples = [
@@ -133,6 +135,8 @@ export function App(){
  const [query,setQuery]=useState(''),[error,setError]=useState(''),[search,setSearch]=useState(''),[category,setCategory]=useState('Todas'),[filters,setFilters]=useState(false),[language,setLanguage]=useState(''),[license,setLicense]=useState(''),[maintenance,setMaintenance]=useState(''),[stars,setStars]=useState('');
  const [assistantResponse,setAssistantResponse]=useState(null);
  const [originalPrompt,setOriginalPrompt]=useState('');
+ const [slow,setSlow]=useState(false),[canRetry,setCanRetry]=useState(false);
+ const attempts=useRef(0);
  const resultHeading=useRef(null);
  const finished=Boolean(assistantResponse&&assistantResponse.status!=='needs_clarification');
  const [presentation,dispatchPresentation]=useReducer(promptPresentation,initialPresentation);
@@ -142,10 +146,10 @@ export function App(){
  const placeholder = useExamplePlaceholder(isDetail || promptFocused || Boolean(query) || phase === 'loading');
  const input=useRef(null), request=useRef(null);useEffect(()=>()=>request.current?.abort(),[]);
  const preparePromptLayout=usePromptLayout(expanded,input,isDetail);
- useEffect(()=>{if(isDetail){request.current?.abort();dispatchPresentation({type:'cancel'});}},[isDetail]);
+ useEffect(()=>{if(isDetail){request.current?.abort();setSlow(false);dispatchPresentation({type:'cancel'});}},[isDetail]);
  useEffect(()=>{if(finished&&!isDetail)resultHeading.current?.focus({preventScroll:true});},[finished,isDetail]);
  function newArchitecture(){
-  request.current?.abort();setAssistantResponse(null);setOriginalPrompt('');setQuery('');setError('');
+  request.current?.abort();request.current=null;attempts.current=0;setSlow(false);setCanRetry(false);setAssistantResponse(null);setOriginalPrompt('');setQuery('');setError('');
   dispatchPresentation({type:'reset'});
   requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));
  }
@@ -155,18 +159,19 @@ export function App(){
  const active=[language,license,maintenance,stars].filter(Boolean).length;
  function clear(){setSearch('');setCategory('Todas');setLanguage('');setLicense('');setMaintenance('');setStars('');}
  async function submit(e){
-  e.preventDefault();if(pending)return;
-  const validation=validateAssistantQuery(query);if(validation){setError(validation);input.current.focus();return;}
-  setError('');preparePromptLayout();dispatchPresentation({type:'submit'});
+  e?.preventDefault();if(pending||request.current)return;
+  const validation=validateAssistantQuery(query);if(validation){setCanRetry(false);setError(validation);input.current.focus();return;}
+  setError('');setCanRetry(false);setSlow(false);preparePromptLayout();dispatchPresentation({type:'submit'});
   request.current?.abort();const controller=new AbortController();request.current=controller;
   const submitted=query;
   try{
    const scenario=new URLSearchParams(window.location.search).get('assistantMock')||'ok';
-   const response=await mockAssistant.ask({query:submitted},{signal:controller.signal,scenario});
+   const response=await requestAssistant({query:submitted},{...assistantScenarioOptions(scenario,tools),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
    if(controller.signal.aborted)return;
    setOriginalPrompt(submitted);setAssistantResponse(response);dispatchPresentation({type:'success'});
    setQuery(response.status==='needs_clarification'?submitted:'');
-  }catch(error){if(controller.signal.aborted||error.name==='AbortError')return;dispatchPresentation({type:'failure'});setError(error.message||'No pudimos generar la propuesta. Vuelve a intentarlo.');}
+  }catch(error){if(controller.signal.aborted||error.name==='AbortError')return;dispatchPresentation({type:'failure'});setError(error.message||'No pudimos generar la propuesta. Vuelve a intentarlo.');setCanRetry(true);}
+  finally{if(request.current===controller){request.current=null;if(!controller.signal.aborted)setSlow(false);}}
  }
 
 
@@ -174,12 +179,13 @@ export function App(){
  <main hidden={isDetail} id="landing-view" data-has-proposal={expanded}><div className="hero"><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
  <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={expanded}><RevealHeading as="h1" text="De tu idea a tu stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!expanded}>{assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura')}</h1></div>
  <div className="prompt-intro"><p className="intro intro-initial" aria-hidden={expanded}>Describe tu idea, y te recomiendo un stack</p><p className="intro intro-result" aria-hidden={!expanded}>{assistantResponse?.summary||(pending?'Preparando una propuesta de ejemplo':'Una propuesta basada en tu descripción')}</p></div>
- <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} response={assistantResponse}/>
+ {finished&&<div className="stack-new-action"><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
+ <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse}/>
 
- <div className={'prompt-form-slot'+(finished?' is-closed':'')} inert={finished?true:undefined} aria-hidden={finished}><div className="prompt-form-clip"><form className={'composer '+(error?'invalid':'')} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onChange={e=>{setQuery(e.target.value);setError('');}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form></div></div>
- {finished&&<div className="architecture-result-tools"><details className="original-prompt"><summary>Tu idea original</summary><p>{originalPrompt}</p></details><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
- <div className="prompt-feedback"><p className="architecture-demo-note" aria-hidden={!expanded}>Datos de demostración · Respuesta mock, sin conexión a IA.</p><p className={'prompt-update-status'+(pending&&hasResult?' is-visible':'')} role="status" aria-hidden={!pending||!hasResult}>Consultando el asistente de ejemplo…</p></div>
- <p id="prompt-error" className="error" role="alert">{error}</p>
+ <div className={'prompt-form-slot'+(finished?' is-closed':'')} inert={finished?true:undefined} aria-hidden={finished}><div className="prompt-form-clip"><form className={'composer '+(error&&!canRetry?'invalid':'')} data-error={error?'true':undefined} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onKeyDown={e=>{if(e.key!=='Enter'||e.shiftKey||e.nativeEvent.isComposing||e.nativeEvent.keyCode===229)return;e.preventDefault();if(!pending&&!e.repeat)e.currentTarget.form?.requestSubmit();}} onChange={e=>{setQuery(e.target.value);setError('');setCanRetry(false);}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error&&!canRetry}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form></div></div>
+ {finished&&<div className="architecture-result-tools"><details className="original-prompt"><summary>Tu idea original</summary><p>{originalPrompt}</p></details></div>}
+ <div className="prompt-feedback"><p className="architecture-demo-note" aria-hidden={!expanded}>Datos de demostración · Respuesta mock, sin conexión a IA.</p><p className={'prompt-update-status'+(pending&&hasResult?' is-visible':'')} role="status" aria-hidden={!pending||!hasResult}>{slow?'Está tomando un poco más de tiempo. Conservamos tu descripción y el resultado anterior.':'Consultando el asistente de ejemplo…'}</p></div>
+ <div className="prompt-error-actions"><p id="prompt-error" className="error" role="alert">{error}</p>{error&&canRetry&&!pending&&<button type="button" className="prompt-retry" onClick={()=>submit()}>Reintentar <ArrowUpRight size={14} aria-hidden="true"/></button>}</div>
  </div></section>
  </div>
  <div className="catalog-shell"><div className="wrap">
