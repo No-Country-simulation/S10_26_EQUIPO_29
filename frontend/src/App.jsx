@@ -1,4 +1,5 @@
 import {tools,cardDetails} from './tools';
+import {githubSnapshotAt,snapshotDate} from './data/catalog.mjs';
 import {useBrandIdentity,markBrandFailed} from './brandIdentity';
 import {ToolDetail} from './ToolDetail';
 import {useToolNavigation} from './useToolNavigation';
@@ -9,7 +10,7 @@ import {useAnimatedCatalog} from './useAnimatedCatalog';
 import {RevealHeading,usePageReveal} from './PageReveal';
 import {MetalBorder} from './MetalBorder';
 import {PromptMetalFill} from './PromptMetalFill';
-import {ArchitectureCanvas} from './ArchitectureCanvas';
+import {StackProposal} from './StackProposal';
 import {ElasticScrollbar} from './ElasticScrollbar';
 import {HeroLights} from './HeroLights';
 import {promptMotion,promptPresentation,initialPresentation} from './promptPresentation.mjs';
@@ -66,7 +67,7 @@ function useExamplePlaceholder(paused) {
  return text;
 }
 
-const categories=['Todas','Autenticación','Bases de datos','Pagos','IA','Analítica','Búsqueda'];
+const categories=['Todas',...new Set(tools.map(tool=>tool.category))];
 const icons={'Autenticación':ShieldCheck,'Bases de datos':Database,'Pagos':CreditCard,'IA':BrainCircuit,'Analítica':ChartNoAxesCombined,'Búsqueda':SearchCheck};
 
 function ToolCard({ tool, onOpen }) {
@@ -74,15 +75,16 @@ function ToolCard({ tool, onOpen }) {
  const identity=useBrandIdentity(tool);
  const logo=identity.logo;
  const detail = cardDetails[tool.name];
- const healthTone = detail.healthScore >= 80 ? 'good' : detail.healthScore >= 60 ? 'moderate' : 'low';
+ const hasHealth=Number.isFinite(detail.healthScore);
+ const healthTone = !hasHealth?'unknown':detail.healthScore >= 80 ? 'good' : detail.healthScore >= 60 ? 'moderate' : 'low';
  const healthLabel = {good:'Salud alta',moderate:'Salud media',low:'Salud baja'}[healthTone];
  const brand = identity.palette;
  const postgres = tool.name === 'PostgreSQL';
  const metrics = [
   ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],
-  ['Última actualización', tool.activity, GitCommitHorizontal],
+  ['Último commit', tool.activity, GitCommitHorizontal],
   ['Licencia', tool.license, Scale],
-  ['Mantenedor', tool.maintained ? 'Activo' : 'Por confirmar', UserRound]
+  ['Mantenedor activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]
  ];
  return <article data-tool-id={tool.id} onClick={e=>{if(!e.target.closest('a,button,summary,details')&&!window.getSelection()?.toString())onOpen(tool.id,e.currentTarget.querySelector('.detail-link'));}} ref={tiltRef} className="tool-card" aria-label={tool.name} style={{
   '--brand-start': brand.start, '--brand-end': brand.end, '--brand-tag': brand.tag
@@ -103,9 +105,9 @@ function ToolCard({ tool, onOpen }) {
   </div>
   <div className="tool-card-details">
    <div className="card-tech-summary">
-   <span className={"health-score health-score--"+healthTone} role="img" aria-label={`Salud del repositorio: ${detail.healthScore} de 100`} title={`${healthLabel}. Puntuación ficticia de demostración; no representa una evaluación real del repositorio.`}>
+   <span className={"health-score health-score--"+healthTone} role="img" aria-label={hasHealth?`Salud del repositorio: ${detail.healthScore} de 100`:'Salud sin evaluar'} title={hasHealth?`${healthLabel}. Puntuación ficticia de demostración.`:'GitHub no proporciona una puntuación global de salud; pendiente de definir su cálculo.'}>
     <Activity size={20} strokeWidth={1.75} className="health-icon" aria-hidden="true"/>
-    <strong aria-hidden="true">{detail.healthScore}<span>/100</span></strong>
+    <strong aria-hidden="true">{hasHealth?<>{detail.healthScore}<span>/100</span></>:<span>Sin evaluar</span>}</strong>
    </span>
    </div>
    <dl className="tool-metrics">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>
@@ -130,6 +132,9 @@ export function App(){
  useCatalogBounce(isDetail);
  const [query,setQuery]=useState(''),[error,setError]=useState(''),[search,setSearch]=useState(''),[category,setCategory]=useState('Todas'),[filters,setFilters]=useState(false),[language,setLanguage]=useState(''),[license,setLicense]=useState(''),[maintenance,setMaintenance]=useState(''),[stars,setStars]=useState('');
  const [assistantResponse,setAssistantResponse]=useState(null);
+ const [originalPrompt,setOriginalPrompt]=useState('');
+ const resultHeading=useRef(null);
+ const finished=Boolean(assistantResponse&&assistantResponse.status!=='needs_clarification');
  const [presentation,dispatchPresentation]=useReducer(promptPresentation,initialPresentation);
  const {pending,expanded,hasResult}=presentation;
  const phase=pending?'loading':hasResult?'done':'idle';
@@ -138,7 +143,13 @@ export function App(){
  const input=useRef(null), request=useRef(null);useEffect(()=>()=>request.current?.abort(),[]);
  const preparePromptLayout=usePromptLayout(expanded,input,isDetail);
  useEffect(()=>{if(isDetail){request.current?.abort();dispatchPresentation({type:'cancel'});}},[isDetail]);
- const filtered=tools.filter(t=>(category==='Todas'||t.category===category)&&normalize(t.name+' '+t.description).includes(normalize(search))&&(!language||t.language===language)&&(!license||t.license===license)&&(!maintenance||(maintenance==='active'?t.maintained:!t.maintained))&&t.stars>=Number(stars));
+ useEffect(()=>{if(finished&&!isDetail)resultHeading.current?.focus({preventScroll:true});},[finished,isDetail]);
+ function newArchitecture(){
+  request.current?.abort();setAssistantResponse(null);setOriginalPrompt('');setQuery('');setError('');
+  dispatchPresentation({type:'reset'});
+  requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));
+ }
+ const filtered=tools.filter(t=>(category==='Todas'||t.category===category)&&normalize(t.name+' '+t.description).includes(normalize(search))&&(!language||t.language===language)&&(!license||t.license===license)&&(!maintenance||(maintenance==='active'?t.dataSource==='github_snapshot'&&!t.archived&&!t.disabled:t.archived||t.disabled))&&t.stars>=Number(stars));
  const displayed=useAnimatedCatalog(filtered);
  usePageReveal([phase,filters,...displayed.map(t=>t.name)].join('|'));
  const active=[language,license,maintenance,stars].filter(Boolean).length;
@@ -153,7 +164,7 @@ export function App(){
    const scenario=new URLSearchParams(window.location.search).get('assistantMock')||'ok';
    const response=await mockAssistant.ask({query:submitted},{signal:controller.signal,scenario});
    if(controller.signal.aborted)return;
-   setAssistantResponse(response);dispatchPresentation({type:'success'});
+   setOriginalPrompt(submitted);setAssistantResponse(response);dispatchPresentation({type:'success'});
    setQuery(response.status==='needs_clarification'?submitted:'');
   }catch(error){if(controller.signal.aborted||error.name==='AbortError')return;dispatchPresentation({type:'failure'});setError(error.message||'No pudimos generar la propuesta. Vuelve a intentarlo.');}
  }
@@ -161,11 +172,12 @@ export function App(){
 
  return <><a href="#asistente" className="skip">Ir al contenido</a><header><div className="nav wrap"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><nav aria-label="Principal"><a href="#asistente" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#asistente');}}}>Asistente</a><a href="#catalogo" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#catalogo');}}}>Catálogo</a></nav></div></header>
  <main hidden={isDetail} id="landing-view" data-has-proposal={expanded}><div className="hero"><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
- <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={expanded}><RevealHeading as="h1" text="De tu idea a tu stack" mobileBreak/></div><h1 className="prompt-heading-result" aria-hidden={!expanded}>{assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura')}</h1></div>
+ <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={expanded}><RevealHeading as="h1" text="De tu idea a tu stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!expanded}>{assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura')}</h1></div>
  <div className="prompt-intro"><p className="intro intro-initial" aria-hidden={expanded}>Describe tu idea, y te recomiendo un stack</p><p className="intro intro-result" aria-hidden={!expanded}>{assistantResponse?.summary||(pending?'Preparando una propuesta de ejemplo':'Una propuesta basada en tu descripción')}</p></div>
- <ArchitectureCanvas active={!isDetail} expanded={expanded} pending={pending} hasResult={hasResult} response={assistantResponse}/>
+ <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} response={assistantResponse}/>
 
- <form className={'composer '+(error?'invalid':'')} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onChange={e=>{setQuery(e.target.value);setError('');}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form>
+ <div className={'prompt-form-slot'+(finished?' is-closed':'')} inert={finished?true:undefined} aria-hidden={finished}><div className="prompt-form-clip"><form className={'composer '+(error?'invalid':'')} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onChange={e=>{setQuery(e.target.value);setError('');}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form></div></div>
+ {finished&&<div className="architecture-result-tools"><details className="original-prompt"><summary>Tu idea original</summary><p>{originalPrompt}</p></details><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
  <div className="prompt-feedback"><p className="architecture-demo-note" aria-hidden={!expanded}>Datos de demostración · Respuesta mock, sin conexión a IA.</p><p className={'prompt-update-status'+(pending&&hasResult?' is-visible':'')} role="status" aria-hidden={!pending||!hasResult}>Consultando el asistente de ejemplo…</p></div>
  <p id="prompt-error" className="error" role="alert">{error}</p>
  </div></section>
@@ -188,9 +200,9 @@ export function App(){
      {Array.from(new Set(tools.map(tool => tool.license))).map(value => <option key={value} value={value}>{value}</option>)}
     </select>
    </label>
-   <label>Mantenimiento
+   <label>Estado del repositorio
     <select value={maintenance} onChange={e => setMaintenance(e.target.value)}>
-     <option value="">Todos</option><option value="active">Activo</option><option value="review">Por revisar</option>
+     <option value="">Todos</option><option value="active">No archivado</option><option value="review">Archivado o deshabilitado</option>
     </select>
    </label>
    <label>Estrellas mínimas
@@ -200,6 +212,7 @@ export function App(){
    </label>
   </div>
  )}
+ <p className="catalog-snapshot-note">Estadísticas capturadas de GitHub · {snapshotDate(githubSnapshotAt)} (UTC−3). Sin actualización en tiempo real. Default es una tarjeta ficticia.</p>
  <div className="results-meta"><span aria-live="polite">{filtered.length} {filtered.length===1?'herramienta':'herramientas'}{category!=='Todas'?' en '+category:''}</span>{(active>0||search||category!=='Todas')&&<button onClick={clear}>Limpiar filtros <X size={13}/></button>}</div>
  <div className="grid">{displayed.map(tool=><ToolCard key={tool.name} tool={tool} onOpen={navigation.open}/>)}</div>
  {filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><p>Prueba otro término o quita alguno de los filtros.</p><button onClick={clear} className="primary">Ver todas las herramientas</button></div>}

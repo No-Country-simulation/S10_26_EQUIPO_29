@@ -2,8 +2,8 @@
   "ok": {
     "id": "demo-assistant-ok",
     "status": "ok",
-    "title": "Tu estudio de yoga, conectado.",
-    "summary": "Una interfaz para consultar clases y reservar cupos, con autenticación centralizada y una API que protege las reservas.",
+    "title": "Tu stack para un estudio de yoga",
+    "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
     "components": [
       {
         "key": "c1",
@@ -14,17 +14,17 @@
       },
       {
         "key": "c2",
-        "label": "Tu interfaz",
-        "role": "Frontend de reservas",
-        "full_name": null,
-        "rationale": "Muestra clases, disponibilidad y formularios de reserva. Es parte de tu aplicación."
+        "label": "Next.js",
+        "role": "Interfaz web de reservas",
+        "full_name": "vercel/next.js",
+        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
       },
       {
         "key": "c3",
-        "label": "Tu API",
-        "role": "Reglas de reservas",
-        "full_name": null,
-        "rationale": "Valida permisos, cupos y reglas del negocio antes de guardar una reserva."
+        "label": "FastAPI",
+        "role": "API de reservas",
+        "full_name": "fastapi/fastapi",
+        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
       },
       {
         "key": "c4",
@@ -32,32 +32,6 @@
         "role": "Base de datos",
         "full_name": "postgres/postgres",
         "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
-      }
-    ],
-    "connections": [
-      {
-        "from_key": "c2",
-        "to_key": "c1",
-        "protocol": "OIDC",
-        "description": "Inicio de sesión"
-      },
-      {
-        "from_key": "c3",
-        "to_key": "c1",
-        "protocol": "JWT",
-        "description": "Validación de tokens"
-      },
-      {
-        "from_key": "c2",
-        "to_key": "c3",
-        "protocol": "REST",
-        "description": "Consulta y creación de reservas"
-      },
-      {
-        "from_key": "c3",
-        "to_key": "c4",
-        "protocol": "SQL",
-        "description": "Lectura y escritura de datos"
       }
     ],
     "assumptions": [
@@ -76,7 +50,6 @@
     "title": "Precisemos tu idea",
     "summary": "Necesito algunos detalles antes de proponer una arquitectura.",
     "components": [],
-    "connections": [],
     "assumptions": [],
     "limitations": [],
     "clarification_questions": [
@@ -91,10 +64,68 @@
     "title": "No hay evidencia suficiente",
     "summary": "El catálogo de ejemplo no ofrece evidencia suficiente para recomendar un stack para esta consulta.",
     "components": [],
-    "connections": [],
     "assumptions": [],
     "limitations": [
       "No se propondrán herramientas sin respaldo en el catálogo."
+    ],
+    "clarification_questions": [],
+    "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "ok_extended": {
+    "id": "demo-assistant-extended",
+    "status": "ok",
+    "title": "Tu stack para un estudio de yoga",
+    "summary": "Un ejemplo ampliado de seis herramientas: interfaz web, API, identidad, datos, caché y métricas. Cada pieza tiene una función y una justificación.",
+    "components": [
+      {
+        "key": "c1",
+        "label": "Keycloak",
+        "role": "Autenticación",
+        "full_name": "keycloak/keycloak",
+        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+      },
+      {
+        "key": "c2",
+        "label": "Next.js",
+        "role": "Interfaz web de reservas",
+        "full_name": "vercel/next.js",
+        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+      },
+      {
+        "key": "c3",
+        "label": "FastAPI",
+        "role": "API de reservas",
+        "full_name": "fastapi/fastapi",
+        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+      },
+      {
+        "key": "c4",
+        "label": "PostgreSQL",
+        "role": "Base de datos",
+        "full_name": "postgres/postgres",
+        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+      },
+      {
+        "key": "c5",
+        "label": "Valkey",
+        "role": "Caché de consultas",
+        "full_name": "valkey-io/valkey",
+        "rationale": "Permite almacenar temporalmente consultas frecuentes de disponibilidad. La confirmación de cupos permanece en la base de datos; la estrategia de invalidación debe definirla el equipo."
+      },
+      {
+        "key": "c6",
+        "label": "Prometheus",
+        "role": "Métricas del servicio",
+        "full_name": "prometheus/prometheus",
+        "rationale": "Recopila métricas de la API para observar latencia, volumen de solicitudes y errores. Requiere instrumentar el servicio y configurar las consultas y alertas relevantes."
+      }
+    ],
+    "assumptions": [
+      "Las personas deben iniciar sesión para reservar.",
+      "La aplicación se alojará en infraestructura propia."
+    ],
+    "limitations": [
+      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
     ],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"

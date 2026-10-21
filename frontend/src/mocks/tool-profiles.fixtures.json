@@ -1,0 +1,92 @@
+{
+  "react": {
+    "summary": "Construye interfaces de usuario con componentes reutilizables para aplicaciones web.",
+    "features": [
+      "Componentes reutilizables",
+      "Estado e interacciones",
+      "Ecosistema de interfaces web"
+    ],
+    "ideas": []
+  },
+  "nextjs": {
+    "summary": "Framework de React para construir aplicaciones web con rutas y distintas estrategias de renderizado.",
+    "features": [
+      "Rutas de aplicación",
+      "Renderizado en servidor y estático",
+      "Integración con React"
+    ],
+    "ideas": []
+  },
+  "fastapi": {
+    "summary": "Crea APIs con Python, validación de datos y documentación de los endpoints.",
+    "features": [
+      "Validación de datos",
+      "Documentación OpenAPI",
+      "Endpoints asíncronos"
+    ],
+    "ideas": []
+  },
+  "nestjs": {
+    "summary": "Organiza servicios y APIs de Node.js con módulos, controladores e inyección de dependencias.",
+    "features": [
+      "Módulos de aplicación",
+      "Inyección de dependencias",
+      "Controladores y servicios"
+    ],
+    "ideas": []
+  },
+  "django": {
+    "summary": "Framework web de Python con modelos de datos, administración y herramientas para aplicaciones de negocio.",
+    "features": [
+      "Modelos y ORM",
+      "Panel de administración",
+      "Rutas y vistas"
+    ],
+    "ideas": []
+  },
+  "valkey": {
+    "summary": "Almacén de datos clave-valor en memoria para caché y cargas de baja latencia.",
+    "features": [
+      "Datos en memoria",
+      "Estructuras clave-valor",
+      "Opciones de persistencia"
+    ],
+    "ideas": []
+  },
+  "rabbitmq": {
+    "summary": "Gestiona colas de mensajes para separar tareas y procesos entre servicios.",
+    "features": [
+      "Colas de mensajes",
+      "Enrutamiento de mensajes",
+      "Confirmaciones de entrega"
+    ],
+    "ideas": []
+  },
+  "prometheus": {
+    "summary": "Recopila métricas de servicios para consultar su comportamiento y definir alertas.",
+    "features": [
+      "Series temporales",
+      "Consultas PromQL",
+      "Reglas de alerta"
+    ],
+    "ideas": []
+  },
+  "grafana": {
+    "summary": "Visualiza métricas y otras fuentes de observabilidad en paneles y gráficos.",
+    "features": [
+      "Paneles de visualización",
+      "Múltiples fuentes de datos",
+      "Alertas y consultas"
+    ],
+    "ideas": []
+  },
+  "traefik": {
+    "summary": "Proxy de aplicaciones para dirigir tráfico hacia servicios y gestionar rutas de entrada.",
+    "features": [
+      "Enrutamiento de tráfico",
+      "Configuración de servicios",
+      "Terminación TLS"
+    ],
+    "ideas": []
+  }
+}

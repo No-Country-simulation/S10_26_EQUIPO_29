@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {initialPresentation,promptPresentation,promptMotion,nodeDelay,edgeDelay} from '../src/promptPresentation.mjs';
+import {initialPresentation,promptPresentation} from '../src/promptPresentation.mjs';
 
 test('first request reserves layout, then reveals its result',()=>{
  const pending=promptPresentation(initialPresentation,{type:'submit'});
@@ -20,11 +20,11 @@ test('cancelled initial request cannot display a late result',()=>{
  assert.deepEqual(cancelled,initialPresentation);
  assert.equal(promptPresentation(cancelled,{type:'success'}),cancelled);
 });
-test('connections start after both nodes begin arriving and complete inside the reveal budget',()=>{
- for(const [from,to] of [[1,0],[2,0],[1,2],[2,3]]){
-  const start=edgeDelay(from,to);
-  assert.ok(start>=Math.max(nodeDelay(from),nodeDelay(to))+120);
-  assert.ok(start+promptMotion.edge<=650);
-  assert.ok(start+180+promptMotion.label<=650);
- }
+test('new architecture clears presentation and ignores an obsolete result',()=>{
+ const ready=promptPresentation(promptPresentation(initialPresentation,{type:'submit'}),{type:'success'});
+ const reset=promptPresentation(ready,{type:'reset'});
+ assert.deepEqual(reset,initialPresentation);
+ assert.equal(promptPresentation(reset,{type:'success'}),reset);
+ const next=promptPresentation(reset,{type:'submit'});
+ assert.equal(next.pending,true);assert.equal(next.hasResult,false);
 });

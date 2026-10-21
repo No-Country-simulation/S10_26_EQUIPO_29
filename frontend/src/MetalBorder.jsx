@@ -19,10 +19,9 @@ export const MetalBorder=memo(function MetalBorder(){
   try{
    const uniforms={u_isImage:false,u_shape:1,u_fit:1,u_scale:1.2,u_rotation:52,u_offsetX:0,u_offsetY:-.04,u_originX:.5,u_originY:.5,u_worldWidth:0,u_worldHeight:0};
    for(const key of ['repetition','softness','shiftRed','shiftBlue','distortion','contour','angle'])uniforms['u_'+key]=liquidMetalMaterial[key];
-   // Broad, soft exposure bands; no RGB separation or multicolor chrome.
-   Object.assign(uniforms,{u_shiftRed:0,u_shiftBlue:0,u_softness:.78,u_repetition:1.65,u_contour:.35});
-   uniforms.u_colorBack=getShaderColorFromString('#91cfff');
-   uniforms.u_colorTint=getShaderColorFromString('#ffffff');
+   // Original liquid-metal palette, with the shared soft chromatic reflections.
+   uniforms.u_colorBack=getShaderColorFromString(liquidMetalMaterial.colorBack);
+   uniforms.u_colorTint=getShaderColorFromString(liquidMetalMaterial.colorTint);
    shader=new ShaderMount(materialHost,liquidMetalFragmentShader,uniforms,{preserveDrawingBuffer:true,alpha:true},0,12000,1,220000);
   }catch{failed=true;}
 
@@ -62,18 +61,11 @@ export const MetalBorder=memo(function MetalBorder(){
    ctx.globalAlpha=(failed||motion.matches)?.45:intensity;ctx.drawImage(mask,0,0);ctx.globalAlpha=1;
    ctx.globalCompositeOperation='source-in';
    if(shader&&!failed&&!motion.matches){
-    ctx.filter='grayscale(1) contrast(.7) brightness(1.1) sepia(1) saturate(4.4) hue-rotate(165deg) blur(.85px)';
+    ctx.filter='blur(.65px)';
     const material=shader.canvasElement;
     // Sample the interior material so its own rectangular silhouette never becomes a second rim.
     ctx.drawImage(material,material.width*.25,material.height*.25,material.width*.5,material.height*.5,0,0,output.width,output.height);
     ctx.filter='none';
-    // Restrained amber exposure patch, drifting with the same slow material clock.
-    const phase=metalShaderTime(elapsed)/1400;
-    const burnX=output.width*(.58+.18*Math.sin(phase));
-    const burnY=output.height*(.5+.3*Math.cos(phase*.7));
-    const burn=ctx.createRadialGradient(burnX,burnY,0,burnX,burnY,output.width*.23);
-    burn.addColorStop(0,'rgba(255,143,66,.16)');burn.addColorStop(.45,'rgba(240,110,42,.06)');burn.addColorStop(1,'rgba(240,110,42,0)');
-    ctx.globalCompositeOperation='source-atop';ctx.fillStyle=burn;ctx.fillRect(0,0,output.width,output.height);
    }else{ctx.fillStyle='#78caff';ctx.fillRect(0,0,output.width,output.height);}
    ctx.globalCompositeOperation='source-over';
    // Reuse the exact colored border frame, so nearby texture catches its passing reflections.
