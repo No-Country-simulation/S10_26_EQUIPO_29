@@ -552,3 +552,78 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 
 .hero-inner.has-architecture .composer:not([data-error="true"]) .composer-footer{display:flex;align-items:center}
 .hero-inner.has-architecture .composer[data-error="true"] .composer-footer .composer-retry{translate:0 0}
+
+/* Technical sheets float over the preserved catalog; only the modal scrolls. */
+.tool-modal-overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:32px;background:#0009;overscroll-behavior:contain}
+.tool-modal-frame{position:relative;width:min(1100px,100%);max-height:calc(100dvh - 64px);border-radius:40px;background:#101010;box-shadow:0 24px 100px #0008,0 0 0 1px #ffffff16;overflow:hidden;isolation:isolate;outline:none}
+.tool-modal-scroll{max-height:calc(100dvh - 64px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#666 #0000}
+.tool-modal-frame .tool-modal-close{position:absolute;z-index:5;right:20px;top:20px;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#101010b8;border:1px solid #ffffff26;color:#fff;backdrop-filter:blur(12px)}
+.tool-modal-frame .tool-modal-close:hover{background:#333e}
+.tool-modal-frame .tool-modal-close:focus-visible{outline:2px solid #8ccfff;outline-offset:3px}
+.tool-modal-frame .detail-cover{min-height:250px;border-radius:40px 40px 0 0}
+.tool-modal-frame .wrap{width:auto;max-width:none;margin:0;padding-left:40px;padding-right:40px}
+.tool-modal-frame .detail-cover-inner{padding-top:30px;padding-bottom:30px;padding-right:76px}
+.tool-modal-frame .detail-identity{margin-top:0}
+.tool-modal-frame .detail-identity h1{font-size:44px}
+.tool-modal-frame .detail-body{padding-top:32px;padding-bottom:24px}
+.tool-modal-frame .detail-overview{gap:32px;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr)}
+.tool-modal-frame .detail-body h2{font-size:25px}
+.tool-modal-frame .detail-health h2{font-size:15px}
+.tool-modal-frame .detail-integrations{margin-top:40px}
+.tool-modal-frame .detail-missing{min-height:250px;padding-top:60px;padding-bottom:40px}
+.tool-modal-open .elastic-scrollbar{visibility:hidden;pointer-events:none}
+@media(max-width:700px){
+ .tool-modal-overlay{padding:12px}
+ .tool-modal-frame{border-radius:28px;max-height:calc(100dvh - 24px)}
+ .tool-modal-scroll{max-height:calc(100dvh - 24px)}
+ .tool-modal-frame .detail-cover{border-radius:28px 28px 0 0;min-height:230px}
+ .tool-modal-frame .wrap{padding-left:24px;padding-right:24px}
+ .tool-modal-frame .detail-cover-inner{padding-right:64px}
+ .tool-modal-frame .detail-overview{grid-template-columns:minmax(0,1fr);gap:24px}
+ .tool-modal-frame .detail-identity h1{font-size:32px;overflow-wrap:anywhere}
+ .tool-modal-frame .tool-modal-close{top:16px;right:16px;width:36px;height:36px}
+}
+@media(prefers-reduced-motion:reduce){.tool-modal-frame,.tool-modal-overlay{animation:none!important;transition:none!important}}
+
+/* A separate native scroll rail leaves the sheet viewport smoothly rounded. */
+.tool-modal-shell{position:relative;width:min(1100px,100%);min-width:0}
+.tool-modal-shell .tool-modal-frame{width:100%;overflow:hidden}
+.tool-modal-scroll{scrollbar-width:none}
+.tool-modal-scroll::-webkit-scrollbar{display:none}
+.tool-modal-rail{position:absolute;left:calc(100% + 4px);top:16px;bottom:16px;width:12px;overflow-x:hidden;overflow-y:scroll;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#777 #0000}
+.tool-modal-rail>div{width:1px;pointer-events:none}
+@media(max-width:700px){.tool-modal-rail{left:calc(100% + 4px);width:8px;top:12px;bottom:12px}}
+/* A fixed-size scroll viewport follows the frame's animated rounded silhouette. */
+.tool-modal-scroll{height:100%}
+
+/* Read-only integration snippets, highlighted with Prism React Renderer. */
+.snippet{margin-top:20px;background:#111318;border-color:#ffffff12;border-radius:18px}
+.snippet>.snippet-toolbar{padding:10px 16px;background:#ffffff03}
+.snippet-language{font-size:12px;color:#c0c5d0}
+.snippet pre{max-height:360px;padding:18px 0;scrollbar-width:thin;scrollbar-color:#555 transparent;outline-offset:-3px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.8;white-space:pre}
+.snippet-line{display:flex;min-height:1.8em;width:max-content;min-width:100%;padding-right:20px}
+.snippet-line-number{flex:0 0 48px;padding-right:16px;text-align:right;color:#626979;user-select:none;font-variant-numeric:tabular-nums}
+.snippet-line-code{display:block;white-space:pre}
+.snippet-toolbar button{min-height:32px}
+@media(max-width:700px){.snippet pre{padding:14px 0;font-size:11px}.snippet-line-number{flex-basis:36px;padding-right:12px}}
+
+/* White hover/focus washes must always carry dark labels and currentColor icons.
+   Controls with their own dark/metallic fill keep their dedicated treatment. */
+:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a):not(:disabled):is(:hover,:focus-visible){color:#141414}
+.detail-actions a:is(:hover,:focus-visible){background:#fff;border-color:#fff;color:#141414}
+
+/* Echo the card's asymmetric rounded join between brand cover and information. */
+.tool-modal-frame .detail-body{position:relative;z-index:1;margin-top:-24px;border-radius:2px 32px 0 0;background:#101010}
+.tool-modal-frame .detail-metrics{border-radius:2px 32px 32px 32px}
+/* The transition envelope owns the only exterior contour; avoid doubled strokes. */
+.cover-in-flight .tool-modal-frame{box-shadow:none}
+
+/* Return from a modal at rest; keep the keyboard outline without a stuck wash. */
+.tool-card[data-return-rest] .tool-actions>:is(a,button):is(:hover,:focus-visible,:focus){color:#fff}
+.tool-card[data-return-rest] .tool-actions>:is(a,button):is(:hover,:focus-visible,:focus)::before{transform:translateY(102%);transition:none}
+.tool-card[data-return-rest] .tool-actions>a:first-child{background:#181818;border-color:#ffffff29}
+.tool-card[data-return-rest] .tool-actions>a:last-child,.tool-card[data-return-rest] .tool-actions>button{background:var(--button-brand);border-color:var(--button-brand)}
+
+/* Keyboard focus has its own outline; a filled action requires actual hover. */
+.tool-card .tool-actions>a.detail-link:focus-visible:not(:hover){color:#fff;background:#181818;border-color:#ffffff29}
+.tool-card .tool-actions>a.detail-link:focus-visible:not(:hover)::before{transform:translateY(102%)}

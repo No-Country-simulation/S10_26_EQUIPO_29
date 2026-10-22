@@ -1,8 +1,7 @@
 import {toolCategoryNames} from './data/catalog.mjs';
 import {tools,cardDetails} from './tools';
-import {githubSnapshotAt,snapshotDate} from './data/catalog.mjs';
 import {useBrandIdentity,markBrandFailed} from './brandIdentity';
-import {ToolDetail} from './ToolDetail';
+import {ToolModal} from './ToolModal';
 import {useToolNavigation} from './useToolNavigation';
 import {useCatalogBounce} from './useCatalogBounce';
 import {useHeroParallax} from './useHeroParallax';
@@ -177,8 +176,8 @@ export function App(){
  }
 
 
- return <><a href="#asistente" className="skip">Ir al contenido</a><header><div className="nav wrap"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><nav aria-label="Principal"><a href="#asistente" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#asistente');}}}>Asistente</a><a href="#catalogo" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#catalogo');}}}>Catálogo</a></nav></div></header>
- <main hidden={isDetail} id="landing-view" data-has-proposal={expanded}><div className="hero"><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
+ return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><nav aria-label="Principal"><a href="#asistente" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#asistente');}}}>Asistente</a><a href="#catalogo" onClick={e=>{if(isDetail){e.preventDefault();navigation.toLanding('#catalogo');}}}>Catálogo</a></nav></div></header>
+ <main inert={isDetail?true:undefined} aria-hidden={isDetail} id="landing-view" data-has-proposal={expanded}><div className="hero"><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
  <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={expanded}><RevealHeading as="h1" text="De tu idea a tu stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!expanded}>{assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura')}</h1></div>
  <div className="prompt-intro"><p className="intro intro-initial" aria-hidden={expanded}>Describe tu idea, y te recomiendo un stack</p><p className="intro intro-result" aria-hidden={!expanded}>{assistantResponse?.summary||(pending?'Preparando una propuesta de ejemplo':'Una propuesta basada en tu descripción')}</p></div>
  {finished&&<div className="stack-new-action"><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
@@ -219,9 +218,8 @@ export function App(){
    </label>
   </div>
  )}
- <p className="catalog-snapshot-note">Estadísticas capturadas de GitHub · {snapshotDate(githubSnapshotAt)} (UTC−3). Sin actualización en tiempo real. Default es una tarjeta ficticia.</p>
  <div className="results-meta"><span aria-live="polite">{filtered.length} {filtered.length===1?'herramienta':'herramientas'}{category!=='Todas'?' en '+category:''}</span>{(active>0||search||category!=='Todas')&&<button onClick={clear}>Limpiar filtros <X size={13}/></button>}</div>
  <div className="grid">{displayed.map(tool=><ToolCard key={tool.name} tool={tool} onOpen={navigation.open}/>)}</div>
  {filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><p>Prueba otro término o quita alguno de los filtros.</p><button onClick={clear} className="primary">Ver todas las herramientas</button></div>}
- </section><footer className="catalog-footer"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a></footer></div></div></main>{isDetail&&<ToolDetail id={navigation.id} onBack={navigation.back}/>}<ElasticScrollbar routeKey={navigation.id}/></>;
+ </section><footer className="catalog-footer"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a></footer></div></div></main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;
 }

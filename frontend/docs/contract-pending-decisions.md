@@ -8,7 +8,7 @@ Referencia: PR17, head a6719c4e212667ed792a9c9bda422ed97257f1c1. Repo acordado c
 - Filtros consideran todas las categorías asignadas; card conserva la principal. Lista local sin reducirla a las seis provisionales.
 - 13 ideas de integración locales en estructura IntegrationIdea, con adapter y arrays visibles. URL por idea, resumen, dificultad traducida, estado de revisión. Snippet solo si existe, con lenguaje.
 - Las ideas son ejemplos editoriales humanos sin revisar, no salidas de IA. Los hashes son hashes de la entrada editorial del mock, no ai_input_hash de producción.
-- Se retiraron snippets no verificados de las ideas activas. No se afirma que provengan de README/docs.
+- Se retiraron snippets no verificados de las ideas activas. Un ejemplo de Keycloak ahora incluye extractos de la documentación oficial, con procedencia en src/mocks/snippet-sources.json. El resto sigue sin snippet.
 - 5 ideas SQL/JavaScript preservadas separadamente en integration-ideas-pending.fixtures.json: no se fuerza un tipo incorrecto, no aparecen en fichas. Los resúmenes y características siguen siendo contenido editorial fuera de Repo.
 - Sin datos de integración no aparece una sección vacía. Repos archivados no muestran ideas del mock. La regla de generación «sin README no generar» corresponde al productor; estos ejemplos no representan una ejecución de esa generación.
 

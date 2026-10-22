@@ -4,7 +4,7 @@
     "full_name": "keycloak/keycloak",
     "title": "Inicio de sesión en una aplicación web",
     "integration_type": "sdk",
-    "summary": "Ejemplo de integración: inicio de sesión en una aplicación web.",
+    "summary": "Inicializa el adaptador con los datos de tu cliente y solicita inicio de sesión. Requiere configurar el servidor, el realm, el cliente público y sus URLs de redirección.",
     "compatible_stack": [
       "React y API protegida"
     ],
@@ -15,12 +15,12 @@
     "triggers": [
       "Acceso del usuario a una ruta protegida"
     ],
-    "snippet": null,
-    "snippet_language": null,
-    "docs_url": "https://www.keycloak.org/documentation",
+    "snippet": "import Keycloak from 'keycloak-js';\n\nconst keycloak = new Keycloak({\n  url: 'http://keycloak-server',\n  realm: 'my-realm',\n  clientId: 'my-app'\n});\n\nawait keycloak.init({\n  onLoad: 'login-required'\n});",
+    "snippet_language": "javascript",
+    "docs_url": "https://www.keycloak.org/securing-apps/javascript-adapter",
     "generated_by": "human",
     "reviewed_at": null,
-    "based_on_hash": "724537623ae1ddfbcb02c829cbaed0fa24139233e0dea375456e418c352410a2"
+    "based_on_hash": "49c88cbe260ac40aa797b3cf3ddb1e12c35cb7826236dd703b8516fcd54a877f"
   },
   {
     "id": "mock_keycloak_2",

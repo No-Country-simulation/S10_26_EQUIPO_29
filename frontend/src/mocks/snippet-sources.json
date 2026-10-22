@@ -1,0 +1,7 @@
+{
+  "mock_keycloak_1": {
+    "source": "https://www.keycloak.org/securing-apps/javascript-adapter",
+    "checked_at": "2026-10-22",
+    "note": "Extractos de inicialización y login-required de la documentación oficial; comillas y sangría normalizadas. Valores de configuración de ejemplo; no es una aplicación completa. La idea sigue como borrador editorial."
+  }
+}

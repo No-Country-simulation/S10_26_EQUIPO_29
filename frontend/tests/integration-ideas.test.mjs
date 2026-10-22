@@ -13,11 +13,11 @@ test('integration fixtures match the proposed shape and refer to catalog tools',
   assert.ok(idea.title.length<=120&&idea.summary.length<=300);
   assert.ok(idea.compatible_stack.length>0);assert.ok(Array.isArray(idea.dependencies)&&Array.isArray(idea.triggers));
   assert.ok(new URL(idea.docs_url));assert.equal(idea.generated_by,'human');assert.equal(idea.reviewed_at,null);
-  assert.equal(idea.snippet,null);assert.equal(idea.snippet_language,null);
+  if(idea.snippet)assert.ok(idea.snippet_language&&idea.docs_url.includes('keycloak.org/securing-apps/'));else assert.equal(idea.snippet_language,null);
  }
 });
 test('adapter preserves lists, optional snippets and honest review labels',()=>{
- const raw=integrationIdeaRecords[0];const draft=toIntegrationIdea(raw);
+ const raw=integrationIdeaRecords.find(idea=>!idea.snippet);const draft=toIntegrationIdea(raw);
  assert.deepEqual(draft.stack,raw.compatible_stack);assert.equal(draft.snippet,null);assert.match(draft.reviewLabel,/Borrador editorial/);
  const ai=toIntegrationIdea({...raw,generated_by:'llm',snippet:'console.log(1)',snippet_language:'javascript'});
  assert.match(ai.reviewLabel,/Sugerida por IA/);assert.equal(ai.snippetLanguage,'javascript');

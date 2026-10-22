@@ -1,7 +1,7 @@
 import {useLayoutEffect,useRef} from 'react';
 import {scrollbarMetrics,elasticThumb,followScroll,scrollFromThumb,updateScrollGesture,gestureStretch} from './scrollbarGeometry.mjs';
 
-export function ElasticScrollbar({routeKey}){
+export function ElasticScrollbar(){
  const railRef=useRef(null),thumbRef=useRef(null);
  useLayoutEffect(()=>{
   const rail=railRef.current,thumb=thumbRef.current,root=document.documentElement;
@@ -98,6 +98,6 @@ export function ElasticScrollbar({routeKey}){
    for(const name of ['pointerup','pointercancel','lostpointercapture'])rail.removeEventListener(name,end);
    rail.removeEventListener('keydown',key);rail.removeEventListener('focus',active);
   };
- },[routeKey]);
+ },[]);
  return <div ref={railRef} className="elastic-scrollbar" role="scrollbar" aria-label="Desplazar página" aria-controls="root" aria-orientation="vertical" aria-valuemin={0} aria-valuemax={0} aria-valuenow={0} tabIndex={0} hidden><div ref={thumbRef} className="elastic-scrollbar-thumb" aria-hidden="true"/></div>;
 }
