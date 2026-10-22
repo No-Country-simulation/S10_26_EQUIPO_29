@@ -1,3 +1,4 @@
+import {toolCategoryNames} from './data/catalog.mjs';
 import {tools,cardDetails} from './tools';
 import {githubSnapshotAt,snapshotDate} from './data/catalog.mjs';
 import {useBrandIdentity,markBrandFailed} from './brandIdentity';
@@ -10,6 +11,7 @@ import {useAnimatedCatalog} from './useAnimatedCatalog';
 import {RevealHeading,usePageReveal} from './PageReveal';
 import {MetalBorder} from './MetalBorder';
 import {PromptMetalFill} from './PromptMetalFill';
+import {PromptError} from './PromptError';
 import {StackProposal} from './StackProposal';
 import {ElasticScrollbar} from './ElasticScrollbar';
 import {HeroLights} from './HeroLights';
@@ -69,7 +71,7 @@ function useExamplePlaceholder(paused) {
  return text;
 }
 
-const categories=['Todas',...new Set(tools.map(tool=>tool.category))];
+const categories=['Todas',...new Set(tools.flatMap(toolCategoryNames))];
 const icons={'Autenticación':ShieldCheck,'Bases de datos':Database,'Pagos':CreditCard,'IA':BrainCircuit,'Analítica':ChartNoAxesCombined,'Búsqueda':SearchCheck};
 
 function ToolCard({ tool, onOpen }) {
@@ -84,7 +86,7 @@ function ToolCard({ tool, onOpen }) {
  const postgres = tool.name === 'PostgreSQL';
  const metrics = [
   ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],
-  ['Último commit', tool.activity, GitCommitHorizontal],
+  ['Último push', tool.activity, GitCommitHorizontal],
   ['Licencia', tool.license, Scale],
   ['Mantenedor activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]
  ];
@@ -153,7 +155,7 @@ export function App(){
   dispatchPresentation({type:'reset'});
   requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));
  }
- const filtered=tools.filter(t=>(category==='Todas'||t.category===category)&&normalize(t.name+' '+t.description).includes(normalize(search))&&(!language||t.language===language)&&(!license||t.license===license)&&(!maintenance||(maintenance==='active'?t.dataSource==='github_snapshot'&&!t.archived&&!t.disabled:t.archived||t.disabled))&&t.stars>=Number(stars));
+ const filtered=tools.filter(t=>(category==='Todas'||toolCategoryNames(t).includes(category))&&normalize(t.name+' '+t.description).includes(normalize(search))&&(!language||t.language===language)&&(!license||t.license===license)&&(!maintenance||(maintenance==='active'?t.dataSource==='github_snapshot'&&!t.archived&&!t.disabled:t.archived||t.disabled))&&t.stars>=Number(stars));
  const displayed=useAnimatedCatalog(filtered);
  usePageReveal([phase,filters,...displayed.map(t=>t.name)].join('|'));
  const active=[language,license,maintenance,stars].filter(Boolean).length;
@@ -182,10 +184,9 @@ export function App(){
  {finished&&<div className="stack-new-action"><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
  <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse}/>
 
- <div className={'prompt-form-slot'+(finished?' is-closed':'')} inert={finished?true:undefined} aria-hidden={finished}><div className="prompt-form-clip"><form className={'composer '+(error&&!canRetry?'invalid':'')} data-error={error?'true':undefined} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onKeyDown={e=>{if(e.key!=='Enter'||e.shiftKey||e.nativeEvent.isComposing||e.nativeEvent.keyCode===229)return;e.preventDefault();if(!pending&&!e.repeat)e.currentTarget.form?.requestSubmit();}} onChange={e=>{setQuery(e.target.value);setError('');setCanRetry(false);}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error&&!canRetry}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form></div></div>
+ <div className={'prompt-form-slot'+(finished?' is-closed':'')} inert={finished?true:undefined} aria-hidden={finished}><div className="prompt-form-clip"><form className={'composer '+(error&&!canRetry?'invalid':'')} data-error={error?'true':undefined} onSubmit={submit}><MetalBorder/><label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><textarea ref={input} id="prompt" value={query} maxLength={assistantLimits.max} readOnly={pending} aria-busy={pending} onKeyDown={e=>{if(e.key!=='Enter'||e.shiftKey||e.nativeEvent.isComposing||e.nativeEvent.keyCode===229)return;e.preventDefault();if(!pending&&!e.repeat)e.currentTarget.form?.requestSubmit();}} onChange={e=>{setQuery(e.target.value);setError('');setCanRetry(false);}} placeholder={phase==='done'?'Describe tu idea completa con los detalles que quieras ajustar…':placeholder} onFocus={()=>setPromptFocused(true)} onBlur={()=>setPromptFocused(false)} aria-describedby="prompt-error" aria-invalid={!!error&&!canRetry}/><div className="composer-footer flex items-center justify-end gap-[10px]"><PromptError message={error} canRetry={canRetry&&!pending} onRetry={()=>submit()}/><button className="primary prompt-submit" aria-disabled={pending} type="submit" aria-label={phase==='loading'?'Generando propuesta':'Generar propuesta'} title={phase==='loading'?'Generando propuesta':'Generar propuesta'}><PromptMetalFill/><span className={'submit-symbol'+(pending?' is-loading':'')} aria-hidden="true"><ArrowUp className="submit-arrow" size={24} strokeWidth={2}/><LoaderCircle className="submit-spinner spin" size={22}/></span></button></div></form></div></div>
  {finished&&<div className="architecture-result-tools"><details className="original-prompt"><summary>Tu idea original</summary><p>{originalPrompt}</p></details></div>}
  <div className="prompt-feedback"><p className="architecture-demo-note" aria-hidden={!expanded}>Datos de demostración · Respuesta mock, sin conexión a IA.</p><p className={'prompt-update-status'+(pending&&hasResult?' is-visible':'')} role="status" aria-hidden={!pending||!hasResult}>{slow?'Está tomando un poco más de tiempo. Conservamos tu descripción y el resultado anterior.':'Consultando el asistente de ejemplo…'}</p></div>
- <div className="prompt-error-actions"><p id="prompt-error" className="error" role="alert">{error}</p>{error&&canRetry&&!pending&&<button type="button" className="prompt-retry" onClick={()=>submit()}>Reintentar <ArrowUpRight size={14} aria-hidden="true"/></button>}</div>
  </div></section>
  </div>
  <div className="catalog-shell"><div className="wrap">

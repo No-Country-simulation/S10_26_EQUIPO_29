@@ -3,11 +3,10 @@ from pathlib import Path
 from datetime import datetime,timezone
 root=Path(__file__).resolve().parents[1]
 records=json.loads((root/'src/mocks/catalog.fixtures.json').read_text())
-fields='id nameWithOwner url stargazerCount isArchived isDisabled pushedAt updatedAt licenseInfo { spdxId name } primaryLanguage { name } issues(states:OPEN) { totalCount } pullRequests(states:OPEN) { totalCount } latestRelease { tagName publishedAt url } defaultBranchRef { name target { ... on Commit { committedDate oid } } }'
+fields='id databaseId nameWithOwner url stargazerCount isArchived isDisabled pushedAt updatedAt licenseInfo { spdxId name } primaryLanguage { name } issues(states:OPEN) { totalCount } pullRequests(states:OPEN) { totalCount } latestRelease { tagName publishedAt url } defaultBranchRef { name target { ... on Commit { committedDate oid } } }'
 parts=[]
 for i,r in enumerate(records):
- if not r['repo']:continue
- owner,name=r['repo'].split('/',1)
+ owner,name=r['full_name'].split('/',1)
  parts.append(f'r{i}: repository(owner:{json.dumps(owner)}, name:{json.dumps(name)}) {{ {fields} }}')
 query='query { '+' '.join(parts)+' rateLimit { remaining resetAt } }'
 result=subprocess.run(['gh','api','graphql','-f','query='+query],text=True,capture_output=True)

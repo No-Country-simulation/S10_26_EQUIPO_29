@@ -1,6 +1,4 @@
-import {catalogRecords,toTool,toCardDetail} from './data/catalog.mjs';
-
-// Compatibility exports keep catalog and detail on the same mock records.
-export const tools=catalogRecords.map(toTool);
-export const cardDetails=Object.fromEntries(catalogRecords.map(record=>[record.name,toCardDetail(record)]));
-
+import {catalogRecords} from './data/catalog.mjs';
+// Catalog and detail consume the same adapted UI records.
+export const tools=catalogRecords;
+export const cardDetails=Object.fromEntries(catalogRecords.map(record=>[record.name,record]));

@@ -1,4 +1,94 @@
 {
+  "herramienta-de-ejemplo": {
+    "summary": "Esta herramienta ficticia permite visualizar la tarjeta de respaldo del catálogo. No representa un proyecto real; sus métricas son valores de ejemplo.",
+    "features": [
+      "Iniciales cuando no hay logo disponible",
+      "Paleta neutral y nombre completo visible",
+      "Sin marca de agua"
+    ],
+    "ideas": []
+  },
+  "postgresql": {
+    "summary": "Base de datos relacional para persistir información de negocio con transacciones, restricciones y consultas SQL. Es una pieza central para aplicaciones que necesitan consistencia entre operaciones.",
+    "features": [
+      "Transacciones y restricciones de integridad",
+      "Consultas SQL y datos JSONB",
+      "Extensiones para necesidades especializadas"
+    ],
+    "ideas": []
+  },
+  "keycloak": {
+    "summary": "Servicio de identidad para centralizar el inicio de sesión y la gestión de acceso. Permite separar la autenticación de los servicios de negocio y conectar aplicaciones con protocolos estándar.",
+    "features": [
+      "Inicio de sesión único",
+      "Integración mediante OIDC y SAML",
+      "Gestión de usuarios, roles y sesiones"
+    ],
+    "ideas": []
+  },
+  "meilisearch": {
+    "summary": "Motor de búsqueda para añadir descubrimiento rápido de contenido a un producto. Se integra como un índice derivado de la base de datos principal y se consulta desde la aplicación.",
+    "features": [
+      "Búsqueda tolerante a errores",
+      "Filtros y ordenación configurables",
+      "Indexación de documentos JSON"
+    ],
+    "ideas": []
+  },
+  "ollama": {
+    "summary": "Ejecución local de modelos de lenguaje para experimentar con asistentes y procesamiento de texto. La capacidad y latencia dependen del modelo y del hardware disponible.",
+    "features": [
+      "Modelos alojados en infraestructura propia",
+      "API de generación y conversación",
+      "Integración con servicios de recuperación de contexto"
+    ],
+    "ideas": []
+  },
+  "plausible": {
+    "summary": "Analítica web orientada a comprender visitas y conversiones mediante una interfaz sencilla. Su incorporación requiere definir qué eventos ayudan a evaluar el producto.",
+    "features": [
+      "Métricas de tráfico y páginas",
+      "Eventos de conversión",
+      "Opciones de alojamiento propio"
+    ],
+    "ideas": []
+  },
+  "lago": {
+    "summary": "Infraestructura de facturación para productos con suscripciones y consumo medido. Modela clientes, planes y eventos de uso; el cobro y la configuración fiscal requieren decisiones adicionales.",
+    "features": [
+      "Facturación basada en consumo",
+      "Planes y suscripciones",
+      "Eventos y automatización de facturación"
+    ],
+    "ideas": []
+  },
+  "qdrant": {
+    "summary": "Base de datos vectorial para recuperar elementos similares mediante embeddings. Permite acompañar los vectores con metadatos para restringir la búsqueda según el contexto.",
+    "features": [
+      "Búsqueda por similitud vectorial",
+      "Filtros por metadatos",
+      "Colecciones de vectores y payloads"
+    ],
+    "ideas": []
+  },
+  "umami": {
+    "summary": "Analítica web para observar tráfico y eventos de producto. Puede alojarse en infraestructura propia y conectarse al sitio mediante un script de seguimiento.",
+    "features": [
+      "Visitas y fuentes de tráfico",
+      "Eventos personalizados",
+      "Alojamiento propio"
+    ],
+    "ideas": []
+  },
+  "typesense": {
+    "summary": "Motor de búsqueda para construir navegación y descubrimiento sobre datos estructurados. El esquema de la colección define los campos que podrán consultarse y filtrarse.",
+    "features": [
+      "Búsqueda de texto con tolerancia a errores",
+      "Facetas y filtros",
+      "Colecciones con esquema explícito"
+    ],
+    "ideas": []
+  },
   "react": {
     "summary": "Construye interfaces de usuario con componentes reutilizables para aplicaciones web.",
     "features": [

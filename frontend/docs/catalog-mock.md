@@ -1,25 +1,16 @@
-# Catálogo de demostración
+# Catálogo: contrato y adaptación
 
-20 entradas:19 proyectos reales y1 tarjeta Default ficticia. Se añaden React, Next.js, FastAPI, NestJS, Django, Valkey, RabbitMQ, Prometheus, Grafana y Traefik. Repositorios y documentación en catalog.fixtures.json. Las estadísticas de los19 repositorios reales proceden de una captura de GitHub, almacenada localmente. Default sigue siendo ficticia. No se consulta GitHub al cargar la página.
+Referencia: PR #17, `shared/contracts/repo.py`, commit a6719c4e212667ed792a9c9bda422ed97257f1c1. Esta adaptación local no confirma los contratos pendientes ni incorpora HTTP.
 
-Las fichas nuevas se definen en tool-profiles.fixtures.json. Logos locales de Simple Icons16.35.0, con procedencia y licencia en public/assets/brands. Valkey utiliza el respaldo de iniciales.
+- `src/mocks/catalog.fixtures.json`: 19 repos con nombres y estructura del contrato Repo. `github_id` es numérico, no el node ID de GraphQL. `open_issues_count` incluye issues y PRs abiertos.
+- `src/data/catalog.mjs`: `toTool` y `toCardDetail` convierten estos registros una vez al modelo de la interfaz. `catalogRepos` expone el origen; `catalogRecords` y `mockCatalog` exponen el modelo visual. `mockCatalog` no simula un endpoint HTTP acordado.
+- `catalog-presentation.json`: rutas locales, nombres visibles, documentación, releases y procedencia de la captura. No son campos garantizados por Repo. `maintained` sigue sin confirmar.
+- `catalog-categories.json`: catálogo de categorías local provisional; conserva las categorías actuales adicionales a las seis propuestas. Primera asignación como categoría principal; el adaptador preserva todas las asignaciones. La card muestra la principal y el filtro considera todas las asignaciones.
+- `catalog-default.fixture.json`: ejemplo ficticio independiente; no se fuerza a pasar como repositorio real con un github_id inventado.
+- Logos y colores siguen en `src/data/brand-identities.json`, enlazados por full_name.
 
-La respuesta fija del asistente utiliza Keycloak, Next.js, FastAPI y PostgreSQL; todos tienen full_name vinculado al repo del catálogo y ficha navegable. Es un mock, no una recomendación generada por IA.
+Los textos españoles actuales son resúmenes curados de demostración (`summary_es`); no se presentan como descripciones descargadas de GitHub ni generadas por IA. `description`, `readme_text` y `homepage` quedan null al no estar en la captura disponible. Topics y use_cases están vacíos; no se inventan valores.
 
-Paletas de marca configuradas para9 herramientas nuevas a partir del hex y la fuente de Simple Icons (COLORS.json). Las superficies son variantes oscuras para texto blanco. Next.js conserva su identidad monocromática. Valkey mantiene respaldo neutral al no tener asset configurado. Catálogo, detalle y recomendaciones comparten resolveBrand.
+Valores null de salud, issues y mantenimiento no se convierten en cero/false. Las etiquetas visuales de ausencia se resuelven en el adaptador o componente, sin escribirlas en los datos de contrato.
 
-## Identidad de marca compartida
-Archivo único: `src/data/brand-identities.json`. Contiene fallback (gris) e identities, indexadas por full_name, con logo, watermark opcional, wordmark opcional y palette {start,end,tag}. `src/brandIdentity.js` resuelve estas identidades tanto en catálogo como en propuesta y detalle. No se deducen URLs ni colores del nombre. La clave se normaliza por espacios y mayúsculas.
-
-Para incorporar una marca, añadir su full_name exacto al registro y configurar sus assets locales y paleta. Sin coincidencia o ante fallo del logo, usar iniciales y fallback gris; un fallo exclusivo de watermark solo lo oculta. `src/mocks/brand-palettes.json` se ha retirado para evitar fuentes duplicadas.
-
-## Captura real de GitHub
-Origen auditable: `src/mocks/github-snapshot.json` incluye consulta GraphQL, valores y captured_at. Para refrescar manualmente: `python3 scripts/snapshot-github.py` (requiere GitHub CLI autenticado), luego `python3 scripts/apply-github-snapshot.py`, compilar y ejecutar tests. No se instala cron ni se añade tráfico de GitHub al frontend.
-
-- stars:stargazerCount; openIssues:issues.totalCount (excluye PR); PR abiertas se conservan aparte. Un0 corresponde a las issues en GitHub, no necesariamente al tracker externo del proyecto.
-- Último commit:defaultBranchRef.target.committedDate. No se confunde con updatedAt (cambia también por metadata) ni pushedAt (puede afectar otras ramas). activity contiene fecha absoluta en America/Punta_Arenas.
-- version:última release devuelta por GitHub, con tag/fecha/enlace; null significa Sin release publicada, no que el proyecto no tenga versiones.
-- license:SPDX detectado por GitHub; NOASSERTION o ausencia se presenta como Revisar licencia. No se conserva la licencia ficticia anterior ni se interpreta legalmente.
-- Salud:GitHub no proporciona el score del diseño; healthScore=null para proyectos reales. No se calcula ni se inventa una puntuación.
-- Mantenedor:no es un campo verificable directo. Se muestra Repositorio:No archivado/Archivado/Deshabilitado según flags GitHub. maintained=null. El filtro usa ese estado, no una supuesta actividad del equipo.
-- Language:primaryLanguage de GitHub. Los textos descriptivos, roles y perfiles siguen siendo contenido curado para el prototipo.
+Los scripts snapshot-github.py y apply-github-snapshot.py mantienen esta separación. La aplicación del snapshot busca por full_name, no por posición del array. La captura existente se conserva; no hay consultas en tiempo real.

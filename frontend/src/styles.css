@@ -525,9 +525,30 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 
 /* Request recovery stays beside the original composer, without clearing the idea. */
 .stack-building>div{max-width:440px;text-align:center;padding:24px}.stack-building p{font-size:14px;line-height:1.6;margin:0}.stack-building .stack-loading-hint{font-size:12px;color:#8f9bac;margin-top:8px}
-.prompt-error-actions{max-width:756px;margin:0 auto;text-align:left;display:flex;align-items:center;gap:18px}.prompt-error-actions .error{flex:1}.prompt-error-actions:has(.error:empty){display:none}
-.hero button.prompt-retry{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;padding:10px 14px;border:1px solid #ffffff30;border-radius:20px;background:#242830;font-size:12px;color:#e9eff8}.hero button.prompt-retry:hover{background:#303743}.hero button.prompt-retry::before{display:none}
 .stack-layer-role>div,.stack-layer-brand>div:last-child{min-width:0}.stack-layer-role span,.stack-layer-category{overflow-wrap:anywhere}.stack-layer-category{max-width:100%}
 
 /* Error uses the same liquid light and reflected texture, independent of focus. */
 .hero .composer[data-error="true"]{border-color:#ffffff18}
+
+/* Inline error occupies the composer's existing footer, beside the send control. */
+.hero .composer-footer{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:end;column-gap:18px}
+.hero .composer[data-error="true"] .composer-footer{height:auto;min-height:44px}
+.composer-feedback{min-width:0;text-align:left;align-self:center}
+.composer-error-copy{display:flex;align-items:flex-start;gap:8px;color:#ffaaa1}
+.composer-error-copy>svg{flex-shrink:0;margin-top:3px;animation:prompt-error-icon-in 180ms ease both}
+.composer-error-body{min-width:0;font-size:11.5px;line-height:1.65}
+.composer-error-text{display:inline;margin:0;font-size:11.5px;line-height:1.65;color:#ffaaa1;overflow-wrap:anywhere}
+.prompt-error-word-mask{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.prompt-error-word{display:inline-block;transform:translateY(110%);animation:prompt-error-word-in 320ms cubic-bezier(.22,1,.36,1) both;animation-delay:var(--word-delay)}
+.hero button.composer-retry{display:inline-flex;align-items:center;gap:3px;padding:3px 0;margin-left:9px;font-size:11px;line-height:1.4;color:#ffc0b9;background:transparent;border:0;border-radius:0;white-space:nowrap;vertical-align:baseline;text-decoration:underline;text-decoration-color:#ffc0b950;text-underline-offset:3px;translate:none}
+.hero button.composer-retry:hover{color:#ffe0dc;text-decoration-color:currentColor}.hero button.composer-retry::before{display:none}
+.hero-inner.has-architecture .composer[data-error="true"]{height:auto;min-height:136px}
+.hero-inner.has-architecture .composer[data-error="true"] .composer-footer{position:relative;min-height:44px;margin-top:12px}
+.hero-inner.has-architecture .composer[data-error="true"] .composer-footer>button{translate:0 0}
+@keyframes prompt-error-word-in{from{transform:translateY(110%)}to{transform:translateY(0)}}
+@keyframes prompt-error-icon-in{from{opacity:0}to{opacity:1}}
+@media(max-width:640px){.hero .composer-footer{column-gap:12px}.composer-error-text{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.prompt-error-word,.composer-error-copy>svg{animation:none;transform:none}}
+
+.hero-inner.has-architecture .composer:not([data-error="true"]) .composer-footer{display:flex;align-items:center}
+.hero-inner.has-architecture .composer[data-error="true"] .composer-footer .composer-retry{translate:0 0}
