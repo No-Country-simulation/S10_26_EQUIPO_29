@@ -3,27 +3,29 @@
 Asistente que recibe la descripción de un negocio y recomienda un stack de
 herramientas open source, citando solo repos del catálogo.
 
-Esta carpeta es autosuficiente: tiene su propio `requirements.txt`, sus datos
-y sus tests. No depende de otras carpetas del repo.
+Esta carpeta tiene su propio `requirements.txt`, sus datos y sus tests. La forma
+de un repo no se define aquí: se usa el contrato compartido `Repo` de
+[`shared/contracts/`](../shared/contracts/). Por eso los comandos se ejecutan
+desde la raíz del repo.
 
 ## Estado
 
-**Datos de ejemplo.** Mientras la ingesta no esté lista, la IA trabaja con
-datos de ejemplo: 20 repos reales descargados de la API de GitHub.
+**Datos de ejemplo.** Mientras la IA no lee de la base de datos, trabaja con
+20 repos reales descargados de la API de GitHub, con categorías asignadas a mano.
 
 ## Estructura
 
 ```
 ai/
-├── schemas.py                  # Esquema Pydantic `Repo` (borrador del contrato ingesta → IA)
+├── catalog.py                  # load_repos(): único punto de acceso a los datos
 ├── requirements.txt
 ├── scripts/
 │   └── build_sample_data.py    # Regenera ai/data/ desde la API de GitHub
 ├── data/
-│   ├── repos.json              # 20 repos validados contra `Repo`
+│   ├── repos.json              # 20 repos con la forma del contrato, sin el README
 │   └── readmes/                # README de cada repo (<owner>__<name>.md)
 └── tests/
-    └── test_sample_data.py     # Valida los datos contra el esquema
+    └── test_sample_data.py     # Valida los datos de ejemplo contra el contrato
 ```
 
 ## Puesta en marcha
@@ -41,36 +43,43 @@ uv pip install -r ai/requirements.txt
 
 ```bash
 python -m pytest ai/tests -v              # valida los datos de ejemplo
+python -m pytest tests/contracts -v       # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data    # regenera ai/data/ (requiere `gh` autenticado)
 ```
 
-Se usa `python -m` para que la raíz del repo esté en la ruta de importación
-(`from ai.schemas import Repo`).
+Se usa `python -m` desde la raíz para que `ai` y `shared` se puedan importar
+(`from shared.contracts.repo import Repo`). Desde otra carpeta, el import falla.
 
-## Esquema `Repo`
+## Cómo leer los datos
 
-| Campo | Tipo | Obligatorio | Nota |
-|---|---|---|---|
-| `repo_id` | `str` | Sí | `owner/name` (full_name de GitHub). Id con el que se cita el repo |
-| `github_id` | `int` | Sí | Id numérico de GitHub; no cambia si el repo se renombra |
-| `description` | `str` | No | |
-| `topics` | `list[str]` | No (`[]`) | |
-| `categories` | `list[Categoria]` | Sí (mín. 1) | Auth, DB, Payments, AI, Analytics, Search. Por ahora se asignan a mano |
-| `language` | `str` | No | |
-| `license` | `str` | No | Identificador SPDX. Puede ser `NOASSERTION` |
-| `stars` | `int ≥ 0` | Sí | |
-| `pushed_at` | `datetime` | Sí | Último push; señal de actividad |
-| `open_issues` | `int ≥ 0` | Sí | GitHub cuenta issues **y** PRs abiertos |
-| `archived` | `bool` | Sí | |
-| `readme_path` | `str` | No | Relativa a `ai/data/` |
-| `health_score` | `float` | No | Lo calcula la ingesta; rango por acordar |
+```python
+from ai.catalog import load_repos
 
-El esquema rechaza campos desconocidos (`extra="forbid"`), para que un nombre
-mal escrito falle en vez de perderse en silencio.
+repos = load_repos()   # list[Repo], con readme_text incluido
+```
 
-## Por acordar con el equipo
+El código de la IA lee los repos solo con `load_repos()`. Hoy une `repos.json`
+con los archivos de `readmes/`; cuando la IA lea de la base de datos, cambia
+solo esta función.
 
-Es un borrador. Pendiente de definir con ingesta: la lista oficial de
-categorías, la fórmula y el rango de `health_score`, si los repos sin
-descripción entran al catálogo, y qué campos adicionales vale la pena traer
-(homepage, forks, último release, contribuidores).
+## Contrato `Repo`
+
+Definido en [`shared/contracts/repo.py`](../shared/contracts/repo.py)
+(v1.0, acordado con la ingesta). Usa los nombres de GitHub (`full_name`,
+`stargazers_count`, `license_spdx_id`, `open_issues_count`). Las categorías
+salen de [`shared/contracts/categories.json`](../shared/contracts/categories.json).
+
+Los datos de ejemplo son más estrictos que el contrato:
+
+- El contrato ignora campos desconocidos (lector tolerante). Los tests exigen
+  que toda clave de `repos.json` sea un campo del contrato, para detectar
+  errores de tipeo.
+- El contrato admite repos sin categoría ni README. Los datos de ejemplo no:
+  sus categorías son la referencia clasificada a mano (`assigned_by: "human"`).
+
+Nota: Pydantic normaliza `homepage` (por ejemplo, agrega `/` al final del dominio).
+
+## Por acordar
+
+- Lista de categorías definitiva (hoy: las 6 del caso, provisional).
+- Fórmula y rango de `health_score` (lo calcula la ingesta).

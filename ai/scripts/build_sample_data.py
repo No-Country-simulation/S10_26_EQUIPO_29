@@ -11,36 +11,34 @@ lo valida con el esquema `Repo` y escribe:
 
 import json
 import subprocess
-from pathlib import Path
 
-from ai.schemas import Repo
+from ai.catalog import README_DIR, REPOS_FILE, readme_file
+from shared.contracts.repo import Repo
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-README_DIR = DATA_DIR / "readmes"
-
-# Clasificación manual. Es la referencia contra la que se evaluará
-# más adelante la clasificación automática con un LLM.
+# Clasificación manual de acuerdo a shared/contracts/categories.
+# Es la referencia contra la que se evaluará más adelante
+# la clasificación automática con un LLM.
 CATEGORIES: dict[str, list[str]] = {
-    "keycloak/keycloak": ["Auth"],
-    "ory/kratos": ["Auth"],
-    "supertokens/supertokens-core": ["Auth"],
-    "zitadel/zitadel": ["Auth"],
-    "supabase/supabase": ["DB", "Auth"],
-    "pocketbase/pocketbase": ["DB", "Auth"],
-    "redis/redis": ["DB"],
-    "juspay/hyperswitch": ["Payments"],
-    "getlago/lago": ["Payments"],
-    "killbill/killbill": ["Payments"],
-    "ollama/ollama": ["AI"],
-    "langchain-ai/langchain": ["AI"],
-    "run-llama/llama_index": ["AI"],
-    "PostHog/posthog": ["Analytics"],
-    "plausible/analytics": ["Analytics"],
-    "umami-software/umami": ["Analytics"],
-    "metabase/metabase": ["Analytics"],
-    "meilisearch/meilisearch": ["Search"],
-    "typesense/typesense": ["Search"],
-    "qdrant/qdrant": ["Search", "AI"],
+    "keycloak/keycloak": ["auth"],
+    "ory/kratos": ["auth"],
+    "supertokens/supertokens-core": ["auth"],
+    "zitadel/zitadel": ["auth"],
+    "supabase/supabase": ["database", "auth"],
+    "pocketbase/pocketbase": ["database", "auth"],
+    "redis/redis": ["database"],
+    "juspay/hyperswitch": ["payments"],
+    "getlago/lago": ["payments"],
+    "killbill/killbill": ["payments"],
+    "ollama/ollama": ["ai"],
+    "langchain-ai/langchain": ["ai"],
+    "run-llama/llama_index": ["ai"],
+    "PostHog/posthog": ["analytics"],
+    "plausible/analytics": ["analytics"],
+    "umami-software/umami": ["analytics"],
+    "metabase/metabase": ["analytics"],
+    "meilisearch/meilisearch": ["search"],
+    "typesense/typesense": ["search"],
+    "qdrant/qdrant": ["search", "ai"],
 }
 
 
@@ -53,47 +51,46 @@ def gh_api(path: str, raw: bool = False) -> str:
     return result.stdout.decode("utf-8")
 
 
-def build_repo(full_name: str, categories: list[str]) -> Repo:
+def build_repo(full_name: str, category_ids: list[str]) -> Repo:
     """Descarga un repo y su README, y lo devuelve validado."""
     data = json.loads(gh_api(f"repos/{full_name}"))
+    readme = gh_api(f"repos/{full_name}/readme", raw=True)
 
-    readme_file = README_DIR / f"{full_name.replace('/', '__')}.md"
-    readme_file.write_text(
-        gh_api(f"repos/{full_name}/readme", raw=True),
-        encoding="utf-8",
-        newline="\n",
-    )
+    # Guardar el README. La API devuelve el nombre actual si el repo fue renombrado.
+    readme_file(data["full_name"]).write_text(readme, encoding="utf-8", newline="\n")
 
     return Repo(
-        repo_id=data["full_name"],
+        full_name=data["full_name"],
         github_id=data["id"],
         description=data["description"],
         topics=data["topics"],
-        categories=categories,
         language=data["language"],
-        license=(data["license"] or {}).get("spdx_id"),
-        stars=data["stargazers_count"],
+        license_spdx_id=(data["license"] or {}).get("spdx_id"),
+        stargazers_count=data["stargazers_count"],
         pushed_at=data["pushed_at"],
-        open_issues=data["open_issues_count"],
+        open_issues_count=data["open_issues_count"],
         archived=data["archived"],
-        readme_path=readme_file.relative_to(DATA_DIR).as_posix(),
+        homepage=data["homepage"],
+        readme_text=readme,
+        categories=[{"category_id": c, "assigned_by": "human"} for c in category_ids],
     )
 
 
 def main() -> None:
     README_DIR.mkdir(parents=True, exist_ok=True)
     repos = []
-    for full_name, categories in CATEGORIES.items():
+    for full_name, category_ids in CATEGORIES.items():
         print(f"-> {full_name}")
-        repos.append(build_repo(full_name, categories))
+        repos.append(build_repo(full_name, category_ids))
 
-    out = DATA_DIR / "repos.json"
-    out.write_text(
-        json.dumps([r.model_dump(mode="json") for r in repos], indent=2, ensure_ascii=False) + "\n",
+    # El README ya está en su archivo; no se repite dentro de repos.json.
+    rows = [r.model_dump(mode="json", exclude={"readme_text"}) for r in repos]
+    REPOS_FILE.write_text(
+        json.dumps(rows, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
         newline="\n",
     )
-    print(f"{len(repos)} repos -> {out}")
+    print(f"{len(repos)} repos -> {REPOS_FILE}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,133 @@
+"""Ejemplos que validan contra los contratos de shared/contracts/.
+
+Correr desde la raíz del repo:
+    python -m pytest tests/contracts -v
+"""
+import json
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
+
+from shared.contracts.assistant import AssistantRequest, AssistantResponse
+from shared.contracts.integration_idea import IntegrationIdea
+from shared.contracts.repo import CategoryList, Repo
+
+CONTRACTS_DIR = Path(__file__).resolve().parents[2] / "shared" / "contracts"
+
+# Ejemplos válidos (valores ilustrativos)
+REPO = {
+    "full_name": "keycloak/keycloak", "github_id": 11125589,
+    "description": "Open Source Identity and Access Management For Modern Applications and Services",
+    "topics": ["keycloak", "oidc", "saml"],
+    "language": "Java", "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 37435, "pushed_at": "2026-10-19T18:51:53Z", "open_issues_count": 3273,
+    "archived": False,
+    "readme_text": "Keycloak is an Open Source Identity and Access Management solution...",
+    "homepage": "https://www.keycloak.org",
+    "health_score": None,
+    "categories": [{"category_id": "auth", "assigned_by": "llm"}],
+    "use_cases": ["SSO para apps internas", "Login social con Google/GitHub"],
+    "summary_es": "Gestión de identidad y acceso de código abierto: login único, roles y permisos.",
+}
+
+IDEA = {
+    "id": "idea_keycloak_01", "full_name": "keycloak/keycloak",
+    "title": "Login único (SSO) con OIDC en una app web",
+    "integration_type": "rest_api",
+    "summary": "Delegar el login de tu app a Keycloak usando OIDC, sin guardar contraseñas en tu backend.",
+    "compatible_stack": ["Next.js", "FastAPI"],
+    "dependencies": ["Servidor Keycloak en ejecución", "Un realm y un client configurados"],
+    "difficulty": "medium", "snippet": None,
+    "docs_url": "https://www.keycloak.org/documentation",
+    "generated_by": "llm", "reviewed_at": None, "based_on_hash": "a1b2c3",
+}
+
+RESPONSE = {
+    "id": "resp_0001", "status": "ok", "title": "Un estudio de yoga, conectado.",
+    "summary": "App React con login en Keycloak y API FastAPI que guarda reservas en PostgreSQL.",
+    "components": [
+        {"key": "c1", "label": "Tu app web (React)", "role": "interfaz", "full_name": None,
+         "rationale": "El equipo ya conoce React."},
+        {"key": "c2", "label": "API (FastAPI)", "role": "API", "full_name": None,
+         "rationale": "Aquí vive la lógica de reservas y cupos."},
+        {"key": "c3", "label": "PostgreSQL", "role": "base de datos", "full_name": "postgres/postgres",
+         "rationale": "Relacional, para clases, cupos y reservas."},
+        {"key": "c4", "label": "Keycloak", "role": "identidad", "full_name": "keycloak/keycloak",
+         "rationale": "Cuentas con roles para alumnos y profesores."},
+    ],
+    "connections": [
+        {"from_key": "c1", "to_key": "c4", "protocol": "OIDC", "description": "Inicio de sesión."},
+        {"from_key": "c1", "to_key": "c2", "protocol": "REST", "description": "Pide clases y crea reservas."},
+        {"from_key": "c2", "to_key": "c4", "protocol": "JWT", "description": "Verifica token y rol."},
+        {"from_key": "c2", "to_key": "c3", "protocol": "SQL", "description": "Lee y guarda reservas."},
+    ],
+    "assumptions": ["Sin pagos en la primera versión."],
+    "limitations": ["El control de cupos requiere lógica propia en la API."],
+    "generated_at": "2026-10-19T22:00:00Z",
+}
+
+# Fila como la entrega la vista:
+FILA_VISTA = {
+    "github_id": 53631945, "full_name": "BurntSushi/ripgrep", "name": "ripgrep",
+    "description": "ripgrep recursively searches directories for a regex pattern",
+    "homepage": "", "language": "Rust", "topics": ["cli", "search"],
+    "stargazers_count": 50000, "forks_count": 2000, "pushed_at": "2026-10-18T10:00:00Z",
+    "archived": False, "license_spdx_id": "Unlicense", "content_hash": "x" * 64,
+    "readme_text": None,
+}
+
+
+@pytest.fixture(scope="module")
+def category_ids() -> set[str]:
+    data = json.loads((CONTRACTS_DIR / "categories.json").read_text(encoding="utf-8"))
+    return {c.id for c in CategoryList.model_validate(data).categories}
+
+
+def test_ids_de_categorias_unicos():
+    data = json.loads((CONTRACTS_DIR / "categories.json").read_text(encoding="utf-8"))
+    ids = [c["id"] for c in data["categories"]]
+    assert len(ids) == len(set(ids)), "id de categoría duplicado"
+
+
+def test_repo_validado(category_ids):
+    repo = Repo.model_validate(REPO)
+    assert all(a.category_id in category_ids for a in repo.categories)
+
+
+def test_idea_valida():
+    IntegrationIdea.model_validate(IDEA)
+
+
+def test_pregunta_valida():
+    AssistantRequest(query="Quiero una app web para un estudio de yoga con reservas de clases.")
+
+
+def test_respuesta_valida():
+    AssistantResponse.model_validate(RESPONSE)
+
+
+def test_fila_de_la_vista_se_lee():
+    # Como la entrega la vista: homepage "", columnas extra, sin open_issues_count
+    repo = Repo.model_validate(FILA_VISTA)
+    assert repo.homepage is None
+    assert repo.open_issues_count is None
+
+
+@pytest.mark.parametrize(
+    "modelo, base, cambio",
+    [
+        (Repo, REPO, {"stargazers_count": -5}),
+        (Repo, REPO, {"homepage": "no es url"}),
+        (Repo, REPO, {"full_name": "sin-barra"}),
+        (IntegrationIdea, IDEA, {"snippet": "print('hola')"}),
+        (AssistantResponse, RESPONSE, {"connections": [
+            {"from_key": "c1", "to_key": "c9", "protocol": "REST", "description": "x"}]}),
+        (AssistantResponse, RESPONSE, {"status": "needs_clarification"}),
+    ],
+    ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
+         "snippet-sin-lenguaje", "flecha-a-caja-inexistente", "aclaracion-sin-preguntas"],
+)
+def test_casos_invalidos_se_rechazan(modelo, base, cambio):
+    with pytest.raises(ValidationError):
+        modelo.model_validate({**base, **cambio})

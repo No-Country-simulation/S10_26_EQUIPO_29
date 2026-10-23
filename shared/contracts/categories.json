@@ -1,0 +1,11 @@
+{
+  "version": 0,
+  "categories": [
+    {"id": "auth",      "name": "Autenticación", "description": "Login, SSO, gestión de usuarios, roles y permisos."},
+    {"id": "database",  "name": "Base de datos", "description": "Motores y servicios para almacenar y consultar datos."},
+    {"id": "payments",  "name": "Pagos",         "description": "Cobros, suscripciones y facturación."},
+    {"id": "ai",        "name": "IA",            "description": "Modelos, frameworks de LLM, embeddings y agentes."},
+    {"id": "analytics", "name": "Analítica",     "description": "Medición de uso, métricas de producto y dashboards."},
+    {"id": "search",    "name": "Búsqueda",      "description": "Motores de búsqueda de texto y búsqueda semántica."}
+  ]
+}
