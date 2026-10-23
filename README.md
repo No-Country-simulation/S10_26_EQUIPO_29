@@ -29,6 +29,7 @@ Criterio: **lo que es de todos va en la raíz; lo que es de una parte va en su c
 | `shared/contracts/` | Contratos entre partes: esquemas de datos y ejemplos JSON | Todos (cambios por PR, avisando) |
 | `tests/` | Pruebas de **integración** entre partes. Las pruebas de cada parte van en su carpeta | Todos |
 | `docs/` | Documentación general del proyecto | Todos |
+| `pm/` | Producto y gestión del proyecto | Project Manager |
 | `.env.example` | Variables de entorno de todo el proyecto, con una sección por parte y valores de ejemplo | Todos |
 
 ## Cómo se conectan las partes
