@@ -1,0 +1,439 @@
+[
+  {
+    "full_name": "postgres/postgres",
+    "github_id": 927442,
+    "description": null,
+    "topics": [],
+    "language": "C",
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 22488,
+    "pushed_at": "2026-10-21T00:33:05Z",
+    "open_issues_count": 0,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "database",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Una base sólida para los datos de tu aplicación. Relacional, extensible y preparada para consultas complejas."
+  },
+  {
+    "full_name": "keycloak/keycloak",
+    "github_id": 11125589,
+    "description": null,
+    "topics": [],
+    "language": "Java",
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 37446,
+    "pushed_at": "2026-10-21T00:52:17Z",
+    "open_issues_count": 3310,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Inicio de sesión único, gestión de usuarios y control de acceso para tus aplicaciones."
+  },
+  {
+    "full_name": "meilisearch/meilisearch",
+    "github_id": 130688011,
+    "description": null,
+    "topics": [],
+    "language": "Rust",
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 59616,
+    "pushed_at": "2026-10-20T17:47:17Z",
+    "open_issues_count": 320,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "search",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Búsqueda rápida y tolerante a errores para que tus usuarios encuentren lo que necesitan."
+  },
+  {
+    "full_name": "ollama/ollama",
+    "github_id": 658928958,
+    "description": null,
+    "topics": [],
+    "language": "Go",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 184074,
+    "pushed_at": "2026-10-20T22:09:49Z",
+    "open_issues_count": 4371,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "ai",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Ejecuta modelos de lenguaje en tu infraestructura e intégralos en tus propias experiencias."
+  },
+  {
+    "full_name": "plausible/analytics",
+    "github_id": 160427405,
+    "description": null,
+    "topics": [],
+    "language": "Elixir",
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 29577,
+    "pushed_at": "2026-10-20T12:18:39Z",
+    "open_issues_count": 53,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Entiende cómo se utiliza tu producto con analítica web sencilla y centrada en la privacidad."
+  },
+  {
+    "full_name": "getlago/lago",
+    "github_id": 464415161,
+    "description": null,
+    "topics": [],
+    "language": "Go",
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 10699,
+    "pushed_at": "2026-10-21T01:16:15Z",
+    "open_issues_count": 33,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "payments",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Componentes para gestionar facturación por uso y suscripciones en tus productos."
+  },
+  {
+    "full_name": "qdrant/qdrant",
+    "github_id": 268163609,
+    "description": null,
+    "topics": [],
+    "language": "Rust",
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 35162,
+    "pushed_at": "2026-10-20T23:21:17Z",
+    "open_issues_count": 783,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "database",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Búsqueda vectorial para recuperar información relevante y construir aplicaciones con IA."
+  },
+  {
+    "full_name": "umami-software/umami",
+    "github_id": 280363952,
+    "description": null,
+    "topics": [],
+    "language": "TypeScript",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 39492,
+    "pushed_at": "2026-10-20T23:27:19Z",
+    "open_issues_count": 121,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Métricas esenciales de tu sitio en una interfaz simple, con opción de alojamiento propio."
+  },
+  {
+    "full_name": "typesense/typesense",
+    "github_id": 79317191,
+    "description": null,
+    "topics": [],
+    "language": "C++",
+    "license_spdx_id": "GPL-3.0",
+    "stargazers_count": 27015,
+    "pushed_at": "2026-10-20T12:37:43Z",
+    "open_issues_count": 909,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "search",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Un motor de búsqueda para crear experiencias de descubrimiento en tus aplicaciones."
+  },
+  {
+    "full_name": "react/react",
+    "github_id": 10270250,
+    "description": null,
+    "topics": [],
+    "language": "JavaScript",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 251590,
+    "pushed_at": "2026-10-20T21:16:35Z",
+    "open_issues_count": 1478,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "frontend",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Construye interfaces de usuario con componentes reutilizables para aplicaciones web."
+  },
+  {
+    "full_name": "vercel/next.js",
+    "github_id": 70107786,
+    "description": null,
+    "topics": [],
+    "language": "JavaScript",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 143096,
+    "pushed_at": "2026-10-21T01:12:34Z",
+    "open_issues_count": 3727,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "frontend",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Framework de React para construir aplicaciones web con rutas y distintas estrategias de renderizado."
+  },
+  {
+    "full_name": "fastapi/fastapi",
+    "github_id": 160919119,
+    "description": null,
+    "topics": [],
+    "language": "Python",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 103294,
+    "pushed_at": "2026-10-20T23:00:11Z",
+    "open_issues_count": 71,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "backend",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Crea APIs con Python, validación de datos y documentación de los endpoints."
+  },
+  {
+    "full_name": "nestjs/nest",
+    "github_id": 80945428,
+    "description": null,
+    "topics": [],
+    "language": "TypeScript",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 76868,
+    "pushed_at": "2026-10-21T01:05:22Z",
+    "open_issues_count": 32,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "backend",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Organiza servicios y APIs de Node.js con módulos, controladores e inyección de dependencias."
+  },
+  {
+    "full_name": "django/django",
+    "github_id": 4164482,
+    "description": null,
+    "topics": [],
+    "language": "Python",
+    "license_spdx_id": "BSD-3-Clause",
+    "stargazers_count": 91478,
+    "pushed_at": "2026-10-20T18:46:12Z",
+    "open_issues_count": 539,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "backend",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Framework web de Python con modelos de datos, administración y herramientas para aplicaciones de negocio."
+  },
+  {
+    "full_name": "valkey-io/valkey",
+    "github_id": 775743011,
+    "description": null,
+    "topics": [],
+    "language": "C",
+    "license_spdx_id": "BSD-3-Clause",
+    "stargazers_count": 27478,
+    "pushed_at": "2026-10-20T21:20:02Z",
+    "open_issues_count": 943,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "cache",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Almacén de datos clave-valor en memoria para caché y cargas de baja latencia."
+  },
+  {
+    "full_name": "rabbitmq/rabbitmq-server",
+    "github_id": 924551,
+    "description": null,
+    "topics": [],
+    "language": "JavaScript",
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 13934,
+    "pushed_at": "2026-10-21T00:49:20Z",
+    "open_issues_count": 270,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "messaging",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Gestiona colas de mensajes para separar tareas y procesos entre servicios."
+  },
+  {
+    "full_name": "prometheus/prometheus",
+    "github_id": 6838921,
+    "description": null,
+    "topics": [],
+    "language": "Go",
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 66666,
+    "pushed_at": "2026-10-21T01:05:02Z",
+    "open_issues_count": 1019,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "observability",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Recopila métricas de servicios para consultar su comportamiento y definir alertas."
+  },
+  {
+    "full_name": "grafana/grafana",
+    "github_id": 15111821,
+    "description": null,
+    "topics": [],
+    "language": "TypeScript",
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 77397,
+    "pushed_at": "2026-10-21T01:22:19Z",
+    "open_issues_count": 3341,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "observability",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Visualiza métricas y otras fuentes de observabilidad en paneles y gráficos."
+  },
+  {
+    "full_name": "traefik/traefik",
+    "github_id": 42408804,
+    "description": null,
+    "topics": [],
+    "language": "Go",
+    "license_spdx_id": "MIT",
+    "stargazers_count": 65294,
+    "pushed_at": "2026-10-20T15:46:08Z",
+    "open_issues_count": 951,
+    "archived": false,
+    "readme_text": null,
+    "homepage": null,
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "infrastructure",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": "Proxy de aplicaciones para dirigir tráfico hacia servicios y gestionar rutas de entrada."
+  }
+]
