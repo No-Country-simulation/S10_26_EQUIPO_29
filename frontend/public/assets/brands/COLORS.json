@@ -1,0 +1,56 @@
+{
+  "Django": {
+    "hex": "#092E20",
+    "source": "https://www.djangoproject.com/community/logos/",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "FastAPI": {
+    "hex": "#009688",
+    "source": "https://github.com/tiangolo/fastapi/blob/ffb4f77a11f83132b521ba0aac6c95792c19e797/docs/en/docs/img/icon-white.svg",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "Grafana": {
+    "hex": "#F46800",
+    "source": "https://grafana.com",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "NestJS": {
+    "hex": "#E0234E",
+    "source": "https://nestjs.com",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "Next.js": {
+    "hex": "#000000",
+    "source": "https://vercel.com/design/brands#next-js",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "Prometheus": {
+    "hex": "#E6522C",
+    "source": "https://prometheus.io",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "RabbitMQ": {
+    "hex": "#FF6600",
+    "source": "https://www.rabbitmq.com",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "React": {
+    "hex": "#61DAFB",
+    "source": "https://github.com/facebook/create-react-app/blob/282c03f9525fdf8061ffa1ec50dce89296d916bd/test/fixtures/relative-paths/src/logo.svg",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  },
+  "Traefik": {
+    "hex": "#24A1C1",
+    "source": "https://traefik.io/traefik",
+    "provider": "Simple Icons16.35.0",
+    "note": "Card background and tag are darker tonal adaptations for white text."
+  }
+}

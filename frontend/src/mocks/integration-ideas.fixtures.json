@@ -1,0 +1,301 @@
+[
+  {
+    "id": "mock_keycloak_1",
+    "full_name": "keycloak/keycloak",
+    "title": "Inicio de sesión en una aplicación web",
+    "integration_type": "sdk",
+    "summary": "Inicializa el adaptador con los datos de tu cliente y solicita inicio de sesión. Requiere configurar el servidor, el realm, el cliente público y sus URLs de redirección.",
+    "compatible_stack": [
+      "React y API protegida"
+    ],
+    "dependencies": [
+      "Realm y cliente público con PKCE; keycloak-js"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Acceso del usuario a una ruta protegida"
+    ],
+    "snippet": "import Keycloak from 'keycloak-js';\n\nconst keycloak = new Keycloak({\n  url: 'http://keycloak-server',\n  realm: 'my-realm',\n  clientId: 'my-app'\n});\n\nawait keycloak.init({\n  onLoad: 'login-required'\n});",
+    "snippet_language": "javascript",
+    "docs_url": "https://www.keycloak.org/securing-apps/javascript-adapter",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "49c88cbe260ac40aa797b3cf3ddb1e12c35cb7826236dd703b8516fcd54a877f"
+  },
+  {
+    "id": "mock_keycloak_2",
+    "full_name": "keycloak/keycloak",
+    "title": "Descubrimiento para validar tokens",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: descubrimiento para validar tokens.",
+    "compatible_stack": [
+      "Backend con middleware JWT"
+    ],
+    "dependencies": [
+      "Cliente OIDC y validación de issuer, audience y firma"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Solicitud autenticada a la API"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://www.keycloak.org/documentation",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "2db49ccc68f0ae219d3ce575518c5e955de1acbb997e4833b101d2f80f3d089c"
+  },
+  {
+    "id": "mock_meilisearch_1",
+    "full_name": "meilisearch/meilisearch",
+    "title": "Indexar un catálogo de productos",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: indexar un catálogo de productos.",
+    "compatible_stack": [
+      "Backend de catálogo"
+    ],
+    "dependencies": [
+      "Instancia de Meilisearch y clave privada de indexación"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Creación o actualización de productos"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://www.meilisearch.com/docs",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "2103fbbd20f9cc7be4001e9e096bc853af2c054b0b7d620c3f4c79a9b90ee767"
+  },
+  {
+    "id": "mock_meilisearch_2",
+    "full_name": "meilisearch/meilisearch",
+    "title": "Buscar desde el backend",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: buscar desde el backend.",
+    "compatible_stack": [
+      "Web y API de búsqueda"
+    ],
+    "dependencies": [
+      "Índice products y clave con permisos de búsqueda"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Consulta del usuario"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://www.meilisearch.com/docs",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "5d28fdb069bb7464f36b96f189277cf0cb2007a2b49f9e3903c2f56916b4d1ff"
+  },
+  {
+    "id": "mock_ollama_1",
+    "full_name": "ollama/ollama",
+    "title": "Asistente privado",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: asistente privado.",
+    "compatible_stack": [
+      "Backend Python o Node.js"
+    ],
+    "dependencies": [
+      "Ollama y un modelo descargado"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Mensaje del usuario"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.ollama.com/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "c769070a41e1f6b290d671b5d08c517a55c86a37862abaf8611ec7ae0f375d6d"
+  },
+  {
+    "id": "mock_ollama_2",
+    "full_name": "ollama/ollama",
+    "title": "Responder con contexto recuperado",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: responder con contexto recuperado.",
+    "compatible_stack": [
+      "API y buscador vectorial"
+    ],
+    "dependencies": [
+      "Modelo local y pipeline de recuperación con permisos"
+    ],
+    "difficulty": "high",
+    "triggers": [
+      "Pregunta sobre documentos internos"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.ollama.com/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "b2d8b49d48e799b357821a51c41c5b969bad856d838f4493ea08f0fb806ccd85"
+  },
+  {
+    "id": "mock_plausible_2",
+    "full_name": "plausible/analytics",
+    "title": "Registrar un evento desde un servicio",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: registrar un evento desde un servicio.",
+    "compatible_stack": [
+      "Backend de producto"
+    ],
+    "dependencies": [
+      "Endpoint de eventos y dominio configurado"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Evento de negocio aprobado para analítica"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://plausible.io/docs",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "76def5f76b8fc4c25d1f4c5ca20e7b32621c68bf0f9a960627904d3881d2c238"
+  },
+  {
+    "id": "mock_lago_1",
+    "full_name": "getlago/lago",
+    "title": "Enviar consumo de una API",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: enviar consumo de una API.",
+    "compatible_stack": [
+      "Servicio de medición"
+    ],
+    "dependencies": [
+      "Cliente, suscripción y métrica configurados en Lago"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Solicitud facturable completada"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.getlago.com/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "a5fc68793e4db67056cd2a2e311939819f47c21de9dc91312373f2cdfa750074"
+  },
+  {
+    "id": "mock_lago_2",
+    "full_name": "getlago/lago",
+    "title": "Procesar notificaciones de facturación",
+    "integration_type": "webhook",
+    "summary": "Ejemplo de integración: procesar notificaciones de facturación.",
+    "compatible_stack": [
+      "Backend y cola de trabajos"
+    ],
+    "dependencies": [
+      "Endpoint HTTPS y validación de autenticidad"
+    ],
+    "difficulty": "high",
+    "triggers": [
+      "Notificación de una factura"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.getlago.com/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "5ce3dbae61bae7d6a93513f54e57cc9a369875d85ce733b02be9b313a773d97a"
+  },
+  {
+    "id": "mock_qdrant_1",
+    "full_name": "qdrant/qdrant",
+    "title": "Preparar una colección documental",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: preparar una colección documental.",
+    "compatible_stack": [
+      "Pipeline de embeddings"
+    ],
+    "dependencies": [
+      "Qdrant y modelo con vectores de 384 dimensiones"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Configuración del índice"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://qdrant.tech/documentation/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "2c2a6f5100b9584355ef7688c10ae5483f67b05083aa912a61150f7ce95c4cbe"
+  },
+  {
+    "id": "mock_qdrant_2",
+    "full_name": "qdrant/qdrant",
+    "title": "Recuperación con aislamiento por cliente",
+    "integration_type": "sdk",
+    "summary": "Ejemplo de integración: recuperación con aislamiento por cliente.",
+    "compatible_stack": [
+      "Backend RAG"
+    ],
+    "dependencies": [
+      "qdrant-client y metadatos tenant_id"
+    ],
+    "difficulty": "high",
+    "triggers": [
+      "Pregunta autenticada"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://qdrant.tech/documentation/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "ace70c4ba71b3724456e80247dda4882a52e6de2e67900ea6fcb4d0be6393ee7"
+  },
+  {
+    "id": "mock_typesense_1",
+    "full_name": "typesense/typesense",
+    "title": "Crear un índice de herramientas",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: crear un índice de herramientas.",
+    "compatible_stack": [
+      "Backend de catálogo"
+    ],
+    "dependencies": [
+      "Typesense y clave de administración privada"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Preparación de la colección"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://typesense.org/docs/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "f4f74b3548e5c2ea4a72b52c4995aa7ee3d1417bb26252351d7705ef603e06ae"
+  },
+  {
+    "id": "mock_typesense_2",
+    "full_name": "typesense/typesense",
+    "title": "Buscar con facetas",
+    "integration_type": "rest_api",
+    "summary": "Ejemplo de integración: buscar con facetas.",
+    "compatible_stack": [
+      "Frontend y API de búsqueda"
+    ],
+    "dependencies": [
+      "Colección tools poblada y clave de solo búsqueda"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Consulta o selección de categoría"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://typesense.org/docs/",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "b7eb29f48adaf0c758e8339b0d6e04ea07588904fec91a2ec21503b7b88f7934"
+  }
+]

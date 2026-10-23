@@ -1,0 +1,53 @@
+{
+  "postgresql": [
+    {
+      "title": "Reservas sin duplicados",
+      "type": "SQL",
+      "stack": "API Node.js o Python",
+      "dependencies": "Servidor PostgreSQL y driver SQL",
+      "difficulty": "Intermedia",
+      "trigger": "Confirmación de una reserva",
+      "snippet": "CREATE TABLE reservations (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  resource_id bigint NOT NULL,\n  starts_at timestamptz NOT NULL,\n  UNIQUE (resource_id, starts_at)\n);"
+    },
+    {
+      "title": "Eventos pendientes de publicación",
+      "type": "SQL · Outbox",
+      "stack": "Backend y worker de eventos",
+      "dependencies": "PostgreSQL y worker de publicación",
+      "difficulty": "Intermedia",
+      "trigger": "Transacción de negocio confirmada",
+      "snippet": "BEGIN;\nINSERT INTO outbox (event_type, payload)\nVALUES ('reservation.created', '{\"id\": 42}'::jsonb);\n-- Guardar aquí la reserva en la misma transacción.\nCOMMIT;"
+    }
+  ],
+  "plausible": [
+    {
+      "title": "Medir una conversión",
+      "type": "JavaScript",
+      "stack": "Sitio web",
+      "dependencies": "Script de Plausible configurado para el dominio",
+      "difficulty": "Básica",
+      "trigger": "Propuesta completada",
+      "snippet": "// Después de instalar el script oficial para tu dominio:\nwindow.plausible?.('Proposal created');"
+    }
+  ],
+  "umami": [
+    {
+      "title": "Instrumentar un sitio",
+      "type": "JavaScript",
+      "stack": "Aplicación web",
+      "dependencies": "Instancia Umami y website ID",
+      "difficulty": "Básica",
+      "trigger": "Visita a una página",
+      "snippet": "<script defer\n  src=\"https://analytics.example.com/script.js\"\n  data-website-id=\"YOUR_WEBSITE_ID\">\n</script>"
+    },
+    {
+      "title": "Medir interacción con el catálogo",
+      "type": "JavaScript",
+      "stack": "React",
+      "dependencies": "Script de seguimiento inicializado",
+      "difficulty": "Básica",
+      "trigger": "Apertura de una ficha",
+      "snippet": "window.umami?.track('Tool detail opened', {\n  tool: 'postgresql',\n  source: 'catalog'\n});\n// Evitar enviar datos personales en las propiedades."
+    }
+  ]
+}
