@@ -1,3 +1,4 @@
+import {registerCardInteraction} from './cardInteractionEvents.mjs';
 import {useEffect, useRef} from 'react';
 
 // Keep hover on an inner surface so filtering and entrance transforms stay independent.
@@ -9,9 +10,10 @@ export function useCardTilt() {
   const enabled = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   let releaseTimer = 0, pressedAt = 0, pointerId = null, pressedKey = null;
-  const release = () => {clearTimeout(releaseTimer);surface.removeAttribute('data-pressed');pointerId=null;pressedKey=null;};
+  const release = () => {clearTimeout(releaseTimer);surface.removeAttribute('data-pressed');pointerId=null;pressedKey=null;if(!surface.hasAttribute('data-hover'))shared.deactivate();};
   const press = () => {
    if (!motion.matches || card.dataset.exiting === 'true') return;
+   shared.activate();
    clearTimeout(releaseTimer);pressedAt=performance.now();surface.dataset.pressed='true';
   };
   const finish = () => {
@@ -28,6 +30,7 @@ export function useCardTilt() {
   let frame = 0;
   let x = .5, y = .5;
   const reset = () => {
+   shared.deactivate();
    release();
    cancelAnimationFrame(frame);
    frame = 0;
@@ -36,6 +39,7 @@ export function useCardTilt() {
   };
   const move = event => {
    if (!enabled.matches || event.pointerType === 'touch' || card.dataset.exiting === 'true') return;
+   shared.activate();
    const bounds = card.getBoundingClientRect();
    x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
    y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
@@ -48,11 +52,9 @@ export function useCardTilt() {
     surface.style.setProperty('--glare-y', `${y*100}%`);
    });
   };
-  const visibility = () => { if (document.hidden) reset(); };
+  const shared=registerCardInteraction({reset,up,keyup});
   card.addEventListener('pointerdown', down, {passive:true});
-  window.addEventListener('pointerup', up);
   card.addEventListener('keydown', keydown);
-  window.addEventListener('keyup', keyup);
   card.addEventListener('focusout', release);
   card.addEventListener('cardpressreset', release);
   motion.addEventListener('change', release);
@@ -60,15 +62,10 @@ export function useCardTilt() {
   card.addEventListener('pointerleave', reset);
   card.addEventListener('pointercancel', reset);
   enabled.addEventListener('change', reset);
-  window.addEventListener('blur', reset);
-  window.addEventListener('scroll', reset, {passive:true});
-  document.addEventListener('visibilitychange', visibility);
   return () => {
-   reset();
+   reset();shared.dispose();
    card.removeEventListener('pointerdown', down);
-   window.removeEventListener('pointerup', up);
    card.removeEventListener('keydown', keydown);
-   window.removeEventListener('keyup', keyup);
    card.removeEventListener('focusout', release);
    card.removeEventListener('cardpressreset', release);
    motion.removeEventListener('change', release);
@@ -76,9 +73,6 @@ export function useCardTilt() {
    card.removeEventListener('pointerleave', reset);
    card.removeEventListener('pointercancel', reset);
    enabled.removeEventListener('change', reset);
-   window.removeEventListener('blur', reset);
-   window.removeEventListener('scroll', reset);
-   document.removeEventListener('visibilitychange', visibility);
   };
  }, []);
  return ref;
