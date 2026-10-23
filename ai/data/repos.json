@@ -1,6 +1,6 @@
 [
   {
-    "repo_id": "keycloak/keycloak",
+    "full_name": "keycloak/keycloak",
     "github_id": 11125589,
     "description": "Open Source Identity and Access Management For Modern Applications and Services",
     "topics": [
@@ -8,20 +8,25 @@
       "oidc",
       "saml"
     ],
-    "categories": [
-      "Auth"
-    ],
     "language": "Java",
-    "license": "Apache-2.0",
-    "stars": 37402,
-    "pushed_at": "2026-10-16T19:15:12Z",
-    "open_issues": 3241,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 37472,
+    "pushed_at": "2026-10-22T14:34:45Z",
+    "open_issues_count": 3334,
     "archived": false,
-    "readme_path": "readmes/keycloak__keycloak.md",
-    "health_score": null
+    "homepage": "https://www.keycloak.org/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "ory/kratos",
+    "full_name": "ory/kratos",
     "github_id": 135321861,
     "description": "Headless cloud-native authentication and identity management written in Go. Scales to a billion+ users. Replace Homegrown, Auth0, Okta, Firebase with better UX and DX. Passkeys, Social Sign In, OIDC, Magic Link, Multi-Factor Auth, SMS, SAML, TOTP, and more. Runs everywhere, runs best on Ory Network. ",
     "topics": [
@@ -37,20 +42,25 @@
       "user-profiles",
       "users"
     ],
-    "categories": [
-      "Auth"
-    ],
     "language": "Go",
-    "license": "Apache-2.0",
-    "stars": 13924,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 13933,
     "pushed_at": "2026-07-29T09:30:37Z",
-    "open_issues": 233,
+    "open_issues_count": 236,
     "archived": false,
-    "readme_path": "readmes/ory__kratos.md",
-    "health_score": null
+    "homepage": "https://www.ory.com/?utm_source=github&utm_medium=banner&utm_campaign=kratos",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "supertokens/supertokens-core",
+    "full_name": "supertokens/supertokens-core",
     "github_id": 231921809,
     "description": "Open source alternative to Auth0 / Firebase Auth / AWS Cognito ",
     "topics": [
@@ -74,20 +84,25 @@
       "social-login",
       "supertokens"
     ],
-    "categories": [
-      "Auth"
-    ],
     "language": "Java",
-    "license": "NOASSERTION",
-    "stars": 15350,
-    "pushed_at": "2026-10-16T19:01:17Z",
-    "open_issues": 148,
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 15333,
+    "pushed_at": "2026-10-22T17:15:52Z",
+    "open_issues_count": 151,
     "archived": false,
-    "readme_path": "readmes/supertokens__supertokens-core.md",
-    "health_score": null
+    "homepage": "https://supertokens.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "zitadel/zitadel",
+    "full_name": "zitadel/zitadel",
     "github_id": 247714750,
     "description": "ZITADEL - Identity infrastructure, simplified for you.",
     "topics": [
@@ -109,20 +124,25 @@
       "sso",
       "user"
     ],
-    "categories": [
-      "Auth"
-    ],
     "language": "Go",
-    "license": "AGPL-3.0",
-    "stars": 15328,
-    "pushed_at": "2026-10-16T09:29:48Z",
-    "open_issues": 1288,
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 15388,
+    "pushed_at": "2026-10-22T10:18:32Z",
+    "open_issues_count": 1311,
     "archived": false,
-    "readme_path": "readmes/zitadel__zitadel.md",
-    "health_score": null
+    "homepage": "https://zitadel.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "supabase/supabase",
+    "full_name": "supabase/supabase",
     "github_id": 214587193,
     "description": "The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI applications.",
     "topics": [
@@ -146,21 +166,29 @@
       "vectors",
       "websockets"
     ],
-    "categories": [
-      "DB",
-      "Auth"
-    ],
     "language": "TypeScript",
-    "license": "Apache-2.0",
-    "stars": 111658,
-    "pushed_at": "2026-10-16T21:15:25Z",
-    "open_issues": 1164,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 113373,
+    "pushed_at": "2026-10-22T17:35:41Z",
+    "open_issues_count": 1188,
     "archived": false,
-    "readme_path": "readmes/supabase__supabase.md",
-    "health_score": null
+    "homepage": "https://supabase.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "database",
+        "assigned_by": "human"
+      },
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "pocketbase/pocketbase",
+    "full_name": "pocketbase/pocketbase",
     "github_id": 510607652,
     "description": "Open Source realtime backend in 1 file",
     "topics": [
@@ -169,21 +197,29 @@
       "golang",
       "realtime"
     ],
-    "categories": [
-      "DB",
-      "Auth"
-    ],
     "language": "Go",
-    "license": "MIT",
-    "stars": 61452,
-    "pushed_at": "2026-10-14T18:45:14Z",
-    "open_issues": 19,
+    "license_spdx_id": "MIT",
+    "stargazers_count": 61541,
+    "pushed_at": "2026-10-22T17:09:17Z",
+    "open_issues_count": 19,
     "archived": false,
-    "readme_path": "readmes/pocketbase__pocketbase.md",
-    "health_score": null
+    "homepage": "https://pocketbase.io/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "database",
+        "assigned_by": "human"
+      },
+      {
+        "category_id": "auth",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "redis/redis",
+    "full_name": "redis/redis",
     "github_id": 156018,
     "description": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
     "topics": [
@@ -208,20 +244,25 @@
       "vector-databases",
       "vector-search"
     ],
-    "categories": [
-      "DB"
-    ],
     "language": "C",
-    "license": "NOASSERTION",
-    "stars": 76906,
-    "pushed_at": "2026-10-16T09:16:21Z",
-    "open_issues": 3037,
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 77042,
+    "pushed_at": "2026-10-22T15:07:52Z",
+    "open_issues_count": 3057,
     "archived": false,
-    "readme_path": "readmes/redis__redis.md",
-    "health_score": null
+    "homepage": "http://redis.io/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "database",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "juspay/hyperswitch",
+    "full_name": "juspay/hyperswitch",
     "github_id": 552877440,
     "description": "Open source, composable payments platform | PCI compliant | SaaS and Self-host options | Enables connectivity to multiple payment, payout, fraud, vault and tokenization providers | Uplifts authorization with intelligent routing and revenue recovery | Reduce payment processing costs with cost observability | Reduces payment ops with reconciliation",
     "topics": [
@@ -246,20 +287,25 @@
       "stripe",
       "works-with-react"
     ],
-    "categories": [
-      "Payments"
-    ],
     "language": "Rust",
-    "license": "Apache-2.0",
-    "stars": 45337,
-    "pushed_at": "2026-10-16T19:35:34Z",
-    "open_issues": 2334,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 45390,
+    "pushed_at": "2026-10-22T17:29:13Z",
+    "open_issues_count": 2357,
     "archived": false,
-    "readme_path": "readmes/juspay__hyperswitch.md",
-    "health_score": null
+    "homepage": "https://hyperswitch.io/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "payments",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "getlago/lago",
+    "full_name": "getlago/lago",
     "github_id": 464415161,
     "description": "Open Source Metering and Usage Based Billing API ⭐️ Consumption tracking, Subscription management, Pricing iterations, Payment orchestration & Revenue analytics",
     "topics": [
@@ -282,20 +328,25 @@
       "subscriptions",
       "usage-based-billing"
     ],
-    "categories": [
-      "Payments"
-    ],
     "language": "Go",
-    "license": "AGPL-3.0",
-    "stars": 10688,
-    "pushed_at": "2026-10-16T10:07:05Z",
-    "open_issues": 33,
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 10705,
+    "pushed_at": "2026-10-22T16:04:57Z",
+    "open_issues_count": 35,
     "archived": false,
-    "readme_path": "readmes/getlago__lago.md",
-    "health_score": null
+    "homepage": "https://www.getlago.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "payments",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "killbill/killbill",
+    "full_name": "killbill/killbill",
     "github_id": 6325420,
     "description": "Open-Source Subscription Billing & Payments Platform",
     "topics": [
@@ -304,20 +355,25 @@
       "payments",
       "subscriptions"
     ],
-    "categories": [
-      "Payments"
-    ],
     "language": "Java",
-    "license": "Apache-2.0",
-    "stars": 5798,
-    "pushed_at": "2026-10-12T23:02:51Z",
-    "open_issues": 272,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 5814,
+    "pushed_at": "2026-10-22T13:40:39Z",
+    "open_issues_count": 272,
     "archived": false,
-    "readme_path": "readmes/killbill__killbill.md",
-    "health_score": null
+    "homepage": "https://killbill.io/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "payments",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "ollama/ollama",
+    "full_name": "ollama/ollama",
     "github_id": 658928958,
     "description": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
     "topics": [
@@ -337,20 +393,25 @@
       "ollama",
       "qwen"
     ],
-    "categories": [
-      "AI"
-    ],
     "language": "Go",
-    "license": "MIT",
-    "stars": 183495,
-    "pushed_at": "2026-10-16T22:02:40Z",
-    "open_issues": 4313,
+    "license_spdx_id": "MIT",
+    "stargazers_count": 184306,
+    "pushed_at": "2026-10-22T17:13:46Z",
+    "open_issues_count": 4395,
     "archived": false,
-    "readme_path": "readmes/ollama__ollama.md",
-    "health_score": null
+    "homepage": "https://ollama.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "ai",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "langchain-ai/langchain",
+    "full_name": "langchain-ai/langchain",
     "github_id": 552661142,
     "description": "The agent engineering platform.",
     "topics": [
@@ -375,20 +436,25 @@
       "rag",
       "typescript"
     ],
-    "categories": [
-      "AI"
-    ],
     "language": "Python",
-    "license": "MIT",
-    "stars": 147945,
-    "pushed_at": "2026-10-16T19:28:43Z",
-    "open_issues": 651,
+    "license_spdx_id": "MIT",
+    "stargazers_count": 148278,
+    "pushed_at": "2026-10-22T17:32:58Z",
+    "open_issues_count": 667,
     "archived": false,
-    "readme_path": "readmes/langchain-ai__langchain.md",
-    "health_score": null
+    "homepage": "https://docs.langchain.com/langchain/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "ai",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "run-llama/llama_index",
+    "full_name": "run-llama/llama_index",
     "github_id": 560704231,
     "description": "LlamaIndex is the document processing platform for AI",
     "topics": [
@@ -403,20 +469,25 @@
       "rag",
       "vector-database"
     ],
-    "categories": [
-      "AI"
-    ],
     "language": "Python",
-    "license": "MIT",
-    "stars": 52525,
-    "pushed_at": "2026-10-14T15:29:28Z",
-    "open_issues": 955,
+    "license_spdx_id": "MIT",
+    "stargazers_count": 52618,
+    "pushed_at": "2026-10-21T02:34:58Z",
+    "open_issues_count": 1024,
     "archived": false,
-    "readme_path": "readmes/run-llama__llama_index.md",
-    "health_score": null
+    "homepage": "https://developers.llamaindex.ai/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "ai",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "PostHog/posthog",
+    "full_name": "PostHog/posthog",
     "github_id": 235901813,
     "description": ":hedgehog: PostHog is the leading platform for building self-driving products. Our developer tools – AI observability, analytics, session replay, flags, experiments, error tracking, logs, and more – capture all the context agents need to diagnose problems, uncover opportunities, and ship fixes. Steer it all from Slack, web, desktop, or the MCP.",
     "topics": [
@@ -436,20 +507,25 @@
       "typescript",
       "web-analytics"
     ],
-    "categories": [
-      "Analytics"
-    ],
     "language": "Python",
-    "license": "NOASSERTION",
-    "stars": 40311,
-    "pushed_at": "2026-10-16T22:26:02Z",
-    "open_issues": 5662,
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 40384,
+    "pushed_at": "2026-10-22T17:38:57Z",
+    "open_issues_count": 5344,
     "archived": false,
-    "readme_path": "readmes/PostHog__posthog.md",
-    "health_score": null
+    "homepage": "https://posthog.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "plausible/analytics",
+    "full_name": "plausible/analytics",
     "github_id": 160427405,
     "description": "Open source, privacy-first web analytics. Lightweight, cookie-free Google Analytics alternative. Self-hosted or cloud.",
     "topics": [
@@ -474,20 +550,25 @@
       "website-stats",
       "website-tracking"
     ],
-    "categories": [
-      "Analytics"
-    ],
     "language": "Elixir",
-    "license": "AGPL-3.0",
-    "stars": 29499,
-    "pushed_at": "2026-10-16T12:28:23Z",
-    "open_issues": 60,
+    "license_spdx_id": "AGPL-3.0",
+    "stargazers_count": 29601,
+    "pushed_at": "2026-10-22T15:34:42Z",
+    "open_issues_count": 54,
     "archived": false,
-    "readme_path": "readmes/plausible__analytics.md",
-    "health_score": null
+    "homepage": "https://plausible.io/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "umami-software/umami",
+    "full_name": "umami-software/umami",
     "github_id": 280363952,
     "description": "Umami is a privacy-first analytics platform. Traffic, campaigns, behavior, conversions, and revenue in one place — no cookies, no surveillance, self-hosted or in the cloud.",
     "topics": [
@@ -501,20 +582,25 @@
       "user-journey",
       "web-analytics"
     ],
-    "categories": [
-      "Analytics"
-    ],
     "language": "TypeScript",
-    "license": "MIT",
-    "stars": 39422,
-    "pushed_at": "2026-10-16T21:13:33Z",
-    "open_issues": 107,
+    "license_spdx_id": "MIT",
+    "stargazers_count": 39532,
+    "pushed_at": "2026-10-20T23:27:19Z",
+    "open_issues_count": 126,
     "archived": false,
-    "readme_path": "readmes/umami-software__umami.md",
-    "health_score": null
+    "homepage": "https://umami.is/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "metabase/metabase",
+    "full_name": "metabase/metabase",
     "github_id": 30203935,
     "description": "The easy-to-use open source Business Intelligence and Embedded Analytics tool that lets everyone work with data :bar_chart:",
     "topics": [
@@ -537,20 +623,25 @@
       "sql-editor",
       "visualization"
     ],
-    "categories": [
-      "Analytics"
-    ],
     "language": "Clojure",
-    "license": "NOASSERTION",
-    "stars": 49705,
-    "pushed_at": "2026-10-16T22:21:59Z",
-    "open_issues": 4551,
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 49793,
+    "pushed_at": "2026-10-22T17:39:06Z",
+    "open_issues_count": 4600,
     "archived": false,
-    "readme_path": "readmes/metabase__metabase.md",
-    "health_score": null
+    "homepage": "https://metabase.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "analytics",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "meilisearch/meilisearch",
+    "full_name": "meilisearch/meilisearch",
     "github_id": 130688011,
     "description": "A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.",
     "topics": [
@@ -575,20 +666,25 @@
       "vector-search",
       "vectors"
     ],
-    "categories": [
-      "Search"
-    ],
     "language": "Rust",
-    "license": "NOASSERTION",
-    "stars": 59585,
-    "pushed_at": "2026-10-15T15:53:55Z",
-    "open_issues": 321,
+    "license_spdx_id": "NOASSERTION",
+    "stargazers_count": 59633,
+    "pushed_at": "2026-10-22T16:19:11Z",
+    "open_issues_count": 319,
     "archived": false,
-    "readme_path": "readmes/meilisearch__meilisearch.md",
-    "health_score": null
+    "homepage": "https://www.meilisearch.com/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "search",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "typesense/typesense",
+    "full_name": "typesense/typesense",
     "github_id": 79317191,
     "description": "Open Source alternative to Algolia + Pinecone and an Easier-to-Use alternative to ElasticSearch ⚡ 🔍 ✨ Fast, typo tolerant, in-memory fuzzy Search Engine for building delightful search experiences",
     "topics": [
@@ -613,20 +709,25 @@
       "typo-tolerance",
       "vector-search"
     ],
-    "categories": [
-      "Search"
-    ],
     "language": "C++",
-    "license": "GPL-3.0",
-    "stars": 26985,
-    "pushed_at": "2026-10-13T05:46:12Z",
-    "open_issues": 911,
+    "license_spdx_id": "GPL-3.0",
+    "stargazers_count": 27026,
+    "pushed_at": "2026-10-21T03:31:19Z",
+    "open_issues_count": 913,
     "archived": false,
-    "readme_path": "readmes/typesense__typesense.md",
-    "health_score": null
+    "homepage": "https://typesense.org/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "search",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   },
   {
-    "repo_id": "qdrant/qdrant",
+    "full_name": "qdrant/qdrant",
     "github_id": 268163609,
     "description": "Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdrant.io/",
     "topics": [
@@ -651,17 +752,25 @@
       "vector-search",
       "vector-search-engine"
     ],
-    "categories": [
-      "Search",
-      "AI"
-    ],
     "language": "Rust",
-    "license": "Apache-2.0",
-    "stars": 35105,
-    "pushed_at": "2026-10-16T17:04:07Z",
-    "open_issues": 787,
+    "license_spdx_id": "Apache-2.0",
+    "stargazers_count": 35187,
+    "pushed_at": "2026-10-22T15:51:06Z",
+    "open_issues_count": 795,
     "archived": false,
-    "readme_path": "readmes/qdrant__qdrant.md",
-    "health_score": null
+    "homepage": "https://qdrant.tech/",
+    "health_score": null,
+    "categories": [
+      {
+        "category_id": "search",
+        "assigned_by": "human"
+      },
+      {
+        "category_id": "ai",
+        "assigned_by": "human"
+      }
+    ],
+    "use_cases": [],
+    "summary_es": null
   }
 ]
