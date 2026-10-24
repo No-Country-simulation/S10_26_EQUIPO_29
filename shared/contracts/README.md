@@ -7,8 +7,8 @@ por Pull Request, avisando al equipo ([`CONTRIBUTING.md`](../../CONTRIBUTING.md)
 |---|---|---|---|
 | `repo.py` | Repo: una herramienta del catálogo y sus categorías | Ingesta + IA → IA, API, frontend | v1.0 · acordado (20-oct-2026) |
 | `categories.json` | Lista de categorías | Equipo → IA, frontend | Provisional (`version: 0`, las 6 del caso) |
-| `integration_idea.py` | Idea de integración de una herramienta | IA → frontend | Propuesta, pendiente de revisión con frontend |
-| `assistant.py` | Pregunta y respuesta del asistente | Frontend ↔ IA | Propuesta, pendiente de revisión con frontend |
+| `integration_idea.py` | Idea de integración de una herramienta | IA → frontend | v1.1 · en revisión con frontend |
+| `assistant.py` | Pregunta, respuesta y errores del asistente | Frontend ↔ IA | v1.1 · en revisión con frontend |
 
 ## Uso desde Python
 
