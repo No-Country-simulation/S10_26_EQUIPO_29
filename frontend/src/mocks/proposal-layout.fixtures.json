@@ -1,114 +1,54 @@
 {
   "demo-assistant-ok": {
-    "description": "Cuatro herramientas para gestionar el acceso, la experiencia de reservas y los datos de tu estudio.",
+    "description": "Seis herramientas para un SaaS con organizaciones aisladas, permisos, reportes y observabilidad.",
     "layers": [
       {
         "key": "c1",
         "full_name": "keycloak/keycloak",
         "label": "Acceso",
-        "caption": "Usuarios y permisos",
+        "caption": "Sesiones y roles",
         "icon": "identity"
       },
       {
         "key": "c2",
         "full_name": "vercel/next.js",
         "label": "Interfaz",
-        "caption": "Calendario y reservas",
+        "caption": "Panel por organización",
         "icon": "interface"
       },
       {
         "key": "c3",
         "full_name": "fastapi/fastapi",
         "label": "Servicios",
-        "caption": "Reglas del negocio",
+        "caption": "Autorización y negocio",
         "icon": "service"
       },
       {
         "key": "c4",
         "full_name": "postgres/postgres",
         "label": "Datos",
-        "caption": "Clases, reservas y cupos",
-        "icon": "database"
-      }
-    ],
-    "steps": [
-      {
-        "title": "Iniciar sesión y autorizar solicitudes",
-        "description": "Next.js inicia el acceso con Keycloak mediante OpenID Connect y PKCE. Para llamar a FastAPI, envía el token de acceso en la cabecera Authorization. La API debe verificar firma, emisor, audiencia y permisos antes de aceptar la solicitud.",
-        "component_keys": [
-          "c1",
-          "c2",
-          "c3"
-        ]
-      },
-      {
-        "title": "Consultar y confirmar una reserva",
-        "description": "Next.js consulta la disponibilidad y envía la reserva a FastAPI mediante HTTPS y JSON. FastAPI valida los datos y aplica las reglas del negocio; la interfaz presenta la respuesta sin conectarse directamente a la base de datos.",
-        "component_keys": [
-          "c2",
-          "c3"
-        ]
-      },
-      {
-        "title": "Guardar los cupos de forma consistente",
-        "description": "FastAPI consulta PostgreSQL mediante un driver u ORM. La comprobación de cupos y la creación de la reserva deben ejecutarse en una transacción con control de concurrencia para evitar sobreventas.",
-        "component_keys": [
-          "c3",
-          "c4"
-        ]
-      }
-    ]
-  },
-  "demo-assistant-extended": {
-    "description": "Seis herramientas para acceso, reservas, datos, caché y observabilidad.",
-    "layers": [
-      {
-        "key": "c1",
-        "full_name": "keycloak/keycloak",
-        "label": "Acceso",
-        "caption": "Usuarios y permisos",
-        "icon": "identity"
-      },
-      {
-        "key": "c2",
-        "full_name": "vercel/next.js",
-        "label": "Interfaz",
-        "caption": "Calendario y reservas",
-        "icon": "interface"
-      },
-      {
-        "key": "c3",
-        "full_name": "fastapi/fastapi",
-        "label": "Servicios",
-        "caption": "Reglas del negocio",
-        "icon": "service"
-      },
-      {
-        "key": "c4",
-        "full_name": "postgres/postgres",
-        "label": "Datos",
-        "caption": "Clases, reservas y cupos",
+        "caption": "Aislamiento de datos",
         "icon": "database"
       },
       {
         "key": "c5",
         "full_name": "valkey-io/valkey",
         "label": "Caché",
-        "caption": "Consultas frecuentes",
+        "caption": "Reportes frecuentes",
         "icon": "cache"
       },
       {
         "key": "c6",
         "full_name": "prometheus/prometheus",
         "label": "Observabilidad",
-        "caption": "Métricas del servicio",
+        "caption": "Latencia y errores",
         "icon": "metrics"
       }
     ],
     "steps": [
       {
-        "title": "Iniciar sesión y autorizar solicitudes",
-        "description": "Next.js inicia el acceso con Keycloak mediante OpenID Connect y PKCE. Para llamar a FastAPI, envía el token de acceso en la cabecera Authorization. La API debe verificar firma, emisor, audiencia y permisos antes de aceptar la solicitud.",
+        "title": "Autenticar y resolver la organización",
+        "description": "Next.js inicia sesión con Keycloak mediante OpenID Connect y PKCE. FastAPI verifica el token y consulta la pertenencia del usuario a una organización; no debe confiar únicamente en un identificador enviado por el navegador.",
         "component_keys": [
           "c1",
           "c2",
@@ -116,28 +56,110 @@
         ]
       },
       {
-        "title": "Consultar y confirmar una reserva",
-        "description": "Next.js consulta la disponibilidad y envía la reserva a FastAPI mediante HTTPS y JSON. FastAPI valida los datos y aplica las reglas del negocio; la interfaz presenta la respuesta sin conectarse directamente a la base de datos.",
-        "component_keys": [
-          "c2",
-          "c3"
-        ]
-      },
-      {
-        "title": "Guardar los cupos de forma consistente",
-        "description": "FastAPI consulta PostgreSQL mediante un driver u ORM. La comprobación de cupos y la creación de la reserva deben ejecutarse en una transacción con control de concurrencia para evitar sobreventas.",
+        "title": "Autorizar cada operación y aislar los datos",
+        "description": "FastAPI comprueba el rol y la organización antes de consultar PostgreSQL. Se propone configurar seguridad por fila y establecer el contexto de organización dentro de cada transacción, usando un rol de base de datos que no omita esas políticas. El equipo debe probar accesos cruzados entre empresas.",
         "component_keys": [
           "c3",
           "c4"
         ]
       },
       {
-        "title": "Añadir caché y observar la API",
-        "description": "FastAPI puede consultar Valkey para lecturas frecuentes, con caducidad e invalidación definidas por el equipo; PostgreSQL sigue siendo la fuente de verdad para confirmar cupos. Prometheus consulta un endpoint de métricas que debe instrumentarse y protegerse según el despliegue.",
+        "title": "Servir reportes sin mezclar organizaciones",
+        "description": "La API consulta Valkey con una clave que incluye la organización y los filtros del reporte. En un fallo de caché, consulta PostgreSQL y guarda el resultado con caducidad. Las escrituras deben invalidar los reportes afectados; el caché no sustituye las comprobaciones de permisos.",
         "component_keys": [
           "c3",
           "c4",
-          "c5",
+          "c5"
+        ]
+      },
+      {
+        "title": "Medir el comportamiento de la API",
+        "description": "FastAPI expone métricas instrumentadas de duración de solicitudes, errores y volumen. Prometheus las recopila desde un endpoint con acceso restringido. Las etiquetas deben mantenerse acotadas; no incluir tokens, datos personales ni una etiqueta por usuario u organización.",
+        "component_keys": [
+          "c3",
+          "c6"
+        ]
+      }
+    ]
+  },
+  "demo-assistant-extended": {
+    "description": "Seis herramientas para un SaaS con organizaciones aisladas, permisos, reportes y observabilidad.",
+    "layers": [
+      {
+        "key": "c1",
+        "full_name": "keycloak/keycloak",
+        "label": "Acceso",
+        "caption": "Sesiones y roles",
+        "icon": "identity"
+      },
+      {
+        "key": "c2",
+        "full_name": "vercel/next.js",
+        "label": "Interfaz",
+        "caption": "Panel por organización",
+        "icon": "interface"
+      },
+      {
+        "key": "c3",
+        "full_name": "fastapi/fastapi",
+        "label": "Servicios",
+        "caption": "Autorización y negocio",
+        "icon": "service"
+      },
+      {
+        "key": "c4",
+        "full_name": "postgres/postgres",
+        "label": "Datos",
+        "caption": "Aislamiento de datos",
+        "icon": "database"
+      },
+      {
+        "key": "c5",
+        "full_name": "valkey-io/valkey",
+        "label": "Caché",
+        "caption": "Reportes frecuentes",
+        "icon": "cache"
+      },
+      {
+        "key": "c6",
+        "full_name": "prometheus/prometheus",
+        "label": "Observabilidad",
+        "caption": "Latencia y errores",
+        "icon": "metrics"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Autenticar y resolver la organización",
+        "description": "Next.js inicia sesión con Keycloak mediante OpenID Connect y PKCE. FastAPI verifica el token y consulta la pertenencia del usuario a una organización; no debe confiar únicamente en un identificador enviado por el navegador.",
+        "component_keys": [
+          "c1",
+          "c2",
+          "c3"
+        ]
+      },
+      {
+        "title": "Autorizar cada operación y aislar los datos",
+        "description": "FastAPI comprueba el rol y la organización antes de consultar PostgreSQL. Se propone configurar seguridad por fila y establecer el contexto de organización dentro de cada transacción, usando un rol de base de datos que no omita esas políticas. El equipo debe probar accesos cruzados entre empresas.",
+        "component_keys": [
+          "c3",
+          "c4"
+        ]
+      },
+      {
+        "title": "Servir reportes sin mezclar organizaciones",
+        "description": "La API consulta Valkey con una clave que incluye la organización y los filtros del reporte. En un fallo de caché, consulta PostgreSQL y guarda el resultado con caducidad. Las escrituras deben invalidar los reportes afectados; el caché no sustituye las comprobaciones de permisos.",
+        "component_keys": [
+          "c3",
+          "c4",
+          "c5"
+        ]
+      },
+      {
+        "title": "Medir el comportamiento de la API",
+        "description": "FastAPI expone métricas instrumentadas de duración de solicitudes, errores y volumen. Prometheus las recopila desde un endpoint con acceso restringido. Las etiquetas deben mantenerse acotadas; no incluir tokens, datos personales ni una etiqueta por usuario u organización.",
+        "component_keys": [
+          "c3",
           "c6"
         ]
       }

@@ -1,9 +1,9 @@
 import {useLayoutEffect,useRef,useState} from 'react';
 import {ArrowUpRight,BookOpen,Box,Database,Gauge,Layers3,Monitor,Server,UserRound} from 'lucide-react';
-import {tools} from './tools';
-import {resolveComponentTool} from './data/assistant.mjs';
-import {resolveProposalExample} from './data/proposal.mjs';
-import {BrandIcon} from './AssistantBrandIcon';
+import {tools} from '../../tools';
+import {resolveComponentTool} from '../../data/assistant.mjs';
+import {resolveProposalExample} from '../../data/proposal.mjs';
+import {BrandIcon} from '../../AssistantBrandIcon';
 
 const layerIcons={identity:UserRound,interface:Monitor,service:Server,database:Database,cache:Layers3,metrics:Gauge};
 function RecommendationLayer({component,layer,index}){

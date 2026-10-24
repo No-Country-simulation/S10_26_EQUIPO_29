@@ -1,0 +1,8 @@
+{
+  "postgres/postgres": {
+    "spdx_id": "PostgreSQL",
+    "source": "https://www.postgresql.org/about/licence/",
+    "verified_at": "2026-10-23",
+    "snapshot_value": "NOASSERTION"
+  }
+}
