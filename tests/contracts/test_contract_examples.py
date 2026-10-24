@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from shared.contracts.assistant import AssistantRequest, AssistantResponse
+from shared.contracts.assistant import AssistantRequest, AssistantResponse, ErrorResponse
 from shared.contracts.integration_idea import IntegrationIdea
 from shared.contracts.repo import CategoryList, Repo
 
@@ -67,6 +67,19 @@ RESPONSE = {
     "generated_at": "2026-10-19T22:00:00Z",
 }
 
+SIN_EVIDENCIA = {
+    "id": "resp_0002", "status": "no_evidence",
+    "summary": "El catálogo no tiene herramientas para control de satélites. "
+               "Prueba describiendo la parte web o de datos de tu proyecto.",
+    "generated_at": "2026-10-19T22:05:00Z",
+}
+
+ERROR = {"error": {"code": "timeout", "message": "La respuesta tardó más de 15 s."}}
+
+# Quinta caja con una key que ya existe; las flechas siguen siendo válidas.
+COMPONENTE_REPETIDO = {"key": "c4", "label": "Redis", "role": "caché", "full_name": "redis/redis",
+                       "rationale": "Guarda los cupos en memoria."}
+
 # Fila como la entrega la vista:
 FILA_VISTA = {
     "github_id": 53631945, "full_name": "BurntSushi/ripgrep", "name": "ripgrep",
@@ -107,6 +120,15 @@ def test_respuesta_valida():
     AssistantResponse.model_validate(RESPONSE)
 
 
+def test_respuesta_sin_evidencia_valida():
+    AssistantResponse.model_validate(SIN_EVIDENCIA)
+
+
+@pytest.mark.parametrize("code", ["invalid_query", "invalid_response", "provider_unavailable", "timeout"])
+def test_error_valido(code):
+    ErrorResponse.model_validate({"error": {"code": code, "message": "Mensaje de ejemplo."}})
+
+
 def test_fila_de_la_vista_se_lee():
     # Como la entrega la vista: homepage "", columnas extra, sin open_issues_count
     repo = Repo.model_validate(FILA_VISTA)
@@ -124,9 +146,25 @@ def test_fila_de_la_vista_se_lee():
         (AssistantResponse, RESPONSE, {"connections": [
             {"from_key": "c1", "to_key": "c9", "protocol": "REST", "description": "x"}]}),
         (AssistantResponse, RESPONSE, {"status": "needs_clarification"}),
+        (AssistantResponse, RESPONSE, {"components": RESPONSE["components"] + [COMPONENTE_REPETIDO]}),
+        (AssistantResponse, RESPONSE, {"generated_at": "2026-10-19T22:00:00"}),
+        (AssistantResponse, SIN_EVIDENCIA, {"summary": None}),
+        (AssistantResponse, RESPONSE, {"summary": "   "}),
+        (AssistantResponse, RESPONSE, {"components": [
+            {**RESPONSE["components"][0], "label": "   "}, *RESPONSE["components"][1:]]}),
+        (AssistantResponse, RESPONSE, {"assumptions": [""]}),
+        (IntegrationIdea, IDEA, {"compatible_stack": [
+            "Cualquier aplicación web moderna compatible con OpenID Connect"]}),
+        (IntegrationIdea, IDEA, {"dependencies": [
+            "Un servidor Keycloak en ejecución, con un realm, un client público con PKCE y usuarios de prueba"]}),
+        (IntegrationIdea, IDEA, {"compatible_stack": ["React", " "]}),
+        (ErrorResponse, ERROR, {"error": {"code": "server_error", "message": "x"}}),
     ],
     ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
-         "snippet-sin-lenguaje", "flecha-a-caja-inexistente", "aclaracion-sin-preguntas"],
+         "snippet-sin-lenguaje", "flecha-a-caja-inexistente", "aclaracion-sin-preguntas",
+         "key-repetida", "fecha-sin-zona", "sin-evidencia-sin-summary", "summary-solo-espacios",
+         "label-solo-espacios", "supuesto-vacio", "stack-largo", "dependencia-larga",
+         "stack-elemento-vacio", "error-code-desconocido"],
 )
 def test_casos_invalidos_se_rechazan(modelo, base, cambio):
     with pytest.raises(ValidationError):
