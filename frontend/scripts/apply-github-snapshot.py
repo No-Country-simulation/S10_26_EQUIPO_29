@@ -13,5 +13,10 @@ for record in records:
  commit=(repo.get('defaultBranchRef') or {}).get('target') or {};release=repo.get('latestRelease')
  record.update(github_id=repo.get('databaseId',record['github_id']),stargazers_count=repo['stargazerCount'],open_issues_count=repo['issues']['totalCount']+repo['pullRequests']['totalCount'],language=(repo.get('primaryLanguage') or {}).get('name'),license_spdx_id=(repo.get('licenseInfo') or {}).get('spdxId'),pushed_at=repo['pushedAt'],archived=repo['isArchived'],health_score=None)
  local.update(version=release['tagName'] if release else None,maintained=None,disabled=repo['isDisabled'],dataSource='github_snapshot',syncedAt=snapshot['captured_at'],lastCommitAt=commit.get('committedDate'),releasePublishedAt=release['publishedAt'] if release else None,releaseUrl=release['url'] if release else None,openPullRequests=repo['pullRequests']['totalCount'])
+# Preserve explicit official-source verification when GitHub cannot identify the license.
+verified=json.loads((root/'src/mocks/license-verifications.json').read_text())
+for record in records:
+ if record['license_spdx_id'] in (None,'NOASSERTION') and record['full_name'] in verified:
+  record['license_spdx_id']=verified[record['full_name']]['spdx_id']
 for file,value in [(path,records),(meta_path,metadata)]:file.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
 print('Updated',len(records),'contract records')
