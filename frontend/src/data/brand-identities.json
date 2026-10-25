@@ -1,0 +1,155 @@
+{
+  "fallback": {
+    "start": "#222222",
+    "end": "#303030",
+    "tag": "#454545"
+  },
+  "identities": {
+    "postgres/postgres": {
+      "logo": "/assets/cards/postgres-logo.svg",
+      "watermark": "/assets/cards/postgres-watermark.svg",
+      "palette": {
+        "start": "#0f1839",
+        "end": "#002ec5",
+        "tag": "#2749ba"
+      }
+    },
+    "keycloak/keycloak": {
+      "logo": "/assets/brands/keycloak.svg",
+      "palette": {
+        "start": "#10252e",
+        "end": "#075477",
+        "tag": "#14617b"
+      }
+    },
+    "meilisearch/meilisearch": {
+      "logo": "/assets/brands/meilisearch.svg",
+      "palette": {
+        "start": "#30152e",
+        "end": "#802563",
+        "tag": "#8b306e"
+      }
+    },
+    "ollama/ollama": {
+      "logo": "/assets/brands/ollama.svg",
+      "palette": {
+        "start": "#202020",
+        "end": "#414141",
+        "tag": "#505050"
+      }
+    },
+    "plausible/analytics": {
+      "logo": "/assets/brands/plausible.svg",
+      "palette": {
+        "start": "#171c42",
+        "end": "#3847a3",
+        "tag": "#4654b1"
+      }
+    },
+    "getlago/lago": {
+      "logo": "/assets/brands/lago.svg",
+      "wordmark": true,
+      "palette": {
+        "start": "#152a21",
+        "end": "#245d40",
+        "tag": "#2b684b"
+      }
+    },
+    "qdrant/qdrant": {
+      "logo": "/assets/brands/qdrant.svg",
+      "palette": {
+        "start": "#32131e",
+        "end": "#8a2144",
+        "tag": "#a32850"
+      }
+    },
+    "umami-software/umami": {
+      "logo": "/assets/brands/umami.svg",
+      "palette": {
+        "start": "#171717",
+        "end": "#363636",
+        "tag": "#494949"
+      }
+    },
+    "typesense/typesense": {
+      "logo": "/assets/brands/typesense.svg",
+      "palette": {
+        "start": "#302011",
+        "end": "#815020",
+        "tag": "#875323"
+      }
+    },
+    "react/react": {
+      "logo": "/assets/brands/react.svg",
+      "palette": {
+        "start": "#203e49",
+        "end": "#3b7f93",
+        "tag": "#479db6"
+      }
+    },
+    "vercel/next.js": {
+      "logo": "/assets/brands/nextjs.svg",
+      "palette": {
+        "start": "#191919",
+        "end": "#353535",
+        "tag": "#484848"
+      }
+    },
+    "fastapi/fastapi": {
+      "logo": "/assets/brands/fastapi.svg",
+      "palette": {
+        "start": "#092f2f",
+        "end": "#055a54",
+        "tag": "#046e65"
+      }
+    },
+    "nestjs/nest": {
+      "logo": "/assets/brands/nestjs.svg",
+      "palette": {
+        "start": "#3d1421",
+        "end": "#811a34",
+        "tag": "#a01d3d"
+      }
+    },
+    "django/django": {
+      "logo": "/assets/brands/django.svg",
+      "palette": {
+        "start": "#121d1d",
+        "end": "#1b2e29",
+        "tag": "#1f362f"
+      }
+    },
+    "rabbitmq/rabbitmq-server": {
+      "logo": "/assets/brands/rabbitmq.svg",
+      "palette": {
+        "start": "#44240f",
+        "end": "#923f09",
+        "tag": "#b64c06"
+      }
+    },
+    "prometheus/prometheus": {
+      "logo": "/assets/brands/prometheus.svg",
+      "palette": {
+        "start": "#3e1f1a",
+        "end": "#843421",
+        "tag": "#a53e25"
+      }
+    },
+    "grafana/grafana": {
+      "logo": "/assets/brands/grafana.svg",
+      "palette": {
+        "start": "#41240f",
+        "end": "#8c4009",
+        "tag": "#ae4e06"
+      }
+    },
+    "traefik/traefik": {
+      "logo": "/assets/brands/traefik.svg",
+      "palette": {
+        "start": "#12313c",
+        "end": "#196073",
+        "tag": "#1d758d"
+      }
+    }
+  }
+}

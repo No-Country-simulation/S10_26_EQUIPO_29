@@ -1,0 +1,21 @@
+{
+  "id": "herramienta-de-ejemplo",
+  "name": "Default",
+  "category": "IA",
+  "description": "Ejemplo visual de una herramienta sin logo: iniciales, colores neutros y la misma estructura del catálogo.",
+  "language": "Por definir",
+  "license": "Por definir",
+  "stars": 0,
+  "activity": "Sin datos",
+  "maintained": false,
+  "repo": null,
+  "color": "#ffffff",
+  "healthScore": 0,
+  "openIssues": 0,
+  "tag": "Ejemplo",
+  "version": "Sin datos",
+  "docs": null,
+  "dataSource": "mock",
+  "syncedAt": "2026-10-20T12:00:00Z",
+  "full_name": null
+}

@@ -1,0 +1,146 @@
+{
+  "demo-assistant-ok": {
+    "description": "Cuatro herramientas para gestionar el acceso, la experiencia de reservas y los datos de tu estudio.",
+    "layers": [
+      {
+        "key": "c1",
+        "full_name": "keycloak/keycloak",
+        "label": "Acceso",
+        "caption": "Usuarios y permisos",
+        "icon": "identity"
+      },
+      {
+        "key": "c2",
+        "full_name": "vercel/next.js",
+        "label": "Interfaz",
+        "caption": "Calendario y reservas",
+        "icon": "interface"
+      },
+      {
+        "key": "c3",
+        "full_name": "fastapi/fastapi",
+        "label": "Servicios",
+        "caption": "Reglas del negocio",
+        "icon": "service"
+      },
+      {
+        "key": "c4",
+        "full_name": "postgres/postgres",
+        "label": "Datos",
+        "caption": "Clases, reservas y cupos",
+        "icon": "database"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Iniciar sesión y autorizar solicitudes",
+        "description": "Next.js inicia el acceso con Keycloak mediante OpenID Connect y PKCE. Para llamar a FastAPI, envía el token de acceso en la cabecera Authorization. La API debe verificar firma, emisor, audiencia y permisos antes de aceptar la solicitud.",
+        "component_keys": [
+          "c1",
+          "c2",
+          "c3"
+        ]
+      },
+      {
+        "title": "Consultar y confirmar una reserva",
+        "description": "Next.js consulta la disponibilidad y envía la reserva a FastAPI mediante HTTPS y JSON. FastAPI valida los datos y aplica las reglas del negocio; la interfaz presenta la respuesta sin conectarse directamente a la base de datos.",
+        "component_keys": [
+          "c2",
+          "c3"
+        ]
+      },
+      {
+        "title": "Guardar los cupos de forma consistente",
+        "description": "FastAPI consulta PostgreSQL mediante un driver u ORM. La comprobación de cupos y la creación de la reserva deben ejecutarse en una transacción con control de concurrencia para evitar sobreventas.",
+        "component_keys": [
+          "c3",
+          "c4"
+        ]
+      }
+    ]
+  },
+  "demo-assistant-extended": {
+    "description": "Seis herramientas para acceso, reservas, datos, caché y observabilidad.",
+    "layers": [
+      {
+        "key": "c1",
+        "full_name": "keycloak/keycloak",
+        "label": "Acceso",
+        "caption": "Usuarios y permisos",
+        "icon": "identity"
+      },
+      {
+        "key": "c2",
+        "full_name": "vercel/next.js",
+        "label": "Interfaz",
+        "caption": "Calendario y reservas",
+        "icon": "interface"
+      },
+      {
+        "key": "c3",
+        "full_name": "fastapi/fastapi",
+        "label": "Servicios",
+        "caption": "Reglas del negocio",
+        "icon": "service"
+      },
+      {
+        "key": "c4",
+        "full_name": "postgres/postgres",
+        "label": "Datos",
+        "caption": "Clases, reservas y cupos",
+        "icon": "database"
+      },
+      {
+        "key": "c5",
+        "full_name": "valkey-io/valkey",
+        "label": "Caché",
+        "caption": "Consultas frecuentes",
+        "icon": "cache"
+      },
+      {
+        "key": "c6",
+        "full_name": "prometheus/prometheus",
+        "label": "Observabilidad",
+        "caption": "Métricas del servicio",
+        "icon": "metrics"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Iniciar sesión y autorizar solicitudes",
+        "description": "Next.js inicia el acceso con Keycloak mediante OpenID Connect y PKCE. Para llamar a FastAPI, envía el token de acceso en la cabecera Authorization. La API debe verificar firma, emisor, audiencia y permisos antes de aceptar la solicitud.",
+        "component_keys": [
+          "c1",
+          "c2",
+          "c3"
+        ]
+      },
+      {
+        "title": "Consultar y confirmar una reserva",
+        "description": "Next.js consulta la disponibilidad y envía la reserva a FastAPI mediante HTTPS y JSON. FastAPI valida los datos y aplica las reglas del negocio; la interfaz presenta la respuesta sin conectarse directamente a la base de datos.",
+        "component_keys": [
+          "c2",
+          "c3"
+        ]
+      },
+      {
+        "title": "Guardar los cupos de forma consistente",
+        "description": "FastAPI consulta PostgreSQL mediante un driver u ORM. La comprobación de cupos y la creación de la reserva deben ejecutarse en una transacción con control de concurrencia para evitar sobreventas.",
+        "component_keys": [
+          "c3",
+          "c4"
+        ]
+      },
+      {
+        "title": "Añadir caché y observar la API",
+        "description": "FastAPI puede consultar Valkey para lecturas frecuentes, con caducidad e invalidación definidas por el equipo; PostgreSQL sigue siendo la fuente de verdad para confirmar cupos. Prometheus consulta un endpoint de métricas que debe instrumentarse y protegerse según el despliegue.",
+        "component_keys": [
+          "c3",
+          "c4",
+          "c5",
+          "c6"
+        ]
+      }
+    ]
+  }
+}
