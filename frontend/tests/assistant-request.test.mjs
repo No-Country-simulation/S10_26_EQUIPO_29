@@ -80,3 +80,10 @@ test('unexpected provider aborts/errors become recoverable failures instead of s
   await assert.rejects(requestAssistant(request,{...quick,provider:{ask:async()=>{throw error;}}}),e=>e.code==='technical_error'&&!e.message.includes('internal details'));
  }
 });
+
+test('unverified SPDX licenses cannot be recommended, including adapted records',async()=>{
+ const response=await valid();const catalog=structuredClone(catalogRecords);
+ catalog.find(t=>t.full_name==='postgres/postgres').license_spdx_id='NOASSERTION';
+ assert.throws(()=>validateAssistantCatalog(response,catalog),{code:'unverified_license'});
+ assert.equal(validateAssistantCatalog(response,catalogRecords),response);
+});

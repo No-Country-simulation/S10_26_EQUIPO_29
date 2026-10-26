@@ -34,8 +34,8 @@ test('default lists, isolated responses, cancellation and technical errors',asyn
 test('all recommended components remain available, with optional catalog links',async()=>{
  const response=await mockAssistant.ask({query:'Una plataforma de reservas de clases'},{delay:0});
  assert.equal('connections' in response,false);
- assert.deepEqual(response.components.map(c=>c.label),['Keycloak','Next.js','FastAPI','PostgreSQL']);
- assert.equal(response.components.filter(c=>resolveComponentTool(c,catalogRecords)).length,4);
+ assert.deepEqual(response.components.map(c=>c.label),['Keycloak','Next.js','FastAPI','PostgreSQL','Valkey','Prometheus']);
+ assert.equal(response.components.filter(c=>resolveComponentTool(c,catalogRecords)).length,6);
  assert.equal(response.components.filter(c=>c.full_name===null).length,0);
 });
 
@@ -44,4 +44,9 @@ test('extended layout scenario respects six-component limit and resolves every t
  assert.equal(response.status,'ok');assert.equal(response.components.length,6);
  assert.ok(response.components.every(c=>resolveComponentTool(c,catalogRecords)));
  const tooMany=structuredClone(response);tooMany.components.push({...tooMany.components[0],key:'c7'});assert.throws(()=>validateAssistantResponse(tooMany));
+});
+
+test('query limits count Unicode code points, including astral characters',()=>{
+ assert.equal(validateAssistantQuery('😀'.repeat(2000)),'');
+ assert.notEqual(validateAssistantQuery('😀'.repeat(2001)),'');
 });

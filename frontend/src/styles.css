@@ -162,53 +162,25 @@ button,.primary,.filter-button,.categories button,.icon-button,.tool-actions a,.
 .tool-card[data-exiting="true"] .card-glare{opacity:0}
 @media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){.card-surface{transform:none!important}.card-glare{display:none}}
 
-/* Shared brand wash rises under labels; isolated from reveal transforms. */
+/* Shared white wash. Custom metallic/chip controls own their own states. */
 :root{--button-brand:#1745c7;--button-outline:rgb(255 255 255 / 16%)}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a){position:relative;isolation:isolate;overflow:hidden}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a)::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:var(--button-brand);transform:translateY(102%);transition:transform 340ms cubic-bezier(.22,1,.36,1)}
-/* A translucent blue wash preserves dark text on filled white actions. */
-:is(.primary,.tool-actions a:last-child)::before{opacity:.18}
+:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a){position:relative;isolation:isolate;overflow:hidden}
+:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a)::before{content:"";position:absolute;inset:-1px;z-index:-1;pointer-events:none;border-radius:0;background:#fff;opacity:1;transform:translateY(102%);transition:transform 340ms cubic-bezier(.22,1,.36,1)}
 .nav nav a,.tool-actions a:first-child,.filter-button{border-color:var(--button-outline)}
-@media(hover:hover){
- :is(button:not(.category-chip),.nav nav a,.tool-actions a):not(:disabled):hover::before{transform:translateY(0)}
- .nav nav a:hover,.tool-actions a:first-child:hover,.filter-button:hover{background:transparent;border-color:rgb(255 255 255 / 24%);color:#fff}
- .primary:hover{background:var(--accent)}
- .tool-actions a:last-child:hover{background:#fff}
- .categories button:hover{background:transparent;color:#fff}
- .categories button.active:hover{background:#303030}
- .results-meta button:hover,.icon-button:hover{color:#fff}
- .filter-button.selected:hover{background:#232323}
-}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a):focus-visible::before{transform:translateY(0)}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a):focus-visible{color:#fff}
-:is(.primary,.tool-actions a:last-child):focus-visible{color:#141414}
-@media(prefers-reduced-motion:reduce){:is(button:not(.category-chip),.nav nav a,.tool-actions a)::before{transition:none}}
-
-/* Primary actions are brand blue; the rising hover layer is white. */
-.primary,.tool-actions a:last-child{background:var(--button-brand);border-color:var(--button-brand);color:#fff}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a)::before{background:#fff;opacity:1}
-@media(hover:hover){
- .primary:hover,.tool-actions a:last-child:hover{background:var(--button-brand);color:#141414}
- .nav nav a:hover,.tool-actions a:first-child:hover,.filter-button:hover,.categories button:hover,.results-meta button:hover,.icon-button:hover{color:#141414}
-}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a):focus-visible{color:#141414}
+.primary,.tool-actions a:last-child{background:var(--button-brand);border-color:transparent;background-clip:border-box;color:#fff}
 .primary:active{background:var(--button-brand)}
-:is(.primary,.tool-actions a:last-child)::before{opacity:1}
-
-/* Use a single outer clip: the rising layer also covers the border inset. */
-:is(button:not(.category-chip),.nav nav a,.tool-actions a)::before{inset:-1px;border-radius:0}
-.primary,.tool-actions a:last-child{background-clip:padding-box}
 @media(hover:hover){
- :is(button:not(.category-chip),.nav nav a,.tool-actions a):not(:disabled):hover{border-color:#fff}
-}
-:is(button:not(.category-chip),.nav nav a,.tool-actions a):focus-visible{border-color:#fff}
-
-/* Filled actions have no separate stroke during the rising fill. */
-.primary,.tool-actions a:last-child{border-color:transparent;background-clip:border-box}
-@media(hover:hover){
+ :is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a):not(:disabled):hover::before{transform:translateY(0)}
+ :is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a):not(:disabled):hover{border-color:#fff;color:#141414}
+ .nav nav a:hover,.tool-actions a:first-child:hover,.filter-button:hover{background:transparent}
+ .primary:hover,.tool-actions a:last-child:hover{background:var(--button-brand)}
+ .filter-button.selected:hover{background:#232323}
  :is(button.primary,.tool-actions a:last-child):not(:disabled):hover{border-color:transparent}
 }
+:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a):focus-visible::before{transform:translateY(0)}
+:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a):focus-visible{color:#141414;border-color:#fff}
 :is(button.primary,.tool-actions a:last-child):focus-visible{border-color:transparent}
+@media(prefers-reduced-motion:reduce){:is(button:not(.category-chip):not(:where(.prompt-submit,.new-architecture,.composer-retry)),.nav nav a,.tool-actions a)::before{transition:none}}
 
 /* Broad rounded panel over the lower edge of the hero. */
 .catalog-shell{position:relative;z-index:1;margin-top:-56px;border-radius:56px 56px 0 0;background:#101010;min-width:0;padding-top:8px}

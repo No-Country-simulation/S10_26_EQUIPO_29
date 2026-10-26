@@ -2,44 +2,60 @@
   "ok": {
     "id": "demo-assistant-ok",
     "status": "ok",
-    "title": "Tu estudio de yoga, conectado.",
-    "summary": "Next.js para la experiencia de reservas, FastAPI para las reglas del negocio, Keycloak para el acceso y PostgreSQL para guardar clases y cupos.",
+    "title": "Una plataforma SaaS, preparada para crecer.",
+    "summary": "Un SaaS multiempresa con acceso por roles, aislamiento de datos, reportes con caché y métricas de la API. Seis herramientas con responsabilidades separadas.",
     "components": [
       {
         "key": "c1",
         "label": "Keycloak",
-        "role": "Autenticación",
+        "role": "Autenticación y permisos",
         "full_name": "keycloak/keycloak",
-        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+        "rationale": "Centraliza el inicio de sesión mediante OpenID Connect y los roles de usuarios y administradores. La API debe comprobar además a qué organización pertenece cada usuario."
       },
       {
         "key": "c2",
         "label": "Next.js",
-        "role": "Interfaz web de reservas",
+        "role": "Panel de administración",
         "full_name": "vercel/next.js",
-        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+        "rationale": "Construye el panel de cada organización para gestionar usuarios, recursos y reportes. Consume la API con la sesión del usuario y presenta los permisos disponibles."
       },
       {
         "key": "c3",
         "label": "FastAPI",
-        "role": "API de reservas",
+        "role": "API multiempresa",
         "full_name": "fastapi/fastapi",
-        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+        "rationale": "Valida las solicitudes, resuelve la organización autorizada y aplica los permisos en cada operación. El aislamiento entre empresas y las reglas del negocio deben implementarse en el backend."
       },
       {
         "key": "c4",
         "label": "PostgreSQL",
-        "role": "Base de datos",
+        "role": "Datos aislados por organización",
         "full_name": "postgres/postgres",
-        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+        "rationale": "Guarda organizaciones, usuarios y recursos relacionados. Se propone implementar políticas de seguridad por fila y transacciones; el equipo debe configurar y probar el contexto de organización de cada consulta."
+      },
+      {
+        "key": "c5",
+        "label": "Valkey",
+        "role": "Caché de reportes",
+        "full_name": "valkey-io/valkey",
+        "rationale": "Almacena temporalmente reportes de consulta frecuente con claves separadas por organización. Requiere caducidad e invalidación al modificar los datos; PostgreSQL conserva la información definitiva."
+      },
+      {
+        "key": "c6",
+        "label": "Prometheus",
+        "role": "Métricas de rendimiento",
+        "full_name": "prometheus/prometheus",
+        "rationale": "Recopila métricas de latencia, errores y volumen de solicitudes de la API. Requiere instrumentación y reglas de alerta; evitar identificadores de usuarios u organizaciones como etiquetas de alta cardinalidad."
       }
     ],
     "assumptions": [
-      "Las personas deben iniciar sesión para reservar.",
-      "La aplicación se alojará en infraestructura propia."
+      "Cada usuario pertenece a una organización y solo puede acceder a sus recursos.",
+      "La primera versión opera en una región, con una carga moderada; el volumen y los objetivos de disponibilidad están por definir.",
+      "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
+      "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
@@ -74,58 +90,60 @@
   "ok_extended": {
     "id": "demo-assistant-extended",
     "status": "ok",
-    "title": "Tu estudio de yoga, conectado.",
-    "summary": "Un ejemplo ampliado de seis herramientas: interfaz web, API, identidad, datos, caché y métricas. Cada pieza tiene una función y una justificación.",
+    "title": "Una plataforma SaaS, preparada para crecer.",
+    "summary": "Un SaaS multiempresa con acceso por roles, aislamiento de datos, reportes con caché y métricas de la API. Seis herramientas con responsabilidades separadas.",
     "components": [
       {
         "key": "c1",
         "label": "Keycloak",
-        "role": "Autenticación",
+        "role": "Autenticación y permisos",
         "full_name": "keycloak/keycloak",
-        "rationale": "Centraliza el inicio de sesión y emite tokens para acceder a la API."
+        "rationale": "Centraliza el inicio de sesión mediante OpenID Connect y los roles de usuarios y administradores. La API debe comprobar además a qué organización pertenece cada usuario."
       },
       {
         "key": "c2",
         "label": "Next.js",
-        "role": "Interfaz web de reservas",
+        "role": "Panel de administración",
         "full_name": "vercel/next.js",
-        "rationale": "Permite construir el calendario, la consulta de disponibilidad y los formularios de reserva con React y rutas de aplicación."
+        "rationale": "Construye el panel de cada organización para gestionar usuarios, recursos y reportes. Consume la API con la sesión del usuario y presenta los permisos disponibles."
       },
       {
         "key": "c3",
         "label": "FastAPI",
-        "role": "API de reservas",
+        "role": "API multiempresa",
         "full_name": "fastapi/fastapi",
-        "rationale": "Expone los endpoints de clases y reservas, valida los datos y aplica las reglas de cupos con la lógica que desarrolle el equipo."
+        "rationale": "Valida las solicitudes, resuelve la organización autorizada y aplica los permisos en cada operación. El aislamiento entre empresas y las reglas del negocio deben implementarse en el backend."
       },
       {
         "key": "c4",
         "label": "PostgreSQL",
-        "role": "Base de datos",
+        "role": "Datos aislados por organización",
         "full_name": "postgres/postgres",
-        "rationale": "Guarda clases y reservas; las transacciones ayudan a mantener la consistencia de los cupos."
+        "rationale": "Guarda organizaciones, usuarios y recursos relacionados. Se propone implementar políticas de seguridad por fila y transacciones; el equipo debe configurar y probar el contexto de organización de cada consulta."
       },
       {
         "key": "c5",
         "label": "Valkey",
-        "role": "Caché de consultas",
+        "role": "Caché de reportes",
         "full_name": "valkey-io/valkey",
-        "rationale": "Permite almacenar temporalmente consultas frecuentes de disponibilidad. La confirmación de cupos permanece en la base de datos; la estrategia de invalidación debe definirla el equipo."
+        "rationale": "Almacena temporalmente reportes de consulta frecuente con claves separadas por organización. Requiere caducidad e invalidación al modificar los datos; PostgreSQL conserva la información definitiva."
       },
       {
         "key": "c6",
         "label": "Prometheus",
-        "role": "Métricas del servicio",
+        "role": "Métricas de rendimiento",
         "full_name": "prometheus/prometheus",
-        "rationale": "Recopila métricas de la API para observar latencia, volumen de solicitudes y errores. Requiere instrumentar el servicio y configurar las consultas y alertas relevantes."
+        "rationale": "Recopila métricas de latencia, errores y volumen de solicitudes de la API. Requiere instrumentación y reglas de alerta; evitar identificadores de usuarios u organizaciones como etiquetas de alta cardinalidad."
       }
     ],
     "assumptions": [
-      "Las personas deben iniciar sesión para reservar.",
-      "La aplicación se alojará en infraestructura propia."
+      "Cada usuario pertenece a una organización y solo puede acceder a sus recursos.",
+      "La primera versión opera en una región, con una carga moderada; el volumen y los objetivos de disponibilidad están por definir.",
+      "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
+      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
+      "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"

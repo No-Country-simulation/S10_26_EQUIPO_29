@@ -42,6 +42,7 @@ export function validateAssistantCatalog(response,catalog){
   // null means a part of the user's application, permitted by the draft contract.
   if(component.full_name==null)continue;
   const tool=resolveComponentTool(component,catalog);
+  if(tool?.license_spdx_id==='NOASSERTION')throw new AssistantError('unverified_license','Una herramienta de la propuesta tiene su licencia sin verificar. Tu descripción se conserva; vuelve a intentarlo.');
   if(!tool||tool.archived===true||tool.disabled===true)throw new AssistantError('unavailable_tool','Una herramienta de la propuesta no está disponible en el catálogo activo. Tu descripción se conserva; vuelve a intentarlo.');
  }
  return response;
