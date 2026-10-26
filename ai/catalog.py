@@ -12,11 +12,12 @@ Datos de ejemplo:
 import json
 from pathlib import Path
 
-from shared.contracts.repo import Repo
+from shared.contracts.repo import Repo, Category, CategoryList
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 REPOS_FILE = DATA_DIR / "repos.json"
 README_DIR = DATA_DIR / "readmes"
+CATEGORIES_FILE = Path(__file__).resolve().parents[1] / "shared" / "contracts" / "categories.json"
 
 
 def readme_file(full_name: str) -> Path:
@@ -43,3 +44,12 @@ def load_repos() -> list[Repo]:
         readme = path.read_text(encoding="utf-8") if path.is_file() else None
         repos.append(Repo.model_validate({**raw, "readme_text": readme}))
     return repos
+
+def load_categories() -> dict[str, Category]:
+    """Devuelve las categorías por `id`
+
+    Arroja `pydantic.ValidationError` si el archivo no cumple `CategoryList`.
+    """
+    data = CategoryList.model_validate_json(CATEGORIES_FILE.read_bytes())
+    return {c.id: c for c in data.categories}
+
