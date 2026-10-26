@@ -59,10 +59,10 @@ uv pip install -r ai/requirements.txt
 
 ```bash
 python -m pytest -q                              # todos los tests del repo, sin el modelo
+python -m pytest ai/tests -v                     # tests de la IA, sin el modelo
 AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~1 min)
-python -m pytest ai/tests -v              # valida los datos de ejemplo
-python -m pytest tests/contracts -v       # valida los ejemplos del contrato
-python -m ai.scripts.build_sample_data    # regenera ai/data/ (requiere `gh` autenticado)
+python -m pytest tests/contracts -v              # valida los ejemplos del contrato
+python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
 
 ```
 
