@@ -38,7 +38,7 @@ MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B",
                                       query_prompt="task: search result | query: ",
                                       document_prompt="title: none | text: ",),
 }
-DEFAULT_MODEL = "qwen3"
+DEFAULT_MODEL = "embeddinggemma"
 
 
 def model_spec() -> ModelSpec:
