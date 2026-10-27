@@ -22,6 +22,7 @@ El proyecto incorpora un contrato de hash versionado para identificar el conteni
 8. [Estructura del proyecto](#8-estructura-del-proyecto)
 9. [Estado actual](#9-estado-actual)
 10. [Evolución de la arquitectura](#10-evolución-de-la-arquitectura)
+11. [Conexión de los integrantes del equipo](#11-conexión-de-los-integrantes-del-equipo)
 
 ---
 
@@ -82,16 +83,6 @@ flowchart TD
     CR --> VW
     CM --> VW
     VW --> CON
-
-    classDef main fill:#dceafb,stroke:#4475a5,color:#183653
-    classDef process fill:#f2f2f2,stroke:#888888,color:#222222
-    classDef storage fill:#e5f3e8,stroke:#54845e,color:#173d20
-    classDef consumer fill:#f8eddb,stroke:#a17a36,color:#533b12
-
-    class OB main
-    class GH,EX,TR,HC,LP process
-    class PG,CR,CM,VW storage
-    class CON consumer
 ```
 
 El diagrama representa la arquitectura lógica y las responsabilidades de sus componentes. No implica que todos los procesos se ejecuten automáticamente ni que exista una API desplegada.
@@ -99,8 +90,6 @@ El diagrama representa la arquitectura lógica y las responsabilidades de sus co
 ### 2.1. Fuente de datos
 
 GitHub es el origen de los metadatos y del contenido documental de los repositorios seleccionados.
-
-La extracción se realiza sobre los repositorios aprobados para el catálogo.
 
 ### 2.2. Procesamiento
 
@@ -149,16 +138,6 @@ flowchart TD
     CM --> VW
 
     VW --> IA
-
-    classDef system fill:#dceafb,stroke:#4475a5,color:#183653
-    classDef storage fill:#e5f3e8,stroke:#54845e,color:#173d20
-    classDef view fill:#f8eddb,stroke:#a17a36,color:#533b12
-    classDef consumer fill:#eeeeee,stroke:#777777,color:#222222
-
-    class OB system
-    class DB,CR,CM storage
-    class VW view
-    class IA consumer
 ```
 
 Este diagrama presenta la jerarquía conceptual: OpenBridge organiza la persistencia, las entidades almacenan la información, la vista consolida los datos y los consumidores autorizados acceden a ellos.
@@ -197,11 +176,7 @@ La cardinalidad representa que un repositorio puede tener cero o un registro aso
 
 Es la entidad central del catálogo. Almacena los metadatos disponibles de cada repositorio, incluyendo su identificador, nombre completo, descripción, lenguaje, estadísticas y otros atributos provenientes de GitHub.
 
-Su clave primaria es:
-
-`github_id`
-
-Este identificador permite distinguir los repositorios y relacionarlos con sus respectivos README.
+Su clave primaria es `github_id`, que identifica de manera única cada repositorio.
 
 La tabla también contiene los campos `content_hash` y `content_hash_version`, utilizados para representar y versionar la huella del contenido procesado.
 
@@ -216,8 +191,6 @@ Almacena el contenido textual de los README asociados a los repositorios.
 | `updated_at` | Fecha y hora de actualización registrada. |
 
 La clave foránea establece la integridad referencial entre las tablas. La restricción `ON DELETE CASCADE` hace que la eliminación de un repositorio elimine también el registro asociado en `catalog_readmes`.
-
-La separación entre metadatos y README permite administrar ambos componentes de forma independiente y consultarlos conjuntamente.
 
 ### 3.5. Relación con la vista de consumo
 
@@ -261,9 +234,7 @@ Esta separación permite:
 
 ### 4.3. Contrato `openbridge-ai-v1`
 
-La versión identificada en el esquema es:
-
-`openbridge-ai-v1`
+La versión identificada en el esquema es `openbridge-ai-v1`.
 
 Esta versión corresponde al contrato de hash canónico documentado para OpenBridge.
 
@@ -293,8 +264,6 @@ Antes de decidir si un registro debe actualizarse, es necesario verificar que la
 
 El cargador actual mantiene una política conservadora para los registros existentes: no debe actualizar automáticamente los metadatos ni los README sin que el contrato de hash y las reglas de escritura estén aprobados.
 
-Esta política protege la integridad del catálogo y evita cambios que puedan invalidar la interpretación de los hashes existentes.
-
 ## 5. Vista de consumo para IA
 
 La vista `public.v_repos_for_ai` es la interfaz de consulta consolidada de OpenBridge.
@@ -302,8 +271,6 @@ La vista `public.v_repos_for_ai` es la interfaz de consulta consolidada de OpenB
 Su definición combina la información de `catalog_repositories` con el texto asociado de `catalog_readmes`.
 
 ### 5.1. Campos expuestos
-
-La vista presenta los siguientes campos:
 
 | Campo | Descripción |
 |---|---|
@@ -322,16 +289,9 @@ La vista presenta los siguientes campos:
 | `content_hash` | Huella del contenido procesado. |
 | `readme_text` | Contenido textual del README. |
 
-La disponibilidad de algunos campos depende de los metadatos proporcionados por GitHub.
-
 ### 5.2. Función de la vista
 
-La vista proporciona una interfaz común para:
-
-- Consultar metadatos y README en una sola operación.
-- Reducir la necesidad de que los consumidores conozcan el esquema interno.
-- Mantener una proyección controlada de los campos disponibles.
-- Separar el almacenamiento de la forma en que se consumen los datos.
+La vista proporciona una interfaz común para consultar metadatos y README en una sola operación, reducir la necesidad de que los consumidores conozcan el esquema interno y mantener una proyección controlada de los campos disponibles.
 
 La vista expone `content_hash`, pero no `content_hash_version`. Si un consumidor necesita conocer la versión del contrato, ese requisito debe acordarse antes de modificar la interfaz de consumo.
 
@@ -347,38 +307,18 @@ La vista constituye la interfaz de datos disponible actualmente. No implica que 
 
 El procesamiento se distribuye entre los módulos de ingeniería de datos.
 
-### 6.1. Extracción
+| Módulo | Responsabilidad |
+|---|---|
+| `src/extract_github.py` | Extrae información de GitHub. |
+| `src/transform.py` | Organiza y valida los registros. |
+| `src/hash_contract.py` | Implementa el contrato de hash y las funciones asociadas. |
+| `src/load.py` | Compara el resultado transformado con el catálogo y planifica la carga. |
+| `src/database.py` | Gestiona el motor de conexión a PostgreSQL. |
+| `src/config.py` | Configura y valida los parámetros de conexión. |
 
-`src/extract_github.py`
+El cargador prepara un plan de carga a partir del resultado transformado y del estado del catálogo. La planificación no implica por sí misma la escritura de datos.
 
-Obtiene la información de los repositorios aprobados y prepara los registros extraídos para su procesamiento.
-
-### 6.2. Transformación
-
-`src/transform.py`
-
-Organiza los registros y aplica las validaciones necesarias antes de preparar los datos para la carga.
-
-### 6.3. Cálculo y validación del hash
-
-`src/hash_contract.py`
-
-Implementa el contrato de hash y las funciones asociadas a la generación y previsualización de las huellas.
-
-### 6.4. Planificación de carga
-
-`src/load.py`
-
-Compara el resultado transformado con una instantánea del catálogo existente y genera un plan de carga.
-
-El proceso de planificación no implica por sí mismo la escritura de datos. Las operaciones de escritura requieren una autorización independiente y el cumplimiento del contrato aprobado.
-
-### 6.5. Conexión y configuración
-
-- `src/config.py`: configura y valida los parámetros de conexión.
-- `src/database.py`: crea el motor de SQLAlchemy y proporciona la comprobación de conectividad.
-
-Esta separación facilita el mantenimiento de los componentes y permite probar la extracción, transformación, validación y planificación de carga de manera controlada.
+Las operaciones de escritura requieren autorización independiente y el cumplimiento del contrato aprobado.
 
 ## 7. Seguridad y control de acceso
 
@@ -431,19 +371,6 @@ OpenBridge/
 
 La estructura es representativa y puede evolucionar a medida que se incorporen nuevos componentes.
 
-### Módulos principales
-
-| Módulo | Responsabilidad |
-|---|---|
-| `extract_github.py` | Extracción de información de GitHub. |
-| `transform.py` | Transformación y validación de registros. |
-| `hash_contract.py` | Contrato y validación de las huellas de contenido. |
-| `load.py` | Comparación con el catálogo y planificación de carga. |
-| `database.py` | Motor de conexión a PostgreSQL. |
-| `config.py` | Configuración de los parámetros de conexión. |
-
-Los documentos de arquitectura y las decisiones técnicas deben mantenerse alineados con los cambios que se realicen en los módulos y en el esquema.
-
 Los archivos SQL deben revisarse antes de ejecutarse, especialmente los que correspondan a candidatos, pruebas o aplicación de cambios.
 
 ## 9. Estado actual
@@ -468,13 +395,9 @@ Los resultados representan el estado observado en las validaciones realizadas. N
 
 La evolución del proyecto debe priorizar la integridad del catálogo, la estabilidad del contrato de hash y la claridad de la interfaz de consumo.
 
-Las siguientes etapas constituyen una ruta de desarrollo propuesta.
-
 ### 10.1. Consolidación del modelo de datos
 
-Mantener documentadas las entidades, las relaciones, las restricciones y la estructura de la vista.
-
-Los cambios de esquema deben revisarse y validarse antes de aplicarse a la base de datos.
+Mantener documentadas las entidades, las relaciones, las restricciones y la estructura de la vista. Los cambios de esquema deben revisarse y validarse antes de aplicarse a la base de datos.
 
 ### 10.2. Evolución del contrato de hash
 
@@ -490,7 +413,7 @@ Acordar con los responsables de los componentes consumidores qué campos necesit
 
 Una API propia puede incorporarse si el equipo necesita una interfaz HTTP común para múltiples aplicaciones o servicios.
 
-En ese caso, deberá definirse por separado su contrato, autenticación, autorización, validación de parámetros y política de exposición de datos.
+En ese caso, deberán definirse su contrato, autenticación, autorización, validación de parámetros y política de exposición de datos.
 
 La API no forma parte del estado implementado que se documenta actualmente.
 
@@ -498,7 +421,71 @@ La API no forma parte del estado implementado que se documenta actualmente.
 
 Mantener las pruebas automatizadas, revisar los permisos después de los cambios administrativos y documentar las decisiones que afecten al modelo de datos.
 
-El objetivo es que la arquitectura pueda evolucionar sin perder la integridad de los registros ni la compatibilidad de la interfaz de consumo.
+## 11. Conexión de los integrantes del equipo
+
+Los integrantes autorizados pueden conectarse a la base de datos de OpenBridge desde sus propios computadores utilizando un cliente compatible con PostgreSQL, como DBeaver o pgAdmin.
+
+La conexión utiliza Supabase como servidor remoto y el usuario `openbridge_ai_reader`, que está destinado a la consulta de la vista de consumo.
+
+### 11.1. Parámetros de conexión
+
+Los siguientes parámetros corresponden a la configuración utilizada durante la validación del proyecto.
+
+| Parámetro | Valor |
+|---|---|
+| Motor | PostgreSQL |
+| Host | `aws-0-us-east-1.pooler.supabase.com` |
+| Puerto | `5432` |
+| Base de datos | `postgres` |
+| Usuario | `openbridge_ai_reader.fvvyifuckawheyvwgyke` |
+| Modo SSL | `require` |
+| Contraseña | Solicitarla al responsable de OpenBridge por un canal privado. |
+
+El nombre de usuario completo corresponde al acceso mediante el pooler de Supabase. Si los parámetros del proyecto cambian, se deben consultar los valores vigentes en la configuración de conexión de Supabase.
+
+**La contraseña no se incluye en el repositorio ni en esta documentación.**
+
+### 11.2. Conexión mediante DBeaver
+
+1. Instalar [DBeaver Community](https://dbeaver.io/download/).
+2. Crear una conexión nueva de tipo PostgreSQL.
+3. Introducir el host, puerto, base de datos y usuario indicados anteriormente.
+4. Introducir la contraseña del usuario de lectura, recibida por un canal seguro.
+5. Activar SSL y seleccionar el modo `require`.
+6. Seleccionar **Test Connection** para comprobar la conectividad y la autenticación.
+7. Si la prueba es satisfactoria, guardar la conexión.
+
+Una vez conectado, el integrante puede navegar por los objetos de la base de datos y consultar la vista `public.v_repos_for_ai`.
+
+### 11.3. Conexión mediante pgAdmin
+
+También se puede utilizar pgAdmin, un cliente gráfico para PostgreSQL.
+
+1. Crear un servidor nuevo desde la opción de registro de servidores.
+2. En la pestaña de conexión, introducir el host, puerto, base de datos y usuario.
+3. Introducir la contraseña del usuario de lectura.
+4. En la configuración SSL, seleccionar el modo `require`.
+5. Guardar la configuración y conectarse al servidor.
+
+Después de establecer la conexión, navegar hasta la base de datos `postgres`, el esquema `public` y la sección de vistas. Allí se encuentra `v_repos_for_ai`, siempre que los permisos estén configurados correctamente.
+
+### 11.4. Qué pueden consultar los integrantes
+
+El acceso de lectura permite consultar la información expuesta por `public.v_repos_for_ai`, incluidos los metadatos y el contenido textual de los README.
+
+El usuario lector no está destinado a modificar la información ni a administrar la estructura de la base de datos. El acceso directo a las tablas subyacentes está restringido intencionalmente.
+
+### 11.5. Seguridad de las credenciales
+
+Cada integrante debe utilizar las credenciales que le hayan sido proporcionadas por el responsable del proyecto.
+
+- No publicar contraseñas en GitHub, documentos públicos ni capturas de pantalla.
+- No utilizar las credenciales administrativas de PostgreSQL para las consultas rutinarias.
+- No guardar contraseñas en archivos del repositorio.
+- No ejecutar scripts de creación de roles, concesión de permisos o migración durante las pruebas de conexión.
+- Informar al responsable si aparece un error de autenticación o de permisos, en lugar de intentar modificar la configuración de seguridad.
+
+Si el equipo crece, se recomienda evaluar credenciales individuales o una API autenticada que permita gestionar el acceso de forma centralizada.
 
 ---
 
