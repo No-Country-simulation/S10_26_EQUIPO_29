@@ -72,7 +72,7 @@ def render_report(model: str, golden: SearchGoldenSet, n_repos: int, summary: di
 
 def main() -> None:
     golden = load_search_queries()
-    model = embeddings.MODEL_NAME
+    model = embeddings.model_spec().name
 
     start = time.perf_counter()
     embeddings.embed_query("calentamiento")      # carga el modelo
