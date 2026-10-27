@@ -9,9 +9,9 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-26. Golden set v1 ·
 | hit@3 | 14/14 (100%) |
 | MRR@3 | 0.92 |
 | recall@3 | 89% |
-| Carga del modelo + primera consulta | 6.2 s |
-| Vectores del catálogo (20 repos) | 11.9 s |
-| Consulta (promedio) | 0.22 s |
+| Carga del modelo + primera consulta | 6.5 s |
+| Vectores del catálogo (20 repos) | 15.2 s |
+| Consulta (promedio) | 0.69 s |
 
 ## Consultas con respuesta
 
