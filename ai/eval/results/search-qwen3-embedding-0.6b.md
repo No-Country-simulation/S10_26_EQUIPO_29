@@ -9,8 +9,8 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 ·
 | hit@3 | 14/14 (100%) |
 | MRR@3 | 0.92 |
 | recall@3 | 89% |
-| Carga del modelo + primera consulta | 6.3 s |
-| Vectores del catálogo (20 repos) | 11.6 s |
+| Carga del modelo + primera consulta | 6.5 s |
+| Vectores del catálogo (20 repos) | 11.2 s |
 | Consulta (promedio) | 0.20 s |
 
 ## Consultas con respuesta
@@ -55,3 +55,7 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 ·
 | `none-einvoice` | killbill 0.532 |
 | `none-inventory` | pocketbase 0.505 |
 | `none-videocall` | analytics 0.469 |
+
+## Umbral de `no_evidence`
+
+Sin calibrar para este modelo (`min_score = None`).

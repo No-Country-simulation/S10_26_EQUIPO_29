@@ -18,10 +18,11 @@ from sentence_transformers import SentenceTransformer
 class ModelSpec:
     """Modelo de embeddings y como usarlo"""
 
-    name: str                   # id en Hugging Face
-    query_prompt: str           # se antepone a la consulta
-    document_prompt: str = ""   # se antepone a cada documento
+    name: str                       # id en Hugging Face
+    query_prompt: str               # se antepone a la consulta
+    document_prompt: str = ""       # se antepone a cada documento
     left_padding: bool = False
+    min_score: float | None = None  # umbral de no_evidence
 
 
 QWEN3_INSTRUCTION  = (
@@ -36,7 +37,9 @@ MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B",
           "embeddinggemma": ModelSpec(name="google/embeddinggemma-300m",
                                       # Formatos de su ficha. Requiere aceptar licencia HF
                                       query_prompt="task: search result | query: ",
-                                      document_prompt="title: none | text: ",),
+                                      document_prompt="title: none | text: ",
+                                      # Calibrado con ai/eval (golden set v2, 20 repos); provisional.
+                                      min_score=0.20),
 }
 DEFAULT_MODEL = "embeddinggemma"
 

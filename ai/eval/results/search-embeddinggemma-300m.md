@@ -9,9 +9,9 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 ·
 | hit@3 | 14/14 (100%) |
 | MRR@3 | 0.83 |
 | recall@3 | 93% |
-| Carga del modelo + primera consulta | 6.6 s |
-| Vectores del catálogo (20 repos) | 5.5 s |
-| Consulta (promedio) | 0.09 s |
+| Carga del modelo + primera consulta | 5.4 s |
+| Vectores del catálogo (20 repos) | 4.2 s |
+| Consulta (promedio) | 0.07 s |
 
 ## Consultas con respuesta
 
@@ -55,3 +55,14 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 ·
 | `none-einvoice` | killbill 0.156 |
 | `none-inventory` | lago 0.208 |
 | `none-videocall` | killbill 0.188 |
+
+## Umbral de `no_evidence`
+
+Umbral: **0.200**. Si el 1.er resultado puntúa menos, la necesidad se responde como sin evidencia.
+
+| | Valor |
+|---|---|
+| 1.er resultado, consultas con respuesta | 0.207 – 0.558 |
+| 1.er resultado, consultas sin respuesta | 0.117 – 0.208 |
+| Con respuesta bloqueadas (error grave) | 0/14: — |
+| Sin respuesta que pasan (las puede frenar el LLM) | 1/8: `none-inventory` |

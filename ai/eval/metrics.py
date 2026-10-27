@@ -1,4 +1,4 @@
-"""Métricas de la búsqueda contra el golden set: hit@k, MRR@k y recall@k."""
+"""Métricas de la búsqueda contra el golden set: hit@k, MRR@k, recall@k y umbral."""
 
 from dataclasses import dataclass
 
@@ -9,6 +9,7 @@ class QueryOutcome:
 
     query_id: str
     expected_ranks: tuple[int | None, ...]    # Posición de cada esperado. None si no aparece.
+    top_score: float
 
     @property
     def answerable(self) -> bool:
@@ -47,3 +48,15 @@ def summarize(outcomes: list[QueryOutcome], k: int) -> dict:
             "mrr": sum(reciprocal) / n,
             "recall": sum(recall) / n,
 }
+
+
+def threshold_errors(outcomes: list[QueryOutcome],
+                     min_score: float) -> tuple[list[str], list[str]]:
+    """Errores de un umbral de no_evidence aplicado al 1.er resultado.
+
+    Devuelve (con respuesta que se bloquearían, sin respuesta que pasarían).
+    Un puntaje igual al umbral pasa.
+    """
+    blocked = [o.query_id for o in outcomes if o.answerable and o.top_score < min_score]
+    leaked = [o.query_id for o in outcomes if not o.answerable and o.top_score >= min_score]
+    return blocked, leaked

@@ -9,7 +9,7 @@ from datetime import date
 
 from ai import embeddings
 from ai.eval.golden import EVAL_DIR, SearchGoldenSet, SearchQuery, load_search_queries
-from ai.eval.metrics import QueryOutcome, expected_ranks, summarize
+from ai.eval.metrics import QueryOutcome, expected_ranks, summarize, threshold_errors
 from ai.search import SearchIndex, SearchResult
 
 K = 3
@@ -24,8 +24,9 @@ def top_cell(results: list[SearchResult]) -> str:
     return " · ".join(f"{short(r.repo.full_name)} {r.score:.3f}" for r in results)
 
 
-def render_report(model: str, golden: SearchGoldenSet, n_repos: int, summary: dict,
-                  times: dict, rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]]) -> str:
+def render_report(model: str, min_score: float | None, golden: SearchGoldenSet,
+                  n_repos: int, summary: dict, times: dict,
+                  rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]]) -> str:
     lines = [
         f"# Evaluación de la búsqueda · {model}",
         "",
@@ -67,12 +68,34 @@ def render_report(model: str, golden: SearchGoldenSet, n_repos: int, summary: di
         if not q.answerable:
             lines.append(f"| `{q.id}` | {top_cell(top[:1])} |")
 
+    lines += ["", "## Umbral de `no_evidence`", ""]
+    if min_score is None:
+        lines.append("Sin calibrar para este modelo (`min_score = None`).")
+    else:
+        outcomes = [o for _, _, o in rows]
+        answered = [o.top_score for o in outcomes if o.answerable]
+        unanswered = [o.top_score for o in outcomes if not o.answerable]
+        blocked, leaked = threshold_errors(outcomes, min_score)
+        ids = lambda xs: ", ".join(f"`{x}`" for x in xs) or "—"
+        lines += [
+            f"Umbral: **{min_score:.3f}**. Si el 1.er resultado puntúa menos, "
+            "la necesidad se responde como sin evidencia.",
+            "",
+            "| | Valor |",
+            "|---|---|",
+            f"| 1.er resultado, consultas con respuesta | {min(answered):.3f} – {max(answered):.3f} |",
+            f"| 1.er resultado, consultas sin respuesta | {min(unanswered):.3f} – {max(unanswered):.3f} |",
+            f"| Con respuesta bloqueadas (error grave) | {len(blocked)}/{len(answered)}: {ids(blocked)} |",
+            f"| Sin respuesta que pasan (las puede frenar el LLM) | {len(leaked)}/{len(unanswered)}: {ids(leaked)} |",
+        ]
+
     return "\n".join(lines) + "\n"
 
 
 def main() -> None:
     golden = load_search_queries()
-    model = embeddings.model_spec().name
+    spec = embeddings.model_spec()
+    model = spec.name
 
     start = time.perf_counter()
     embeddings.embed_query("calentamiento")      # carga el modelo
@@ -88,7 +111,9 @@ def main() -> None:
         start = time.perf_counter()
         results = index.search(q.query, k=n_repos)   # ranking completo
         query_s.append(time.perf_counter() - start)
-        outcome = QueryOutcome(q.id, expected_ranks([r.repo.full_name for r in results], q.expected))
+        outcome = QueryOutcome(q.id,
+                               expected_ranks([r.repo.full_name for r in results], q.expected),
+                               results[0].score,)
         rows.append((q, results[:K], outcome))
         outcomes.append(outcome)
 
@@ -97,7 +122,11 @@ def main() -> None:
 
     RESULTS_DIR.mkdir(exist_ok=True)
     path = RESULTS_DIR / f"search-{short(model).lower()}.md"
-    path.write_text(render_report(model, golden, n_repos, summary, times, rows), encoding="utf-8")
+    path.write_text(render_report(model,
+                                  spec.min_score,
+                                  golden, n_repos,
+                                  summary,
+                                  times, rows), encoding="utf-8",)
 
     print(f"Modelo: {model}")
     print(f"hit@{K}: {summary['hits']}/{summary['n']}  MRR@{K}: {summary['mrr']:.2f}  "
