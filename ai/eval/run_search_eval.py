@@ -9,7 +9,7 @@ from datetime import date
 
 from ai import embeddings
 from ai.eval.golden import EVAL_DIR, SearchGoldenSet, SearchQuery, load_search_queries
-from ai.eval.metrics import QueryOutcome, first_hit_rank, summarize
+from ai.eval.metrics import QueryOutcome, expected_ranks, summarize
 from ai.search import SearchIndex, SearchResult
 
 K = 3
@@ -25,7 +25,7 @@ def top_cell(results: list[SearchResult]) -> str:
 
 
 def render_report(model: str, golden: SearchGoldenSet, n_repos: int, summary: dict,
-                  times: dict, rows: list[tuple[SearchQuery, list[SearchResult], int | None]]) -> str:
+                  times: dict, rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]]) -> str:
     lines = [
         f"# Evaluación de la búsqueda · {model}",
         "",
@@ -38,20 +38,23 @@ def render_report(model: str, golden: SearchGoldenSet, n_repos: int, summary: di
         "|---|---|",
         f"| hit@{K} | {summary['hits']}/{summary['n']} ({summary['hit_rate']:.0%}) |",
         f"| MRR@{K} | {summary['mrr']:.2f} |",
+        f"| recall@{K} | {summary['recall']:.0%} |",
         f"| Carga del modelo + primera consulta | {times['load']:.1f} s |",
         f"| Vectores del catálogo ({n_repos} repos) | {times['build']:.1f} s |",
         f"| Consulta (promedio) | {times['query']:.2f} s |",
         "",
         "## Consultas con respuesta",
         "",
-        f"| Consulta | Acierto | Posición del 1.er esperado | Top-{K} (puntaje) | Esperados |",
-        "|---|---|---|---|---|",
+        f"| Consulta | Acierto | Posición de cada esperado | Top-{K} (puntaje) |",
+        "|---|---|---|---|",
     ]
-    for q, top, rank in rows:
+    for q, top, outcome in rows:
         if q.answerable:
-            hit = "✅" if rank is not None and rank <= K else "❌"
-            expected = ", ".join(short(e) for e in q.expected)
-            lines.append(f"| `{q.id}` | {hit} | {rank or '—'} | {top_cell(top)} | {expected} |")
+            hit = "✅" if outcome.rank is not None and outcome.rank <= K else "❌"
+            positions = " · ".join(
+                f"{short(e)} {r or '—'}" for e, r in zip(q.expected, outcome.expected_ranks)
+            )
+            lines.append(f"| `{q.id}` | {hit} | {positions} | {top_cell(top)} |")
 
     lines += ["", "## Pares (deben dar resultados distintos)", "",
               f"| Par | Consulta | Top-{K} |", "|---|---|---|"]
@@ -85,9 +88,9 @@ def main() -> None:
         start = time.perf_counter()
         results = index.search(q.query, k=n_repos)   # ranking completo
         query_s.append(time.perf_counter() - start)
-        rank = first_hit_rank([r.repo.full_name for r in results], q.expected)
-        rows.append((q, results[:K], rank))
-        outcomes.append(QueryOutcome(q.id, q.answerable, rank))
+        outcome = QueryOutcome(q.id, expected_ranks([r.repo.full_name for r in results], q.expected))
+        rows.append((q, results[:K], outcome))
+        outcomes.append(outcome)
 
     summary = summarize(outcomes, K)
     times = {"load": load_s, "build": build_s, "query": sum(query_s) / len(query_s)}
@@ -97,7 +100,8 @@ def main() -> None:
     path.write_text(render_report(model, golden, n_repos, summary, times, rows), encoding="utf-8")
 
     print(f"Modelo: {model}")
-    print(f"hit@{K}: {summary['hits']}/{summary['n']}  MRR@{K}: {summary['mrr']:.2f}")
+    print(f"hit@{K}: {summary['hits']}/{summary['n']}  MRR@{K}: {summary['mrr']:.2f}  "
+          f"recall@{K}: {summary['recall']:.0%}")
     print(f"Reporte: {path}")
 
 
