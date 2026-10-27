@@ -1,6 +1,6 @@
 # Evaluación de la búsqueda · google/embeddinggemma-300m
 
-Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v1 · 20 repos · k = 3 · CPU.
+Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 · 20 repos · k = 3 · CPU.
 
 ## Resumen
 
@@ -9,9 +9,9 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v1 ·
 | hit@3 | 14/14 (100%) |
 | MRR@3 | 0.83 |
 | recall@3 | 93% |
-| Carga del modelo + primera consulta | 6.4 s |
-| Vectores del catálogo (20 repos) | 4.0 s |
-| Consulta (promedio) | 0.06 s |
+| Carga del modelo + primera consulta | 6.6 s |
+| Vectores del catálogo (20 repos) | 5.5 s |
+| Consulta (promedio) | 0.09 s |
 
 ## Consultas con respuesta
 
@@ -51,3 +51,7 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v1 ·
 | `none-video` | umami 0.117 |
 | `none-agenda` | lago 0.145 |
 | `none-email` | umami 0.141 |
+| `none-accounting` | pocketbase 0.190 |
+| `none-einvoice` | killbill 0.156 |
+| `none-inventory` | lago 0.208 |
+| `none-videocall` | killbill 0.188 |

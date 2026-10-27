@@ -1,6 +1,6 @@
 # Evaluación de la búsqueda · Qwen/Qwen3-Embedding-0.6B
 
-Generado con `python -m ai.eval.run_search_eval` el 2026-10-26. Golden set v1 · 20 repos · k = 3 · CPU.
+Generado con `python -m ai.eval.run_search_eval` el 2026-10-27. Golden set v2 · 20 repos · k = 3 · CPU.
 
 ## Resumen
 
@@ -9,9 +9,9 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-26. Golden set v1 ·
 | hit@3 | 14/14 (100%) |
 | MRR@3 | 0.92 |
 | recall@3 | 89% |
-| Carga del modelo + primera consulta | 6.5 s |
-| Vectores del catálogo (20 repos) | 15.2 s |
-| Consulta (promedio) | 0.69 s |
+| Carga del modelo + primera consulta | 6.3 s |
+| Vectores del catálogo (20 repos) | 11.6 s |
+| Consulta (promedio) | 0.20 s |
 
 ## Consultas con respuesta
 
@@ -51,3 +51,7 @@ Generado con `python -m ai.eval.run_search_eval` el 2026-10-26. Golden set v1 ·
 | `none-video` | analytics 0.439 |
 | `none-agenda` | pocketbase 0.487 |
 | `none-email` | analytics 0.453 |
+| `none-accounting` | killbill 0.554 |
+| `none-einvoice` | killbill 0.532 |
+| `none-inventory` | pocketbase 0.505 |
+| `none-videocall` | analytics 0.469 |

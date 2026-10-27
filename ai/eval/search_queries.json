@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "queries": [
     {
       "id": "auth-sso",
@@ -126,6 +126,34 @@
       "expected": [],
       "pair": null,
       "note": "Sin respuesta, pero 'casi': suena a analítica (umami habla de campañas) y ningún repo envía correos. Pone a prueba el umbral."
+    },
+        {
+      "id": "none-accounting",
+      "query": "Llevar la contabilidad y la nómina de mis empleados",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta, 'casi': suena a pagos y facturación (lago, killbill), pero ninguno hace contabilidad ni nómina."
+    },
+    {
+      "id": "none-einvoice",
+      "query": "Emitir facturas electrónicas válidas ante la DIAN",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta, 'casi' difícil: lago tiene el topic invoices, pero factura suscripciones; no hace facturación electrónica legal."
+    },
+    {
+      "id": "none-inventory",
+      "query": "Controlar el inventario de productos de mi bodega",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada en el catálogo gestiona inventario."
+    },
+    {
+      "id": "none-videocall",
+      "query": "Hacer videollamadas con mis clientes desde mi página web",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada parecido en el catálogo."
     }
   ]
 }
