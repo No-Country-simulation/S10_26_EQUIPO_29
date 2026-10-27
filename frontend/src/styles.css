@@ -599,3 +599,48 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 /* Keyboard focus has its own outline; a filled action requires actual hover. */
 .tool-card .tool-actions>a.detail-link:focus-visible:not(:hover){color:#fff;background:#181818;border-color:#ffffff29}
 .tool-card .tool-actions>a.detail-link:focus-visible:not(:hover)::before{transform:translateY(102%)}
+
+/* Compact proposal: tabs share one region, all contract text remains accessible. */
+.stack-layers-panel:has(.proposal-tabs){padding:0;background:none;border:0;border-radius:0}
+.proposal-tabs [role=tablist]{display:flex;gap:10px;padding-bottom:16px;border-bottom:1px solid #ffffff18;margin-bottom:24px}
+.proposal-tabs [role=tab]{display:flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid #ffffff20;border-radius:18px;background:#ffffff04;color:#c7ced9;font-size:14px;transition:background 180ms,color 180ms}
+.proposal-tabs [role=tab]::before,.proposal-connection::before{display:none!important}
+.proposal-tabs [role=tab][aria-selected=true]{background:#1745c7;color:white;border-color:transparent}
+.proposal-tabs [role=tab]:hover{background:#ffffff12;color:white}.proposal-tabs [role=tab][aria-selected=true]:hover{background:#2454d6}
+.proposal-tabs [role=tab]>span{padding:2px 7px;border-radius:30px;background:#ffffff0d;font-size:12px}
+.proposal-panels{min-height:360px}
+.proposal-panels [role=tabpanel]:not([hidden]){animation:proposal-panel-in 240ms cubic-bezier(.22,1,.36,1) both}
+.proposal-panels [hidden]{display:none!important}
+.proposal-tools{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.proposal-tool{min-width:0;padding:20px;border-radius:16px;border:1px solid color-mix(in srgb,var(--proposal-brand) 60%,#ffffff22);background:color-mix(in srgb,var(--proposal-brand) 24%,#101317);display:flex;flex-direction:column;gap:12px}
+.proposal-tool-heading{display:flex;gap:14px;align-items:center;min-width:0}.proposal-tool-heading>div{min-width:0}
+.stack-content .proposal-tool h3{font-size:17px;overflow-wrap:anywhere}.stack-content .proposal-tool-heading p{font-size:13px;line-height:1.5;margin:3px 0 0;overflow-wrap:anywhere}
+.proposal-brand{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center}.proposal-brand img{width:36px;height:36px;object-fit:contain}.proposal-brand .brand-initials{width:36px;height:36px;font-size:16px}
+.proposal-rationale summary{font-size:13px;color:#c1cbd8;cursor:pointer;padding:3px 0}.stack-content .proposal-rationale p{font-size:14px;line-height:1.6;margin-top:8px;overflow-wrap:anywhere}
+.proposal-tool>a{display:flex;gap:5px;align-items:center;color:#79baff;font-size:13px;margin-top:auto;width:fit-content}.proposal-tool>a:hover{color:white;text-decoration:underline}
+.proposal-connections{list-style:none;padding:0;margin:0}.proposal-connections>li{border-bottom:1px solid #ffffff15}
+.proposal-connection{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) minmax(100px,.6fr) 22px;gap:20px;align-items:center;text-align:left;padding:16px 4px;background:transparent;color:#eef2f8;border:0;border-radius:8px;transition:background 150ms}
+.proposal-connection:hover{background:#ffffff05;color:#fff}.proposal-endpoint{display:flex;align-items:center;gap:14px;font-size:15px;min-width:0}.proposal-endpoint>span:last-child{overflow-wrap:anywhere}.connection-arrow,.connection-chevron{color:#a5afbd}
+.proposal-protocol{justify-self:start;padding:6px 10px;font-size:12px;border:1px solid #ffffff20;border-radius:30px;overflow-wrap:anywhere;max-width:100%}
+.connection-chevron{transition:transform 240ms}.proposal-connection[aria-expanded=true] .connection-chevron{transform:rotate(180deg)}
+.proposal-explanation{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows 260ms cubic-bezier(.22,1,.36,1),opacity 180ms}.proposal-explanation.is-open{grid-template-rows:1fr;opacity:1}.proposal-explanation>div{overflow:hidden;min-height:0}.stack-content .proposal-explanation p{font-size:14px;line-height:1.6;margin:0;padding:0 4px 16px;overflow-wrap:anywhere}
+.proposal-empty{padding:28px 0}
+@keyframes proposal-panel-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
+@media(max-width:900px){.proposal-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.proposal-connection{gap:12px;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr) 90px 20px}.proposal-endpoint{gap:8px}}
+@media(max-width:600px){.proposal-tools{grid-template-columns:1fr}.proposal-panels{min-height:0}.proposal-tabs [role=tab]{font-size:13px;padding:10px 12px;gap:6px}.proposal-connection{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr) 18px;gap:8px}.proposal-protocol{grid-column:1/4;grid-row:2;margin-left:4px}.connection-chevron{grid-column:4;grid-row:1}.proposal-endpoint{font-size:13px;gap:6px}.proposal-endpoint .proposal-brand{width:26px;height:26px}.proposal-endpoint .proposal-brand img{width:24px;height:24px}.proposal-endpoint .brand-initials{width:24px;height:24px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.proposal-panels [role=tabpanel]:not([hidden]){animation:none}.proposal-explanation,.connection-chevron,.proposal-tabs [role=tab]{transition:none}}
+.hero .proposal-tabs button[role=tab]:is(:hover,:focus-visible),.hero .proposal-tabs button.proposal-connection:is(:hover,:focus-visible){color:#fff}
+.hero .proposal-tabs button:focus-visible{outline:2px solid #8ccfff;outline-offset:3px}
+.proposal-brand img{filter:brightness(0) invert(1)}
+.stack-layers-panel:has(.proposal-tabs){background:#0e1217ed;padding:24px;border-radius:18px}
+@media(max-width:600px){.stack-layers-panel:has(.proposal-tabs){padding:16px}}
+@media(min-width:901px){
+ .hero-inner.has-architecture:has(.proposal-tabs){max-width:1386px;padding-top:28px;text-align:left}
+ .hero-inner.has-architecture:has(.proposal-tabs) .prompt-heading-result{max-width:calc(100% - 240px);font-size:36px;letter-spacing:-1.4px}
+ .hero-inner.has-architecture:has(.proposal-tabs) .intro-result{margin-left:0!important;max-width:900px}
+ .hero-inner:has(.proposal-tabs) .stack-new-action{position:absolute;right:24px;top:40px;margin:0}
+}
+.proposal-connection{padding-top:12px;padding-bottom:12px}
+.stack-content .assistant-context details h3{margin-top:16px;font-size:14px}
+.hero-inner:has(.proposal-tabs) .stack-surface{max-width:none;margin-bottom:12px}
+.hero-inner:has(.proposal-tabs) .architecture-result-tools{max-width:none;margin-top:8px}
