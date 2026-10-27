@@ -13,14 +13,19 @@ desde la raíz del repo.
 **Datos de ejemplo.** Mientras la IA no lee de la base de datos, trabaja con
 20 repos reales descargados de la API de GitHub, con categorías asignadas a mano.
 
-**Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés), devuelve los repos del catálogo más parecidos por significado, con filtros por licencia, health score y categoría.
+**Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés),
+devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
+health score y categoría.
+
+**Evaluación de la búsqueda.** Golden set de 22 consultas, métricas (hit@3, MRR, recall) y umbral de
+"sin evidencia", con un solo comando. resultados y decisiones en [`eval/README.md`](eval/README.md).
 
 ## Estructura
 
 ```
 ai/
 ├── catalog.py                  # load_repos() y load_categories(): único punto de acceso a los datos
-├── embeddings.py               # Modelo de embeddings (Qwen3-Embedding-0.6B, local, en CPU)
+├── embeddings.py               # Modelo de embeddings (EmbeddingGemma por defecto) y umbral
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── requirements.txt
 ├── scripts/
@@ -28,9 +33,18 @@ ai/
 ├── data/
 │   ├── repos.json              # 20 repos con la forma del contrato, sin el README
 │   └── readmes/                # README de cada repo (<owner>__<name>.md)
+├── eval/
+│   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
+│   ├── search_queries.json     # Golden set: consultas y repos esperados
+│   ├── golden.py               # Carga y valida el golden set
+│   ├── metrics.py              # hit@k, MRR, recall y umbral
+│   ├── run_search_eval.py      # python -m ai.eval.run_search_eval
+│   └── results/                # Un reporte por modelo
 └── tests/
     ├── test_sample_data.py     # Valida los datos de ejemplo contra el contrato
-    └── test_search.py          # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
+    ├── test_search.py          # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
+    ├── test_search_queries.py  # Valida el golden set
+    └── test_eval_metrics.py    # Métricas de la evaluación (sin modelo)
 ```
 
 ## Puesta en marcha
@@ -46,12 +60,26 @@ uv pip install -r ai/requirements.txt
 
 ### Modelo de embeddings
 
-- La primera vez que se usa la búsqueda se descarga `Qwen/Qwen3-Embedding-0.6B`
-  (~1,2 GB) a la caché de Hugging Face del usuario (`~/.cache/huggingface/`).
-  Después se lee de ahí.
-- Corre en CPU y usa ~2,4 GB de RAM. Construir el índice de 20 repos tarda
-  ~15 s; cada consulta, ~0,25 s.
-- Para trabajar sin internet después de la primera descarga: `export HF_HUB_OFFLINE=1`.
+El modelo por defecto es `google/embeddinggemma-300m`. Por qué este modelo:
+[`eval/README.md`](eval/README.md).
+
+**Requisito, una vez por máquina:** el modelo pide aceptar su licencia en
+Hugging Face.
+
+1. Crear una cuenta en [huggingface.co](https://huggingface.co) y aceptar la
+   licencia en la [página del modelo](https://huggingface.co/google/embeddinggemma-300m).
+2. Crear un token de tipo **Read** (Settings → Access Tokens).
+3. `hf auth login` → "Paste an access token". El token queda en la carpeta
+   del usuario (`~/.cache/huggingface/`); **nunca va al repo ni a `.env`**.
+
+Después:
+
+- La primera vez se descargan ~1,2 GB a la caché de Hugging Face; luego se
+  leen de ahí. Para trabajar sin internet: `export HF_HUB_OFFLINE=1`.
+- Corre en CPU, con ~1,2 GB de RAM aproximadamente. Construir el índice de
+  20 repos tarda ~5 s; cada consulta, menos de 0,1 s.
+- Otro modelo del registro: `AI_EMBEDDING_MODEL=qwen3` (Qwen3-Embedding-0.6B,
+  sin licencia que aceptar, ~2,4 GB de RAM, sin umbral calibrado).
 - En Windows puede aparecer una advertencia de Hugging Face sobre *symlinks*:
   es inofensiva.
 
@@ -60,10 +88,10 @@ uv pip install -r ai/requirements.txt
 ```bash
 python -m pytest -q                              # todos los tests del repo, sin el modelo
 python -m pytest ai/tests -v                     # tests de la IA, sin el modelo
-AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~1 min)
+AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~20 s)
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
-
+python -m ai.eval.run_search_eval                # evalúa la búsqueda y escribe el reporte en ai/eval/results/
 ```
 
 Se usa `python -m` desde la raíz para que `ai` y `shared` se puedan importar
