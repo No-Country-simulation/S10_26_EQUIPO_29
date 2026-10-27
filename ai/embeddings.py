@@ -11,6 +11,7 @@ from functools import lru_cache
 
 import numpy as np
 import torch
+from huggingface_hub.errors import GatedRepoError
 from sentence_transformers import SentenceTransformer
 
 
@@ -54,14 +55,20 @@ def model_spec() -> ModelSpec:
 
 @lru_cache(maxsize=1)
 def _model() -> SentenceTransformer:
-    """Carga del modelo la primera vez; luego reutiliza el mismo."""
-    # float32: en CPU, bfloat16 (default) es lento e impreciso.
+    """Carga el modelo la primera vez; luego reutiliza el mismo."""
     spec = model_spec()
-    return SentenceTransformer(
-        spec.name,
-        processor_kwargs={"padding_side": "left"} if spec.left_padding else {},
-        model_kwargs={"dtype": torch.float32},
-    )
+    try:
+        # float32: en CPU, bfloat16 (default) es lento e impreciso.
+        return SentenceTransformer(
+            spec.name,
+            processor_kwargs={"padding_side": "left"} if spec.left_padding else {},
+            model_kwargs={"dtype": torch.float32},
+        )
+    except GatedRepoError as err:
+        raise RuntimeError(
+            f"{spec.name} requiere aceptar su licencia en Hugging Face y un token de lectura "
+            "(hf auth login). Pasos en ai/README.md, sección 'Modelo de embeddings'."
+        ) from err
 
 
 def embed_documents(texts: list[str]) -> np.ndarray:
