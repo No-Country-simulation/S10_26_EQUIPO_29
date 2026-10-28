@@ -1,27 +1,22 @@
-import {useLayoutEffect,useRef,useState} from 'react';
+import {useLayoutEffect,useRef} from 'react';
+import {observeProposalHeight} from './observeProposalHeight.mjs';
 import {ProposalTabs} from './ProposalTabs';
 
 export function StackProposal({expanded,pending,hasResult,slow,response}){
  const content=useRef(null);
- const [height,setHeight]=useState(400);
- useLayoutEffect(()=>{
-  const element=content.current;if(!element)return;
-  const measure=()=>setHeight(Math.ceil(element.getBoundingClientRect().height));
-  const observer=new ResizeObserver(measure);observer.observe(element);measure();
-  return()=>observer.disconnect();
- },[]);
+ const surface=useRef(null);
+ useLayoutEffect(()=>observeProposalHeight(content.current,surface.current),[]);
  const ok=response?.status==='ok';
  return <div className={'architecture-stage '+(expanded?'is-visible':'')} aria-busy={pending}><div className="architecture-stage-clip">
- <div className="stack-surface" style={{height}}>
- <div className={'stack-building'+(pending&&!hasResult?' is-visible':'')} role="status" aria-hidden={!pending||hasResult}><div><p>{slow?'Está tomando un poco más de tiempo':'Preparando la propuesta de ejemplo…'}</p>{slow&&<p className="stack-loading-hint">Tu descripción sigue guardada. Estamos esperando la respuesta.</p>}</div></div>
+ <div className="stack-surface" ref={surface}>
  <div ref={content} className={'stack-content'+(!hasResult?' is-waiting':'')}>
  {hasResult&&ok&&<section className="stack-layers-panel" aria-label="Propuesta de arquitectura">
   <ProposalTabs key={response.id} response={response}/>
   <ResponseContext response={response} compact/>
  </section>}
  {hasResult&&!ok&&<section className="stack-outcome" aria-label={response?.status==='needs_clarification'?'Aclaraciones necesarias':'Sin evidencia suficiente'}>
- <h2>{response?.status==='needs_clarification'?'Completemos la descripción':'No hay evidencia suficiente'}</h2>
- {response?.status==='needs_clarification'?<><ol>{response.clarification_questions.map((q,i)=><li key={i}>{q}</li>)}</ol><p>Añade estas respuestas a tu descripción original y vuelve a generar la propuesta. Incluye toda la información: cada consulta se evalúa por separado y no conserva la conversación anterior.</p></>:<p>{response?.summary}</p>}
+
+ {response?.status==='needs_clarification'?<><ol>{response.clarification_questions.map((q,i)=><li key={i}>{q}</li>)}</ol></>:null}
  <ResponseContext response={response}/></section>}
  </div></div></div></div>;
 }

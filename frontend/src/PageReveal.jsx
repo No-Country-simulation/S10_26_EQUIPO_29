@@ -1,10 +1,23 @@
 import React, {useLayoutEffect,useRef} from 'react';
 
-export function RevealHeading({as:Tag='h2',text,mobileBreak=false}){
+export function RevealHeading({as:Tag='h2',text,mobileBreak=false,gradientWord}){
+ const heading=useRef(null);
+ useLayoutEffect(()=>{
+  if(!gradientWord)return;
+  const element=heading.current;
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  let visible=false;
+  const sync=()=>element.style.setProperty('--word-play-state',visible&&!document.hidden&&!motion.matches&&!element.closest('[aria-hidden="true"]')?'running':'paused');
+  const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();});
+  const presentation=new MutationObserver(sync);
+  presentation.observe(element.parentElement,{attributes:true,attributeFilter:['aria-hidden']});
+  observer.observe(element);document.addEventListener('visibilitychange',sync);motion.addEventListener('change',sync);sync();
+  return()=>{observer.disconnect();presentation.disconnect();document.removeEventListener('visibilitychange',sync);motion.removeEventListener('change',sync);};
+ },[gradientWord]);
  let offset=0;
- return <Tag className="reveal-heading" aria-label={text}>{text.split(' ').map((word,index)=>{
+ return <Tag ref={heading} className="reveal-heading" aria-label={text}>{text.split(' ').map((word,index)=>{
   const start=offset;offset+=Array.from(word).length+1;
-  return <React.Fragment key={index}>{index>0&&(mobileBreak&&index===2?<><br className="mobile-break"/>{' '}</>:' ')}<span className="reveal-word" aria-hidden="true">{Array.from(word).map((letter,i)=><span className="letter-mask" key={i}><span className="reveal-letter" style={{'--letter-delay':`${Math.min(start+i,36)*12}ms`}}>{letter}</span></span>)}</span></React.Fragment>;
+  return <React.Fragment key={index}>{index>0&&(mobileBreak&&index===2?<><br className="mobile-break"/>{' '}</>:' ')}<span className={'reveal-word'+(word===gradientWord?' gradient-word':'')} aria-hidden="true">{(word===gradientWord?[word]:Array.from(word)).map((letter,i)=><span className="letter-mask" key={i}><span className="reveal-letter" style={{'--letter-delay':`${Math.min(start+i,36)*12}ms`}}>{letter}</span></span>)}</span></React.Fragment>;
  })}</Tag>;
 }
 

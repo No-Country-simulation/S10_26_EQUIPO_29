@@ -53,7 +53,7 @@ test('unknown, archived or disabled repositories never enter the accepted propos
   assert.throws(()=>validateAssistantCatalog(response,catalog),{code:'unavailable_tool'});
  }
  await assert.rejects(requestAssistant(request,{...quick,scenario:'unknown_tool'}),{code:'unavailable_tool'});
- await assert.rejects(requestAssistant(request,{...quick,...assistantScenarioOptions('archived_tool',catalogRecords)}),{code:'unavailable_tool'});
+ await assert.rejects(requestAssistant(request,{...assistantScenarioOptions('archived_tool',catalogRecords),...quick}),{code:'unavailable_tool'});
  assert.equal(catalogRecords.find(t=>t.full_name==='keycloak/keycloak').archived,false);
  const appPart=structuredClone(response);appPart.components[0].full_name=null;assert.equal(validateAssistantCatalog(appPart,catalogRecords),appPart);
 });

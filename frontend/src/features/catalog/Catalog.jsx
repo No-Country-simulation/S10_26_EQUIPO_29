@@ -14,6 +14,6 @@ export const Catalog=memo(function Catalog({onOpen,phase}){
  <section className="catalog" id="catalogo"><div className="section-top"><div><RevealHeading text="Explora el ecosistema open source"/></div></div>
  <CatalogFilters state={state} count={filtered.length}/>
  <div className="grid">{displayed.map(tool=><ToolCard key={tool.name} tool={tool} onOpen={onOpen}/>)}</div>
- {filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><p>Prueba otro término o quita alguno de los filtros.</p><button onClick={clear} className="primary">Ver todas las herramientas</button></div>}
+ {filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><button onClick={clear} className="primary ui-wash">Ver todas las herramientas</button></div>}
  </section><footer className="catalog-footer"><a className="brand" href="#"><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a></footer></div></div>);
 });

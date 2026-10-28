@@ -1,4 +1,3 @@
-import {useExamplePlaceholder} from './useExamplePlaceholder';
 import {useState,useRef,useEffect,useReducer} from 'react';
 import {tools} from '../../tools';
 import {promptPresentation,initialPresentation} from '../../promptPresentation.mjs';
@@ -17,8 +16,6 @@ export function useAssistantFlow(isDetail){
  const [presentation,dispatchPresentation]=useReducer(promptPresentation,initialPresentation);
  const {pending,expanded,hasResult}=presentation;
  const phase=pending?'loading':hasResult?'done':'idle';
- const [promptFocused, setPromptFocused] = useState(false);
- const placeholder = useExamplePlaceholder(isDetail || promptFocused || Boolean(query) || phase === 'loading');
  const input=useRef(null), request=useRef(null);useEffect(()=>()=>request.current?.abort(),[]);
  const preparePromptLayout=usePromptLayout(expanded,input,isDetail);
  useEffect(()=>{if(isDetail){request.current?.abort();setSlow(false);dispatchPresentation({type:'cancel'});}},[isDetail]);
@@ -44,5 +41,5 @@ export function useAssistantFlow(isDetail){
   finally{if(request.current===controller){request.current=null;if(!controller.signal.aborted)setSlow(false);}}
  }
 
- return {query,setQuery,error,setError,assistantResponse,originalPrompt,slow,canRetry,setCanRetry,resultHeading,finished,pending,expanded,hasResult,phase,setPromptFocused,placeholder,input,newArchitecture,submit};
+ return {query,setQuery,error,setError,assistantResponse,originalPrompt,slow,canRetry,setCanRetry,resultHeading,finished,pending,expanded,hasResult,phase,isDetail,input,newArchitecture,submit};
 }

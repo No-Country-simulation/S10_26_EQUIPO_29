@@ -48,6 +48,26 @@
     {
       "id": "infrastructure",
       "name": "Infraestructura"
+    },
+    {
+      "id": "storage",
+      "name": "Almacenamiento"
+    },
+    {
+      "id": "cms",
+      "name": "CMS"
+    },
+    {
+      "id": "communication",
+      "name": "Comunicación"
+    },
+    {
+      "id": "automation",
+      "name": "Automatización"
+    },
+    {
+      "id": "data_processing",
+      "name": "Procesamiento de datos"
     }
   ]
 }

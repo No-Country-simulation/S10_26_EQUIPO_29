@@ -54,7 +54,6 @@
       "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
       "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
@@ -176,7 +175,6 @@
       "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
       "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
