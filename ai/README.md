@@ -20,6 +20,10 @@ health score y categoría.
 **Evaluación de la búsqueda.** Golden set de 22 consultas, métricas (hit@3, MRR, recall) y umbral de
 "sin evidencia", con un solo comando. resultados y decisiones en [`eval/README.md`](eval/README.md).
 
+**Catálogo real (snapshot).** Copia de los 100 repos de la vista `public.v_repos_for_ai`
+en `data/catalog/`, para escribir casos de prueba y medir la búsqueda contra datos reales
+sin conectarse a la base. La búsqueda todavía usa los datos de ejemplo (`load_repos()`).
+
 ## Estructura
 
 ```
@@ -29,10 +33,12 @@ ai/
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── requirements.txt
 ├── scripts/
-│   └── build_sample_data.py    # Regenera ai/data/ desde la API de GitHub
+│   ├── build_sample_data.py        # Regenera ai/data/ desde la API de GitHub
+│   └── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
 ├── data/
 │   ├── repos.json              # 20 repos con la forma del contrato, sin el README
-│   └── readmes/                # README de cada repo (<owner>__<name>.md)
+│   ├── readmes/                # README de cada repo (<owner>__<name>.md)
+│   └── catalog/                # Snapshot del catálogo real: repos.json, readmes/, meta.json
 ├── eval/
 │   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
 │   ├── search_queries.json     # Golden set: consultas y repos esperados
@@ -41,6 +47,7 @@ ai/
 │   ├── run_search_eval.py      # python -m ai.eval.run_search_eval
 │   └── results/                # Un reporte por modelo
 └── tests/
+    ├── test_catalog_snapshot.py  # Valida el snapshot y las funciones del script (sin base)
     ├── test_sample_data.py     # Valida los datos de ejemplo contra el contrato
     ├── test_search.py          # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
     ├── test_search_queries.py  # Valida el golden set
@@ -91,11 +98,31 @@ python -m pytest ai/tests -v                     # tests de la IA, sin el modelo
 AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~20 s)
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
+python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.eval.run_search_eval                # evalúa la búsqueda y escribe el reporte en ai/eval/results/
 ```
 
 Se usa `python -m` desde la raíz para que `ai` y `shared` se puedan importar
 (`from shared.contracts.repo import Repo`). Desde otra carpeta, el import falla.
+
+## Snapshot del catálogo real
+
+`ai/scripts/export_catalog_snapshot.py` lee la vista `public.v_repos_for_ai` con el usuario
+de solo lectura y escribe `ai/data/catalog/`:
+
+- `repos.json`: campos de la ingesta del contrato `Repo`, sin el README, ordenados por `full_name`.
+- `readmes/<owner>__<name>.md`: README de cada repo.
+- `meta.json`: cuándo se tomó (UTC), de dónde, cuántos repos y qué columnas de la vista
+  sobran o faltan frente al contrato.
+
+**Requisito:** `AI_READER_DATABASE_URL` en `.env` (ver `.env.example`). Si la contraseña tiene
+símbolos (`? " < > [ @ : / #`…), va codificada en la URL (*percent-encoding*). Para obtenerla sin
+que quede en el historial (PowerShell):
+
+    python -c "from getpass import getpass; from urllib.parse import quote; print(quote(getpass('Contraseña: '), safe=''))"
+
+El script valida cada fila contra `Repo` antes de escribir: si alguna no cumple, no toca el
+snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qué cambió en el catálogo.
 
 ## Cómo leer los datos
 
