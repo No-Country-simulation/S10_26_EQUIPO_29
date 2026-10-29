@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ingesta (sincronización del catálogo): credenciales y adjuntos locales
+.env.supabase
+.env.ai-reader
+appsettings.supabase.local.json
+

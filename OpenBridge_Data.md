@@ -676,31 +676,36 @@ Las notebooks no deben contener contraseñas, tokens ni otros secretos. Tampoco 
 
 ## 12. Estructura del proyecto
 
-Los componentes principales de ingeniería de datos se encuentran en `data-engineering/`.
+Los componentes principales de ingeniería de datos se encuentran en `ingestion/`.
 
 ```text
 OpenBridge/
 ├── README.md
 ├── .gitignore
-└── data-engineering/
+└── ingestion/
     ├── docs/
     │   ├── ADR-001_content_hash_v1.md
-    │   └── ADR-003_topics_para_IA_v1.md
+    │   ├── ADR-002_load_v0_2.md
+    │   ├── ADR-003_topics_para_IA_v1.md
+    │   ├── ADR-004_sincronizacion_incremental.md
+    │   └── update_catalog_runbook.md
     ├── notebooks/
     │   └── ...
     ├── scripts/
-    │   └── ...
-    ├── sql/
-    │   └── ...
+    │   └── update_catalog.py
     ├── src/
     │   ├── config.py
     │   ├── database.py
     │   ├── extract_github.py
     │   ├── transform.py
     │   ├── hash_contract.py
-    │   └── load.py
+    │   ├── load.py
+    │   ├── sync_config.py
+    │   ├── sync_load.py
+    │   └── sync_plan.py
     ├── tests/
     │   └── ...
+    ├── approved_repositories_100_verified.txt
     ├── requirements.txt
     └── README.md
 ```
