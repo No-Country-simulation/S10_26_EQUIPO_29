@@ -75,12 +75,6 @@ def test_categorias_existen(repos, category_ids):
     assert not desconocidas, f"Categorías que no están en categories.json: {sorted(desconocidas)}"
 
 
-def test_cubre_todas_las_categorias(repos, category_ids):
-    presentes = {a.category_id for r in repos for a in r.categories}
-    faltan = category_ids - presentes
-    assert not faltan, f"Categorías sin ningún repo: {sorted(faltan)}"
-
-
 def test_todos_tienen_readme(repos):
     # En los datos de ejemplo todos los repos deben tener su README guardado.
     sin_readme = [r.full_name for r in repos if not r.readme_text]

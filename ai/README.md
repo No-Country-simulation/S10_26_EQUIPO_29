@@ -164,8 +164,8 @@ for r in results:
   lista.
 - `min_health`: los repos sin `health_score` pasan, marcados con `health_unknown`.
 - `categories`: pasa un repo si alguna de sus categorías está en la lista.
-- Cada repo se representa con un texto: nombre, categorías (nombre y
-  descripción de `categories.json`), descripción y topics sin ruido
+- Cada repo se representa con un texto: nombre, categorías (`name` y
+  `description` de `categories.json`; `llm_notes` no entra), descripción y topics sin ruido
   (`NOISE_TOPICS` en `search.py`). El README no se usa.
 - Cambiar el modelo, ese texto o `categories.json` obliga a recalcular los
   vectores. Hoy ocurre solo, al construir el índice.
@@ -189,5 +189,4 @@ Nota: Pydantic normaliza `homepage` (por ejemplo, agrega `/` al final del domini
 
 ## Por acordar
 
-- Lista de categorías definitiva (hoy: las 6 del caso, provisional).
 - Fórmula y rango de `health_score` (lo calcula la ingesta).
