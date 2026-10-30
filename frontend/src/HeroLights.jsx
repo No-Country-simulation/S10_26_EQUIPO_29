@@ -7,6 +7,7 @@ export const HeroLights = memo(function HeroLights({inputRef}) {
  const root = useRef(null);
  useEffect(() => {
   const host = root.current;
+  if(['localhost','127.0.0.1'].includes(location.hostname)&&new URLSearchParams(location.search).get('typingTest')==='static'){host.dataset.running='false';return;}
   const input = inputRef.current;
   const layers = [...host.querySelectorAll('.hero-light-stage img')];
   const burns = [...host.querySelectorAll('.hero-film-burn')];

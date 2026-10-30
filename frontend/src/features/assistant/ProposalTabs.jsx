@@ -1,11 +1,12 @@
 import {useRef,useState} from 'react';
 import {ArrowRight,ArrowUpRight,Box,ChevronDown,Layers3,Workflow} from 'lucide-react';
-import {tools} from '../../tools';
+import {useCatalogData} from '../../data/CatalogProvider';
 import {resolveComponentTool} from '../../data/assistant.mjs';
 import {BrandIcon} from '../../AssistantBrandIcon';
 import {useBrandIdentity} from '../../brandIdentity';
 
 function ToolRecommendation({component}){
+ const {tools}=useCatalogData();
  const tool=resolveComponentTool(component,tools);
  const identity=useBrandIdentity(tool??{name:component.label});
  return <li className="proposal-tool" style={{'--proposal-brand':identity.palette.start}}>
@@ -15,6 +16,7 @@ function ToolRecommendation({component}){
  </li>;
 }
 function Endpoint({component}){
+ const {tools}=useCatalogData();
  const tool=resolveComponentTool(component,tools);
  return <span className="proposal-endpoint"><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></span>;
 }

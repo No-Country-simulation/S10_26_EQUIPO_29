@@ -1,11 +1,90 @@
 {
-  "version": 0,
+  "version": 1,
   "categories": [
-    {"id": "auth",      "name": "Autenticación", "description": "Login, SSO, gestión de usuarios, roles y permisos."},
-    {"id": "database",  "name": "Base de datos", "description": "Motores y servicios para almacenar y consultar datos."},
-    {"id": "payments",  "name": "Pagos",         "description": "Cobros, suscripciones y facturación."},
-    {"id": "ai",        "name": "IA",            "description": "Modelos, frameworks de LLM, embeddings y agentes."},
-    {"id": "analytics", "name": "Analítica",     "description": "Medición de uso, métricas de producto y dashboards."},
-    {"id": "search",    "name": "Búsqueda",      "description": "Motores de búsqueda de texto y búsqueda semántica."}
+    {
+      "id": "database",
+      "name": "Bases de datos",
+      "description": "Motores y servicios para almacenar y consultar datos."
+    },
+    {
+      "id": "auth",
+      "name": "Autenticación",
+      "description": "Login, SSO, gestión de usuarios, roles y permisos."
+    },
+    {
+      "id": "search",
+      "name": "Búsqueda",
+      "description": "Motores de búsqueda de texto y búsqueda semántica."
+    },
+    {
+      "id": "ai",
+      "name": "IA",
+      "description": "Modelos, frameworks de LLM, embeddings y agentes."
+    },
+    {
+      "id": "analytics",
+      "name": "Analítica",
+      "description": "Medición de uso, métricas de producto y dashboards."
+    },
+    {
+      "id": "payments",
+      "name": "Pagos",
+      "description": "Cobros, suscripciones y facturación."
+    },
+    {
+      "id": "frontend",
+      "name": "Frontend",
+      "description": "Frontend"
+    },
+    {
+      "id": "backend",
+      "name": "Backend",
+      "description": "Backend"
+    },
+    {
+      "id": "cache",
+      "name": "Caché",
+      "description": "Caché"
+    },
+    {
+      "id": "messaging",
+      "name": "Mensajería",
+      "description": "Mensajería"
+    },
+    {
+      "id": "observability",
+      "name": "Observabilidad",
+      "description": "Observabilidad"
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infraestructura",
+      "description": "Infraestructura"
+    },
+    {
+      "id": "storage",
+      "name": "Almacenamiento",
+      "description": "Almacenamiento"
+    },
+    {
+      "id": "cms",
+      "name": "CMS",
+      "description": "CMS"
+    },
+    {
+      "id": "communication",
+      "name": "Comunicación",
+      "description": "Comunicación"
+    },
+    {
+      "id": "automation",
+      "name": "Automatización",
+      "description": "Automatización"
+    },
+    {
+      "id": "data-processing",
+      "name": "Procesamiento de datos",
+      "description": "Procesamiento de datos"
+    }
   ]
 }

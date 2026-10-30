@@ -1,28 +1,16 @@
-import React,{useEffect,useRef,useState} from 'react';
-import {profiles} from '../../toolProfiles';
-import {cardDetails} from '../../tools';
+import React from 'react';
+import {CardDescription} from './CardDescription';
+import {useCatalogData} from '../../data/CatalogProvider';
 import {useBrandIdentity,markBrandFailed} from '../../brandIdentity';
 import {useCardTilt} from '../../useCardTilt';
 import {UserRound,Star,GitCommitHorizontal,Scale,Activity,ArrowRight} from 'lucide-react';
 export function ToolCard({ tool, onOpen }) {
+ const {profiles}=useCatalogData();
  const tiltRef = useCardTilt();
- const descriptionRef=useRef(null);
- const [descriptionClipped,setDescriptionClipped]=useState(false);
  const description=profiles[tool.id]?.summary;
- useEffect(()=>{
-  const element=descriptionRef.current;
-  if(!element){setDescriptionClipped(false);return;}
-  let active=true;
-  const measure=()=>{if(active)setDescriptionClipped(element.scrollHeight>element.clientHeight+1);};
-  const observer=new ResizeObserver(measure);
-  observer.observe(element);
-  measure();
-  document.fonts.ready.then(measure);
-  return ()=>{active=false;observer.disconnect();};
- },[description]);
  const identity=useBrandIdentity(tool);
  const logo=identity.logo;
- const detail = cardDetails[tool.name];
+ const detail = tool;
  const hasHealth=Number.isFinite(detail.healthScore);
  const healthTone = !hasHealth?'unknown':detail.healthScore >= 80 ? 'good' : detail.healthScore >= 60 ? 'moderate' : 'low';
  const healthLabel = {good:'Salud alta',moderate:'Salud media',low:'Salud baja'}[healthTone];
@@ -49,8 +37,7 @@ export function ToolCard({ tool, onOpen }) {
     <span className="language-tag" title="Lenguaje principal del repositorio">{tool.language}</span>
 
    </div>
-   {description&&<p ref={descriptionRef}>{description}</p>}
-   {descriptionClipped&&<a className="card-read-more" href={'#herramienta/'+tool.id} aria-label={'Ver descripción completa de '+tool.name} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget.closest('.tool-card').querySelector('.detail-link'));}}}>Ver más</a>}
+   {description&&<CardDescription description={description} tool={tool} onOpen={onOpen}/>}
   </div>
   <div className="tool-card-details">
    <div className="card-tech-summary">

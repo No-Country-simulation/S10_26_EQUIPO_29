@@ -1,9 +1,9 @@
 """Punto de registro de las rutas de la API."""
 from fastapi import APIRouter
-from backend.app.api.routes import assistant, categories, integrations, repos
+from backend.app.api.routes import assistant, repos
 
 api_router = APIRouter()
-for router in (repos.router, categories.router, integrations.router, assistant.router):
+for router in (repos.router, assistant.router):
     api_router.include_router(router)
 
 

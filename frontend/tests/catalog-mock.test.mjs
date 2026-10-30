@@ -15,7 +15,7 @@ test('detail matches list, missing IDs return null, and responses cannot mutate 
 
 test('detail profiles use contract prose and no editorial features',async()=>{
  const {items}=await mockCatalog.list();
- for(const tool of items){const repo=catalogRepos.find(repo=>repo.full_name===tool.full_name);assert.equal(profiles[tool.id]?.summary,repo?.description||repo?.summary_es||null);assert.ok(!('features' in profiles[tool.id]));assert.equal(profiles[tool.id]?.homepage,repo?.homepage||null);assert.ok(Array.isArray(profiles[tool.id]?.ideas));}
+ for(const tool of items){const repo=catalogRepos.find(repo=>repo.full_name===tool.full_name);assert.equal(profiles[tool.id]?.summary,repo?.summary_es||repo?.description||null);assert.ok(!('features' in profiles[tool.id]));assert.equal(profiles[tool.id]?.homepage,repo?.homepage||null);assert.ok(Array.isArray(profiles[tool.id]?.ideas));}
  for(const id of ['react','nextjs','fastapi','nestjs','django','valkey','rabbitmq','prometheus','grafana','traefik'])assert.ok(items.some(tool=>tool.id===id));
 });
 

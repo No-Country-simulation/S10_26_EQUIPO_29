@@ -75,9 +75,12 @@ def test_categorias_existen(repos, category_ids):
     assert not desconocidas, f"Categorías que no están en categories.json: {sorted(desconocidas)}"
 
 
-def test_cubre_todas_las_categorias(repos, category_ids):
+def test_cubre_las_seis_categorias_del_dataset_original(repos, category_ids):
     presentes = {a.category_id for r in repos for a in r.categories}
-    faltan = category_ids - presentes
+    # La taxonomía fija tiene 17 opciones; la muestra original cubre estas seis.
+    esperadas = {"auth", "database", "payments", "ai", "analytics", "search"}
+    assert esperadas <= category_ids
+    faltan = esperadas - presentes
     assert not faltan, f"Categorías sin ningún repo: {sorted(faltan)}"
 
 

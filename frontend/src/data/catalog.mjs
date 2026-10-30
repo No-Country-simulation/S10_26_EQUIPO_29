@@ -1,6 +1,6 @@
 import fixtures from '../mocks/catalog.fixtures.json' with {type:'json'};
 import presentation from '../mocks/catalog-presentation.json' with {type:'json'};
-import categoryList from '../mocks/catalog-categories.json' with {type:'json'};
+import categoryList from '../generated/categories.json' with {type:'json'};
 import defaultCard from '../mocks/catalog-default.fixture.json' with {type:'json'};
 export const catalogRepos=fixtures;
 export const catalogCategories=categoryList.categories;
@@ -27,6 +27,6 @@ export const mockCatalog={
 };
 export const githubSnapshotAt=Object.values(presentation).find(record=>record.dataSource==='github_snapshot')?.syncedAt??null;
 export function snapshotDate(value){return value?new Intl.DateTimeFormat('es-CL',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'';}
-export function repositoryStatus(tool){return tool.dataSource==='github_snapshot'?(tool.disabled?'Deshabilitado':tool.archived?'Archivado':'No archivado'):'Por confirmar';}
+export function repositoryStatus(tool){return ['github_snapshot','api'].includes(tool.dataSource)?(tool.disabled?'Deshabilitado':tool.archived?'Archivado':'No archivado'):'Por confirmar';}
 
 export function toolCategoryNames(tool){return tool.categories?.length?tool.categories.map(category=>category.name):[tool.category];}

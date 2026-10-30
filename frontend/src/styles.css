@@ -87,7 +87,7 @@ h2{font-weight:500;letter-spacing:-.3px}
 /* Ordered pixel dithering stays above the animated light and below all content. */
 .hero h1{letter-spacing:-.055em}
 .hero-inner{z-index:1}
-.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url('/assets/hero/dither-grid.svg');background-repeat:repeat;background-size:16px 16px;image-rendering:pixelated;opacity:.92;mask-image:linear-gradient(to bottom,transparent 0%,#000 32%,#000 85%,transparent 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url('/assets/hero/dither-grid.svg');background-repeat:repeat;background-size:var(--dither-size,14px) var(--dither-size,14px);image-rendering:pixelated;opacity:var(--dither-opacity,.32);mask-image:linear-gradient(to bottom,transparent 0%,#000 var(--dither-start,24%),#000 var(--dither-end,91%),transparent 100%)}
 
 .hero-light-stage{position:absolute;inset:0}
 .hero-light-stage img{pointer-events:none}
@@ -158,6 +158,13 @@ button,.primary,.filter-button,.categories button,.icon-button,.tool-actions a,.
 .card-surface[data-hover="true"]{transition-duration:180ms}
 .card-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse farthest-corner at var(--glare-x,50%) var(--glare-y,50%),rgb(255 255 255 / 2%) 0%,rgb(255 255 255 / 0.8%) 55%,transparent 100%);opacity:0;transition:opacity 350ms ease}
 .card-surface[data-hover="true"] .card-glare{opacity:1}
+/* Shared cursor coordinates keep the perimeter light aligned with the surface glare. */
+.card-surface::before,.card-surface::after{content:"";position:absolute;inset:0;z-index:4;border-radius:inherit;pointer-events:none}
+.card-surface::before{box-shadow:inset 0 0 0 1px rgb(255 255 255 / 7%)}
+.card-surface::after{padding:1px;background:radial-gradient(140px circle at var(--glare-x,50%) var(--glare-y,50%),rgb(235 245 255 / 65%),rgb(220 237 255 / 20%) 45%,transparent 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity 300ms ease}
+.card-surface[data-hover="true"]::after{opacity:var(--edge-intensity,0)}
+@media(prefers-reduced-motion:reduce){.card-surface::after{display:none}}
+
 .tool-card[data-exiting="true"] .card-surface{transform:none!important}
 .tool-card[data-exiting="true"] .card-glare{opacity:0}
 @media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){.card-surface{transform:none!important}.card-glare{display:none}}
@@ -695,7 +702,7 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 
 .tool-modal-frame .detail-cover-inner{min-height:inherit;display:flex;flex-direction:column;justify-content:center}
 
-.card-read-more{position:relative;display:inline-block;margin-top:4px;color:#fff;font-size:12px;line-height:18px;text-decoration:underline;text-underline-offset:3px;transition:opacity 160ms}
+.card-description-more{white-space:nowrap}.card-read-more{position:relative;display:inline;margin:0;color:#fff;font-size:inherit;line-height:inherit;text-decoration:underline;text-underline-offset:3px;transition:opacity 160ms}
 .card-read-more:hover{opacity:.8}.card-read-more:focus-visible{outline:2px solid #8ccfff;outline-offset:3px;border-radius:2px}
 
 .integration-accordion .integration-difficulty{display:inline-flex;align-items:center;gap:6px;background:#ffffff0c;color:#d5dbe5}
@@ -716,3 +723,47 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 @keyframes assistant-light-turn{to{transform:rotate(360deg)}}
 @keyframes assistant-copy-in{from{opacity:0;translate:0 4px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){.assistant-light-loader,.assistant-heading-copy{animation:none}}
+
+.snippet-copy-error{display:block;padding:12px 16px;color:#fca5a5;font-size:13px;line-height:1.5}
+
+/* Local elastic prompt experiment: SVG contour, no WebGL or canvas copies. */
+.composer:has(.elastic-prompt-border){border-color:transparent!important}
+.elastic-prompt-border{position:absolute;inset:-128px;width:calc(100% + 256px);height:calc(100% + 256px);overflow:visible;pointer-events:none;z-index:2}
+.elastic-prompt-border path{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.elastic-edge-base{stroke:#ffffff38;stroke-width:2;transition:stroke 180ms ease}
+.composer:focus-within .elastic-edge-base{stroke:#ffffffb3}
+.elastic-edge-light{stroke-width:3.5;opacity:0}
+.composer[data-error=true] .elastic-edge-base{stroke:#ff625a}
+.composer[data-error=true] .elastic-edge-light{display:none}
+
+/* Selected prompt examples: a static list aligned with the composer. */
+.hero-inner:not(.has-architecture){padding-bottom:12px}
+.prompt-suggestions{position:relative;z-index:1;display:grid;grid-template-rows:1fr;opacity:1;transition:grid-template-rows 560ms cubic-bezier(.22,1,.36,1),opacity 180ms;text-align:left}
+.prompt-suggestions.is-hidden{grid-template-rows:0fr;opacity:0;pointer-events:none}
+.prompt-suggestions-clip{min-height:0;overflow:hidden}
+.prompt-suggestions-list{max-width:804px;margin:auto;padding:0 24px 144px}
+.prompt-suggestion{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;min-height:58px;padding:16px 24px;text-align:left;border:0;border-bottom:1px solid #ffffff1c;border-radius:0;color:#d0d5df;font-size:14px;line-height:1.6;font-weight:400;background:transparent;transition:color 180ms ease,background-color 180ms ease}
+.prompt-suggestion:last-child{border-bottom:0}
+.prompt-suggestion span{flex:1}.prompt-suggestion svg{flex-shrink:0}
+.prompt-suggestion:hover,.prompt-suggestion:focus-visible{color:#fff;background:#172b574d}
+.prompt-suggestion:focus-visible{outline:1px solid #b5c9ec;outline-offset:-2px}
+@media(max-width:640px){.prompt-suggestions-list{padding-bottom:112px}.prompt-suggestion{gap:16px;padding:14px 24px;font-size:14px}}
+@media(prefers-reduced-motion:reduce){.prompt-suggestions,.prompt-suggestion{transition:none}}
+
+/* Same surface light intensity as catalog cards, sharing the border pointer loop. */
+.prompt-surface-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;background:radial-gradient(ellipse farthest-corner at var(--prompt-glare-x,50%) var(--prompt-glare-y,50%),rgb(255 255 255 / 2%) 0%,rgb(255 255 255 / .8%) 55%,transparent 100%);opacity:var(--prompt-glare-opacity,0);transition:opacity 350ms ease}
+.composer:focus-within .prompt-surface-glare{opacity:0}
+@media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){.prompt-surface-glare{display:none}}
+
+/* Exterior spill shares the foil gradient and clock; no extra animation loop. */
+.elastic-edge-reflection{stroke-width:14;filter:blur(9px);opacity:0;pointer-events:none}
+.composer[data-error=true] .elastic-edge-reflection{display:none}
+@media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){.elastic-edge-reflection{display:none}}
+
+/* Neutral submit control, without liquid material or colored glow. */
+.hero .composer-footer button.prompt-submit,.hero .composer-footer button.prompt-submit:hover{box-shadow:none;border:1px solid #ffffff1c;transition:translate var(--prompt-layout-duration,560ms) var(--prompt-ease),background-color 160ms ease,border-color 160ms ease}
+.hero .composer-footer button.prompt-submit:hover{background:#393e45;border-color:#ffffff29}
+.hero .composer-footer button.prompt-submit:active{background:#2b2f35}
+@media(prefers-reduced-motion:reduce){.hero .composer-footer button.prompt-submit,.hero .composer-footer button.prompt-submit:hover{transition:none}}
+
+.elastic-edge-ambient{stroke-width:40;filter:blur(25px)}

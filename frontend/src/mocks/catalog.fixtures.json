@@ -20,7 +20,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "PostgreSQL es una base de datos relacional que permite organizar y consultar la información de una aplicación mediante SQL. Puede utilizarse para guardar usuarios, pedidos, pagos, inventarios y otros registros que necesitan mantener relaciones consistentes. Sus transacciones permiten agrupar varias operaciones para que se completen juntas o se reviertan cuando ocurre un error. Las restricciones y claves foráneas ayudan a proteger la integridad de los datos, mientras que los índices permiten mejorar consultas sobre conjuntos de información grandes. Además de tablas tradicionales, admite documentos JSONB para trabajar con estructuras más flexibles. En una arquitectura web, normalmente se conecta al backend, que aplica las reglas de negocio y controla qué información puede consultar o modificar cada usuario. Para preparar una instalación conviene definir el esquema, las migraciones, los permisos de acceso, la estrategia de copias de seguridad y los límites de conexiones. También es necesario observar las consultas lentas y ajustar los índices a los patrones reales de uso."
+    "summary_es": "Base de datos relacional para guardar y consultar información mediante SQL. Ofrece transacciones, relaciones entre tablas y soporte JSONB para aplicaciones que necesitan datos consistentes y consultas flexibles."
   },
   {
     "full_name": "keycloak/keycloak",
@@ -43,7 +43,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "Keycloak permite centralizar la autenticación y la gestión de identidad de varias aplicaciones. En lugar de implementar un inicio de sesión independiente en cada servicio, las aplicaciones pueden delegar esa responsabilidad en un proveedor común. Ofrece integración mediante protocolos como OpenID Connect y SAML, y permite organizar usuarios, grupos, roles y clientes dentro de espacios de configuración llamados realms. En una aplicación web, la interfaz puede redirigir al usuario al inicio de sesión y recibir los tokens necesarios para acceder a servicios protegidos. El backend debe validar esos tokens y aplicar sus propias reglas de autorización para cada operación. La configuración requiere definir las direcciones de retorno permitidas, los permisos de los clientes y la duración de las sesiones. También puede conectarse con proveedores de identidad externos para aprovechar cuentas ya existentes. Antes de llevarlo a producción, es necesario revisar el uso de HTTPS, la persistencia de datos, las copias de seguridad y los procedimientos de recuperación. Su incorporación permite compartir una experiencia de acceso entre diferentes productos sin duplicar toda la gestión de cuentas."
+    "summary_es": "Centraliza el inicio de sesión y la gestión de usuarios, roles y permisos. Permite conectar aplicaciones mediante OpenID Connect y SAML, integrar proveedores de identidad y compartir el acceso entre servicios."
   },
   {
     "full_name": "meilisearch/meilisearch",
@@ -66,7 +66,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "Meilisearch es un motor de búsqueda que permite incorporar consultas de texto a catálogos, directorios y aplicaciones con contenido consultable. La aplicación envía documentos a índices de búsqueda y después consulta esos índices para recuperar resultados relevantes. Puede emplearse para buscar productos por nombre, localizar artículos o explorar herramientas según distintos atributos. La tolerancia a errores tipográficos ayuda a encontrar resultados aunque la consulta no coincida exactamente con el texto almacenado. Los filtros y las opciones de ordenación permiten adaptar la búsqueda a las necesidades de cada pantalla. Dentro de una arquitectura, suele funcionar junto a la base de datos principal: esta conserva los registros de negocio y un proceso sincroniza los cambios con el índice. Esa sincronización debe contemplar altas, actualizaciones y eliminaciones para evitar resultados desactualizados. También es necesario decidir qué campos pueden buscarse, cuáles pueden mostrarse y qué información debe permanecer fuera del índice. Las claves de acceso y los filtros de seguridad deben configurarse según los permisos de los usuarios. El rendimiento y la relevancia se revisan con consultas representativas del contenido real de la aplicación."
+    "summary_es": "Motor de búsqueda para catálogos y aplicaciones. Permite indexar documentos, tolerar errores tipográficos y filtrar resultados. Se integra con la base de datos principal mediante la sincronización de sus registros."
   },
   {
     "full_name": "ollama/ollama",

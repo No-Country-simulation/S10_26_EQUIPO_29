@@ -39,7 +39,7 @@ class Repo(BaseModel):
     # Opcional hasta que la IA procesa; la primera es la principal.
     categories: list[CategoryAssignment] = Field(default_factory=list, max_length=3)
     use_cases: list[str] = Field(default_factory=list, max_length=4)
-    summary_es: str | None = Field(default=None, max_length=400)  # resumen en español para la ficha
+    summary_es: str | None = Field(default=None, max_length=250)  # resumen en español para la ficha
 
     @field_validator("homepage", mode="before")
     @classmethod
