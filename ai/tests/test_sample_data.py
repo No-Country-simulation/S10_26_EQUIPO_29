@@ -77,7 +77,7 @@ def test_categorias_existen(repos, category_ids):
 
 def test_cubre_las_seis_categorias_del_dataset_original(repos, category_ids):
     presentes = {a.category_id for r in repos for a in r.categories}
-    # La taxonomía fija tiene 17 opciones; la muestra original cubre estas seis.
+    # La taxonomía fija tiene 18 opciones; la muestra original cubre estas seis.
     esperadas = {"auth", "database", "payments", "ai", "analytics", "search"}
     assert esperadas <= category_ids
     faltan = esperadas - presentes

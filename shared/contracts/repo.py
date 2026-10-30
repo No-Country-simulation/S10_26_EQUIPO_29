@@ -50,7 +50,8 @@ class Repo(BaseModel):
 class Category(BaseModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9-]*$")   # "auth", "database"
     name: str                                        # lo que ve el usuario
-    description: str                                 # definición para el LLM
+    description: str                                 # definición positiva para búsqueda
+    llm_notes: str                                   # ejemplos y fronteras para el LLM
 
 
 class CategoryList(BaseModel):

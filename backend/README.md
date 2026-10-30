@@ -10,8 +10,8 @@ conexión a una base de datos ni generación IA activa.
 | `GET /repos/{owner}/{name}` | `RepoDetail`: `{repo, integration_ideas}`, o 404 |
 | `POST /assistant` | Valida `AssistantRequest`; 422 con contrato de error o 503 `provider_unavailable` |
 
-El dataset contiene 20 repos asignados a 6 categorías. La lista fija compartida
-tiene 17 opciones; no todas tienen repos en esta muestra. No existe `/categories`.
+El dataset contiene 20 repos asignados a 8 categorías. La lista fija compartida
+tiene 18 opciones; no todas tienen repos en esta muestra. No existe `/categories`.
 No se sustituyen campos vacíos con estadísticas o contenido del mock del frontend.
 
 ## Ejecutar desde la raíz del repositorio

@@ -1,90 +1,59 @@
 {
   "version": 1,
   "categories": [
-    {
-      "id": "database",
-      "name": "Bases de datos",
-      "description": "Motores y servicios para almacenar y consultar datos."
-    },
-    {
-      "id": "auth",
-      "name": "Autenticación",
-      "description": "Login, SSO, gestión de usuarios, roles y permisos."
-    },
-    {
-      "id": "search",
-      "name": "Búsqueda",
-      "description": "Motores de búsqueda de texto y búsqueda semántica."
-    },
-    {
-      "id": "ai",
-      "name": "IA",
-      "description": "Modelos, frameworks de LLM, embeddings y agentes."
-    },
-    {
-      "id": "analytics",
-      "name": "Analítica",
-      "description": "Medición de uso, métricas de producto y dashboards."
-    },
-    {
-      "id": "payments",
-      "name": "Pagos",
-      "description": "Cobros, suscripciones y facturación."
-    },
-    {
-      "id": "frontend",
-      "name": "Frontend",
-      "description": "Frontend"
-    },
-    {
-      "id": "backend",
-      "name": "Backend",
-      "description": "Backend"
-    },
-    {
-      "id": "cache",
-      "name": "Caché",
-      "description": "Caché"
-    },
-    {
-      "id": "messaging",
-      "name": "Mensajería",
-      "description": "Mensajería"
-    },
-    {
-      "id": "observability",
-      "name": "Observabilidad",
-      "description": "Observabilidad"
-    },
-    {
-      "id": "infrastructure",
-      "name": "Infraestructura",
-      "description": "Infraestructura"
-    },
-    {
-      "id": "storage",
-      "name": "Almacenamiento",
-      "description": "Almacenamiento"
-    },
-    {
-      "id": "cms",
-      "name": "CMS",
-      "description": "CMS"
-    },
-    {
-      "id": "communication",
-      "name": "Comunicación",
-      "description": "Comunicación"
-    },
-    {
-      "id": "automation",
-      "name": "Automatización",
-      "description": "Automatización"
-    },
-    {
-      "id": "data-processing",
-      "name": "Procesamiento de datos",
-      "description": "Procesamiento de datos"
-    }
+    {"id": "database", "name": "Bases de datos",
+     "description": "Motores de bases de datos y librerías para usarlas desde el código, como drivers y ORM.",
+     "llm_notes": "Relacionales, documentales, clave-valor, distribuidas o analíticas embebidas. Ej.: PostgreSQL, DuckDB, etcd, SQLAlchemy. No incluye: caché en memoria delante de otra base (cache), archivos y objetos (storage), bases vectoriales para búsqueda semántica (search)."},
+    {"id": "auth", "name": "Autenticación",
+     "description": "Identidad y acceso de usuarios: inicio de sesión, registro, inicio de sesión único, roles, permisos y gestión de secretos.",
+     "llm_notes": "SSO con OIDC o SAML, MFA, gestión de credenciales. Ej.: Keycloak, Zitadel, Ory Kratos, Vault. No incluye: certificados TLS ni cifrado del tráfico (infrastructure)."},
+    {"id": "search", "name": "Búsqueda",
+     "description": "Motores para buscar dentro de los datos de una aplicación: búsqueda de texto completo y búsqueda semántica o vectorial.",
+     "llm_notes": "Texto completo, facetas, autocompletado, búsqueda vectorial o semántica; incluye bases vectoriales. Ej.: Meilisearch, OpenSearch, Qdrant, pgvector. No incluye: modelos que generan embeddings (ai), herramientas de línea de comandos para buscar en archivos (dev-tools)."},
+    {"id": "ai", "name": "IA",
+     "description": "Modelos de inteligencia artificial y aprendizaje automático, y las herramientas para entrenarlos, servirlos y usarlos en aplicaciones.",
+     "llm_notes": "Frameworks de entrenamiento, servidores de inferencia, SDK de proveedores de LLM, frameworks de agentes y RAG, datasets. Ej.: PyTorch, Transformers, Ollama, LangChain. No incluye: bases vectoriales (search), procesamiento de datos sin modelos (data-processing)."},
+    {"id": "analytics", "name": "Analítica",
+     "description": "Medición del uso de un producto o negocio: analítica web y de producto, eventos, embudos e inteligencia de negocio.",
+     "llm_notes": "Dashboards de negocio, BI, motores OLAP como función secundaria. Ej.: PostHog, Plausible, Metabase. No incluye: métricas técnicas de servidores y aplicaciones (observability), mover o transformar datos (data-processing)."},
+    {"id": "payments", "name": "Pagos",
+     "description": "Cobros en línea: pasarelas de pago, suscripciones, facturación por uso y emisión de facturas.",
+     "llm_notes": "Orquestación de pagos y billing. Ej.: Hyperswitch, Lago, Kill Bill. No incluye: contabilidad general ni ERP."},
+    {"id": "frontend", "name": "Frontend",
+     "description": "Construcción de la interfaz que ve el usuario en el navegador o el móvil: librerías de interfaz, frameworks web y estilos.",
+     "llm_notes": "Librerías y metaframeworks de UI, CSS, componentes y herramientas de build del frontend. Ej.: React, Vue, Next.js, Tailwind CSS, Vite. No incluye: contenido editable por personas no técnicas (cms); pruebas, linters y formateadores (dev-tools)."},
+    {"id": "backend", "name": "Backend",
+     "description": "Construcción de la lógica del servidor y de las APIs, incluidas las plataformas de backend como servicio.",
+     "llm_notes": "Frameworks web y de APIs, runtimes de servidor, validación de datos, clientes HTTP, BaaS que dan base de datos, auth y API listas. Ej.: FastAPI, Django, Node.js, Supabase. No incluye: servidores web, proxies y despliegue (infrastructure), colas de tareas (messaging)."},
+    {"id": "cache", "name": "Caché",
+     "description": "Almacenamiento temporal en memoria para responder más rápido y aliviar la base de datos principal.",
+     "llm_notes": "Cachés clave-valor en memoria y cachés de contenido HTTP. Ej.: Redis, Valkey. No incluye: la base de datos principal donde viven los datos (database)."},
+    {"id": "messaging", "name": "Mensajería",
+     "description": "Comunicación entre servicios o procesos: colas de mensajes, tareas en segundo plano y flujos de eventos.",
+     "llm_notes": "Máquina a máquina: colas, publicación/suscripción, streaming de eventos, workers. Ej.: Kafka, Celery, RabbitMQ. No incluye: mensajes a personas como email, chat o notificaciones (communication)."},
+    {"id": "observability", "name": "Observabilidad",
+     "description": "Monitoreo de sistemas en producción: métricas técnicas, logs, trazas y alertas.",
+     "llm_notes": "Recolección, almacenamiento y visualización de telemetría; dashboards de monitoreo. Ej.: Prometheus, Grafana, Jaeger, OpenTelemetry. No incluye: métricas de uso del producto o del negocio (analytics)."},
+    {"id": "infrastructure", "name": "Infraestructura",
+     "description": "Ejecución, despliegue y conexión de aplicaciones: contenedores, orquestación, servidores web, redes e infraestructura como código.",
+     "llm_notes": "Despliegue continuo, proxies y balanceadores, service mesh, certificados. Ej.: Kubernetes, Docker, Terraform, NGINX, Traefik. No incluye: automatización de procesos o tareas de TI (automation), orquestación de pipelines de datos (data-processing)."},
+    {"id": "storage", "name": "Almacenamiento",
+     "description": "Guardado de archivos y objetos como imágenes, documentos y copias de seguridad.",
+     "llm_notes": "Almacenamiento de objetos compatible con S3, sistemas de archivos distribuidos, sincronización de archivos. Ej.: MinIO, Ceph. No incluye: datos estructurados que se consultan (database)."},
+    {"id": "cms", "name": "CMS",
+     "description": "Gestión de contenido que editan personas no técnicas, como textos, páginas e imágenes, para publicarlo en webs y apps.",
+     "llm_notes": "CMS headless y tradicionales, paneles de administración de contenido. Ej.: Strapi, Payload. No incluye: frameworks para construir la interfaz (frontend), aunque estén pensados para sitios de contenido."},
+    {"id": "communication", "name": "Comunicación",
+     "description": "Comunicación con personas: correo, notificaciones, chat y videollamadas.",
+     "llm_notes": "Email transaccional, push, SMS, notificaciones en la app, chat de equipo. Ej.: Novu, Mattermost, Rocket.Chat. No incluye: mensajes entre servicios (messaging), alertas técnicas de monitoreo (observability)."},
+    {"id": "automation", "name": "Automatización",
+     "description": "Automatización de tareas y procesos repetitivos, de negocio o de administración de sistemas.",
+     "llm_notes": "Flujos de trabajo entre aplicaciones, configuración automática de servidores, automatización de navegador. Ej.: Ansible. No incluye: pipelines de datos (data-processing), despliegue de aplicaciones (infrastructure)."},
+    {"id": "data-processing", "name": "Procesamiento de datos",
+     "description": "Movimiento, transformación y cálculo sobre datos, por lotes o en tiempo real.",
+     "llm_notes": "ETL/ELT, procesamiento distribuido y streaming, orquestación de pipelines de datos, dataframes y cálculo numérico. Ej.: Spark, Airflow, dbt, pandas. No incluye: guardar los datos (database), mostrarlos en dashboards (analytics), entrenar modelos (ai)."},
+    {"id": "dev-tools", "name": "Herramientas de desarrollo",
+     "description": "Herramientas que usan los programadores para escribir, revisar, probar y empaquetar código: lenguajes, compiladores, editores, linters, formateadores, frameworks de pruebas y gestores de paquetes.",
+     "llm_notes": "Incluye lenguajes y sus intérpretes, control de versiones y CLI de desarrollo. Ej.: pytest, Playwright, ESLint, Prettier, Ruff, TypeScript, npm, uv, VS Code, Git. No incluye: herramientas de build del frontend como Vite (frontend), runtimes de servidor como Node.js (backend), contenedores y despliegue (infrastructure), automatización de procesos de negocio (automation)."}
   ]
 }

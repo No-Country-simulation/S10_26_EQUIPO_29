@@ -3,7 +3,11 @@ import presentation from '../mocks/catalog-presentation.json' with {type:'json'}
 import categoryList from '../generated/categories.json' with {type:'json'};
 import defaultCard from '../mocks/catalog-default.fixture.json' with {type:'json'};
 export const catalogRepos=fixtures;
-export const catalogCategories=categoryList.categories;
+export const catalogCategories=categoryList.categories.map(category=>({...category,name:category.id==='dev-tools'?'Desarrollo':category.name}));
+export function populatedCategories(categories,tools){
+ const used=new Set(tools.flatMap(tool=>(tool.categories??[]).map(category=>category.id)));
+ return categories.filter(category=>used.has(category.id));
+}
 const categoryNames=new Map(catalogCategories.map(c=>[c.id,c.name]));
 const dateLabel=value=>value?new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'short',year:'numeric',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'Sin datos';
 // Translate the contract once; presentation metadata is local, never API payload.

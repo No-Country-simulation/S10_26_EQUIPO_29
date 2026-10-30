@@ -6,7 +6,7 @@ por Pull Request, avisando al equipo ([`CONTRIBUTING.md`](../../CONTRIBUTING.md)
 | Archivo | Contrato | Escribe → lee | Estado |
 |---|---|---|---|
 | `repo.py` | Repo: una herramienta del catálogo y sus categorías | Ingesta + IA → IA, API, frontend | v1.0 · acordado (20-oct-2026) |
-| `categories.json` | Lista de categorías | Equipo → IA, frontend | Lista fija (`version: 1`, 17 categorías; unificación local) |
+| `categories.json` | Lista de categorías | Equipo → IA, frontend | Lista fija (`version: 1`, 18 categorías; unificación local) |
 | `integration_idea.py` | Idea de integración de una herramienta | IA → frontend | v1.1 · acordado (24-oct-2026) |
 | `assistant.py` | Pregunta, respuesta y errores del asistente | Frontend ↔ IA | v1.1 · acordado (24-oct-2026) |
 
@@ -42,3 +42,5 @@ Ejemplos válidos de cada contrato y casos que deben rechazarse.
 `repo_detail.py` define `RepoDetail`: `repo: Repo` e
 `integration_ideas: list[IntegrationIdea]`. Agrupa los datos de la ficha en una
 respuesta; no cambia la respuesta de listado. Pendiente integrar con el equipo.
+
+Categorías alineadas con PR #46: `description` alimenta la búsqueda; `llm_notes` es obligatorio y contiene ejemplos y fronteras para el LLM. El ID estable es `dev-tools`; el frontend usa la etiqueta corta Desarrollo.
