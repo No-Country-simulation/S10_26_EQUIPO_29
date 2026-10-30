@@ -16,7 +16,8 @@ from shared.contracts.repo import Category, Repo
 QUERY = np.array([1.0, 0.0])
 A, B, C, D = [1.0, 0.0], [0.8, 0.6], [0.6, 0.8], [0.0, 1.0]
 
-AUTH = {"auth": Category(id="auth", name="Autenticación", description="Login y SSO.")}
+AUTH = {"auth": Category(id="auth", name="Autenticación", description="Login y SSO.",
+                         llm_notes="Ej.: Keycloak.")}
 
 
 def make_repo(name, *, categories=("auth",), license="MIT", health=None,
