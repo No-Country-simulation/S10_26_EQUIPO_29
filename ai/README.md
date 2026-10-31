@@ -34,11 +34,13 @@ ai/
 ├── requirements.txt
 ├── scripts/
 │   ├── build_sample_data.py        # Regenera ai/data/ desde la API de GitHub
-│   └── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
+│   ├── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
+│   └── load_seed_example.py        # Carga o borra los datos de ejemplo en las tablas ai.*
 ├── data/
 │   ├── repos.json              # 20 repos con la forma del contrato, sin el README
 │   ├── readmes/                # README de cada repo (<owner>__<name>.md)
-│   └── catalog/                # Snapshot del catálogo real: repos.json, readmes/, meta.json
+│   ├── catalog/                # Snapshot del catálogo real: repos.json, readmes/, meta.json
+│   └── seed/                   # Datos de ejemplo para las tablas de la IA (8 repos)
 ├── eval/
 │   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
 │   ├── search_queries.json     # Golden set: consultas y repos esperados
@@ -51,6 +53,7 @@ ai/
     ├── test_sample_data.py     # Valida los datos de ejemplo contra el contrato
     ├── test_search.py          # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
     ├── test_search_queries.py  # Valida el golden set
+    ├── test_seed_example.py    # Valida los datos de ejemplo y cómo se convierten en filas (sin base)
     └── test_eval_metrics.py    # Métricas de la evaluación (sin modelo)
 ```
 
@@ -99,6 +102,8 @@ AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el mo
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
+python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
+python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
 python -m ai.eval.run_search_eval                # evalúa la búsqueda y escribe el reporte en ai/eval/results/
 ```
 
@@ -123,6 +128,36 @@ que quede en el historial (PowerShell):
 
 El script valida cada fila contra `Repo` antes de escribir: si alguna no cumple, no toca el
 snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qué cambió en el catálogo.
+
+## Datos de ejemplo en las tablas de la IA
+
+`ai/data/seed/ejemplo_ia.json` tiene resumen, categorías e ideas de integración para 8 repos
+del catálogo, para probar la API y la ficha antes de que la IA genere los datos reales. Están
+escritos desde el README de cada repo y revisados de forma manual. No son salida del LLM.
+
+Los repos se eligieron para cubrir los casos de la ficha:
+
+| Caso | Repos |
+|---|---|
+| 3, 2, 1 y 0 ideas | ollama · redis, pgvector, fastapi · duckdb, vault · grafana, ripgrep |
+| Idea con fragmento de código | ollama, redis, duckdb, pgvector, fastapi |
+| Idea sin fragmento («Código no disponible») | vault, y una idea de ollama, redis y fastapi |
+| Sin sitio web (`homepage` vacío) | pgvector, ripgrep |
+| Licencia sin confirmar (`NOASSERTION`) | redis, pgvector, vault |
+| Sin datos de la IA | los demás repos del catálogo |
+
+`ai/scripts/load_seed_example.py` los valida contra los contratos y los escribe con el usuario
+escritor (`AI_DATABASE_URL` en `.env`, con la contraseña codificada como en la sección anterior).
+Todo va en una sola transacción: si algo falla, la base queda como estaba. Se puede correr las
+veces que haga falta: borra los datos de ejemplo y los vuelve a insertar.
+
+**Antes de generar los datos reales de la IA, hay que borrarlos:**
+
+    python -m ai.scripts.load_seed_example --limpiar
+
+Las filas de ejemplo se reconocen por `ai_input_hash` y `based_on_hash` = `seed-ejemplo`.
+La limpieza borra solo esas filas (y las categorías de esos repos), nunca datos reales. Si ya
+hay datos reales para alguno de estos repos, la carga falla sin cambiar nada.
 
 ## Cómo leer los datos
 
