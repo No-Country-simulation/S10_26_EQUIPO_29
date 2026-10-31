@@ -1,6 +1,6 @@
 """Contrato: Repo (= una herramienta del catálogo en el MVP).
 
-v1.0 · acordado con la ingesta (20-oct-2026). Nombres de la vista v_repos_for_ai (GitHub).
+v1.2 · acordado en el Sprint Demo (29-oct-2026). Nombres de la vista v_repos_for_ai (GitHub).
 Escribe: la ingesta (mitad de arriba) y la IA (mitad de abajo).
 Lee: la IA, la API y el frontend.
 """
@@ -31,6 +31,8 @@ class Repo(BaseModel):
     pushed_at: datetime                       # la vista lo da como texto ISO 8601; Pydantic lo convierte
     open_issues_count: int | None = Field(default=None, ge=0)  # issues + PRs; lo usa la ficha, no la IA
     archived: bool                            # True → no recomendar nunca
+    disabled: bool | None = None              # GitHub lo deshabilitó (no se puede clonar); None = sin dato
+    is_maintained: bool | None = None         # no archivado y push en los últimos 180 días; None = sin dato
     readme_text: str | None = None            # LEFT JOIN: puede faltar
     homepage: HttpUrl | None = None           # se pide NULL; "" se lee como None
     health_score: float | None = Field(default=None, ge=0, le=100)  # propuesta 0–100
@@ -39,7 +41,7 @@ class Repo(BaseModel):
     # Opcional hasta que la IA procesa; la primera es la principal.
     categories: list[CategoryAssignment] = Field(default_factory=list, max_length=3)
     use_cases: list[str] = Field(default_factory=list, max_length=4)
-    summary_es: str | None = Field(default=None, max_length=400)  # resumen en español para la ficha
+    summary_es: str | None = Field(default=None, max_length=250)  # resumen en español para la ficha
 
     @field_validator("homepage", mode="before")
     @classmethod

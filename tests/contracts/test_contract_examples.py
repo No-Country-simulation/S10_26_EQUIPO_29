@@ -23,6 +23,8 @@ REPO = {
     "language": "Java", "license_spdx_id": "Apache-2.0",
     "stargazers_count": 37435, "pushed_at": "2026-10-19T18:51:53Z", "open_issues_count": 3273,
     "archived": False,
+    "disabled": False,
+    "is_maintained": True,
     "readme_text": "Keycloak is an Open Source Identity and Access Management solution...",
     "homepage": "https://www.keycloak.org",
     "health_score": None,
@@ -131,9 +133,17 @@ def test_error_valido(code):
 
 def test_fila_de_la_vista_se_lee():
     # Como la entrega la vista: homepage "", columnas extra, sin open_issues_count
+    # ni los campos de v1.2 (disabled, is_maintained) → None = sin dato
     repo = Repo.model_validate(FILA_VISTA)
     assert repo.homepage is None
     assert repo.open_issues_count is None
+    assert repo.disabled is None
+    assert repo.is_maintained is None
+
+
+def test_summary_es_de_250_es_valido():
+    # El límite es inclusivo: 250 caracteres entran; 251 se rechazan (casos inválidos).
+    Repo.model_validate({**REPO, "summary_es": "a" * 250})
 
 
 @pytest.mark.parametrize(
@@ -142,6 +152,8 @@ def test_fila_de_la_vista_se_lee():
         (Repo, REPO, {"stargazers_count": -5}),
         (Repo, REPO, {"homepage": "no es url"}),
         (Repo, REPO, {"full_name": "sin-barra"}),
+        (Repo, REPO, {"summary_es": "a" * 251}),
+        (Repo, REPO, {"is_maintained": "quizás"}),
         (IntegrationIdea, IDEA, {"snippet": "print('hola')"}),
         (AssistantResponse, RESPONSE, {"connections": [
             {"from_key": "c1", "to_key": "c9", "protocol": "REST", "description": "x"}]}),
@@ -160,7 +172,8 @@ def test_fila_de_la_vista_se_lee():
         (IntegrationIdea, IDEA, {"compatible_stack": ["React", " "]}),
         (ErrorResponse, ERROR, {"error": {"code": "server_error", "message": "x"}}),
     ],
-    ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
+        ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
+         "summary-es-251", "is-maintained-no-booleano",
          "snippet-sin-lenguaje", "flecha-a-caja-inexistente", "aclaracion-sin-preguntas",
          "key-repetida", "fecha-sin-zona", "sin-evidencia-sin-summary", "summary-solo-espacios",
          "label-solo-espacios", "supuesto-vacio", "stack-largo", "dependencia-larga",
