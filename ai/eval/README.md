@@ -13,7 +13,7 @@ la herramienta correcta llega al top-3 de cada búsqueda.
 
 Esta evaluación cubre **solo la búsqueda**. La calidad del stack completo
 (descomponer la descripción del negocio, elegir y conectar) se mide aparte,
-con las preguntas de prueba del asistente.
+con los casos de prueba del asistente ([`ASSISTANT_CASES.md`](ASSISTANT_CASES.md)).
 
 ## Cómo correrla
 

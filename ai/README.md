@@ -20,6 +20,10 @@ health score y categoría.
 **Evaluación de la búsqueda.** Golden set de 22 consultas, métricas (hit@3, MRR, recall) y umbral de
 "sin evidencia", con un solo comando. resultados y decisiones en [`eval/README.md`](eval/README.md).
 
+**Casos de prueba del asistente.** 18 pedidos de negocio con el status, las necesidades y
+los repos aceptables esperados, escritos contra el snapshot del catálogo real. Detalle en
+[`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
+
 **Catálogo real (snapshot).** Copia de los 100 repos de la vista `public.v_repos_for_ai`
 en `data/catalog/`, para escribir casos de prueba y medir la búsqueda contra datos reales
 sin conectarse a la base. La búsqueda todavía usa los datos de ejemplo (`load_repos()`).
@@ -43,6 +47,9 @@ ai/
 │   └── seed/                   # Datos de ejemplo para las tablas de la IA (8 repos)
 ├── eval/
 │   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
+│   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
+│   ├── assistant_cases.json    # Casos de prueba del asistente
+│   ├── assistant_cases.py      # Carga y valida los casos
 │   ├── search_queries.json     # Golden set: consultas y repos esperados
 │   ├── golden.py               # Carga y valida el golden set
 │   ├── metrics.py              # hit@k, MRR, recall y umbral
@@ -50,11 +57,12 @@ ai/
 │   └── results/                # Un reporte por modelo
 └── tests/
     ├── test_catalog_snapshot.py  # Valida el snapshot y las funciones del script (sin base)
-    ├── test_sample_data.py     # Valida los datos de ejemplo contra el contrato
-    ├── test_search.py          # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
-    ├── test_search_queries.py  # Valida el golden set
-    ├── test_seed_example.py    # Valida los datos de ejemplo y cómo se convierten en filas (sin base)
-    └── test_eval_metrics.py    # Métricas de la evaluación (sin modelo)
+    ├── test_assistant_cases.py   # Valida los casos del asistente (sin base ni modelo)
+    ├── test_sample_data.py       # Valida los datos de ejemplo contra el contrato
+    ├── test_search.py            # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
+    ├── test_search_queries.py    # Valida el golden set
+    ├── test_seed_example.py      # Valida los datos de ejemplo y cómo se convierten en filas (sin base)
+    └── test_eval_metrics.py      # Métricas de la evaluación (sin modelo)
 ```
 
 ## Puesta en marcha
