@@ -73,6 +73,16 @@ class LLMTimeout(LLMError):
 class LLMUnavailable(LLMError):
     """No se pudo conectar o el proveedor devolvió un error."""
 
+    def __init__(self, message: str, status_code: int | None = None):
+        super().__init__(message)
+        self.status_code = status_code  # None = no hubo conexión
+
+    @property
+    def transient(self) -> bool:
+        """Vale la pena reintentar: sin conexión o error del servidor (5xx)."""
+        return self.status_code is None or self.status_code >= 500
+
+
 class LLMInvalidResponse(LLMError):
     """La respuesta no cumple el esquema pedido."""
 
@@ -158,7 +168,8 @@ def generar(messages: list[dict], *,
     except (openai.AuthenticationError, openai.PermissionDeniedError) as err:
         raise LLMConfigError(f"{key}: la clave no es válida o no tiene acceso") from err
     except openai.APIStatusError as err:
-        raise LLMUnavailable(f"{key}: error {err.status_code} del proveedor") from err
+        raise LLMUnavailable(f"{key}: error {err.status_code} del proveedor",
+                             status_code=err.status_code) from err
     seconds = time.perf_counter() - start
 
     text = response.choices[0].message.content or ""

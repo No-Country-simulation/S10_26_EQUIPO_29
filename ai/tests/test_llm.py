@@ -122,3 +122,15 @@ def test_limite_de_uso_con_espera(fake):
     with pytest.raises(llm.LLMRateLimited) as caught:
         llm.generar(MESSAGES, provider="groq")
     assert caught.value.retry_after == 30.0
+
+
+@pytest.mark.parametrize("error, transient", [
+    (status_error(openai.InternalServerError, 503), True),
+    (status_error(openai.BadRequestError, 400), False),
+    (openai.APIConnectionError(request=REQUEST), True),
+])
+def test_error_temporal_o_permanente(fake, error, transient):
+    fake.error = error
+    with pytest.raises(llm.LLMUnavailable) as caught:
+        llm.generar(MESSAGES, provider="groq")
+    assert caught.value.transient is transient
