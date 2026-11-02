@@ -20,7 +20,7 @@ def test_ids_unicos(golden):
 
 def test_esperados_existen_en_el_catalogo(golden):
     # Un nombre mal escrito haría fallar esa consulta para siempre, en silencio.
-    catalog = {r["full_name"] for r in load_raw()}
+    catalog = {r["full_name"] for r in load_raw(source="sample")}
     for q in golden.queries:
         missing = set(q.expected) - catalog
         assert not missing, f"{q.id}: {missing} no está en el catálogo"
