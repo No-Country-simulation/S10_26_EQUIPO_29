@@ -37,6 +37,14 @@ PROVIDERS = {
         base_url="https://api.groq.com/openai/v1",
         api_key_env="GROQ_API_KEY",
     ),
+    "groq-low": ProviderSpec(
+        model="openai/gpt-oss-120b",
+        base_url="https://api.groq.com/openai/v1",
+        api_key_env="GROQ_API_KEY",
+        # Mismo modelo con menos razonamiento oculto: menos tokens por llamada
+        # y menos esperas por el límite de tokens por minuto.
+        reasoning_effort="low",
+    ),
     "ollama": ProviderSpec(
         model="qwen3.5:4b-q4_K_M",
         base_url="http://localhost:11434/v1/",
