@@ -9,6 +9,7 @@ import os
 import time
 from dataclasses import dataclass
 from functools import lru_cache
+from pydantic import BaseModel, ValidationError
 
 import openai
 from openai import OpenAI
@@ -72,6 +73,14 @@ class LLMTimeout(LLMError):
 class LLMUnavailable(LLMError):
     """No se pudo conectar o el proveedor devolvió un error."""
 
+class LLMInvalidResponse(LLMError):
+    """La respuesta no cumple el esquema pedido."""
+
+    def __init__(self, message: str, raw_text: str, detail: str):
+        super().__init__(message)
+        self.raw_text = raw_text  # lo que escribió el modelo, para revisarlo
+        self.detail = detail      # el error de validación, para el reintento
+
 
 @dataclass(frozen=True)
 class Generation:
@@ -83,6 +92,7 @@ class Generation:
     seconds: float
     input_tokens: int | None
     output_tokens: int | None
+    data: BaseModel | None = None  # la respuesta validada, si se pidió un esquema
 
 
 def provider_key(provider: str | None = None) -> str:
@@ -108,8 +118,13 @@ def _client(key: str) -> OpenAI:
                   timeout=TIMEOUT_SECONDS, max_retries=0)
 
 
-def generar(messages: list[dict], *, provider: str | None = None) -> Generation:
-    """Envía los mensajes al modelo y devuelve su texto con tiempo y tokens."""
+def generar(messages: list[dict], *,
+            schema: type[BaseModel] | None = None,
+            provider: str | None = None) -> Generation:
+    """Envía los mensajes al modelo y devuelve su texto con tiempo y tokens.
+
+    Con `schema`, pide la respuesta en ese formato y la valida.
+    """
     key = provider_key(provider)
     spec = PROVIDERS[key]
     options = {}
@@ -117,6 +132,14 @@ def generar(messages: list[dict], *, provider: str | None = None) -> Generation:
         options["temperature"] = spec.temperature
     if spec.reasoning_effort is not None:
         options["reasoning_effort"] = spec.reasoning_effort
+    if schema is not None:
+        options["response_format"] = {
+            "type": "json_schema",
+            "json_schema": {"name": schema.__name__,
+                            "schema": schema.model_json_schema(),
+                            "strict": True},
+        }
+
     start = time.perf_counter()
     try:
         response = _client(key).chat.completions.create(
@@ -138,6 +161,16 @@ def generar(messages: list[dict], *, provider: str | None = None) -> Generation:
         raise LLMUnavailable(f"{key}: error {err.status_code} del proveedor") from err
     seconds = time.perf_counter() - start
 
+    text = response.choices[0].message.content or ""
+    data = None
+    if schema is not None:
+        try:
+            data = schema.model_validate_json(text)
+        except ValidationError as err:
+            raise LLMInvalidResponse(
+                f"{key}: la respuesta no cumple {schema.__name__}",
+                raw_text=text, detail=str(err)) from err
+
     usage = response.usage
     return Generation(
         text=response.choices[0].message.content or "",
@@ -146,4 +179,5 @@ def generar(messages: list[dict], *, provider: str | None = None) -> Generation:
         seconds=round(seconds, 2),
         input_tokens=usage.prompt_tokens if usage else None,
         output_tokens=usage.completion_tokens if usage else None,
+        data=data,
     )
