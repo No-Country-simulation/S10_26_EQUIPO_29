@@ -31,7 +31,11 @@ Reglas:
 3. Una necesidad por categoría. Si varias partes del pedido caen en la misma
    categoría, únelas en una sola.
 4. En "query", escribe una frase corta en español (de 3 a 8 palabras) que
-   describa qué debe hacer la herramienta, no el nombre de un producto.
+   describa la capacidad técnica que debe tener la herramienta, con palabras
+   generales del oficio, no el objeto del negocio ni el nombre de un producto.
+   Por ejemplo, para "avisarles a los dueños de las mascotas cuando les toca
+   la vacuna", escribe "envío de notificaciones programadas", no "avisos de
+   vacunas de mascotas".
 5. Las tecnologías que el usuario ya usa y no pide cambiar (por ejemplo,
    "nuestros microservicios corren en Kubernetes") son contexto, no
    necesidades.
