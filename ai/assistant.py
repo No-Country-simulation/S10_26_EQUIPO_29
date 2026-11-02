@@ -26,6 +26,8 @@ MAX_NEEDS = 5
 DESCRIPTION_CHARS = 200  # descripción de cada candidato que ve el modelo
 MAX_TOPICS = 6
 TITLE_CHARS = 80         # límite del contrato
+CANDIDATES_SHOWN = 3    # candidatos por necesidad que ve el modelo
+CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
 
 UNDERSTAND_RULES = """Eres el primer paso de un asistente que recomienda herramientas open source
 para construir el sistema de un negocio. Tu tarea: leer el pedido del usuario
@@ -369,3 +371,45 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
     result = _generate_valid(messages, schema, check, provider)
     ok = result.data is not None and not result.problems_final
     return (to_response(result.data, needs, candidates) if ok else None), result
+
+
+# --- Flujo completo ---
+
+@dataclass
+class Assisted:
+    """Respuesta del asistente y lo que pasó en cada paso, para medirlo."""
+
+    response: AssistantResponse | None = None     # None = no se logró una respuesta válida
+    understood: LLMResult | None = None
+    generated: LLMResult | None = None            # None = no hizo falta generar
+    found: dict[str, list[SearchResult]] = field(default_factory=dict)  # por necesidad, ≥ umbral
+    search_seconds: float = 0.0
+
+
+def asistir(request: str, buscar, *, min_score: float,
+            provider: str | None = None) -> Assisted:
+    """Entender → buscar → generar.
+
+    `buscar(query, k)` devuelve los k repos más parecidos a la consulta.
+    Los errores del proveedor (límite de uso, tiempo) se propagan a quien llama.
+    """
+    out = Assisted(understood=entender(request, provider=provider))
+    data = out.understood.data
+    if data is None or out.understood.problems_final:
+        return out                                # sin respuesta válida de entender
+    if not data.needs:
+        out.response = clarification_response(data.clarification_questions)
+        return out
+
+    start = time.perf_counter()
+    for need in data.needs:
+        out.found[need.category] = [r for r in buscar(need.query, CANDIDATES_LOGGED)
+                                    if r.score >= min_score]
+    out.search_seconds = round(time.perf_counter() - start, 2)
+
+    shown = {c: found[:CANDIDATES_SHOWN] for c, found in out.found.items() if found}
+    if not shown:
+        out.response = no_evidence_response(data.needs)
+        return out
+    out.response, out.generated = generar_mapa(request, data.needs, shown, provider=provider)
+    return out
