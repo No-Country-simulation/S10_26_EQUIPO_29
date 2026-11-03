@@ -1,8 +1,8 @@
 """Modelo de lenguaje (LLM) detrás de una sola función: generar().
 
-El proveedor se elige con AI_LLM_PROVIDER (por defecto, gemini). Los tres
+El proveedor se elige con AI_LLM_PROVIDER (por defecto, gemini). Todos los
 proveedores aceptan el formato de OpenAI: solo cambian la dirección, el
-modelo y la clave. Solo este archivo sabe qué proveedor se usa.
+modelo, la clave y algunas opciones. Solo este archivo sabe qué proveedor se usa.
 """
 
 import os
@@ -233,7 +233,7 @@ def generar(messages: list[dict], *,
 
     usage = response.usage
     return Generation(
-        text=response.choices[0].message.content or "",
+        text=text,
         provider=key,
         model=spec.model,
         seconds=round(seconds, 2),
