@@ -18,7 +18,7 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ai.catalog import load_categories
-from ai.llm import LLMInvalidResponse, generar
+from ai.llm import PROVIDERS, LLMInvalidResponse, generar, provider_key
 from ai.search import UNCONFIRMED_LICENSES, SearchResult, clean_topics
 from shared.contracts.assistant import AssistantResponse, Component, Connection
 
@@ -68,7 +68,8 @@ Reglas:
    copia el identificador entre corchetes de la necesidad (por ejemplo,
    messaging), no su nombre. En "full_name" elige solo entre los candidatos
    de ESA necesidad. Si ninguno sirve de verdad para lo que pide el usuario,
-   usa null y explica por qué en "rationale".
+   usa null en "full_name", pero completa igual "label" con el nombre de la
+   necesidad, "role" y "rationale" con la razón.
 2. Elige pensando en el pedido: qué hace la herramienta, si se mantiene
    (último cambio reciente), su licencia y su complejidad. No estás obligado
    a elegir el primer candidato.
@@ -242,8 +243,8 @@ def map_message(request: str, needs, candidates: dict[str, list[SearchResult]],
 
 def draft_schema(need_ids: list[str], repo_names: list[str]) -> type[BaseModel]:
     """Esquema del borrador para UN pedido: necesidades y candidatos como listas cerradas."""
-    NeedId = Literal[tuple(need_ids)]       # type: ignore[valid-type]
-    RepoName = Literal[tuple(repo_names)]   # type: ignore[valid-type]
+    NeedId = Literal[tuple(need_ids)]
+    RepoName = Literal[tuple(repo_names)] if repo_names else str
 
     class Box(BaseModel):
         model_config = ConfigDict(extra="forbid")
@@ -282,6 +283,9 @@ def draft_problems(draft: BaseModel, candidates: dict[str, list[SearchResult]]) 
     if missing:
         problems.append(f"faltan cajas para: {', '.join(missing)}")
     for box in draft.boxes:
+        if box.need not in candidates:
+            problems.append(f"{box.need} no tiene candidatos: no hagas una caja para esa necesidad")
+            continue
         names = [r.repo.full_name for r in candidates.get(box.need, [])]
         if box.full_name is not None and box.full_name not in names:
             problems.append(f"{box.full_name} no es candidato de {box.need}; "
@@ -354,7 +358,10 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
     if not with_tools:
         raise ValueError("ninguna necesidad tiene candidatos: corresponde no_evidence_response()")
     repo_names = sorted({r.repo.full_name for found in with_tools.values() for r in found})
-    schema = draft_schema(list(with_tools), repo_names)
+    if PROVIDERS[provider_key(provider)].closed_candidates:
+        schema = draft_schema(list(with_tools), repo_names)
+    else:  # esquema fijo: todas las categorías y repos como texto
+        schema = draft_schema(list(load_categories()), None)
     messages = [{"role": "system", "content": GENERATE_RULES},
                 {"role": "user", "content": map_message(request, needs, candidates,
                                                         datetime.now(timezone.utc))}]

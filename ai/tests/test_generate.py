@@ -153,3 +153,12 @@ def test_reintenta_si_elige_un_repo_de_otra_necesidad(monkeypatch):
     assert result_.attempts == 2
     assert "no es candidato de ai" in result_.problems_first[0]
     assert response is not None and response.status == "ok"
+
+
+def test_esquema_fijo_acepta_cualquier_texto_y_las_reglas_lo_revisan():
+    schema = assistant.draft_schema(["ai", "cache"], None)
+    d = schema(title="RAG", summary="Resumen.",
+               boxes=[box("stripe/stripe-python"), box("redis/redis", need="cache")],
+               links=[], assumptions=[], other_limitations=[])
+    problems = assistant.draft_problems(d, CANDIDATES)
+    assert any("no es candidato de ai" in p for p in problems)
