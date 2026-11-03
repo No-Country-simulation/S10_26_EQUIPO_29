@@ -24,7 +24,6 @@ class ProviderSpec:
     api_key_env: str | None             # variable con la clave; None = no usa clave
     temperature: float | None = None    # None = valor por defecto del proveedor
     reasoning_effort: str | None = None # cuánto razona antes de responder; None = por defecto
-    closed_candidates: bool = True      # False: esquema fijo (el proveedor compila cada esquema nuevo)
     extra_body: dict | None = None      # campos propios del proveedor, que el SDK de OpenAI no conoce
 
 PROVIDERS = {
@@ -71,12 +70,10 @@ PROVIDERS = {
         model="claude-haiku-5-5",
         base_url="https://api.anthropic.com/v1/",
         api_key_env="ANTHROPIC_API_KEY",
-        # Compila una "gramática" por cada esquema nuevo (lento la primera vez);
-        # con un esquema fijo la reutiliza.
-        closed_candidates=False,
         # Razona por defecto, sin mostrarlo, y esta capa ignora reasoning_effort.
         # Medido con ai/eval/diagnose_latency.py (2026-11-03), generar tarda unos
-        # 10 s razonando y unos 5 s sin razonar.
+        # 10 s razonando y unos 5 s sin razonar; compilar cada esquema nuevo
+        # suma de 0 a 2,5 s. De pago (créditos del plan).
         extra_body={"thinking": {"type": "disabled"}},
     ),
 }

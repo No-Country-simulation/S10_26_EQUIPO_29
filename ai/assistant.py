@@ -18,7 +18,7 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ai.catalog import load_categories
-from ai.llm import PROVIDERS, LLMInvalidResponse, generar, provider_key
+from ai.llm import LLMInvalidResponse, generar
 from ai.search import UNCONFIRMED_LICENSES, SearchResult, clean_topics
 from shared.contracts.assistant import AssistantResponse, Component, Connection
 
@@ -358,10 +358,7 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
     if not with_tools:
         raise ValueError("ninguna necesidad tiene candidatos: corresponde no_evidence_response()")
     repo_names = sorted({r.repo.full_name for found in with_tools.values() for r in found})
-    if PROVIDERS[provider_key(provider)].closed_candidates:
-        schema = draft_schema(list(with_tools), repo_names)
-    else:  # esquema fijo: todas las categorías y repos como texto
-        schema = draft_schema(list(load_categories()), None)
+    schema = draft_schema(list(with_tools), repo_names)
     messages = [{"role": "system", "content": GENERATE_RULES},
                 {"role": "user", "content": map_message(request, needs, candidates,
                                                         datetime.now(timezone.utc))}]
