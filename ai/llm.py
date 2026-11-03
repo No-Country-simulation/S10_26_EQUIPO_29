@@ -24,6 +24,7 @@ class ProviderSpec:
     api_key_env: str | None             # variable con la clave; None = no usa clave
     temperature: float | None = None    # None = valor por defecto del proveedor
     reasoning_effort: str | None = None # cuánto razona antes de responder; None = por defecto
+    closed_candidates: bool = True      # False: esquema fijo (el proveedor compila cada esquema nuevo)
 
 PROVIDERS = {
     "gemini": ProviderSpec(
@@ -52,6 +53,27 @@ PROVIDERS = {
         # Por defecto piensa antes de responder: más de 1.000 tokens y
         # más de 20 s para una frase. "none" lo apaga.
         reasoning_effort="none",
+    ),
+    "gemini-3.1-lite": ProviderSpec(
+        model="gemini-3.1-flash-lite",
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        api_key_env="GEMINI_API_KEY",
+        # Misma clave que gemini, con su propia cuota diaria: respaldo si se agota la de 3.5.
+    ),
+    "gemma": ProviderSpec(
+        model="gemma-4-26b-a4b-it",
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        api_key_env="GEMINI_API_KEY",
+        # Modelo abierto en la API de Gemini; mucha más cuota diaria que los Gemini.
+    ),
+    "claude-haiku": ProviderSpec(
+        model="claude-haiku-5-5",
+        base_url="https://api.anthropic.com/v1/",
+        api_key_env="ANTHROPIC_API_KEY",
+        # Compila una "gramática" por cada esquema nuevo (lento la primera vez);
+        # con un esquema fijo la reutiliza.
+        closed_candidates=False,
+        # De pago (créditos del plan); su capa compatible con OpenAI ignora reasoning_effort.
     ),
 }
 DEFAULT_PROVIDER = "gemini"
@@ -136,6 +158,13 @@ def _client(key: str) -> OpenAI:
                   timeout=TIMEOUT_SECONDS, max_retries=0)
 
 
+def _failed_generation(err: openai.APIStatusError) -> str:
+    """El texto que generó el modelo, si el proveedor lo devuelve con el error."""
+    body = err.body if isinstance(err.body, dict) else {}
+    inner = body.get("error") if isinstance(body.get("error"), dict) else body
+    return str(inner.get("failed_generation", ""))
+
+
 def generar(messages: list[dict], *,
             schema: type[BaseModel] | None = None,
             provider: str | None = None) -> Generation:
@@ -175,8 +204,17 @@ def generar(messages: list[dict], *,
                              retry_after=float(wait) if wait else None) from err
     except (openai.AuthenticationError, openai.PermissionDeniedError) as err:
         raise LLMConfigError(f"{key}: la clave no es válida o no tiene acceso") from err
+    except openai.BadRequestError as err:
+        detail = str(err.message)[:300]
+        # Algunos proveedores (Groq) validan el JSON contra el esquema y responden 400 si no cumple.
+        if "does not match the expected schema" in detail:
+            raise LLMInvalidResponse(f"{key}: la respuesta no cumple el esquema",
+                                     raw_text=_failed_generation(err), detail=detail) from err
+        raise LLMUnavailable(f"{key}: error 400 del proveedor: {detail}",
+                             status_code=400) from err
     except openai.APIStatusError as err:
-        raise LLMUnavailable(f"{key}: error {err.status_code} del proveedor",
+        detail = str(err.message)[:300]  # lo que explica el proveedor.
+        raise LLMUnavailable(f"{key}: error {err.status_code} del proveedor: {detail}",
                              status_code=err.status_code) from err
     seconds = time.perf_counter() - start
 

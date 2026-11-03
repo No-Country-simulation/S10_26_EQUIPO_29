@@ -134,3 +134,13 @@ def test_error_temporal_o_permanente(fake, error, transient):
     with pytest.raises(llm.LLMUnavailable) as caught:
         llm.generar(MESSAGES, provider="groq")
     assert caught.value.transient is transient
+
+
+def test_esquema_rechazado_por_el_proveedor_es_respuesta_invalida(fake):
+    response = httpx2.Response(400, request=REQUEST)
+    fake.error = openai.BadRequestError(
+        "Generated JSON does not match the expected schema.", response=response,
+        body={"error": {"failed_generation": '{"label": null}'}})
+    with pytest.raises(llm.LLMInvalidResponse) as caught:
+        llm.generar(MESSAGES, provider="groq")
+    assert caught.value.raw_text == '{"label": null}'
