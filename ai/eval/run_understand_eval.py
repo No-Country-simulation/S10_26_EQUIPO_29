@@ -1,7 +1,7 @@
 """Mide el paso de entender con los casos del asistente y escribe el reporte.
 
 Uso, desde la raíz del repo:
-    python -m ai.eval.run_understand_eval                  # los tres proveedores, 3 corridas
+    python -m ai.eval.run_understand_eval                  # todos los proveedores del registro, 3 corridas
     python -m ai.eval.run_understand_eval gemini --runs 1  # uno, una corrida
 
 Cada proveedor recibe primero una llamada de calentamiento que no se cuenta.
