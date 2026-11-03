@@ -104,7 +104,7 @@ def build_request(case_id: str):
     messages = [{"role": "system", "content": GENERATE_RULES},
                 {"role": "user", "content": map_message(case.query, needs, shown,
                                                         datetime.now(timezone.utc))}]
-    return case, needs, messages
+    return case, needs, shown, messages
 
 
 # --- Las dos formas de llamar ---
@@ -221,13 +221,14 @@ def summary_row(name: str, calls: list[Measure]) -> str:
             f"| {sum(m.valid for m in warm)}/{len(warm)} | {errors}/{len(calls)} |")
 
 
-def render(case, needs, results: dict[str, list[Measure]], repeats: int) -> str:
+def render(case, needs, results: dict[str, list[Measure]], repeats: int,
+           schema_label: str) -> str:
     lines = [
         "# Diagnóstico de latencia · paso generar",
         "",
         f"Generado con `python -m ai.eval.diagnose_latency` el {date.today()} a las "
         f"{time.strftime('%H:%M')}. Caso `{case.id}`; necesidades: "
-        f"{', '.join(n.category for n in needs)}. Misma petición y mismo esquema fijo para "
+        f"{', '.join(n.category for n in needs)}. Misma petición y {schema_label} para "
         f"todas las variantes; 1 llamada en frío + {repeats} en caliente; streaming.",
         "",
         "Medianas en caliente. Primer texto y total en segundos; escritura en caracteres "
@@ -252,6 +253,9 @@ def main() -> None:
     parser.add_argument("variants", nargs="*", help="por defecto: " + ", ".join(DEFAULT_VARIANTS))
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--case", default=DEFAULT_CASE)
+    parser.add_argument("--closed", action="store_true",
+                        help="esquema cerrado de este pedido (el del flujo real de gemini y "
+                             "groq) en vez del fijo")
     args = parser.parse_args()
     unknown = [v for v in args.variants if v not in VARIANTS]
     if unknown:
@@ -259,8 +263,12 @@ def main() -> None:
     names = args.variants or DEFAULT_VARIANTS
 
     load_dotenv()
-    case, needs, messages = build_request(args.case)
-    schema = draft_schema(list(load_categories()), None)  # el esquema fijo, igual para todos
+    case, needs, shown, messages = build_request(args.case)
+    if args.closed:  # cada pedido trae su propio esquema: mide el costo de compilarlo
+        repo_names = sorted({r.repo.full_name for found in shown.values() for r in found})
+        schema, schema_label = draft_schema(list(shown), repo_names), "esquema cerrado del pedido"
+    else:
+        schema, schema_label = draft_schema(list(load_categories()), None), "esquema fijo"
     print(f"Caso {case.id}: {', '.join(n.category for n in needs)}")
 
     results = {}
@@ -280,8 +288,10 @@ def main() -> None:
     name = f"latency-{date.today()}"
     if names != DEFAULT_VARIANTS:
         name += "-" + "-".join(names)
+    if args.closed:
+        name += "-cerrado-" + case.id
     stem = RESULTS_DIR / name
-    stem.with_suffix(".md").write_text(render(case, needs, results, args.repeats),
+    stem.with_suffix(".md").write_text(render(case, needs, results, args.repeats, schema_label),
                                        encoding="utf-8")
     stem.with_suffix(".json").write_text(json.dumps(
         {"case": case.id, "messages": messages,
