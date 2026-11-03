@@ -79,6 +79,8 @@ PROVIDERS = {
 }
 DEFAULT_PROVIDER = "gemini"
 TIMEOUT_SECONDS = 15.0  # presupuesto de la IA; el frontend espera 20 s
+# Textos con que algunos proveedores (Groq) rechazan una respuesta que no cumple el esquema.
+SCHEMA_REJECTED = ("does not match the expected schema", "Failed to validate JSON")
 
 
 class LLMError(Exception):
@@ -210,7 +212,7 @@ def generar(messages: list[dict], *,
     except openai.BadRequestError as err:
         detail = str(err.message)[:300]
         # Algunos proveedores (Groq) validan el JSON contra el esquema y responden 400 si no cumple.
-        if "does not match the expected schema" in detail:
+        if any(text in detail for text in SCHEMA_REJECTED):
             raise LLMInvalidResponse(f"{key}: la respuesta no cumple el esquema",
                                      raw_text=_failed_generation(err), detail=detail) from err
         raise LLMUnavailable(f"{key}: error 400 del proveedor: {detail}",
