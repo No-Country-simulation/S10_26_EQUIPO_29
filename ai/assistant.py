@@ -283,6 +283,7 @@ def draft_problems(draft: BaseModel, candidates: dict[str, list[SearchResult]]) 
     """Reglas que el esquema no puede expresar. `candidates`: solo necesidades con candidatos.
 
     Cada problema dice qué está mal y qué hacer: el modelo lo lee en el reintento.
+    No supone nada sobre el pedido: solo describe la regla que no se cumplió.
     """
     problems = []
     boxed = [box.need for box in draft.boxes]
@@ -299,8 +300,7 @@ def draft_problems(draft: BaseModel, candidates: dict[str, list[SearchResult]]) 
         names = [r.repo.full_name for r in candidates.get(box.need, [])]
         if box.full_name is not None and box.full_name not in names:
             problems.append(f"{box.full_name} no es candidato de {box.need}; "
-                            f"elige entre {', '.join(names)} o null. Si el usuario lo pidió, "
-                            "dilo en other_limitations")
+                            f"elige entre {', '.join(names)} o null")
     if len(draft.title) > TITLE_CHARS:
         problems.append(f"el título tiene {len(draft.title)} caracteres; el máximo es "
                         f"{TITLE_CHARS}: escríbelo en menos de 10 palabras")
