@@ -85,6 +85,14 @@ def test_ollama_no_piensa_y_gemini_usa_sus_valores(fake):
     assert "reasoning_effort" not in fake.sent
 
 
+def test_claude_no_razona_y_los_demas_no_mandan_extra_body(fake):
+    llm.generar(MESSAGES, provider="claude-haiku")
+    assert fake.sent["extra_body"] == {"thinking": {"type": "disabled"}}
+
+    llm.generar(MESSAGES, provider="gemini")
+    assert "extra_body" not in fake.sent
+
+
 # --- Esquema ---
 
 def test_respuesta_con_esquema(fake):

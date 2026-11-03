@@ -25,6 +25,7 @@ class ProviderSpec:
     temperature: float | None = None    # None = valor por defecto del proveedor
     reasoning_effort: str | None = None # cuánto razona antes de responder; None = por defecto
     closed_candidates: bool = True      # False: esquema fijo (el proveedor compila cada esquema nuevo)
+    extra_body: dict | None = None      # campos propios del proveedor, que el SDK de OpenAI no conoce
 
 PROVIDERS = {
     "gemini": ProviderSpec(
@@ -73,7 +74,10 @@ PROVIDERS = {
         # Compila una "gramática" por cada esquema nuevo (lento la primera vez);
         # con un esquema fijo la reutiliza.
         closed_candidates=False,
-        # De pago (créditos del plan); su capa compatible con OpenAI ignora reasoning_effort.
+        # Razona por defecto, sin mostrarlo, y esta capa ignora reasoning_effort.
+        # Medido con ai/eval/diagnose_latency.py (2026-11-03), generar tarda unos
+        # 10 s razonando y unos 5 s sin razonar.
+        extra_body={"thinking": {"type": "disabled"}},
     ),
 }
 DEFAULT_PROVIDER = "gemini"
@@ -179,6 +183,8 @@ def generar(messages: list[dict], *,
         options["temperature"] = spec.temperature
     if spec.reasoning_effort is not None:
         options["reasoning_effort"] = spec.reasoning_effort
+    if spec.extra_body is not None:
+        options["extra_body"] = spec.extra_body
     if schema is not None:
         options["response_format"] = {
             "type": "json_schema",
