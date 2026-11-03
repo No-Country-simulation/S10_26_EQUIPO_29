@@ -91,3 +91,14 @@ def test_sin_respuesta_valida_tras_el_reintento(monkeypatch):
     assert result.attempts == 2
     assert result.problems_final
     assert len(calls) == 2                           # nunca más de un reintento
+
+
+def test_reintento_sin_texto_no_manda_un_mensaje_vacio(monkeypatch):
+    error = LLMInvalidResponse("no cumple", raw_text="", detail="detalle")
+    generar, calls = fake_generar([error, error])
+    monkeypatch.setattr(assistant, "generar", generar)
+
+    assistant.entender("Necesito cobrar suscripciones mensuales a mis clientes.")
+
+    retry = calls[1]  # la segunda llamada: el reintento
+    assert retry[-2] == {"role": "assistant", "content": "(respuesta vacía)"}
