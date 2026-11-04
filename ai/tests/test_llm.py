@@ -247,9 +247,9 @@ def test_el_limite_de_uso_guarda_el_mensaje_del_proveedor(fakes):
 
 # --- Disyuntor ---
 
-def test_el_disyuntor_salta_al_proveedor_caido(fakes):
-    fails(fakes, "gemini", status_error(openai.RateLimitError, 429))
-    assert llm.generar(MESSAGES).provider == "groq-low"      # descubre la caída
+def test_el_disyuntor_salta_al_proveedor_que_no_responde(fakes):
+    fails(fakes, "gemini", openai.APITimeoutError(request=REQUEST))
+    assert llm.generar(MESSAGES).provider == "groq-low"      # descubre que no responde
     fakes["gemini"].error, fakes["gemini"].sent = None, {}
     assert llm.generar(MESSAGES).provider == "groq-low"      # ya no espera a Gemini
     assert fakes["gemini"].sent == {}                         # ni siquiera lo llamó
@@ -258,11 +258,27 @@ def test_el_disyuntor_salta_al_proveedor_caido(fakes):
 
 def test_el_disyuntor_se_cierra_al_vencer_el_tiempo(fakes, monkeypatch):
     monkeypatch.setattr(llm, "COOLDOWN_SECONDS", 0.0)
-    fails(fakes, "gemini", status_error(openai.RateLimitError, 429))
+    fails(fakes, "gemini", openai.APITimeoutError(request=REQUEST))
     llm.generar(MESSAGES)
     fakes["gemini"].error = None
     assert llm.generar(MESSAGES).provider == "gemini"        # volvió a probarlo y respondió
     assert llm.disconnected() == {}
+
+
+@pytest.mark.parametrize("error", [
+    status_error(openai.RateLimitError, 429),                # límite de uso: responde al instante
+    status_error(openai.InternalServerError, 503),           # servidor ocupado: también
+])
+def test_fallas_rapidas_no_desconectan(fakes, error):
+    fails(fakes, "gemini", error)
+    assert llm.generar(MESSAGES).provider == "groq-low"      # pasa al respaldo en este pedido
+    assert llm.disconnected() == {}                           # pero no castiga a Gemini
+
+
+def test_sin_conexion_desconecta(fakes):
+    fails(fakes, "gemini", openai.APIConnectionError(request=REQUEST))
+    llm.generar(MESSAGES)
+    assert "gemini" in llm.disconnected()
 
 
 def test_con_proveedor_explicito_no_hay_disyuntor(fakes):

@@ -340,6 +340,10 @@ def generar(messages: list[dict], *,
         else:
             _open_until.pop(key, None)        # respondió: queda conectado
             return result
-        if breaker:
+        # Solo las fallas lentas desconectan: un tiempo agotado o sin conexión cuestan segundos;
+        # un 429 o un 5xx responden al instante, así que probarlos otra vez casi no cuesta.
+        slow = isinstance(last_error, LLMTimeout) or (
+            isinstance(last_error, LLMUnavailable) and last_error.status_code is None)
+        if breaker and slow:
             _open_until[key] = time.monotonic() + COOLDOWN_SECONDS
     raise last_error
