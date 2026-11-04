@@ -18,9 +18,10 @@ def found(*names):
 
 
 def assisted(results, pick, other_limitations=(), title="Observabilidad", missing=(),
-             rationale="Razón."):
+             rationale="Razón.", final_extra=()):
     """Una corrida: entender detectó observability (más `missing`, sin candidatos)
-    y el modelo eligió `pick`. La respuesta final la arma `to_response`, como en el flujo."""
+    y el modelo eligió `pick`. La respuesta final la arma `to_response`, como en el flujo;
+    `final_extra` agrega limitaciones a la respuesta final, para probar la métrica sola."""
     needs = [{"category": "observability", "query": "métricas y trazas",
               "evidence": "métricas, logs y trazas"}]
     needs += [{"category": c, "query": f"pedido de {c}", "evidence": c} for c in missing]
@@ -33,6 +34,9 @@ def assisted(results, pick, other_limitations=(), title="Observabilidad", missin
         links=[], assumptions=[], other_limitations=list(other_limitations))
     found_ = {"observability": results, **{c: [] for c in missing}}
     response = assistant.to_response(draft, understood.needs, found_)
+    if final_extra:
+        response = response.model_copy(
+            update={"limitations": [*response.limitations, *final_extra]})
     return Assisted(response=response,
                     understood=LLMResult(data=understood, attempts=1, seconds=1.0),
                     generated=LLMResult(data=draft, attempts=1, seconds=2.0),
@@ -65,21 +69,30 @@ def test_id_entre_corchetes_en_el_texto():
 
 
 def test_limitacion_repetida_cuenta_en_borrador_y_en_respuesta_final():
+    repeated = "La autenticación no está cubierta."
     run = assisted(found("prometheus/prometheus"), "prometheus/prometheus",
-                   other_limitations=["La autenticación no está cubierta.",
-                                      "Grafana podría complementar a Prometheus."],
-                   missing=["auth"])
+                   other_limitations=[repeated, "Grafana podría complementar a Prometheus."],
+                   missing=["auth"], final_extra=[repeated])
     o = flow_outcome(CASE, "fake", 1, run)
     assert o.repeated_draft == 1      # el modelo repitió la necesidad sin herramienta
     assert o.repeated_final == 1      # y llegó dos veces al usuario: la línea del sistema y la suya
 
 
 def test_necesidad_descartada_por_el_modelo_cuenta_como_sin_herramienta():
-    run = assisted(found("helm/helm"), None,
-                   other_limitations=["Falta una herramienta de observabilidad."])
+    repeated = "Falta una herramienta de observabilidad."
+    run = assisted(found("helm/helm"), None, other_limitations=[repeated],
+                   final_extra=[repeated])
     o = flow_outcome(CASE, "fake", 1, run)
     assert o.repeated_draft == 1
     assert o.repeated_final == 1      # "Observabilidad: ninguna herramienta…" + la del modelo
+
+
+def test_el_filtro_deja_la_respuesta_final_sin_repeticiones():
+    run = assisted(found("prometheus/prometheus"), "prometheus/prometheus",
+                   other_limitations=["La autenticación no está cubierta."], missing=["auth"])
+    o = flow_outcome(CASE, "fake", 1, run)
+    assert o.repeated_draft == 1      # el modelo sigue repitiendo en su borrador…
+    assert o.repeated_final == 0      # …pero el usuario no lo ve
 
 
 def test_sin_repeticion_la_respuesta_final_da_cero():
