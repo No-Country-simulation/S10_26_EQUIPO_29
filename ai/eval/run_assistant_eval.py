@@ -1,8 +1,9 @@
 """Compara modelos con el flujo completo del asistente: entender → buscar → generar.
 
 Uso, desde la raíz del repo:
-    python -m ai.eval.run_assistant_eval                  # gemini, groq-low y ollama, 3 corridas
-    python -m ai.eval.run_assistant_eval gemini --runs 1  # ensayo corto
+    python -m ai.eval.run_assistant_eval                 # gemini, groq-low y ollama, 3 corridas
+    python -m ai.eval.run_assistant_eval gemini --runs 1            # ensayo corto
+    python -m ai.eval.run_assistant_eval gemini --cases validation  # casos de validación
 
 Usa los casos rápidos y la búsqueda sobre el catálogo real (snapshot). Cada
 proveedor recibe primero una llamada de calentamiento que no se cuenta; ante
@@ -20,7 +21,7 @@ from dotenv import load_dotenv
 
 from ai import embeddings
 from ai.assistant import CANDIDATES_LOGGED, CANDIDATES_SHOWN, asistir
-from ai.eval.assistant_cases import load_assistant_cases
+from ai.eval.assistant_cases import CASE_FILES, load_assistant_cases
 from ai.eval.flow_metrics import BUDGET_SECONDS, flow_outcome, summarize
 from ai.eval.run_understand_eval import (DEFAULT_WAIT, MAX_WAITS, RESULTS_DIR, TRANSIENT_WAIT,
                                          num, pct, secs, warm_up)
@@ -189,6 +190,8 @@ def main() -> None:
     parser.add_argument("providers", nargs="*",
                         help="por defecto: " + ", ".join(DEFAULT_PROVIDERS))
     parser.add_argument("--runs", type=int, default=3)
+    parser.add_argument("--cases", choices=CASE_FILES, default="base",
+                       help="base: los casos rápidos (por defecto); validation: los casos de validación")
     args = parser.parse_args()
     unknown = [p for p in args.providers if p not in PROVIDERS]
     if unknown:
@@ -203,7 +206,10 @@ def main() -> None:
     def buscar(query, k):
         return index.search(query, k)
 
-    cases = [c for c in load_assistant_cases().cases if c.quick_set]
+    case_set = load_assistant_cases(CASE_FILES[args.cases])
+    # De la base se usan solo los rápidos; los de validación son pocos y se usan todos.
+    cases = ([c for c in case_set.cases if c.quick_set] if args.cases == "base"
+             else case_set.cases)
     outcomes, answers, cold = [], [], {}
 
     for provider in providers:
@@ -239,6 +245,8 @@ def main() -> None:
 
     RESULTS_DIR.mkdir(exist_ok=True)
     name = f"assistant-{date.today()}"
+    if args.cases != "base":
+        name += f"-{args.cases}"
     if ran != DEFAULT_PROVIDERS:
         name += "-" + "-".join(ran)
     stem = RESULTS_DIR / name
