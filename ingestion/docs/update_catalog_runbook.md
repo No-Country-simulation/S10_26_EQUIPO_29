@@ -66,10 +66,10 @@ Opciones relevantes:
 | `3` | Ejecución incompleta: faltan repositorios, README no verificable, destino no comparado, cuota insuficiente (`1` si se añade `--fail-on-incomplete`) |
 | `4` | Escritura bloqueada por las compuertas de seguridad: falta autorización, plan incompleto con `--require-complete` o plan que supera `--max-writes` |
 
-El workflow trata `0` y `3` como advertencia (anotación `::warning::`) y falla con
-cualquier otro código. Un plan incompleto nunca se presenta como completo; para
-que una ejecución incompleta haga fallar el workflow, invóquese con
-`--fail-on-incomplete` y saldrá con `1`.
+El workflow invoca la sincronización con `--fail-on-incomplete`: `0` es éxito y
+cualquier otro código hace fallar la ejecución (un plan incompleto sale `1`, no
+`3`). Un plan incompleto nunca se presenta como completo; sin la bandera ese
+mismo caso solo anotaría `::warning::` y el workflow lo daría por bueno.
 
 ## Cuota de GitHub y preflight de cuota
 
@@ -151,18 +151,23 @@ El token GitHub usa el `GITHUB_TOKEN` automático del workflow.
 
 ## Workflow
 
-- Horario: `0 11 * * *` (UTC) = 06:00 en America/Bogota; además `workflow_dispatch`.
+- Horario: `0 11 * * *` (UTC) = 06:00 en America/Bogota; además `workflow_dispatch`
+  manual con input `mode` (`dry-run` por defecto, `apply` solo manual).
 - `permissions: contents: read`, `concurrency: update-catalog` sin cancelación y
-  `timeout-minutes: 30`.
+  `timeout-minutes: 45`.
 - El trabajo define `OPENBRIDGE_SYNC_ALLOW_WRITES: "0"`: la ejecución programada
   es siempre de solo lectura.
-- Ejecuta `pytest tests -q` y después `update_catalog.py --live --dry-run`. En un
-  dispatch con `mode=apply` se omite el dry-run para no duplicar la extracción: el
-  propio `--apply` imprime el plan antes de escribir.
-- El resumen Markdown se publica en la ejecución y como artefacto de 14 días.
+- Ejecuta `pytest tests -q` y después `update_catalog.py --live --dry-run
+  --fail-on-incomplete`: un plan incompleto sale con `1` y la ejecución falla. En
+  un dispatch con `mode=apply` se omite el dry-run para no duplicar la extracción:
+  el propio `--apply` imprime el plan antes de escribir.
+- El resumen Markdown se publica en la ejecución y como artefacto de 90 días.
+- Si el trabajo falla, el trabajo `notify` abre una incidencia (o comenta la ya
+  abierta) con la URL de la ejecución; solo ese trabajo tiene `issues: write`.
 - El paso de aplicación manual solo se ejecuta con `mode=apply`, la variable de
   repositorio `OPENBRIDGE_SYNC_ALLOW_WRITES=1` y el secreto
-  `OPENBRIDGE_SYNC_CONFIRMATION`. **Por defecto está deshabilitado.**
+  `OPENBRIDGE_SYNC_CONFIRMATION`. **Por defecto está deshabilitado y el cron
+  nunca lo activa.**
 
 ### Habilitar escrituras más adelante
 
