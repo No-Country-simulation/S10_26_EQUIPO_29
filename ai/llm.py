@@ -83,7 +83,6 @@ PROVIDERS = {
     ),
 }
 DEFAULT_PROVIDER = "gemini"
-DEFAULT_PROVIDER = "gemini"
 # Respaldos en orden, separados por comas; uno sin clave se omite. Vacío = sin respaldo.
 DEFAULT_FALLBACK = "groq-low,claude-haiku"
 COOLDOWN_SECONDS = 60.0  # un proveedor que falla por algo temporal queda desconectado este tiempo

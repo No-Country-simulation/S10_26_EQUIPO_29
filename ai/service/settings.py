@@ -3,7 +3,7 @@
 import os
 from dataclasses import dataclass
 
-# Orígenes del frontend en local (vite preview), los mismos que usa la API del catálogo.
+# Orígenes del frontend en local (puerto 4173, con localhost o con 127.0.0.1).
 DEFAULT_CORS_ORIGINS = ("http://localhost:4173", "http://127.0.0.1:4173")
 
 

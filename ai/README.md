@@ -146,11 +146,13 @@ clave en `.env` (nombres en `.env.example`); **las claves nunca van al repo, al 
 **Respaldo y presupuesto.** Si no se pide un proveedor concreto, `generar()` usa el principal
 y, si falla por algo temporal (límite de uso, caída, tiempo agotado), repite la llamada con los
 respaldos de `AI_LLM_FALLBACK`, en orden y **sin esperar** (por defecto `groq-low,claude-haiku`;
-un respaldo sin clave se omite; vacío = sin respaldo). Un proveedor que falla así queda
-**desconectado 60 s** (disyuntor): mientras tanto, las llamadas van directo al siguiente, así que
-solo el primer pedido después de una caída paga la espera. `asistir()` le da a todo el pedido
-15 s (`BUDGET_SECONDS`): cada llamada usa solo el tiempo que queda, el que tiene un respaldo
-detrás tiene un tope de 7 s, y si no alcanza para otra llamada se corta con `LLMTimeout`.
+un respaldo sin clave se omite; vacío = sin respaldo). Si la falla fue lenta (tiempo agotado o
+sin conexión), ese proveedor queda **desconectado 60 s** (disyuntor): mientras tanto, las
+llamadas van directo al siguiente, así que solo el primer pedido después de una caída paga la
+espera. Un límite de uso (429) o un error del servidor (5xx) no desconectan: responden al
+instante y probarlos otra vez casi no cuesta. `asistir()` le da a todo el pedido 15 s
+(`BUDGET_SECONDS`): cada llamada usa solo el tiempo que queda, el que tiene un respaldo detrás
+tiene un tope de 7 s, y si no alcanza para otra llamada se corta con `LLMTimeout`.
 `error_response()` traduce cada error al código HTTP y al cuerpo del contrato (502, 503, 504).
 
 - Un flujo usa unos 5.000 tokens: el límite diario de Groq alcanza para unos 40 pedidos y se
@@ -198,7 +200,9 @@ acepta pedidos hasta terminar.
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
   `http://localhost:4173,http://127.0.0.1:4173`, el frontend en local).
-- **Frontend:** `NEXT_PUBLIC_ASSISTANT_API_BASE_URL=http://127.0.0.1:8001/`.
+- **Frontend:** `NEXT_PUBLIC_ASSISTANT_API_BASE_URL=http://127.0.0.1:8001/` (este servicio).
+  El backend del catálogo tiene su propio `POST /assistant`, que hoy responde siempre 503: el
+  frontend debe apuntar al puerto 8001, no al del catálogo.
 - Las causas de los errores (proveedor, límite, tiempo) quedan en la terminal del servicio,
   no en la respuesta.
 - Probar desde Git Bash: escribir las tildes como escapes de JSON (`\u00ed` = í), porque la

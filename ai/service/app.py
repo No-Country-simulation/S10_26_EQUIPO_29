@@ -9,7 +9,6 @@ Arranque, desde la raíz del repo:
 """
 
 import logging
-import os
 from collections.abc import Callable
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
