@@ -1,4 +1,4 @@
-import {createHttpAssistantProvider} from '../../data/assistantHttp.mjs';
+import {createHttpAssistantProvider,httpAssistantTimeoutMs} from '../../data/assistantHttp.mjs';
 import {useMemo,useState,useRef,useEffect,useReducer} from 'react';
 import {useCatalogData} from '../../data/CatalogProvider';
 import {promptPresentation,initialPresentation} from '../../promptPresentation.mjs';
@@ -38,7 +38,7 @@ export function useAssistantFlow(isDetail){
   try{
    const scenario=new URLSearchParams(window.location.search).get('assistantMock')||'ok';
    const localScenario=process.env.NEXT_PUBLIC_ERROR_PREVIEW==='true'&&['localhost','127.0.0.1'].includes(window.location.hostname)&&new URLSearchParams(window.location.search).has('assistantMock');
-   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools}:assistantScenarioOptions(scenario,tools)),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
+   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools,timeoutMs:httpAssistantTimeoutMs}:assistantScenarioOptions(scenario,tools)),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
    if(controller.signal.aborted)return;
    setOriginalPrompt(submitted);setAssistantResponse(response);dispatchPresentation({type:'success'});
    setQuery(response.status==='needs_clarification'?submitted:'');

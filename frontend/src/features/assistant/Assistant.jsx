@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {PromptSuggestions} from './PromptSuggestions';
 import {getAssistantError} from '../../errorPresentation.mjs';
 import {ArrowUpRight} from 'lucide-react';
@@ -8,6 +8,7 @@ import {promptMotion} from '../../promptPresentation.mjs';
 import {StackProposal} from './StackProposal';
 import {PromptComposer} from './PromptComposer';
 export function Assistant({flow}){
+ const [exampleReveal,setExampleReveal]=useState(null);
  const {assistantResponse,originalPrompt,slow,resultHeading,finished,pending,expanded,hasResult,input,newArchitecture,error,canRetry}=flow;
  const errorCopy=error?getAssistantError(error):null;
  const headerActive=expanded||Boolean(error);
@@ -19,10 +20,10 @@ export function Assistant({flow}){
  {finished&&<div className="stack-new-action"><button type="button" className="new-architecture" onClick={newArchitecture}>Crear nueva arquitectura <ArrowUpRight size={16}/></button></div>}
  <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse}/>
 
- <PromptComposer {...flow}/>
+ <PromptComposer {...flow} exampleReveal={exampleReveal}/>
  {finished&&<div className="architecture-result-tools"><details className="original-prompt"><summary>Tu idea original</summary><p>{originalPrompt}</p></details></div>}
 
- </div><PromptSuggestions flow={flow}/></section>
+ </div><PromptSuggestions flow={flow} onSelect={text=>setExampleReveal({text,id:performance.now()})}/></section>
  </div>
 );
 }
