@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from ai import assistant
+from ai import assistant, llm
 from ai.assistant import Assisted
 from ai.llm import LLMRateLimited, LLMTimeout, LLMUnavailable
 from ai.service.app import Catalog, create_app
@@ -21,10 +21,12 @@ def fake_catalog() -> Catalog:
 
 @pytest.fixture
 def client(monkeypatch):
+    monkeypatch.setattr(llm, "_open_until", {})
     monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
-    monkeypatch.setenv("AI_LLM_FALLBACK", "groq-low")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "groq-low,claude-haiku")
     monkeypatch.setenv("GEMINI_API_KEY", "clave-falsa")
-    monkeypatch.delenv("GROQ_API_KEY", raising=False)
+    monkeypatch.setenv("GROQ_API_KEY", "clave-falsa")
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     app = create_app(load=fake_catalog, settings=Settings(cors_origins=(FRONTEND,)))
     with TestClient(app) as c:      # el "with" ejecuta el arranque (lifespan)
         yield c
@@ -41,11 +43,13 @@ def answers(monkeypatch, result=None, error=None):
 
 # --- Salud ---
 
-def test_salud_dice_que_falta_una_clave_sin_mostrarlas(client):
+def test_salud_muestra_la_cadena_y_los_desconectados_sin_claves(client):
+    llm._open_until["gemini"] = llm.time.monotonic() + 3600   # desconectado una hora
     body = client.get("/health").json()
-    assert body["repos"] == 3 and body["status"] == "incomplete"
-    assert [(x["provider"], x["key_configured"]) for x in body["llm"]] == [
-        ("gemini", True), ("groq-low", False)]
+    assert body["repos"] == 3 and body["status"] == "ok"
+    assert [x["provider"] for x in body["llm"]] == ["gemini", "groq-low"]   # Claude sin clave
+    assert body["llm"][0]["disconnected_seconds"] is not None
+    assert body["llm"][1]["disconnected_seconds"] is None
     assert "clave-falsa" not in str(body)
 
 

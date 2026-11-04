@@ -51,11 +51,6 @@ def load_catalog() -> Catalog:
                    repos=len(index.repos), embedding_model=spec.name)
 
 
-def _key_configured(provider: str) -> bool:
-    env = llm.PROVIDERS[provider].api_key_env
-    return env is None or bool(os.environ.get(env))
-
-
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
     return JSONResponse(status_code=status, content=body.model_dump())
 
@@ -69,13 +64,12 @@ def create_app(load: Callable[[], Catalog] = load_catalog,
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        app.state.providers = llm.provider_chain()   # falla aquí si AI_LLM_PROVIDER no existe
-        missing = [p for p in app.state.providers if not _key_configured(p)]
-        if missing:
-            log.warning("proveedores sin clave: %s", ", ".join(missing))
+        app.state.providers = llm.provider_chain()   # falla aquí si un nombre no existe
+        if not llm.key_configured(app.state.providers[0]):
+            log.warning("el proveedor principal no tiene clave: %s", app.state.providers[0])
         app.state.catalog = load()
-        log.info("listo: %d repos, proveedores %s",
-                 app.state.catalog.repos, ", ".join(app.state.providers))
+        log.warning("listo: %d repos, proveedores %s",
+                    app.state.catalog.repos, " → ".join(app.state.providers))
         yield
 
     app = FastAPI(title="OpenBridge · asistente", version="1.1", lifespan=lifespan)
@@ -100,9 +94,11 @@ def create_app(load: Callable[[], Catalog] = load_catalog,
     @app.get("/health")
     def health() -> dict:
         catalog: Catalog = app.state.catalog
+        paused = llm.disconnected()
         llms = [{"provider": p, "model": llm.PROVIDERS[p].model,
-                 "key_configured": _key_configured(p)} for p in app.state.providers]
-        return {"status": "ok" if all(x["key_configured"] for x in llms) else "incomplete",
+                 "key_configured": llm.key_configured(p),
+                 "disconnected_seconds": paused.get(p)} for p in app.state.providers]
+        return {"status": "ok" if llms[0]["key_configured"] else "incomplete",
                 "repos": catalog.repos,
                 "embedding_model": catalog.embedding_model,
                 "min_score": catalog.min_score,
