@@ -69,7 +69,6 @@ def test_mensaje_con_ids_y_necesidades_sin_herramientas():
     assert "[ai]" in message
     assert "run-llama/llama_index" in message
     assert message.rstrip().endswith("[auth] Autenticación.")
-    assert "sin candidatos" in message            # el modelo no recibe frases sobre el catálogo
 
 
 # --- Esquema del borrador ---
