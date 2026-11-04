@@ -6,6 +6,8 @@ from ai import assistant
 from ai.assistant import LLMResult
 from ai.catalog import load_repos
 from ai.search import SearchResult
+from ai.llm import (LLMConfigError, LLMInvalidResponse, LLMRateLimited, LLMTimeout,
+                    LLMUnavailable)
 
 REPO = load_repos()[0]
 REQUEST = "Necesito cobrar suscripciones mensuales a los clientes de mi software."
@@ -111,3 +113,16 @@ def test_sin_presupuesto_no_hay_fecha_limite(monkeypatch, deadlines):
     understands(monkeypatch, understood(["payments"]))
     assistant.asistir(REQUEST, lambda q, k: results(0.5), min_score=0.2, budget=None)
     assert deadlines == [None]
+
+
+@pytest.mark.parametrize("err, status, code", [
+    (None, 502, "invalid_response"),                                   # sin respuesta válida
+    (LLMInvalidResponse("x", raw_text="", detail="d"), 502, "invalid_response"),
+    (LLMTimeout("x"), 504, "timeout"),
+    (LLMRateLimited("x"), 503, "provider_unavailable"),
+    (LLMUnavailable("x", status_code=500), 503, "provider_unavailable"),
+    (LLMConfigError("x"), 503, "provider_unavailable"),               # falta la clave
+])
+def test_errores_a_codigos_del_contrato(err, status, code):
+    got_status, body = assistant.error_response(err)
+    assert (got_status, body.error.code) == (status, code)

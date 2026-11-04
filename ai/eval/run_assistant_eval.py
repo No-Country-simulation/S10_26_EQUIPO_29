@@ -24,8 +24,8 @@ from ai import embeddings
 from ai.assistant import CANDIDATES_LOGGED, CANDIDATES_SHOWN, asistir
 from ai.eval.assistant_cases import CASE_FILES, load_assistant_cases
 from ai.eval.flow_metrics import BUDGET_SECONDS, flow_outcome, summarize
-from ai.eval.run_understand_eval import (DEFAULT_WAIT, MAX_WAITS, RESULTS_DIR, TRANSIENT_WAIT,
-                                         num, pct, secs, warm_up)
+from ai.eval.run_understand_eval import (DEFAULT_WAIT, MAX_WAIT, MAX_WAITS, RESULTS_DIR,
+                                         TRANSIENT_WAIT, num, pct, secs, warm_up)
 from ai.llm import PROVIDERS, LLMError, LLMRateLimited, LLMUnavailable
 from ai.search import SearchIndex
 
@@ -40,6 +40,8 @@ def with_waits(action, provider: str):
         try:
             return action(), waited
         except LLMRateLimited as err:
+            if err.retry_after and err.retry_after > MAX_WAIT:
+                raise  # límite diario: esperar no tiene sentido en esta corrida
             pause, reason = err.retry_after or DEFAULT_WAIT, "límite de uso"
         except LLMUnavailable as err:
             if not err.transient:

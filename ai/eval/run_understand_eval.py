@@ -30,6 +30,7 @@ MIN_PAUSE = {"gemini": 4.0}  # nivel gratuito: 15 llamadas por minuto
 DEFAULT_WAIT = 20.0          # si el límite de uso no dice cuánto esperar
 MAX_WAITS = 5
 TRANSIENT_WAIT = 10.0        # error temporal del proveedor (503, sin conexión)
+MAX_WAIT = 120.0             # si el proveedor pide esperar más (límite diario), no se insiste
 WARMUP_TRIES = 6  # 6 × 15 s: un modelo local frío puede tardar ~1 min en cargar
 
 
@@ -53,6 +54,8 @@ def call(request: str, provider: str):
         try:
             return entender(request, provider=provider), waited
         except LLMRateLimited as err:
+            if err.retry_after and err.retry_after > MAX_WAIT:
+                raise  # límite diario: esperar no tiene sentido en esta corrida
             pause, reason = err.retry_after or DEFAULT_WAIT, "límite de uso"
         except LLMUnavailable as err:
             if not err.transient:

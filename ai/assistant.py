@@ -18,9 +18,10 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ai.catalog import load_categories
-from ai.llm import Deadline, LLMInvalidResponse, generar
+from ai.llm import Deadline, LLMError, LLMInvalidResponse, LLMTimeout, generar
 from ai.search import UNCONFIRMED_LICENSES, SearchResult, clean_topics
-from shared.contracts.assistant import AssistantResponse, Component, Connection
+from shared.contracts.assistant import (AssistantResponse, Component, Connection,
+                                        ErrorDetail, ErrorResponse)
 
 MAX_NEEDS = 5
 DESCRIPTION_CHARS = 200  # descripción de cada candidato que ve el modelo
@@ -470,3 +471,26 @@ def asistir(request: str, buscar, *, min_score: float,
     out.response, out.generated = generar_mapa(request, data.needs, shown,
                                                provider=provider, deadline=deadline)
     return out
+
+
+# --- Errores para quien llama ---
+
+def _error(code: str, message: str) -> ErrorResponse:
+    return ErrorResponse(error=ErrorDetail(code=code, message=message))
+
+
+def error_response(err: LLMError | None) -> tuple[int, ErrorResponse]:
+    """Código HTTP y cuerpo del contrato para un pedido que no terminó en una respuesta.
+
+    `err`: el error del proveedor, o None si el asistente no logró una respuesta
+    válida tras el reintento. La validación de la pregunta (422) la hace el servicio.
+    """
+    if err is None or isinstance(err, LLMInvalidResponse):
+        return 502, _error("invalid_response",
+                           "No se logró una propuesta válida. Intenta de nuevo.")
+    if isinstance(err, LLMTimeout):
+        return 504, _error("timeout", "La propuesta tardó demasiado. Intenta de nuevo.")
+    # Límite de uso, caída o clave inválida: para el usuario, el asistente no está disponible.
+    # La causa queda en el mensaje del error, para el registro del servicio.
+    return 503, _error("provider_unavailable",
+                       "El asistente no está disponible ahora. Intenta en unos minutos.")
