@@ -8,7 +8,8 @@ Uso, desde la raíz del repo:
 Usa los casos rápidos y la búsqueda sobre el catálogo real (snapshot). Cada
 proveedor recibe primero una llamada de calentamiento que no se cuenta; ante
 límites de uso o errores temporales se espera y se anota. Escribe
-ai/eval/results/assistant-<fecha>[-proveedores].md (reporte) y .json (todas las respuestas).
+ai/eval/results/assistant-<fecha>-<hora>[-validation][-proveedores].md (reporte)
+y .json (todas las respuestas).
 """
 
 import argparse
@@ -244,7 +245,8 @@ def main() -> None:
     summaries = {p: summarize([o for o in outcomes if o.provider == p]) for p in ran}
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    name = f"assistant-{date.today()}"
+    # Con la hora en el nombre, dos corridas del mismo día no se pisan.
+    name = f"assistant-{date.today()}-{time.strftime('%H%M')}"
     if args.cases != "base":
         name += f"-{args.cases}"
     if ran != DEFAULT_PROVIDERS:

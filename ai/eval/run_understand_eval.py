@@ -7,7 +7,7 @@ Uso, desde la raíz del repo:
 
 Cada proveedor recibe primero una llamada de calentamiento que no se cuenta.
 Si el proveedor pide esperar por límite de uso, se espera y se anota.
-Escribe ai/eval/results/understand-<fecha>[-validation][-proveedores].md (reporte)
+Escribe ai/eval/results/understand-<fecha>-<hora>[-validation][-proveedores].md (reporte)
 y .json (todas las respuestas).
 """
 
@@ -217,9 +217,10 @@ def main() -> None:
     summaries = {p: summarize([o for o in outcomes if o.provider == p]) for p in ran}
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    name = f"understand-{date.today()}"
+    # Con la hora en el nombre, dos corridas del mismo día no se pisan.
+    name = f"understand-{date.today()}-{time.strftime('%H%M')}"
     if args.cases != "base":
-        name += f"-{args.cases}"  # no sobrescribe el reporte de la base del mismo día
+        name += f"-{args.cases}"
     if set(ran) != set(PROVIDERS):
         name += "-" + "-".join(ran)
     stem = RESULTS_DIR / name
