@@ -8,6 +8,11 @@ transaccional → verificación → resumen.
 Modo predeterminado: ``--dry-run`` (cero escrituras). Sin ``--live`` no se
 realiza ninguna petición HTTP ni conexión SQL. ``--apply`` exige destino
 habilitado y confirmación explícita por variables de entorno.
+
+Compuertas opcionales: ``--require-complete`` y ``--max-writes`` bloquean la
+escritura (código 4) aunque el apply esté autorizado; ``--fail-on-incomplete``
+convierte las ejecuciones incompletas en error (código 1) y
+``--preflight-rate-limit`` consulta la cuota antes de extraer.
 """
 
 from __future__ import annotations
@@ -26,7 +31,12 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from extract_github import fetch_repositories  # noqa: E402
+from extract_github import (  # noqa: E402
+    check_rate_limit_capacity,
+    estimate_required_requests,
+    fetch_rate_limit,
+    fetch_repositories,
+)
 from hash_contract import (  # noqa: E402
     HASH_VERSION,
     ContentHashError,
@@ -132,9 +142,38 @@ def _parse_args(argv: Sequence[str]) -> argparse.Namespace:
         default=None,
         help="escribe el resumen saneado en un archivo (Markdown)",
     )
+    parser.add_argument(
+        "--preflight-rate-limit",
+        action="store_true",
+        help=(
+            "consulta GET /rate_limit antes de extraer y omite el lote si la "
+            "cuota es insuficiente (una sola petición)"
+        ),
+    )
+    parser.add_argument(
+        "--require-complete",
+        action="store_true",
+        help=(
+            "con --apply, bloquea la escritura si el plan es incompleto "
+            "(repositorios o README sin verificar)"
+        ),
+    )
+    parser.add_argument(
+        "--fail-on-incomplete",
+        action="store_true",
+        help="devuelve 1 en vez de 3 cuando la ejecución queda incompleta",
+    )
+    parser.add_argument(
+        "--max-writes",
+        type=int,
+        default=None,
+        help="con --apply, bloquea la escritura si el plan supera N filas",
+    )
     args = parser.parse_args(list(argv))
     if args.limit is not None and args.limit <= 0:
         parser.error("--limit debe ser un entero positivo")
+    if args.max_writes is not None and args.max_writes <= 0:
+        parser.error("--max-writes debe ser un entero positivo")
     return args
 
 
@@ -232,6 +271,40 @@ def _write_gate(
         return "el destino no está habilitado para escritura"
     if is_admin_user(target.user):
         return "no se admite una cuenta administrativa"
+    return None
+
+
+def _incomplete_exit(args: argparse.Namespace, *, apply_mode: bool = False) -> int:
+    """Código de salida de una ejecución incompleta (degradada)."""
+    if apply_mode and args.require_complete:
+        return EXIT_WRITE_BLOCKED
+    return EXIT_ERROR if args.fail_on_incomplete else EXIT_WARNINGS
+
+
+def _plan_write_block(
+    plan: SyncPlan,
+    *,
+    require_complete: bool,
+    max_writes: int | None,
+) -> str | None:
+    """Motivo por el que no se aplica el plan, o ``None`` si puede escribirse."""
+    if require_complete and plan.incomplete:
+        reasons: list[str] = []
+        if plan.missing_repositories:
+            reasons.append(
+                f"{len(plan.missing_repositories)} repositorios aprobados sin metadatos"
+            )
+        if plan.unresolved_readme:
+            reasons.append(f"{len(plan.unresolved_readme)} README sin verificar")
+        return (
+            "--require-complete exige un plan completo ("
+            + "; ".join(reasons)
+            + ")"
+        )
+    if max_writes is not None and plan.writes > max_writes:
+        return (
+            f"el plan escribe {plan.writes} filas y supera --max-writes {max_writes}"
+        )
     return None
 
 
@@ -382,6 +455,7 @@ def run(
     environ: Mapping[str, str] | None = None,
     fetcher: Callable[..., Any] | None = None,
     engine_factory: Callable[..., Any] | None = None,
+    rate_limit_fetcher: Callable[..., Any] | None = None,
 ) -> int:
     """Ejecuta el coordinador y devuelve el código de salida."""
     environment: Mapping[str, str] = dict(
@@ -445,6 +519,44 @@ def run(
             print("No se realizó ninguna petición HTTP ni conexión SQL.")
             return EXIT_WRITE_BLOCKED
 
+    if args.preflight_rate_limit:
+        probe = fetch_rate_limit if rate_limit_fetcher is None else rate_limit_fetcher
+        required = estimate_required_requests(len(approved))
+        snapshot = None
+        try:
+            snapshot = probe(enabled=True, token=token)
+        except Exception as exc:  # noqa: BLE001 - solo se informa el tipo
+            print(
+                "ADVERTENCIA: no se pudo consultar /rate_limit: "
+                f"{_safe_error(exc, *secrets)}"
+            )
+        if snapshot is not None:
+            capacity_problem = check_rate_limit_capacity(snapshot, required)
+            if capacity_problem:
+                print(f"ADVERTENCIA: {capacity_problem}")
+                print(
+                    "No se inició la extracción y no se abrió ninguna conexión SQL."
+                )
+                report = "\n".join(
+                    [
+                        *_header(target, apply_mode),
+                        (
+                            f"Cuota restante: {snapshot.remaining} | "
+                            f"lote estimado: {required} peticiones"
+                        ),
+                        f"Extracción: OMITIDA ({capacity_problem})",
+                        "Completitud: INCOMPLETA",
+                        "0 escrituras ejecutadas: no se generó ni aplicó ningún plan.",
+                    ]
+                )
+                print(redact(report, *secrets))
+                _write_summary(args.summary_file, report, *secrets)
+                return _incomplete_exit(args, apply_mode=apply_mode)
+            print(
+                f"Cuota verificada: {snapshot.remaining} peticiones disponibles | "
+                f"lote estimado: {required}"
+            )
+
     print(f"Extrayendo {len(approved)} repositorios desde GitHub...")
     try:
         records, audit = fetch(
@@ -473,7 +585,7 @@ def run(
         )
         print(redact(report, *secrets))
         _write_summary(args.summary_file, report, *secrets)
-        return EXIT_WARNINGS
+        return _incomplete_exit(args)
 
     read_engine = None
     try:
@@ -486,7 +598,7 @@ def run(
         )
         print(redact(report, *secrets))
         _write_summary(args.summary_file, report, *secrets)
-        return EXIT_ERROR if apply_mode else EXIT_WARNINGS
+        return EXIT_ERROR if apply_mode else _incomplete_exit(args)
     finally:
         if read_engine is not None:
             _dispose(read_engine)
@@ -502,6 +614,29 @@ def run(
     print(redact(report, *secrets))
 
     if apply_mode:
+        blocked = _plan_write_block(
+            plan,
+            require_complete=bool(args.require_complete),
+            max_writes=args.max_writes,
+        )
+        if blocked:
+            print(f"ESCRITURA BLOQUEADA: {blocked}")
+            print(
+                "No se abrió ninguna conexión de escritura ni se modificó el catálogo."
+            )
+            _write_summary(
+                args.summary_file,
+                "\n".join(
+                    [
+                        report,
+                        "",
+                        f"ESCRITURA BLOQUEADA: {blocked}",
+                        "0 escrituras ejecutadas.",
+                    ]
+                ),
+                *secrets,
+            )
+            return EXIT_WRITE_BLOCKED
         write_engine = None
         try:
             write_engine = factory(target, read_only=False)
@@ -552,7 +687,7 @@ def run(
         )
 
     _write_summary(args.summary_file, report, *secrets)
-    return EXIT_WARNINGS if plan.incomplete else EXIT_OK
+    return _incomplete_exit(args) if plan.incomplete else EXIT_OK
 
 
 def main(argv: Sequence[str] | None = None) -> int:

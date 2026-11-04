@@ -12,7 +12,7 @@ import argparse
 from datetime import datetime, timezone
 import os
 from time import monotonic, sleep as _sleep, time as _time
-from typing import Any, Callable, Sequence
+from typing import Any, Callable, NamedTuple, Sequence
 
 import requests
 
@@ -34,6 +34,9 @@ API_ROOT = "https://api.github.com/repos/"
 TIMEOUT_SECONDS = 10
 MAX_README_BYTES = 2_000_000
 TRANSIENT_HTTP_CODES = {500, 502, 503, 504}
+RATE_LIMIT_ENDPOINT = "https://api.github.com/rate_limit"
+REQUESTS_PER_REPOSITORY = 2  # metadatos + README
+RATE_LIMIT_HEADROOM = 250  # colchón mínimo antes de iniciar un lote
 
 
 def _header(headers: Any, key: str) -> str | None:
@@ -337,6 +340,108 @@ def fetch_repositories(
         else:
             record["_readme_status"] = "DISPONIBLE"
     return records, audit
+
+
+# NamedTuple en lugar de dataclass: test_extract_github.py carga este módulo por
+# ruta sin registrarlo en sys.modules, y dataclasses no puede resolver entonces
+# las anotaciones diferidas (PEP 563).
+class RateLimitSnapshot(NamedTuple):
+    """Cuota observada en ``GET /rate_limit`` antes de iniciar un lote.
+
+    ``consulted=False`` significa que la cuota no se pudo consultar (respuesta
+    no válida o error de red): el coordinador degrada al comportamiento previo
+    en lugar de bloquear el plan.
+    """
+
+    remaining: int | None = None
+    limit: int | None = None
+    reset_epoch: float | None = None
+    consulted: bool = False
+
+
+def _as_int(value: Any) -> int | None:
+    return value if type(value) is int and value >= 0 else None
+
+
+def _as_float(value: Any) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    return float(value)
+
+
+def estimate_required_requests(repositories: int) -> int:
+    """Peticiones que necesita un lote: metadatos + README de cada repositorio."""
+    count = int(repositories)
+    if count < 0:
+        raise ValueError("El número de repositorios no puede ser negativo")
+    return count * REQUESTS_PER_REPOSITORY
+
+
+def fetch_rate_limit(
+    *,
+    enabled: bool = False,
+    http_get: Callable[..., Any] | None = None,
+    token: str | None = None,
+) -> RateLimitSnapshot:
+    """Consulta ``GET /rate_limit`` con una única petición, sin exponer el token.
+
+    * ``enabled=False``: no se realiza ninguna petición.
+    * Respuesta distinta de 200 o error de red: ``consulted=False``.
+    """
+    if not isinstance(enabled, bool):
+        raise TypeError("enabled debe ser booleano")
+    if not enabled:
+        return RateLimitSnapshot()
+    getter = requests.get if http_get is None else http_get
+    auth_token = os.getenv("GITHUB_TOKEN") if token is None else token
+    try:
+        response = getter(
+            RATE_LIMIT_ENDPOINT,
+            headers=_github_headers(auth_token, readme=False),
+            timeout=TIMEOUT_SECONDS,
+            allow_redirects=False,
+        )
+    except requests.exceptions.RequestException:
+        return RateLimitSnapshot()
+    if response.status_code != 200:
+        return RateLimitSnapshot()
+    try:
+        payload = response.json()
+    except (TypeError, ValueError):
+        return RateLimitSnapshot(consulted=True)
+    core = payload.get("resources", {}).get("core") if isinstance(payload, dict) else None
+    if not isinstance(core, dict):
+        return RateLimitSnapshot(consulted=True)
+    return RateLimitSnapshot(
+        remaining=_as_int(core.get("remaining")),
+        limit=_as_int(core.get("limit")),
+        reset_epoch=_as_float(core.get("reset")),
+        consulted=True,
+    )
+
+
+def check_rate_limit_capacity(
+    snapshot: RateLimitSnapshot,
+    required: int,
+    *,
+    headroom: int = RATE_LIMIT_HEADROOM,
+) -> str | None:
+    """Motivo por el que no conviene iniciar el lote, o ``None`` si hay cuota."""
+    if not snapshot.consulted:
+        return None
+    if snapshot.remaining is None:
+        return "respuesta de /rate_limit sin cuota restante interpretable"
+    if snapshot.remaining < required:
+        return (
+            f"cuota insuficiente: quedan {snapshot.remaining} peticiones y el lote "
+            f"necesita {required}"
+        )
+    if snapshot.remaining < headroom:
+        return (
+            f"cuota por debajo del colchón mínimo: quedan {snapshot.remaining} "
+            f"peticiones (mínimo {headroom})"
+        )
+    return None
 
 
 def main() -> None:

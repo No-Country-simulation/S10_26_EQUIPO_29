@@ -32,6 +32,10 @@ python scripts/update_catalog.py --live --dry-run --limit 10 --target supabase
 
 # Escritura: requiere --apply, destino habilitado y confirmación
 python scripts/update_catalog.py --live --apply --target supabase
+
+# Escritura con compuertas adicionales: plan completo, tope de filas y cuota
+python scripts/update_catalog.py --live --apply --target supabase `
+  --require-complete --max-writes 120 --preflight-rate-limit
 ```
 
 Opciones relevantes:
@@ -41,6 +45,16 @@ Opciones relevantes:
   `approved_repositories_100_verified.txt`).
 - `--summary-file RUTA` escribe el resumen Markdown saneado.
 - `--target local|supabase`; si se omite, se usa `OPENBRIDGE_SYNC_TARGET`.
+- `--require-complete` (con `--apply`) bloquea la escritura si el plan queda
+  incompleto: devuelve `4` sin abrir conexión de escritura ni modificar el
+  catálogo.
+- `--max-writes N` (con `--apply`) bloquea la escritura si el plan supera `N`
+  filas; devuelve `4`. Es el tope ante un plan anómalo.
+- `--fail-on-incomplete` devuelve `1` en lugar de `3` cuando la ejecución queda
+  incompleta, para que el workflow falle en vez de anotar una advertencia.
+- `--preflight-rate-limit` consulta `GET /rate_limit` (una sola petición) antes
+  de extraer; si la cuota no alcanza, omite la extracción y devuelve `3`, o `4`
+  si se combina con `--apply --require-complete`.
 
 ## Códigos de salida
 
@@ -49,11 +63,44 @@ Opciones relevantes:
 | `0` | Ejecución completa (plan completo; en apply, verificación correcta) |
 | `1` | Error de extracción, transformación, planificación, aplicación o verificación |
 | `2` | Uso o configuración inválidos (lista aprobada, `--apply` sin destino) |
-| `3` | Ejecución incompleta: faltan repositorios, README no verificable, destino no comparado |
-| `4` | Escritura bloqueada por las compuertas de seguridad |
+| `3` | Ejecución incompleta: faltan repositorios, README no verificable, destino no comparado, cuota insuficiente (`1` si se añade `--fail-on-incomplete`) |
+| `4` | Escritura bloqueada por las compuertas de seguridad: falta autorización, plan incompleto con `--require-complete` o plan que supera `--max-writes` |
 
 El workflow trata `0` y `3` como advertencia (anotación `::warning::`) y falla con
-cualquier otro código. Un plan incompleto nunca se presenta como completo.
+cualquier otro código. Un plan incompleto nunca se presenta como completo; para
+que una ejecución incompleta haga fallar el workflow, invóquese con
+`--fail-on-incomplete` y saldrá con `1`.
+
+## Cuota de GitHub y preflight de cuota
+
+`--preflight-rate-limit` realiza **una** petición a `GET /rate_limit` antes de
+extraer y compara `resources.core.remaining` con lo que necesita el lote.
+
+| Concepto | Valor | Justificación |
+| --- | --- | --- |
+| Peticiones por repositorio | `2` | `GET /repos/{owner}/{repo}` + `GET /repos/{owner}/{repo}/readme`; `_approved_endpoints` no genera ningún otro endpoint y topics, licencia y fechas llegan en el payload de metadatos |
+| Lote de 100 repositorios | `200` | `100 × 2`, el tamaño real de `approved_repositories_100_verified.txt` |
+| Sondeo | `+1` | la petición a `/rate_limit`, contada aparte del lote |
+| Colchón mínimo | `250` | constante `RATE_LIMIT_HEADROOM`; absorbe reintentos y ejecuciones concurrentes |
+
+Con token (límite de `5000`/hora) el consumo nominal es `200 + 1 = 201` (4,0 %).
+La condición exigida es `200 ≤ 5000 − 250 = 4750`, de modo que tras el lote
+quedan `4550` peticiones de margen.
+
+Por qué `250` y no un valor menor: cada reintento por `5xx`/timeout puede añadir
+hasta `max_attempts − 1 = 2` peticiones por endpoint, así que un lote degradado
+consume más que el nominal; `250` cubre el sondeo y del orden de 124 reintentos
+dobles, además de dejar aire a otra ejecución concurrente (plan diario más un
+dry-run manual sobre la misma cuenta). Si el consumo real supera el colchón, la
+red de seguridad es otra: ante `403/429` el extractor detiene el lote completo
+(`stop_batch`) en lugar de esperar, la ejecución queda incompleta y
+`--require-complete` impide escribir el plan parcial. El sondeo es un aviso
+temprano, no la compuerta de escritura.
+
+Si `/rate_limit` no responde, responde un código distinto de `200` o falla la red,
+el sondeo queda como no consultado (`consulted=False`): se emite una advertencia
+y la ejecución continúa con el comportamiento anterior. Una respuesta `200` sin
+`remaining` interpretable sí marca la ejecución como incompleta.
 
 ## Variables de entorno y secretos
 
@@ -170,7 +217,7 @@ autorizado igual que cualquier otra escritura.
 ## Pruebas
 
 ```powershell
-python -m pytest tests -q          # 260 pruebas, sin red ni PostgreSQL
+python -m pytest tests -q          # 285 pruebas, sin red ni PostgreSQL
 ```
 
 Las pruebas nuevas cubren: inserción, actualización de metadatos, actualización
@@ -178,6 +225,11 @@ de README, ejecución sin cambios, compatibilidad `openbridge-ai-v1`, hashes
 inconsistentes, 404 confirmado, errores transitorios, límite de cuota, datos
 incompletos, duplicados, reversión transaccional, validación del destino, cuenta
 administrativa, dry-run sin escrituras, redacción de secretos e idempotencia.
+Añadidas con las compuertas de escritura: `--require-complete` y `--max-writes`
+(bloqueo antes de abrir cualquier conexión de escritura), `--fail-on-incomplete`,
+preflight de cuota (`/rate_limit`: parseo, colchón y degradación ante fallo) y un
+caso que demuestra que un fallo del sondeo no habilita la escritura de un plan
+incompleto.
 
 Cobertura específica del backfill histórico:
 
