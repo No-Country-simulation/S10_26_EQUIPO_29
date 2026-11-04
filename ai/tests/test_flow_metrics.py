@@ -46,11 +46,12 @@ def test_aceptable_en_segundo_puesto_y_elegido():
 def test_aceptable_solo_en_el_cuarto_puesto():
     results = found("grafana/grafana", "helm/helm", "nginx/nginx",
                     "jaegertracing/jaeger", "vitejs/vite")
-    need = flow_outcome(CASE, "fake", 1, assisted(results[:3], "grafana/grafana")).needs[0]
+    need = flow_outcome(CASE, "fake", 1, assisted(results[:3], "grafana/grafana"),
+                        shown=3).needs[0]
     assert not need.available3 and not need.chosen_ok
     o = flow_outcome(CASE, "fake", 1, Assisted(
         response=None, understood=assisted(results[:3], "grafana/grafana").understood,
-        found={"observability": results}))
+        found={"observability": results}), shown=3)
     assert o.needs[0].available5 and not o.needs[0].available3
 
 
@@ -81,8 +82,8 @@ def test_con_cinco_candidatos_el_cuarto_puesto_cuenta_como_visto():
     results = found("grafana/grafana", "helm/helm", "nginx/nginx",
                     "jaegertracing/jaeger", "vitejs/vite")
     run = assisted(results, "jaegertracing/jaeger")
-    assert not flow_outcome(CASE, "fake", 1, run).needs[0].available3          # con 3, no lo vio
-    assert flow_outcome(CASE, "fake", 1, run, shown=5).needs[0].available3     # con 5, sí
+    assert not flow_outcome(CASE, "fake", 1, run, shown=3).needs[0].available3   # con 3, no lo vio
+    assert flow_outcome(CASE, "fake", 1, run, shown=5).needs[0].available3       # con 5, sí
 
 
 def test_acierto_de_punta_a_punta_no_depende_de_k():

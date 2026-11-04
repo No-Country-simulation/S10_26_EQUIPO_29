@@ -27,7 +27,7 @@ MAX_NEEDS = 5
 DESCRIPTION_CHARS = 200  # descripción de cada candidato que ve el modelo
 MAX_TOPICS = 6
 TITLE_CHARS = 80         # límite del contrato
-CANDIDATES_SHOWN = 3    # candidatos por necesidad que ve el modelo
+CANDIDATES_SHOWN = 5    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
 BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
 

@@ -74,7 +74,7 @@ def test_sin_candidatos_sobre_el_umbral_no_genera(monkeypatch, received):
     assert received == []
 
 
-def test_registra_cinco_y_el_modelo_ve_tres(monkeypatch, received):
+def test_registra_cinco_y_el_modelo_ve_los_que_indica_la_constante(monkeypatch, received):
     understands(monkeypatch, understood(["payments"]))
     asked = []
 
