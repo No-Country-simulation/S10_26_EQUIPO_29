@@ -441,11 +441,13 @@ class Assisted:
 
 def asistir(request: str, buscar, *, min_score: float,
             provider: str | None = None,
-            budget: float | None = BUDGET_SECONDS) -> Assisted:
+            budget: float | None = BUDGET_SECONDS,
+            shown: int = CANDIDATES_SHOWN) -> Assisted:
     """Entender → buscar → generar, dentro de un presupuesto de tiempo.
 
     `buscar(query, k)` devuelve los k repos más parecidos a la consulta.
     `budget`: segundos para todo el pedido; None = sin límite (evaluaciones).
+    `shown`: candidatos por necesidad que ve el modelo (se registran al menos 5).
     Los errores del proveedor (límite de uso, tiempo agotado) se propagan a quien llama;
     LLMTimeout también cuando el presupuesto no alcanza para el paso siguiente.
     """
@@ -460,15 +462,15 @@ def asistir(request: str, buscar, *, min_score: float,
 
     start = time.perf_counter()
     for need in data.needs:
-        out.found[need.category] = [r for r in buscar(need.query, CANDIDATES_LOGGED)
+        out.found[need.category] = [r for r in buscar(need.query, max(CANDIDATES_LOGGED, shown))
                                     if r.score >= min_score]
     out.search_seconds = round(time.perf_counter() - start, 2)
 
-    shown = {c: found[:CANDIDATES_SHOWN] for c, found in out.found.items() if found}
-    if not shown:
+    candidates = {c: found[:shown] for c, found in out.found.items() if found}
+    if not candidates:
         out.response = no_evidence_response(data.needs)
         return out
-    out.response, out.generated = generar_mapa(request, data.needs, shown,
+    out.response, out.generated = generar_mapa(request, data.needs, candidates,
                                                provider=provider, deadline=deadline)
     return out
 

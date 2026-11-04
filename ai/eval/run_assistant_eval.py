@@ -100,7 +100,7 @@ def render_review(answers, providers, cases) -> list[str]:
 
 
 def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
-                  n_repos, min_score) -> str:
+                  n_repos, min_score, shown) -> str:
     def row(label, fmt):
         return f"| {label} | " + " | ".join(fmt(summaries[p]) for p in providers) + " |"
 
@@ -109,8 +109,8 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
         "",
         f"Generado con `python -m ai.eval.run_assistant_eval` el {date.today()} "
         f"a las {time.strftime('%H:%M')}. {len(cases)} casos × {runs} corridas por proveedor; "
-        f"catálogo de {n_repos} repos; umbral {min_score}; el modelo ve {CANDIDATES_SHOWN} "
-        f"candidatos por necesidad y se registran {CANDIDATES_LOGGED}. "
+        f"catálogo de {n_repos} repos; umbral {min_score}; el modelo ve {shown} "
+        f"candidatos por necesidad y se registran {max(CANDIDATES_LOGGED, shown)}. "
         "La llamada de calentamiento no se cuenta.",
         "",
         "## Modelos",
@@ -127,10 +127,12 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
         row("Status correcto", lambda s: pct(s["status_ok"])),
         row("Respuesta válida", lambda s: pct(s["valid"])),
         row("Necesidades detectadas", lambda s: pct(s["detected"])),
-        row("Techo de la búsqueda (top 3)", lambda s: pct(s["ceiling3"])),
+        row(f"Techo de la búsqueda (top {shown})", lambda s: pct(s["ceiling3"])),
         row("Techo con 5 candidatos", lambda s: pct(s["ceiling5"])),
         row("Eligió un aceptable (donde había)", lambda s: pct(s["chose_ok"])),
         row("Se abstuvo (donde no había)", lambda s: pct(s["declined_ok"])),
+        row("Acierto de punta a punta (comparable entre k)", lambda s: pct(s["chose_ok_all"])),
+        row("Sin caja donde el caso no tiene herramientas", lambda s: pct(s["declined_no_tool"])),
         row("Eligió el primer candidato", lambda s: pct(s["first_rank"])),
         row("Consistencia entre corridas", lambda s: pct(s["consistency"])),
         row("Entender válido al 1.er intento", lambda s: pct(s["understand_first_ok"])),
@@ -194,7 +196,9 @@ def main() -> None:
                         help="por defecto: " + ", ".join(DEFAULT_PROVIDERS))
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--cases", choices=CASE_FILES, default="base",
-                       help="base: los casos rápidos (por defecto); validation: los casos de validación")
+                        help="base: los casos rápidos (por defecto); validation: los casos de validación")
+    parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
+                        help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
     args = parser.parse_args()
     unknown = [p for p in args.providers if p not in PROVIDERS]
     if unknown:
@@ -228,12 +232,13 @@ def main() -> None:
                 try:
                     assisted, waited = with_waits(
                         lambda: asistir(case.query, buscar, min_score=min_score,
-                                        provider=provider, budget=None),
+                                        provider=provider, budget=None, shown=args.shown),
                         provider)
                     error = None
                 except LLMError as err:
                     assisted, waited, error = None, 0.0, f"{type(err).__name__}: {err}"
-                o = flow_outcome(case, provider, run, assisted, waited=waited, error=error)
+                o = flow_outcome(case, provider, run, assisted, waited=waited, error=error,
+                                 shown=args.shown)
                 outcomes.append(o)
                 answers.append(answer_record(case, provider, run, assisted, waited, error))
                 print(f"  {provider} {run} {case.id:<24} {o.status or 'error':<20} "
@@ -251,12 +256,14 @@ def main() -> None:
     name = f"assistant-{date.today()}-{time.strftime('%H%M')}"
     if args.cases != "base":
         name += f"-{args.cases}"
+    if args.shown != CANDIDATES_SHOWN:
+        name += f"-k{args.shown}"
     if ran != DEFAULT_PROVIDERS:
         name += "-" + "-".join(ran)
     stem = RESULTS_DIR / name
     stem.with_suffix(".md").write_text(
         render_report(ran, summaries, cold, outcomes, answers, cases, args.runs,
-                      len(index.repos), min_score),
+                      len(index.repos), min_score, args.shown),
         encoding="utf-8")
     stem.with_suffix(".json").write_text(
         json.dumps(answers, ensure_ascii=False, indent=2), encoding="utf-8")

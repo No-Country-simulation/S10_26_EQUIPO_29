@@ -75,3 +75,19 @@ def test_resumen_separa_busqueda_y_modelo():
     assert s["ceiling3"] == 1.0       # en las dos corridas válidas había un aceptable
     assert s["chose_ok"] == 0.5       # lo eligió en una de las dos
     assert s["consistency"] == 0.0    # eligió distinto en cada corrida
+
+
+def test_con_cinco_candidatos_el_cuarto_puesto_cuenta_como_visto():
+    results = found("grafana/grafana", "helm/helm", "nginx/nginx",
+                    "jaegertracing/jaeger", "vitejs/vite")
+    run = assisted(results, "jaegertracing/jaeger")
+    assert not flow_outcome(CASE, "fake", 1, run).needs[0].available3          # con 3, no lo vio
+    assert flow_outcome(CASE, "fake", 1, run, shown=5).needs[0].available3     # con 5, sí
+
+
+def test_acierto_de_punta_a_punta_no_depende_de_k():
+    results = found("grafana/grafana", "helm/helm", "nginx/nginx", "jaegertracing/jaeger")
+    run = assisted(results, "jaegertracing/jaeger")
+    for shown in (3, 5):
+        s = summarize([flow_outcome(CASE, "fake", 1, run, shown=shown)])
+        assert s["chose_ok_all"] == 1.0   # misma cuenta con cualquier k
