@@ -31,7 +31,7 @@ def received(monkeypatch):
     """Simula generar_mapa y guarda los candidatos que recibe."""
     log = []
 
-    def fake_generar_mapa(request, needs, candidates, *, provider=None):
+    def fake_generar_mapa(request, needs, candidates, *, provider=None, deadline=None):
         log.append(candidates)
         return "mapa", LLMResult(attempts=1)
 
@@ -39,8 +39,22 @@ def received(monkeypatch):
     return log
 
 
+@pytest.fixture
+def deadlines(monkeypatch):
+    """Simula generar_mapa y guarda la fecha límite que recibe."""
+    seen = []
+
+    def fake_generar_mapa(request, needs, candidates, *, provider=None, deadline=None):
+        seen.append(deadline)
+        return "mapa", LLMResult(attempts=1)
+
+    monkeypatch.setattr(assistant, "generar_mapa", fake_generar_mapa)
+    return seen
+
+
 def understands(monkeypatch, result):
-    monkeypatch.setattr(assistant, "entender", lambda request, provider=None: result)
+    monkeypatch.setattr(assistant, "entender",
+                        lambda request, provider=None, deadline=None: result)
 
 
 def test_pedido_vago_no_busca_ni_genera(monkeypatch, received):
@@ -84,3 +98,16 @@ def test_entender_invalido_no_sigue(monkeypatch, received):
     understands(monkeypatch, understood(["payments"], problems=["categoría repetida"]))
     out = assistant.asistir(REQUEST, lambda q, k: pytest.fail("no debe buscar"), min_score=0.2)
     assert out.response is None and out.found == {} and received == []
+
+
+def test_con_presupuesto_pasa_una_fecha_limite(monkeypatch, deadlines):
+    understands(monkeypatch, understood(["payments"]))
+    assistant.asistir(REQUEST, lambda q, k: results(0.5), min_score=0.2)
+    left = deadlines[0].remaining()
+    assert 0 < left <= assistant.BUDGET_SECONDS
+
+
+def test_sin_presupuesto_no_hay_fecha_limite(monkeypatch, deadlines):
+    understands(monkeypatch, understood(["payments"]))
+    assistant.asistir(REQUEST, lambda q, k: results(0.5), min_score=0.2, budget=None)
+    assert deadlines == [None]

@@ -226,7 +226,7 @@ def main() -> None:
                 try:
                     assisted, waited = with_waits(
                         lambda: asistir(case.query, buscar, min_score=min_score,
-                                        provider=provider),
+                                        provider=provider, budget=None),
                         provider)
                     error = None
                 except LLMError as err:

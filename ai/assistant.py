@@ -18,7 +18,7 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ai.catalog import load_categories
-from ai.llm import LLMInvalidResponse, generar
+from ai.llm import Deadline, LLMInvalidResponse, generar
 from ai.search import UNCONFIRMED_LICENSES, SearchResult, clean_topics
 from shared.contracts.assistant import AssistantResponse, Component, Connection
 
@@ -28,6 +28,7 @@ MAX_TOPICS = 6
 TITLE_CHARS = 80         # límite del contrato
 CANDIDATES_SHOWN = 3    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
+BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
 
 UNDERSTAND_RULES = """Eres el primer paso de un asistente que recomienda herramientas open source
 para construir el sistema de un negocio. Tu tarea: leer el pedido del usuario
@@ -180,18 +181,20 @@ Understood = LLMResult
 
 def _generate_valid(messages: list[dict], schema: type[BaseModel],
                     check, provider: str | None,
-                    format_hint: str | None = None) -> LLMResult:
+                    format_hint: str | None = None,
+                    deadline: Deadline | None = None) -> LLMResult:
     """Llama al modelo y reintenta una vez si la respuesta no cumple el esquema o las reglas.
 
     `format_hint` se suma al aviso cuando la respuesta no cumple el formato: dice qué
     valores son válidos, porque el error del proveedor no lo dice.
+    Con `deadline`, si no queda tiempo para el reintento, generar() lanza LLMTimeout.
     """
     out = LLMResult()
     for attempt in (1, 2):
         out.attempts = attempt
         start = time.perf_counter()
         try:
-            result = generar(messages, schema=schema, provider=provider)
+            result = generar(messages, schema=schema, provider=provider, deadline=deadline)
         except LLMInvalidResponse as err:
             out.data, raw = None, err.raw_text
             problems = [f"la respuesta no cumple el formato pedido: {err.detail}"]
@@ -223,11 +226,13 @@ def _generate_valid(messages: list[dict], schema: type[BaseModel],
     return out
 
 
-def entender(request: str, *, provider: str | None = None) -> LLMResult:
+def entender(request: str, *, provider: str | None = None,
+             deadline: Deadline | None = None) -> LLMResult:
     """Necesidades del pedido, con un reintento si la respuesta no cumple las reglas."""
     messages = [{"role": "system", "content": system_prompt()},
                 {"role": "user", "content": request}]
-    return _generate_valid(messages, understanding_schema(), rule_problems, provider)
+    return _generate_valid(messages, understanding_schema(), rule_problems, provider,
+                           deadline=deadline)
 
 
 # --- Generar ---
@@ -393,7 +398,8 @@ def _format_hint(candidates: dict[str, list[SearchResult]]) -> str:
 
 
 def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]], *,
-                 provider: str | None = None) -> tuple[AssistantResponse | None, LLMResult]:
+                 provider: str | None = None,
+                 deadline: Deadline | None = None) -> tuple[AssistantResponse | None, LLMResult]:
     """Elige y explica una herramienta por necesidad. Solo para necesidades con candidatos."""
     with_tools = {n.category: candidates[n.category] for n in needs if candidates.get(n.category)}
     if not with_tools:
@@ -414,20 +420,7 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
         return problems
 
     result = _generate_valid(messages, schema, check, provider,
-                             format_hint=_format_hint(with_tools))
-    ok = result.data is not None and not result.problems_final
-    return (to_response(result.data, needs, candidates) if ok else None), result
-
-    def check(draft):
-        problems = draft_problems(draft, with_tools)
-        if not problems:
-            try:
-                to_response(draft, needs, candidates)
-            except ValidationError as err:
-                problems = [f"la respuesta no cumple el contrato: {err}"]
-        return problems
-
-    result = _generate_valid(messages, schema, check, provider)
+                             format_hint=_format_hint(with_tools), deadline=deadline)
     ok = result.data is not None and not result.problems_final
     return (to_response(result.data, needs, candidates) if ok else None), result
 
@@ -446,13 +439,17 @@ class Assisted:
 
 
 def asistir(request: str, buscar, *, min_score: float,
-            provider: str | None = None) -> Assisted:
-    """Entender → buscar → generar.
+            provider: str | None = None,
+            budget: float | None = BUDGET_SECONDS) -> Assisted:
+    """Entender → buscar → generar, dentro de un presupuesto de tiempo.
 
     `buscar(query, k)` devuelve los k repos más parecidos a la consulta.
-    Los errores del proveedor (límite de uso, tiempo) se propagan a quien llama.
+    `budget`: segundos para todo el pedido; None = sin límite (evaluaciones).
+    Los errores del proveedor (límite de uso, tiempo agotado) se propagan a quien llama;
+    LLMTimeout también cuando el presupuesto no alcanza para el paso siguiente.
     """
-    out = Assisted(understood=entender(request, provider=provider))
+    deadline = Deadline.in_seconds(budget) if budget is not None else None
+    out = Assisted(understood=entender(request, provider=provider, deadline=deadline))
     data = out.understood.data
     if data is None or out.understood.problems_final:
         return out                                # sin respuesta válida de entender
@@ -470,5 +467,6 @@ def asistir(request: str, buscar, *, min_score: float,
     if not shown:
         out.response = no_evidence_response(data.needs)
         return out
-    out.response, out.generated = generar_mapa(request, data.needs, shown, provider=provider)
+    out.response, out.generated = generar_mapa(request, data.needs, shown,
+                                               provider=provider, deadline=deadline)
     return out

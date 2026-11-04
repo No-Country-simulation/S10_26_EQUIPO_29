@@ -141,7 +141,7 @@ def test_reintenta_si_elige_un_repo_de_otra_necesidad(monkeypatch):
     replies = [draft([box("redis/redis"), box("redis/redis", need="cache")]), draft(VALID)]
     calls = []
 
-    def fake_generar(messages, *, schema=None, provider=None):
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
         calls.append(messages)
         reply = replies[len(calls) - 1]
         return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
@@ -172,7 +172,7 @@ def test_formato_rechazado_reintenta_con_los_valores_validos(monkeypatch):
     replies = [rejected, draft(VALID)]
     calls = []
 
-    def fake_generar(messages, *, schema=None, provider=None):
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
         calls.append(list(messages))
         reply = replies[len(calls) - 1]
         if isinstance(reply, Exception):
