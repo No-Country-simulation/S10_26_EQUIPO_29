@@ -25,7 +25,8 @@ UNCONFIRMED_LICENSES = frozenset({None, "NOASSERTION"})
 
 # Partes del texto que vienen de la IA. Sin ninguna: nombre, descripción y topics.
 TextField = Literal["categories", "summary", "use_cases"]
-TEXT_FIELDS: tuple[TextField, ...] = ("categories",)  # las que usa la búsqueda
+# Las que usa la búsqueda. Sin categorías (medido en ai/eval/SEARCH_DECISION.md).
+TEXT_FIELDS: tuple[TextField, ...] = ("summary", "use_cases")
 
 # Variantes para medir (python -m ai.eval.run_search_eval --texto). Las cuatro primeras
 # forman una cadena: cada una suma un dato de la IA a la anterior.

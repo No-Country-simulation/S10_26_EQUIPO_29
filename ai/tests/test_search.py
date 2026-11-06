@@ -150,15 +150,22 @@ def test_clean_topics_quita_ruido_y_conserva_el_orden():
     assert clean_topics(["hacktoberfest", "login", "open-source", "oidc"]) == ["login", "oidc"]
 
 
-def test_texto_a_embeber():
+def test_texto_a_embeber_por_defecto_no_lleva_categorias():
     repo = make_repo("keycloak", description="Identity management", topics=["hacktoberfest", "oidc"])
-    assert build_embedding_text(repo, AUTH) == (
+    assert build_embedding_text(repo, AUTH) == "keycloak. Identity management. Topics: oidc."
+
+
+def test_texto_a_embeber_con_categorias():
+    repo = make_repo("keycloak", description="Identity management", topics=["hacktoberfest", "oidc"])
+    assert build_embedding_text(repo, AUTH, fields=("categories",)) == (
         "keycloak. Autenticación: Login y SSO. Identity management. Topics: oidc."
     )
 
 
 def test_texto_a_embeber_sin_descripcion():
-    assert build_embedding_text(make_repo("x"), AUTH) == "x. Autenticación: Login y SSO."
+    assert build_embedding_text(make_repo("x"), AUTH, fields=("categories",)) == (
+        "x. Autenticación: Login y SSO."
+    )
 
 
 def _repo_con_ia():
