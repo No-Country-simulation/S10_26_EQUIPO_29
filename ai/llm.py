@@ -71,6 +71,19 @@ PROVIDERS = {
         api_key_env="GEMINI_API_KEY",
         # Modelo abierto en la API de Gemini; mucha más cuota diaria que los Gemini.
     ),
+    "claude-haiku-razona": ProviderSpec(
+        model="claude-haiku-5-5",
+        base_url="https://api.anthropic.com/v1/",
+        api_key_env="ANTHROPIC_API_KEY",
+        # Igual que claude-haiku, pero razonando (por defecto en Claude 5): más lento,
+        # útil en procesos por lotes sin usuario esperando, como el enriquecimiento.
+    ),
+    "claude-sonnet": ProviderSpec(
+        model="claude-sonnet-5-5",
+        base_url="https://api.anthropic.com/v1/",
+        api_key_env="ANTHROPIC_API_KEY",
+        # Modelo grande de Anthropic, de pago. Razona por defecto; no acepta temperatura.
+    ),
     "claude-haiku": ProviderSpec(
         model="claude-haiku-5-5",
         base_url="https://api.anthropic.com/v1/",
