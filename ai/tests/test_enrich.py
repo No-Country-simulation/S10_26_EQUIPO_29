@@ -114,6 +114,8 @@ def test_una_salida_correcta_no_tiene_problemas():
     ({"summary_es": "a" * 251}, "el máximo es 250"),
     ({"summary_es": "  "}, "vacío"),
     ({"summary_es": "Framework con potentes capacidades."}, "marketing (potentes)"),
+    ({"summary_es": "Linter extremadamente rápido."}, "marketing (extremadamente)"),
+    ({"summary_es": "Framework web moderno."}, "marketing (moderno)"),
 ])
 def test_problemas_que_justifican_un_reintento(cambios, problema):
     assert any(problema in p for p in rule_problems(_salida(**cambios)))

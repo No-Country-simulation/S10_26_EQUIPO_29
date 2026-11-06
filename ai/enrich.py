@@ -63,7 +63,7 @@ def cut_text(text: str, limit: int) -> str:
 
 # --- Entrada del modelo ---
 
-PROMPT_VERSION = "4"     # reglas del prompt y validación: si cambia, se regenera todo
+PROMPT_VERSION = "5"     # reglas del prompt y validación: si cambia, se regenera todo
 README_CHARS = 8000      # provisional: se compara con 4000 en los repos de práctica
 MIN_README_CHARS = 200   # por debajo, el README limpio no da evidencia: use_cases vacío
 MAX_CATEGORIES = 3       # contrato Repo
@@ -180,8 +180,12 @@ def rule_problems(data: BaseModel) -> list[str]:
 
 _MARKDOWN = re.compile(r"[*_`\[\]]")  # formato y corchetes de enlaces que la limpieza no quita
 # Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
+# Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
+# "Rápido", "eficiente" y "ligero" se permiten: son atributos técnicos que el README afirma.
 _MARKETING = re.compile(r"\b(potentes?|poderos[oa]s?|increíbles?|revolucionari[oa]s?|"
-                        r"impresionantes?|líder(es)?|(el|la|los|las) mejor(es)?)\b")
+                        r"impresionantes?|líder(es)?|(el|la|los|las) mejor(es)?|"
+                        r"extremadamente|modern[oa]s?|(última|próxima) generación|"
+                        r"estándar(es)? de la industria)\b")
 
 def normalize(text: str) -> str:
     """Texto para comparar citas: sin formato Markdown, espacios unificados, minúsculas."""
