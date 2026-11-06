@@ -27,12 +27,15 @@ UNCONFIRMED_LICENSES = frozenset({None, "NOASSERTION"})
 TextField = Literal["categories", "summary", "use_cases"]
 TEXT_FIELDS: tuple[TextField, ...] = ("categories",)  # las que usa la búsqueda
 
-# Variantes para medir, de menos a más datos de la IA (python -m ai.eval.run_search_eval --texto).
+# Variantes para medir (python -m ai.eval.run_search_eval --texto). Las cuatro primeras
+# forman una cadena: cada una suma un dato de la IA a la anterior.
 TEXT_VARIANTS: dict[str, tuple[TextField, ...]] = {
     "base": (),
     "categorias": ("categories",),
     "resumen": ("categories", "summary"),
     "casos": ("categories", "summary", "use_cases"),
+    # Sin la descripción genérica de la categoría, que acerca consultas sin respuesta.
+    "sin-categorias": ("summary", "use_cases"),
 }
 
 

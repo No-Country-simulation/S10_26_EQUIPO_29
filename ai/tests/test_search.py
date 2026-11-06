@@ -12,6 +12,8 @@ import pytest
 from ai.search import TEXT_VARIANTS, SearchIndex, build_embedding_text, clean_topics
 from shared.contracts.repo import Category, Repo
 
+CADENA = ["base", "categorias", "resumen", "casos"]
+
 # Consulta y vectores de largo 1. Similitud con QUERY: A=1.0, B=0.8, C=0.6, D=0.0
 QUERY = np.array([1.0, 0.0])
 A, B, C, D = [1.0, 0.0], [0.8, 0.6], [0.6, 0.8], [0.0, 1.0]
@@ -179,10 +181,14 @@ def test_texto_con_todos_los_datos_de_la_ia():
     )
 
 
-def test_las_variantes_suman_datos_de_a_uno():
-    variantes = list(TEXT_VARIANTS.values())
+def test_las_variantes_de_la_cadena_suman_datos_de_a_uno():
+    variantes = [TEXT_VARIANTS[nombre] for nombre in CADENA]
     assert variantes[0] == ()
     assert all(set(a) < set(b) for a, b in zip(variantes, variantes[1:]))
+
+
+def test_sin_categorias_es_casos_menos_las_categorias():
+    assert set(TEXT_VARIANTS["sin-categorias"]) == set(TEXT_VARIANTS["casos"]) - {"categories"}
 
 
 # --- Con el modelo real (AI_MODEL_TESTS=1) ---
