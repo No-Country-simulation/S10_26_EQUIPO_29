@@ -9,7 +9,7 @@ import os
 import numpy as np
 import pytest
 
-from ai.search import SearchIndex, build_embedding_text, clean_topics
+from ai.search import TEXT_VARIANTS, SearchIndex, build_embedding_text, clean_topics
 from shared.contracts.repo import Category, Repo
 
 # Consulta y vectores de largo 1. Similitud con QUERY: A=1.0, B=0.8, C=0.6, D=0.0
@@ -157,6 +157,32 @@ def test_texto_a_embeber():
 
 def test_texto_a_embeber_sin_descripcion():
     assert build_embedding_text(make_repo("x"), AUTH) == "x. Autenticación: Login y SSO."
+
+
+def _repo_con_ia():
+    repo = make_repo("kafka", description="Event streaming", topics=["streaming"])
+    return repo.model_copy(update={"summary_es": "Plataforma de eventos",
+                                   "use_cases": ["Construir pipelines", "Integrar datos"]})
+
+
+def test_texto_base_sin_datos_de_la_ia():
+    assert build_embedding_text(_repo_con_ia(), AUTH, fields=()) == (
+        "kafka. Event streaming. Topics: streaming."
+    )
+
+
+def test_texto_con_todos_los_datos_de_la_ia():
+    fields = ("categories", "summary", "use_cases")
+    assert build_embedding_text(_repo_con_ia(), AUTH, fields=fields) == (
+        "kafka. Autenticación: Login y SSO. Plataforma de eventos. Event streaming. "
+        "Topics: streaming. Usos: Construir pipelines; Integrar datos."
+    )
+
+
+def test_las_variantes_suman_datos_de_a_uno():
+    variantes = list(TEXT_VARIANTS.values())
+    assert variantes[0] == ()
+    assert all(set(a) < set(b) for a, b in zip(variantes, variantes[1:]))
 
 
 # --- Con el modelo real (AI_MODEL_TESTS=1) ---
