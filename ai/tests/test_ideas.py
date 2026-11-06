@@ -1,8 +1,12 @@
 """Ideas de integración: entrada del modelo y validación de su salida (sin llamar al LLM)."""
 
-from ai.ideas import (NO_LANGUAGE, SNIPPET_MAX_LINES, CodeBlock, IdeaDraft, IdeasDraft,
-                      check_ideas, docs_url, github_slug, ideas_input, rule_problems, sections,
-                      split_readme)
+import json
+
+from ai import llm
+from ai.ideas import (NO_LANGUAGE, PROMPT_VERSION, SNIPPET_MAX_LINES, CodeBlock, IdeaDraft,
+                      IdeasDraft, check_ideas, docs_url, github_slug, ideas_for_repo, ideas_input,
+                      rule_problems, sections, split_readme)
+from ai.scripts.generate_ideas import up_to_date
 from shared.contracts.integration_idea import IntegrationIdea
 from shared.contracts.repo import Repo
 
@@ -244,3 +248,93 @@ def test_sin_titulo_usa_el_sitio_y_si_no_hay_el_repo():
     con_sitio = _repo(texto, homepage="https://tool.dev")
     assert docs_url("a job queue for Python", texto, con_sitio) == "https://tool.dev/"
     assert docs_url("a job queue for Python", texto, _repo(texto)) == "https://github.com/acme/tool"
+
+
+
+
+# --- Reintento: texto dañado y palabras de venta ---
+
+def test_texto_danado_pide_reintento():
+    entrada = ideas_input(_repo(README))
+    problemas = rule_problems(IdeasDraft(ideas=[_idea(summary="Procesa grandes vol3menes")]),
+                              entrada.blocks)
+    assert any("caracteres dañados" in p for p in problemas)
+
+
+def test_versiones_y_nombres_con_numeros_no_son_texto_danado():
+    entrada = ideas_input(_repo(README))
+    idea = _idea(summary="Usa OAuth2 con Python 3.9+ en K8s y guarda en S3.")
+    assert rule_problems(IdeasDraft(ideas=[idea]), entrada.blocks) == []
+
+
+def test_palabras_de_venta_piden_reintento():
+    entrada = ideas_input(_repo(README))
+    problemas = rule_problems(IdeasDraft(ideas=[_idea(summary="Un cliente moderno y potente.")]),
+                              entrada.blocks)
+    assert any("marketing (moderno, potente)" in p for p in problemas)
+
+
+# --- Una idea por tipo ---
+
+def test_segunda_idea_del_mismo_tipo_se_descarta():
+    aceptadas, descartadas = _check(_idea(), _idea(title="Otra forma con la librería"))
+    assert len(aceptadas) == 1
+    assert [d["reason"] for d in descartadas] == ["tipo repetido"]
+
+
+# --- Un repo de punta a punta, con el modelo simulado ---
+
+def _simular(monkeypatch, *respuestas):
+    """Reemplaza llm.generar: cada llamada devuelve la siguiente respuesta (dict)."""
+    pendientes = [json.dumps(r) for r in respuestas]
+
+    def falso(messages, *, schema=None, provider=None, deadline=None):
+        texto = pendientes.pop(0)
+        return llm.Generation(text=texto, provider=provider, model="m", seconds=0.1,
+                              input_tokens=100, output_tokens=20,
+                              data=schema.model_validate_json(texto))
+    monkeypatch.setattr(llm, "generar", falso)
+
+
+def test_registro_con_una_idea_y_su_huella(monkeypatch):
+    _simular(monkeypatch, {"ideas": [_idea().model_dump()]})
+    registro = ideas_for_repo(_repo(README), "gemini")
+    assert [i["id"] for i in registro["ideas"]] == ["llm-1-1"]
+    assert registro["prompt_version"] == PROMPT_VERSION
+    assert registro["model"] == llm.PROVIDERS["gemini"].model
+    assert registro["ideas"][0]["based_on_hash"] == registro["ai_input_hash"]
+    assert registro["review"]["failed"] is False and registro["review"]["attempts"] == 1
+
+
+def test_lista_vacia_del_modelo_es_un_registro_valido(monkeypatch):
+    _simular(monkeypatch, {"ideas": []})
+    registro = ideas_for_repo(_repo(README), "gemini")
+    assert registro["ideas"] == [] and registro["review"]["failed"] is False
+
+
+def test_reintenta_y_guarda_lo_corregido(monkeypatch):
+    _simular(monkeypatch, {"ideas": [_idea(code_block=9).model_dump()]},
+             {"ideas": [_idea().model_dump()]})
+    registro = ideas_for_repo(_repo(README), "gemini")
+    assert registro["review"]["attempts"] == 2
+    assert registro["ideas"][0]["snippet"] == "pip install tool"
+
+
+def test_readme_casi_vacio_o_archivado_no_llama_al_modelo(monkeypatch):
+    def no_llamar(*args, **kwargs):
+        raise AssertionError("no debería llamar al modelo")
+    monkeypatch.setattr(llm, "generar", no_llamar)
+    assert ideas_for_repo(_repo("Moved to Codeberg."), "gemini")["review"]["skipped"] == \
+        "README sin contenido suficiente"
+    assert ideas_for_repo(_repo(README, archived=True), "gemini")["review"]["skipped"] == \
+        "repo archivado"
+
+
+# --- Lote: qué cuenta como hecho ---
+
+def test_sin_ideas_cuenta_como_hecho_y_sin_respuesta_valida_no():
+    hecho = {"ai_input_hash": "h1", "ideas": [], "review": {"failed": False}}
+    assert up_to_date(hecho, "h1")
+    assert not up_to_date(hecho, "h2")
+    assert not up_to_date({**hecho, "review": {"failed": True}}, "h1")
+    assert not up_to_date(None, "h1")
