@@ -39,7 +39,7 @@ DIFFICULTY_ORDER = {"low": 0, "medium": 1, "high": 2}
 _BROKEN_TEXT = re.compile(r"[a-záéíóúñ]{2,}\d[a-záéíóúñ]+")
 
 # --- Prompt ---
-PROMPT_VERSION = "4"  # reglas del prompt y validación: si cambia, se regeneran las ideas
+PROMPT_VERSION = "5"  # reglas del prompt y validación: si cambia, se regeneran las ideas
 
 RULES = """Eres un ingeniero de integraciones. Recibes los datos de un repositorio de
 GitHub y propones de 0 a 3 ideas concretas para conectar esa herramienta a la
@@ -56,6 +56,8 @@ Reglas:
      o importa. Basta que la entrada diga que hay clientes o APIs para un
      lenguaje ("has clients for Python, Java…").
    - "rest_api": una API HTTP que la herramienta expone y la aplicación llama.
+     Un framework o librería para construir la API de tu propia aplicación no
+     es "rest_api": es "sdk".
    - "docker": la herramienta se ejecuta como contenedor, con una imagen publicada.
    - "webhook": la herramienta envía avisos HTTP a la aplicación cuando ocurre algo.
    Usa un tipo solo si la entrada muestra ese mecanismo para esta herramienta. Si
