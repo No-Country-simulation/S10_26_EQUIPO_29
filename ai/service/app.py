@@ -49,8 +49,8 @@ def load_catalog() -> Catalog:
     index = SearchIndex.build()
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
-                    repos=len(index.repos), embedding_model=spec.name,
-                    catalog_taken_at=snapshot_taken_at())
+                   repos=len(index.repos), embedding_model=spec.name,
+                   catalog_taken_at=snapshot_taken_at())
 
 
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
