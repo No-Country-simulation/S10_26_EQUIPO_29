@@ -3,7 +3,7 @@
 entender() convierte el pedido del usuario en necesidades (una categoría de
 categories.json, una consulta corta para la búsqueda y el fragmento del pedido
 que la justifica) o en preguntas, si el pedido es vago.
-generar_mapa() elige, entre los candidatosde la búsqueda, una herramienta
+generar_mapa() elige, entre los candidatos de la búsqueda, una herramienta
 por necesidad y explica la propuesta. El código arma la respuesta del contrato.
 La búsqueda queda fuera de este archivo.
 """
@@ -32,7 +32,6 @@ MAX_TOPICS = 6
 TITLE_CHARS = 80         # límite del contrato
 CANDIDATES_SHOWN = 5    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
-BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
 BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
 
 Understood = LLMResult  # nombre que usan las métricas de entender
