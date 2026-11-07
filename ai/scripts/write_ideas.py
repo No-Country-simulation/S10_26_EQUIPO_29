@@ -3,7 +3,8 @@
 Solo reemplaza ideas regenerables (generated_by = 'llm' y reviewed_at nulo) de los repos que
 están en el archivo. Las ideas revisadas o escritas por una persona nunca se tocan y ocupan
 cupo: un repo tiene como máximo 3 ideas y una por tipo, contando las revisadas.
-Antes borra los datos de ejemplo escritos a mano, si quedara alguno.
+Antes borra las ideas de los datos de ejemplo, si quedara alguna (solo ideas: el
+enriquecimiento y las categorías de ejemplo los limpia write_enrichment).
 
 Todo va en una sola transacción: o se escribe completo, o no cambia nada.
 Repetible: correrlo dos veces deja la base igual que correrlo una.
@@ -28,7 +29,7 @@ from ai.ideas import MAX_IDEAS
 from ai.scripts.export_catalog_snapshot import REPOS_FILE as SNAPSHOT_FILE
 from ai.scripts.export_catalog_snapshot import redact
 from ai.scripts.generate_ideas import OUT_FILE as IDEAS_FILE
-from ai.scripts.load_seed_example import ENV_VAR, IDEA_COLUMNS, delete_seed, insert_statement
+from ai.scripts.load_seed_example import ENV_VAR, IDEA_COLUMNS, MARKER, insert_statement
 from shared.contracts.integration_idea import IntegrationIdea
 
 SELECT_PROTECTED = """
@@ -40,6 +41,10 @@ DELETE_REGENERABLE = """
 delete from ai.ai_integration_ideas
 where github_id = any(%(ids)s) and generated_by = 'llm' and reviewed_at is null
 """
+
+# Solo las ideas de los datos de ejemplo: el enriquecimiento y las categorías de ejemplo
+# los limpia write_enrichment.
+DELETE_SEED_IDEAS = "delete from ai.ai_integration_ideas where based_on_hash = %(marker)s"
 
 
 def validate_records(records: list[dict], snapshot: list[dict]) -> None:
@@ -121,7 +126,8 @@ def plan_rows(records: list[dict], protected: list[dict]) -> tuple[list[dict], d
 def write(cur: psycopg.Cursor, records: list[dict]) -> dict:
     """Borra la semilla y las ideas regenerables de los repos del archivo, y escribe las nuevas."""
     ids = [r["github_id"] for r in records]
-    deleted_seed = delete_seed(cur)
+    cur.execute(DELETE_SEED_IDEAS, {"marker": MARKER})
+    deleted_seed = cur.rowcount
     cur.execute(SELECT_PROTECTED, {"ids": ids})
     protected = [dict(zip(("id", "github_id", "integration_type", "based_on_hash"), row))
                  for row in cur.fetchall()]
@@ -130,7 +136,7 @@ def write(cur: psycopg.Cursor, records: list[dict]) -> dict:
     replaced = cur.rowcount
     cur.executemany(insert_statement("ai_integration_ideas", IDEA_COLUMNS), rows)
     return {
-        "semilla borrada (filas)": sum(deleted_seed.values()),
+        "ideas de ejemplo borradas": deleted_seed,
         "ideas regenerables borradas": replaced,
         "ideas escritas": len(rows),
         "ideas protegidas (revisadas o de una persona, sin tocar)": len(protected),
