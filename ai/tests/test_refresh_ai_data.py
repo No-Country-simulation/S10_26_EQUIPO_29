@@ -174,6 +174,11 @@ def test_lo_publicado_se_lee_igual_que_los_archivos(data):
     assert not diff_catalog(repos, repos, published["enrichment"], published["ideas"]).has_changes
 
 
+def test_el_informe_cuenta_los_reemplazados(data):
+    repos, _, _ = data
+    text = refresh.describe_replaced({"enrichment": repos[:2], "ideas": []})
+    assert "enriquecimiento 2 · ideas 0" in text
+
 # --- Archivos (en una copia temporal) ---
 
 @pytest.fixture
