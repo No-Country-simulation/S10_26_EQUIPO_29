@@ -11,8 +11,9 @@ la API sólo documenta cómo los rellena.
 Un repositorio que cumple `Repo` cumple `CatalogRepo`; el frontend ignora los
 campos extra.
 
-`is_maintained` y `health_score` viajan siempre en NULL: no hay campo, criterio
-ni fórmula acordados, y no se inventan valores.
+`is_maintained` viaja siempre en NULL: no hay campo ni criterio acordados.
+`health_score` lo calcula el motor v1 sólo con `HEALTH_SCORE_ENABLED=true`; no
+se inventan valores cuando el motor está apagado o faltan datos.
 
 La paginación no viaja en el cuerpo: va en las cabeceras `X-Total-Count`,
 `X-Total-Pages`, `X-Page` y `X-Page-Size`, porque el cuerpo es el array.
@@ -55,7 +56,11 @@ class CatalogRepo(Repo):
         default=None,
         ge=0,
         le=100,
-        description="Pendiente: no hay fórmula acordada (siempre NULL).",
+        description=(
+            "Pendiente de aprobación del equipo: el motor v1 sólo publica un "
+            "valor con HEALTH_SCORE_ENABLED=true; apagado, o sin datos "
+            "suficientes, viaja en null."
+        ),
     )
 
 

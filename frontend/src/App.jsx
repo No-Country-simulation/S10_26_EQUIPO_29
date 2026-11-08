@@ -19,7 +19,7 @@ export function App(){
  const isDetail=navigation.id!==null;
  const flow=useAssistantFlow(isDetail);
  const {expanded,phase}=flow;
- const workspace=useWorkspaceView(flow.pending,isDetail);
+ const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
  useSmoothPageScroll(isDetail);
 
  return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><SectionNavigation paused={isDetail} workspace={workspace}/></div></header>

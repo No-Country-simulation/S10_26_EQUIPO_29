@@ -1,3 +1,4 @@
+import {HealthScore} from './HealthScore';
 import {detailTarget} from './data/detailTarget.mjs';
 import {errorPreview} from './mocks/errorPreview.mjs';
 import {interfaceErrors,errorActions} from './errorPresentation.mjs';
@@ -5,7 +6,7 @@ import React,{useEffect,useState} from 'react';
 import {useCatalogData} from './data/CatalogProvider';
 import {IntegrationIdeas} from './IntegrationIdeas';
 import {IntegrationIdeasSkeleton} from './IntegrationIdeasSkeleton';
-import {Activity,ArrowLeft,ArrowUpRight,Star,GitPullRequest,GitCommitHorizontal,UserRound,Archive,Scale,Code2} from 'lucide-react';
+import {ArrowLeft,ArrowUpRight,Star,GitPullRequest,GitCommitHorizontal,UserRound,Archive,Scale,Code2} from 'lucide-react';
 
 import {repositoryStatus,toolCategoryNames} from './data/catalog.mjs';
 import {useBrandIdentity,markBrandFailed} from './brandIdentity';
@@ -33,8 +34,7 @@ export function ToolDetail({id,onBack}){
  if(!tool&&failed!=='missing'&&(failed||http&&fullName||status!=='ready'))return <div className="tool-detail wrap"><h1 id="detail-title" tabIndex={-1}>{!failed&&(fullName||status==='loading')?'Cargando ficha…':interfaceErrors.detail}</h1>{(failed||status==='error')&&<button className="ui-button ui-button--secondary" onClick={()=>fullName?setAttempt(n=>n+1):retry()}>{errorActions.retry}</button>}</div>;
  if(!tool||failed==='missing'&&!loaded)return <div className="tool-detail detail-missing wrap"><h1 id="detail-title" tabIndex={-1}>Herramienta no encontrada</h1><p>{interfaceErrors.missing}</p><button className="detail-back ui-button ui-button--secondary" onClick={onBack}><ArrowLeft size={16}/> Cerrar ficha</button></div>;
  const detail=tool,profile=loaded?.profile??profiles[original?.id??id]??{summary:tool.description||null,homepage:null,ideas:[]},brand=identity.palette;
- const hasHealth=Number.isFinite(detail.healthScore);
- const tone=!hasHealth?'unknown':detail.healthScore>=80?'good':detail.healthScore>=60?'moderate':'low';
+
  const logo=identity.logo;
  return <div className="tool-detail" data-compact={compact} style={{'--brand-start':brand.start,'--brand-end':brand.end,'--brand-tag':brand.tag}}>
   <section className="detail-cover" data-tool-id={id} aria-label={`Portada de ${tool.name}`}>
@@ -50,7 +50,7 @@ export function ToolDetail({id,onBack}){
    <div id="detail-panel-about" role="tabpanel" aria-labelledby="detail-tab-about" hidden={tab!=='about'}>
    <div className="detail-overview"><section>{profile.summary&&<><h2>Acerca de {tool.name}</h2><p className="detail-summary">{profile.summary}</p></>}
 </section>
-   <aside className="detail-metrics" aria-label="Datos técnicos"><div className="detail-health"><h2>Salud del repositorio</h2><span className={`health-score health-score--${tone}`} role="img" aria-label={hasHealth?`Salud del repositorio: ${detail.healthScore} de 100`:'Salud sin evaluar'}><Activity className="health-icon" size={20}/><strong>{hasHealth?<>{detail.healthScore}<span>/100</span></>:<span>Sin evaluar</span>}</strong></span></div>
+   <aside className="detail-metrics" aria-label="Datos técnicos"><div className="detail-health"><h2>Salud del repositorio</h2><HealthScore score={detail.healthScore}/></div>
    <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenedor activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden="true"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>
    </div>
    <div id="detail-panel-integrations" role="tabpanel" aria-labelledby="detail-tab-integrations" hidden={tab!=='integrations'}>

@@ -1,3 +1,5 @@
+import {mockMode,unavailableAssistant} from '../../data/mockMode.mjs';
+import {useResultReset} from './useResultReset';
 import {sixToolPreview} from '../../mocks/errorPreview.mjs';
 import {createHttpAssistantProvider,httpAssistantTimeoutMs} from '../../data/assistantHttp.mjs';
 import {useMemo,useState,useRef,useEffect,useReducer} from 'react';
@@ -22,9 +24,11 @@ export function useAssistantFlow(isDetail){
  const {pending,expanded,hasResult}=presentation;
  const phase=pending?'loading':hasResult?'done':'idle';
  const input=useRef(null), request=useRef(null);useEffect(()=>()=>request.current?.abort(),[]);
+ const prepareResultReset=useResultReset(input);
  const preparePromptLayout=usePromptLayout(expanded,input,isDetail);
  useEffect(()=>{if(finished&&!isDetail)resultHeading.current?.focus({preventScroll:true});},[finished,isDetail]);
  function stop(){
+  prepareResultReset();
   request.current?.abort();request.current=null;
   setSlow(false);setError('');setCanRetry(false);
   dispatchPresentation({type:'cancel'});
@@ -37,14 +41,14 @@ export function useAssistantFlow(isDetail){
  }
  async function submit(e){
   e?.preventDefault();if(pending||request.current)return;
-  const validation=queryErrorCode(query);if(validation){setCanRetry(false);setError(validation);input.current.focus();return;}
-  setError('');setCanRetry(false);setSlow(false);preparePromptLayout();dispatchPresentation({type:'submit'});
+  const validation=queryErrorCode(query);if(validation){setCanRetry(false);setError(validation);input.current.focus({preventScroll:true});return;}
+  setError('');setCanRetry(false);setSlow(false);prepareResultReset();preparePromptLayout();setAssistantResponse(null);setOriginalPrompt('');dispatchPresentation({type:'submit'});
   request.current?.abort();const controller=new AbortController();request.current=controller;
   const submitted=query;
   try{
    const scenario=new URLSearchParams(window.location.search).get('assistantMock')||'ok';
    const localScenario=process.env.NEXT_PUBLIC_ERROR_PREVIEW==='true'&&['localhost','127.0.0.1'].includes(window.location.hostname)&&new URLSearchParams(window.location.search).has('assistantMock');
-   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools,timeoutMs:httpAssistantTimeoutMs}:assistantScenarioOptions(scenario,tools)),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
+   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools,timeoutMs:httpAssistantTimeoutMs}:localScenario||mockMode()?assistantScenarioOptions(scenario,tools):{provider:unavailableAssistant,catalog:tools}),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
    if(controller.signal.aborted)return;
    setOriginalPrompt(submitted);setAssistantResponse(response);dispatchPresentation({type:'success'});
    setQuery(submitted);

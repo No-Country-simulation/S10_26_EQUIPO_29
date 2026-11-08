@@ -52,5 +52,5 @@ export const Catalog=memo(function Catalog({onOpen,phase}){
   <p className="sr-only" role="status">Página {pagination.page} de {pagination.pages}. {pagination.items.length} herramientas de {filtered.length}.</p>
   <CatalogPagination page={pagination.page} pages={pagination.pages} onChange={changePage}/>
  </>}
- </section><footer className="catalog-footer"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a></footer></div></div>);
+ </section><footer className="catalog-footer"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><a className="ui-button ui-button--secondary catalog-design-link" href="/design-system/">Design System</a></footer></div></div>);
 });
