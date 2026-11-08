@@ -1,3 +1,4 @@
+import {mockMode} from './mockMode.mjs';
 import {errorPreview,sixToolPreview} from '../mocks/errorPreview.mjs';
 import {createContext,useContext,useEffect,useMemo,useState} from 'react';
 import {tools as mockTools} from '../tools';
@@ -8,7 +9,8 @@ import {createCatalogHttp} from './catalogHttp.mjs';
 
 const baseUrl=process.env.NEXT_PUBLIC_CATALOG_API_BASE_URL||process.env.NEXT_PUBLIC_API_BASE_URL||'';
 const http=baseUrl&&!sixToolPreview()?createCatalogCache(createCatalogHttp({baseUrl})):null;
-const initial={tools:http?[]:mockTools,profiles:http?{}:mockProfiles,categories:catalogCategories,status:http?'loading':'ready',error:null};
+const demo=!http&&(mockMode()||sixToolPreview());
+const initial={tools:demo?mockTools:[],profiles:demo?mockProfiles:{},categories:catalogCategories,status:http?'loading':demo?'ready':'error',error:null};
 const Context=createContext({...initial,http,baseUrl});
 export function CatalogProvider({children}){
  const [data,setData]=useState(()=>http?.peekList()?{...http.peekList(),status:'ready',error:null}:initial),[attempt,setAttempt]=useState(0);
@@ -29,3 +31,8 @@ export function CatalogProvider({children}){
  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export const useCatalogData=()=>useContext(Context);
+
+// Explicit, isolated fixture boundary for the Design System. Never fetches or falls back in production flows.
+export function CatalogPreviewProvider({value,children}){
+ return <Context.Provider value={value}>{children}</Context.Provider>;
+}

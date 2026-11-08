@@ -29,10 +29,11 @@ export function usePageReveal(contentKey){
   const groups=[
    ['.nav > .brand, .nav nav a',60],
    ['.hero-inner > h1, .prompt-heading-initial > h1',0,40],
-   ['.hero-inner > .prompt-intro',0,110],
+   ['.hero-inner .prompt-intro',0,110],
    ['.hero-inner .prompt-form-slot:not(.is-closed) .composer',0,170],
    ['.hero-inner .prompt-submit',0,230],
-   ['.prompt-suggestion',45,250],
+   ['.prompt-suggestions-label',0,250],
+   ['.prompt-suggestion',45,295],
    ['#catalogo > .section-top h2, #catalogo .search-box, #catalogo .filter-button',0],
    ['.categories > button',35],
    ['.filters > label',45],

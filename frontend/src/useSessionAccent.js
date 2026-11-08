@@ -1,11 +1,13 @@
 import {useLayoutEffect} from 'react';
-import {sessionPalette} from './sessionPalette.mjs';
+import {createSessionPaletteResolver} from './sessionPalette.mjs';
 
-// One accent per browser tab session; reloading and navigation keep the choice.
+const pagePalette=createSessionPaletteResolver();
+
+// One accent per page load; navigation and component remounts keep the choice.
 // Reuse the tool palette without changing individual tool identities.
 export function useSessionAccent(){
  useLayoutEffect(()=>{
-  const palette=sessionPalette('interface:primary:v1');
+  const palette=pagePalette('interface:primary:v1');
   document.documentElement.style.setProperty('--button-brand',palette.tag);
  },[]);
 }

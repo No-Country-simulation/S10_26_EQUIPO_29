@@ -2,8 +2,11 @@
 
 No hay reglas de negocio inventadas:
 
-- `is_maintained` y `health_score` se devuelven siempre en NULL porque no hay
-  campo ni fórmula acordados.
+- `is_maintained` se calcula en lectura: no archivado y push en los últimos
+  180 días; fecha ausente, inválida o futura significa dato desconocido.
+- `health_score` sale del motor v1 (`app/services/health.py`) sólo cuando
+  `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en NULL. El motor nunca
+  convierte un dato faltante en 0.
 - Ningún NULL se convierte en 0/false. `archived` es obligatorio en el contrato,
   así que una fila sin ese dato se reporta como catálogo no disponible.
 - El resumen de IA se recorta a los 250 caracteres del contrato y se registra un
@@ -11,7 +14,7 @@ No hay reglas de negocio inventadas:
 - Las ideas de un repositorio archivado se omiten: el contrato lo prohíbe.
 """
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 import re
 from math import ceil
@@ -33,6 +36,7 @@ from backend.app.core.errors import (
     RepoNotFoundError,
 )
 from backend.app.repositories.repos import RepoFilters, RepoRepository
+from backend.app.services.health import HealthInput, compute_health
 from shared.contracts.integration_idea import IntegrationIdea
 
 logger = logging.getLogger("openbridge.catalog")
@@ -60,6 +64,26 @@ def _to_datetime(value: Any) -> datetime | None:
         return None
 
 
+def compute_is_maintained(archived: Any, pushed_at: datetime | None, *, reference_time: datetime | None = None) -> bool | None:
+    """Actividad reciente, independiente de disabled y del health score.
+
+    Se calcula al servir la API, no se lee ni escribe una columna persistida.
+    Un dato desconocido no equivale a falta de mantenimiento.
+    """
+    if archived is True:
+        return False
+    if archived is not False or pushed_at is None:
+        return None
+    now = reference_time or datetime.now(timezone.utc)
+    # El contrato permite fechas sin zona; se interpretan consistentemente en UTC.
+    stamp = pushed_at.replace(tzinfo=timezone.utc) if pushed_at.tzinfo is None else pushed_at
+    now = now.replace(tzinfo=timezone.utc) if now.tzinfo is None else now
+    age = (now - stamp).total_seconds()
+    if age < 0:
+        return None
+    return age <= 180 * 86400
+
+
 def _as_list(value: Any) -> list[Any]:
     if value is None:
         return []
@@ -67,6 +91,18 @@ def _as_list(value: Any) -> list[Any]:
         return list(value)
     logger.warning("Se esperaba una lista y llegó %s", type(value).__name__)
     return []
+
+
+def _as_count(value: Any) -> int | None:
+    """Entero no negativo o `None`. Un booleano no es un contador."""
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return None
+    return value
+
+
+def _as_flag(value: Any) -> bool | None:
+    """Booleano tal cual; cualquier otra cosa es «sin dato»."""
+    return value if isinstance(value, bool) else None
 
 
 def _fit_summary(summary: str | None, full_name: str) -> str | None:
@@ -132,10 +168,12 @@ class CatalogService:
         *,
         default_page_size: int,
         max_page_size: int,
+        health_score_enabled: bool = False,
     ) -> None:
         self._repository = repository
         self._default_page_size = default_page_size
         self._max_page_size = max_page_size
+        self._health_score_enabled = health_score_enabled
 
     def list_repos(
         self,
@@ -216,8 +254,30 @@ class CatalogService:
             )
         return page_size
 
+    def _health_score(self, row: dict[str, Any], pushed_at: datetime | None) -> float | None:
+        """Score v1 de la fila, o NULL si el motor está apagado o no hay datos.
+
+        Se calcula en lectura porque no existe tabla/vista de salud y el rol de
+        la API es de solo lectura; ver `docs/health-score-implementation.md`.
+        """
+        if not self._health_score_enabled:
+            return None
+        result = compute_health(
+            HealthInput(
+                pushed_at=pushed_at,
+                open_issues_count=_as_count(row.get("open_issues_count")),
+                stargazers_count=_as_count(row.get("stargazers_count")),
+                license_spdx_id=row.get("license_spdx_id"),
+                archived=_as_flag(row.get("archived")),
+                disabled=_as_flag(row.get("disabled")),
+            ),
+            now=datetime.now(timezone.utc),
+        )
+        return None if result is None else result.score
+
     def _repo_payload(self, row: dict[str, Any]) -> dict[str, Any]:
         """Traduce una fila SQL al contrato; no rellena huecos con valores falsos."""
+        pushed_at = _to_datetime(row.get("pushed_at"))
         return {
             "github_id": row["github_id"],
             "full_name": row["full_name"],
@@ -229,7 +289,7 @@ class CatalogService:
             "license_spdx_id": row.get("license_spdx_id"),
             "stargazers_count": row.get("stargazers_count"),
             "forks_count": row.get("forks_count"),
-            "pushed_at": _to_datetime(row.get("pushed_at")),
+            "pushed_at": pushed_at,
             "archived": row.get("archived"),
             "readme_text": row.get("readme_text"),
             "open_issues_count": row.get("open_issues_count"),
@@ -238,8 +298,8 @@ class CatalogService:
             "categories": _as_list(row.get("categories")),
             "html_url": row.get("html_url"),
             "disabled": row.get("disabled"),
-            "is_maintained": None,
-            "health_score": None,
+            "is_maintained": compute_is_maintained(row.get("archived"), pushed_at),
+            "health_score": self._health_score(row, pushed_at),
         }
 
     def _to_catalog_repo(self, row: dict[str, Any]) -> CatalogRepo:

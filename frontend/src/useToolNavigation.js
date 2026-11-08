@@ -1,16 +1,21 @@
+import {useCatalogData} from './data/CatalogProvider';
+import {detailTarget,toolHref,readToolRoute} from './data/detailTarget.mjs';
 import {restReturningCard} from './cardReturnState.mjs';
 import {useEffect,useRef,useState} from 'react';
 import {flushSync} from 'react-dom';
-const readId=()=>location.hash.startsWith('#herramienta/')?location.hash.slice(13):null;
+const readId=()=>readToolRoute(location.hash);
 const ease='cubic-bezier(.22,1,.36,1)';
 export function useToolNavigation(){
+ const {tools}=useCatalogData();
+ const toolsRef=useRef(tools);toolsRef.current=tools;
  const [id,setId]=useState(readId);
  const current=useRef(id),saved=useRef({focus:null}),busy=useRef(false),cleanup=useRef(()=>{}),returnCleanup=useRef(()=>{});
  function change(next){
   if(next===current.current)return;
   cleanup.current();returnCleanup.current();
   const opening=next!==null,previous=current.current;
-  const card=document.querySelector(`[data-tool-id="${CSS.escape(opening?next:previous)}"].tool-card`);
+  const resolved=detailTarget(opening?next:previous,toolsRef.current).original;
+  const card=document.querySelector(`[data-tool-id="${CSS.escape(resolved?.id??(opening?next:previous))}"].tool-card`);
   if(!opening)returnCleanup.current=restReturningCard(card);
   if(opening&&previous===null)saved.current.focus=document.activeElement;
   if(opening){current.current=next;flushSync(()=>setId(next));}
@@ -40,7 +45,9 @@ export function useToolNavigation(){
  function open(next,focus){
   if(busy.current)return;
   focus?.focus({preventScroll:true});
-  history.pushState({...history.state,openbridgeDetail:true},'',`#herramienta/${next}`);change(next);
+  const tool=detailTarget(next,toolsRef.current).original;
+  const hash=tool?toolHref(tool):'#herramienta/'+next;
+  history.pushState({...history.state,openbridgeDetail:true},'',hash);change(readToolRoute(hash));
  }
  function back(){
   if(busy.current)cleanup.current();

@@ -149,7 +149,7 @@ def test_missing_ai_data_is_null_not_zero_or_false():
     assert item["disabled"] is None
     assert item["description"] is None
     assert item["categories"] == []
-    assert item["is_maintained"] is None
+    assert isinstance(item["is_maintained"], bool)
     assert item["health_score"] is None
 
 

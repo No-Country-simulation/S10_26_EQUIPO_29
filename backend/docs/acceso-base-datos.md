@@ -117,12 +117,9 @@ catálogo, la IA debe ejecutarse. Ninguna de las dos cosas es parte de esta tare
 | Campo | Estado real | Respuesta de la API |
 | --- | --- | --- |
 | `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main` | `null` siempre |
-| `health_score` | no hay columna ni fórmula acordada | `null` siempre |
+| `health_score` | motor v1 gated por `HEALTH_SCORE_ENABLED` (apagado por defecto) → `null` si el flag está apagado o faltan datos |
 
-La API no calcula ninguno de los dos: no se inventan valores. Cuando el equipo de
-datos cree `is_maintained` (hay una propuesta de DDL sin ejecutar) y Jeison
-entregue la fórmula de `health_score`, sólo hay que añadirlos al `SELECT`: el
-contrato ya los admite (`bool | None` y `float | None` entre 0 y 100).
+La API no inventa valores. `health_score` lo calcula en lectura el motor v1 (`backend/app/services/health.py`, índice por reglas con renormalización de datos faltantes) y sólo se publica con `HEALTH_SCORE_ENABLED=true`; apagado, la API mantiene `null` y el frontend muestra «Sin evaluar». `is_maintained` sigue en `null` hasta que el equipo de datos cree la columna (hay una propuesta de DDL sin ejecutar). El contrato ya admite ambos (`bool | None` y `float | None` entre 0 y 100).
 
 ### Filas que la API no puede servir
 

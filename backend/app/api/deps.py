@@ -23,4 +23,5 @@ def get_catalog_service(
         repository,
         default_page_size=settings.default_page_size,
         max_page_size=settings.max_page_size,
+        health_score_enabled=settings.health_score_enabled,
     )

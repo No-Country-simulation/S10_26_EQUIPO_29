@@ -7,8 +7,8 @@ const suggestions=[
  {title:'Unificar reportes de ventas',summary:'Importaciones automáticas y métricas del negocio.',prompt:'Quiero reunir las ventas de nuestras tiendas y nuestra web en un panel para gerencia. Necesitamos importar datos cada hora, detectar registros duplicados y comparar ingresos, productos y sucursales. Si una importación falla, debe poder reintentarse sin repetir ventas. Empezaremos con unos 100.000 registros diarios y necesitamos controlar si la información está actualizada.'}
 ];
 
-export function PromptSuggestions({flow,onSelect}){
- const hidden=flow.expanded;
+export function PromptSuggestions({flow,onSelect,workspace=false}){
+ const hidden=workspace||flow.expanded||Boolean(flow.error);
  const select=text=>{
   flow.setQuery(text);
   onSelect?.(text);

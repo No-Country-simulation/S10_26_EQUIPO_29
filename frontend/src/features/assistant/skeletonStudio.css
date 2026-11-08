@@ -1,0 +1,57 @@
+.proposal-skeleton .proposal-skeleton-card{background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-light,18%),var(--skeleton-background,#101317)),var(--skeleton-background,#101317) 65%);border-color:color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),#ffffff0a);box-shadow:var(--skeleton-shadow-x,8px) var(--skeleton-shadow-y,8px) var(--skeleton-blur,26px) rgb(0 0 0 / var(--skeleton-shadow,.35));contain:none}
+.proposal-skeleton .proposal-skeleton-card:before{background-size:var(--skeleton-gap,12px) var(--skeleton-gap,12px)}
+.proposal-skeleton .proposal-skeleton-dots{mask-size:var(--skeleton-gap,12px) var(--skeleton-gap,12px);opacity:var(--skeleton-dots,.75)}
+.proposal-skeleton .proposal-skeleton-wave{animation-duration:var(--skeleton-speed,3.2s);background:linear-gradient(110deg,transparent 15%,transparent 30%,var(--skeleton-color,#dcecff) 50%,transparent 78%)}
+
+
+/* The same light direction defines the surface and the illuminated rim. */
+.proposal-skeleton .proposal-skeleton-card{border-color:transparent}
+.proposal-skeleton .proposal-skeleton-card:after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),#ffffff06 65%,#00000050);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+/* Soft dot halos share the exact sweep phase without an animated blur filter. */
+.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,#0009 0px,#0006 1.5px,#0002 3px,transparent 5px);opacity:var(--skeleton-glow,.35)}
+
+/* All six surfaces sample one radial light in the grid's coordinate space. */
+.proposal-skeleton .proposal-skeleton-card{background:radial-gradient(circle var(--scene-light-radius,900px) at var(--scene-light-x,0px) var(--scene-light-y,0px),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-light,18%),transparent),transparent 100%),var(--skeleton-background,#101317)}
+.proposal-skeleton .proposal-skeleton-card:after{background:radial-gradient(circle var(--scene-light-radius,900px) at var(--scene-light-x,0px) var(--scene-light-y,0px),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),transparent 100%),#ffffff05}
+
+/* A padded light field reaches transparency before its rectangular bounds.
+   Translate the shared field; scaling an off-centre ring caused hard crops. */
+.proposal-skeleton .proposal-skeleton-wave{inset:auto;left:calc(var(--wave-scene-left,0px) - var(--wave-scene-width,100%));top:calc(var(--wave-scene-top,0px) - var(--wave-scene-height,100%));width:calc(var(--wave-scene-width,100%) * 3);height:calc(var(--wave-scene-height,100%) * 3);background:radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 50% 50%,color-mix(in srgb,var(--skeleton-color,#dcecff) 100%,transparent) var(--wave-core,7%),color-mix(in srgb,var(--skeleton-color,#dcecff) 65%,transparent) 35%,color-mix(in srgb,var(--skeleton-color,#dcecff) 22%,transparent) 65%,transparent 100%);transform-origin:center;animation:proposal-scene-wave var(--skeleton-speed,3.2s) cubic-bezier(.37,0,.63,1) infinite;will-change:transform,opacity}
+@keyframes proposal-scene-wave{0%{transform:translate3d(-45%,-12%,0);opacity:0}18%{opacity:1}82%{opacity:1}100%{transform:translate3d(45%,12%,0);opacity:0}}
+@media(prefers-reduced-motion:reduce){.proposal-skeleton .proposal-skeleton-wave{animation:none;transform:none;opacity:.25;will-change:auto}}
+
+/* Split the soft halo into cool spectral fringes, retaining the neutral dot core. */
+.proposal-skeleton .proposal-skeleton-prism{mask-image:radial-gradient(circle,#000c 0px,#0008 2px,#0003 4px,transparent 6px);opacity:var(--wave-dispersion,.45)}
+.proposal-skeleton .proposal-skeleton-prism .proposal-skeleton-wave{background:radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 48% 49%,#64dfffcc 0%,#73d9ff70 28%,#73d9ff20 60%,transparent 100%),radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 52% 51%,#f2a5e6b3 0%,#cbb5ff66 28%,#e7a9e520 60%,transparent 100%)}
+.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,#000b 0px,#0007 1.5px,#0003 3px,transparent 5px)}
+
+/* A quiet, elongated wake behind the light front; no extra animated layer. */
+.proposal-skeleton .proposal-skeleton-wave{background:radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 50% 50%,color-mix(in srgb,var(--skeleton-color,#dcecff) 90%,transparent) var(--wave-core,7%),color-mix(in srgb,var(--skeleton-color,#dcecff) 48%,transparent) 30%,color-mix(in srgb,var(--skeleton-color,#dcecff) 15%,transparent) 60%,transparent 100%),radial-gradient(ellipse 27% var(--wave-radius-y,22%) at 38% 49%,color-mix(in srgb,var(--skeleton-color,#dcecff) var(--wave-trail,30%),transparent),transparent 100%);animation-timing-function:linear}
+@keyframes proposal-scene-wave{
+ 0%{transform:translate3d(-45%,-8%,0);opacity:0}
+ 12.5%{transform:translate3d(-33.75%,-7.4%,0);opacity:.5}
+ 25%{transform:translate3d(-22.5%,-5.65%,0);opacity:1}
+ 37.5%{transform:translate3d(-11.25%,-3.06%,0);opacity:1}
+ 50%{transform:translate3d(0,0,0);opacity:1}
+ 62.5%{transform:translate3d(11.25%,3.06%,0);opacity:1}
+ 75%{transform:translate3d(22.5%,5.65%,0);opacity:1}
+ 87.5%{transform:translate3d(33.75%,7.4%,0);opacity:.7}
+ 100%{transform:translate3d(45%,8%,0);opacity:0}
+}
+
+/* Stretch the wave beyond the scene vertically, fading before the field edges. */
+.proposal-skeleton .proposal-skeleton-wave{mask-image:linear-gradient(transparent,black 22%,black 78%,transparent)}
+
+/* Whole dots follow the rounded card boundary, including its corners. */
+.proposal-skeleton .proposal-skeleton-card:before,.proposal-skeleton .proposal-skeleton-dots{inset:0;width:auto;height:auto;mask-image:var(--dots-core-mask);mask-size:100% 100%;mask-position:0 0;mask-repeat:no-repeat}
+.proposal-skeleton .proposal-skeleton-card:before{background:#66707c55}
+.proposal-skeleton .proposal-skeleton-halo,.proposal-skeleton .proposal-skeleton-prism{mask-image:var(--dots-halo-mask)}
+
+/* Relief is a static texture; the existing wave remains the only moving light. */
+.proposal-skeleton .proposal-skeleton-card:before{mask-image:none;background:var(--dots-relief) 0 0/100% 100% no-repeat}
+.proposal-skeleton .proposal-skeleton-card{box-shadow:var(--contact-x,1px) var(--contact-y,1px) var(--contact-blur,4px) rgb(0 0 0 / var(--contact-opacity,.45)),var(--skeleton-shadow-x,8px) var(--skeleton-shadow-y,8px) var(--skeleton-blur,26px) rgb(0 0 0 / var(--skeleton-shadow,.35))}
+
+/* Content-shaped skeleton: a soft shared light replaces the dot texture. */
+.proposal-skeleton .proposal-skeleton-card:before,.proposal-skeleton .proposal-skeleton-dots{mask-image:var(--skeleton-content-mask);mask-size:100% 100%;mask-repeat:no-repeat}
+.proposal-skeleton .proposal-skeleton-card:before{background:#ffffff0d}
+.proposal-skeleton .proposal-skeleton-dots{opacity:var(--skeleton-sweep-light,.18)}

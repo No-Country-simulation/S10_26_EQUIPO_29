@@ -122,8 +122,10 @@ def list_repos(
         "`categories: []`, `use_cases: []` e `integration_ideas: []`.\n\n"
         "La ficha cumple `shared.contracts.repo_detail`: como mucho tres ideas, "
         "todas del mismo repositorio, y ninguna si el repositorio está archivado.\n\n"
-        "`is_maintained` y `health_score` viajan en `null`: no hay campo, "
-        "criterio ni fórmula acordados."
+        "`is_maintained` viaja en `null`: no hay campo ni criterio acordados.\n\n"
+        "`health_score` se calcula con el motor v1 sólo con "
+        "`HEALTH_SCORE_ENABLED=true`; apagado viaja en `null` y el frontend "
+        "muestra «Sin evaluar»."
     ),
     responses={
         200: {"description": "Ficha del repositorio."},
