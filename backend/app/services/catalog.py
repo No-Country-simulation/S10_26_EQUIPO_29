@@ -2,8 +2,8 @@
 
 No hay reglas de negocio inventadas:
 
-- `is_maintained` se devuelve siempre en NULL porque no hay campo ni criterio
-  acordados.
+- `is_maintained` se calcula en lectura: no archivado y push en los últimos
+  180 días; fecha ausente, inválida o futura significa dato desconocido.
 - `health_score` sale del motor v1 (`app/services/health.py`) sólo cuando
   `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en NULL. El motor nunca
   convierte un dato faltante en 0.
@@ -62,6 +62,26 @@ def _to_datetime(value: Any) -> datetime | None:
     except ValueError:
         logger.warning("pushed_at no interpretable como ISO 8601: %r", value)
         return None
+
+
+def compute_is_maintained(archived: Any, pushed_at: datetime | None, *, reference_time: datetime | None = None) -> bool | None:
+    """Actividad reciente, independiente de disabled y del health score.
+
+    Se calcula al servir la API, no se lee ni escribe una columna persistida.
+    Un dato desconocido no equivale a falta de mantenimiento.
+    """
+    if archived is True:
+        return False
+    if archived is not False or pushed_at is None:
+        return None
+    now = reference_time or datetime.now(timezone.utc)
+    # El contrato permite fechas sin zona; se interpretan consistentemente en UTC.
+    stamp = pushed_at.replace(tzinfo=timezone.utc) if pushed_at.tzinfo is None else pushed_at
+    now = now.replace(tzinfo=timezone.utc) if now.tzinfo is None else now
+    age = (now - stamp).total_seconds()
+    if age < 0:
+        return None
+    return age <= 180 * 86400
 
 
 def _as_list(value: Any) -> list[Any]:
@@ -278,7 +298,7 @@ class CatalogService:
             "categories": _as_list(row.get("categories")),
             "html_url": row.get("html_url"),
             "disabled": row.get("disabled"),
-            "is_maintained": None,
+            "is_maintained": compute_is_maintained(row.get("archived"), pushed_at),
             "health_score": self._health_score(row, pushed_at),
         }
 

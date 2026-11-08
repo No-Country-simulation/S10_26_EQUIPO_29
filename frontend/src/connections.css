@@ -52,3 +52,38 @@
 
 /* Keep the highlight inside the clipped card, rather than outside its border. */
 .hero .proposal-tool:after{inset:0;padding:1px;background:radial-gradient(180px circle at var(--glare-x,50%) var(--glare-y,50%),#f1f8ffe6,#dcedff66 45%,transparent 100%)}
+
+/* Nested entrances follow each card without changing its layout or replaying on expansion. */
+.hero .proposal-tool :is(.proposal-brand,.proposal-title-row,.proposal-tool-heading>div>p,.proposal-rationale,.proposal-tool-actions>*){
+ animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) both;
+ animation-delay:calc(var(--card-reveal-delay,0ms) + var(--content-step,100ms));
+}
+.hero .proposal-tool .proposal-brand{--content-step:80ms}
+.hero .proposal-tool .proposal-title-row{--content-step:120ms}
+.hero .proposal-tool .proposal-tool-heading>div>p{--content-step:160ms}
+.hero .proposal-tool .proposal-rationale{--content-step:200ms}
+.hero .proposal-tool .proposal-tool-actions>:first-child{--content-step:240ms}
+.hero .proposal-tool .proposal-tool-actions>:last-child{--content-step:280ms}
+.hero .has-architecture-header .prompt-heading-result .assistant-heading-copy{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 90ms both}
+.hero .has-architecture-header .intro-result .assistant-heading-copy{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 150ms both}
+.hero .stack-layers-panel .proposal-toolbar{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 140ms both}
+.hero .stack-layers-panel :is(.proposal-context-open,.proposal-original){animation:proposal-content-reveal 500ms cubic-bezier(.22,1,.36,1) 240ms both}
+.hero .stack-layers-panel :is(.context-panel>h3,.proposal-original>h3){animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 300ms both}
+.hero .stack-layers-panel .context-panel li{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) calc(340ms + var(--item-reveal-delay,0ms)) both}
+.hero .stack-layers-panel .proposal-original>p{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 360ms both}
+@keyframes proposal-content-reveal{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+ .hero .proposal-tool :is(.proposal-brand,.proposal-title-row,.proposal-tool-heading>div>p,.proposal-rationale,.proposal-tool-actions>*),
+ .hero .has-architecture-header :is(.prompt-heading-result,.intro-result) .assistant-heading-copy,
+ .hero .stack-layers-panel :is(.proposal-toolbar,.proposal-context-open,.proposal-original,.context-panel>h3,.proposal-original>h3,.context-panel li,.proposal-original>p){animation:none}
+}
+
+/* Parent surfaces lead their content; grid opacity avoids stacking vertical travel. */
+.hero .has-architecture-header .architecture-header{animation:proposal-content-reveal 520ms cubic-bezier(.22,1,.36,1) both}
+.hero .stack-layers-panel .proposal-tools{animation:proposal-group-reveal 380ms ease-out 120ms both}
+.hero .stack-layers-panel .context-panel{animation:proposal-group-reveal 420ms ease-out 270ms both}
+@keyframes proposal-group-reveal{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+ .hero .has-architecture-header .architecture-header,
+ .hero .stack-layers-panel :is(.proposal-tools,.context-panel){animation:none}
+}

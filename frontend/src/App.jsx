@@ -1,3 +1,4 @@
+import {flushSync} from 'react-dom';
 import {useSessionAccent} from './useSessionAccent';
 import {ArrowUp} from 'lucide-react';
 import {useSmoothPageScroll} from './useSmoothPageScroll';
@@ -21,8 +22,21 @@ export function App(){
  const {expanded,phase}=flow;
  const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
  useSmoothPageScroll(isDetail);
+ const resetting=useRef(false);
+ function resetArchitecture(){
+  if(resetting.current)return;
+  const reset=()=>{flow.newArchitecture();workspace.reset();};
+  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){reset();return;}
+  resetting.current=true;
+  document.documentElement.dataset.architectureReset='true';
+  const transition=document.startViewTransition(()=>flushSync(reset));
+  transition.finished.catch(()=>{}).finally(()=>{
+   delete document.documentElement.dataset.architectureReset;
+   resetting.current=false;
+  });
+ }
 
  return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><SectionNavigation paused={isDetail} workspace={workspace}/></div></header>
- <main inert={isDetail?true:undefined} aria-hidden={isDetail} id="landing-view" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className="assistant-surface" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:()=>{flow.newArchitecture();workspace.reset();}}} workspace={workspace.active}/></div>
+ <main inert={isDetail?true:undefined} aria-hidden={isDetail} id="landing-view" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className="assistant-surface" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>
  <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className="catalog-surface"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type="button" className="ui-button ui-button--primary catalog-access" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden="true"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;
 }

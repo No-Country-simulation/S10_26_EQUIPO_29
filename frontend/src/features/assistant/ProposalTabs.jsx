@@ -35,7 +35,7 @@ function ToolRecommendation({component,index=0}){
  const tool=resolveComponentTool(component,tools);
  const identity=useBrandIdentity(tool??{name:component.label});
  const licenseWarning=recommendationLicenseWarning(tool);
- return <li className="proposal-tool" onPointerMove={trackBorder} style={{'--card-reveal-delay':`${Math.min(index,6)*85}ms`,'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>
+ return <li className="proposal-tool" onPointerMove={trackBorder} style={{'--card-reveal-delay':`${160+Math.min(index,6)*85}ms`,'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>
   {identity.watermark&&<img className="proposal-watermark" src={identity.watermark} alt="" aria-hidden="true"/>}
   <div className="proposal-tool-heading"><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><div><div className="proposal-title-row"><h3>{component.label}</h3>{licenseWarning&&<FollowingTooltip text={licenseWarning} className="proposal-license-tip">{trigger=><button type="button" className="proposal-license-icon" aria-label={licenseWarning} {...trigger}><TriangleAlert size={15} aria-hidden="true"/></button>}</FollowingTooltip>}</div><p>{component.role}</p></div></div>
   <div className={'proposal-rationale'+(expanded?' is-expanded':'')} id={rationaleId} ref={rationaleRef} style={rationaleHeight===null?undefined:{height:rationaleHeight}}><p>{component.rationale}</p></div>

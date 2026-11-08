@@ -20,5 +20,5 @@ export function StackProposal({expanded,pending,hasResult,slow,response,original
  </div></div></div></div>;
 }
 function ResponseContext({response}){
- return response&&<div className="proposal-context-open">{[["Supuestos",response.assumptions],["Limitaciones",response.limitations]].map(([title,items])=>items.length>0&&<section key={title} className={title==='Supuestos'?'context-panel context-assumptions':'context-panel context-limitations'}><h3>{title}</h3><ul>{items.map((v,i)=><li key={i}>{v}</li>)}</ul></section>)}</div>;
+ return response&&<div className="proposal-context-open">{[["Supuestos",response.assumptions],["Limitaciones",response.limitations]].map(([title,items])=>items.length>0&&<section key={title} className={title==='Supuestos'?'context-panel context-assumptions':'context-panel context-limitations'}><h3>{title}</h3><ul>{items.map((v,i)=><li key={i} style={{'--item-reveal-delay':`${Math.min(i,6)*40}ms`}}>{v}</li>)}</ul></section>)}</div>;
 }

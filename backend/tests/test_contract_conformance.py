@@ -66,8 +66,8 @@ def test_v12_field_types_are_the_contract_types():
     assert isinstance(item["archived"], bool)
     assert item["disabled"] is True
     assert item["open_issues_count"] is None
-    # Sin criterio aplicado en la API, `is_maintained` no se inventa.
-    assert item["is_maintained"] is None
+    # La fecha válida permite calcular el booleano de mantenimiento.
+    assert isinstance(item["is_maintained"], bool)
     assert isinstance(item["categories"], list)
     for assignment in item["categories"]:
         assert set(assignment) == {"category_id", "assigned_by"}

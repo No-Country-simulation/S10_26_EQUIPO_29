@@ -22,7 +22,7 @@ export function ToolCard({ tool, onOpen }) {
   ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],
   ['Último push', tool.activity, GitCommitHorizontal],
   ['Licencia', tool.license, Scale],
-  ['Mantenedor activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]
+  ['Mantenimiento activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]
  ];
  return <article data-tool-id={tool.id} onClick={e=>{if(!e.target.closest('a,button,summary,details')&&!window.getSelection()?.toString())onOpen(tool.id,e.currentTarget.querySelector('.detail-link'));}} ref={tiltRef} className="tool-card" aria-label={tool.name} style={{
   '--brand-start': brand.start, '--brand-end': brand.end, '--brand-tag': brand.tag

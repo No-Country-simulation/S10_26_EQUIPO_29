@@ -1234,7 +1234,7 @@ to{transform:translateY(0)}
 .proposal-watermark{z-index:-1;object-fit:contain;opacity:.12;pointer-events:none;filter:brightness(0)invert();width:45%;height:80%;position:absolute;bottom:12px;right:-24px}
 .hero .proposal-tool-heading .proposal-brand{width:48px;height:48px}
 .hero .stack-content .proposal-tool h3{color:#fff;margin:0;font-size:26px;line-height:1.2}
-.hero .stack-content .proposal-tool-heading p{color:#f0f3f8;margin-top:8px;font-size:15px;line-height:1.6}
+.hero .stack-content .proposal-tool-heading p{color:#bac3cf;margin-top:8px;font-size:15px;line-height:1.6}
 .proposal-rationale h4{color:#fff;margin:0;font-size:15px;font-weight:600}
 .hero .stack-content .proposal-rationale p{color:#f0f3f8;margin:8px 0 0;font-size:15px;line-height:1.65}
 .hero .proposal-tool>a{color:#fff;border:1px solid #ffffff80;border-radius:999px;padding:9px 16px;font-size:14px;transition:background .14s}
@@ -1556,8 +1556,8 @@ to{transform:translateY(-110%)}
 @media(prefers-reduced-motion:reduce){.hero.assistant-workspace .prompt-input-compact,.hero.assistant-workspace .hero-inner .prompt-input-compact textarea{transition:none}}
 
 /* Depth belongs to content only: never transform an ancestor of the fixed composer. */
-.assistant-surface .hero-inner>.prompt-heading,
-.assistant-surface .hero-inner>.prompt-intro,
+.assistant-surface .hero-inner .prompt-heading,
+.assistant-surface .hero-inner .prompt-intro,
 .assistant-surface .hero-inner>.architecture-stage,
 .assistant-surface .prompt-suggestions,
 .assistant-surface .composer{
@@ -1567,7 +1567,7 @@ to{transform:translateY(-110%)}
  transition:scale .16s ease-out,filter .16s ease-out;
 }
 @media(prefers-reduced-motion:reduce){
- .assistant-surface .hero-inner>.prompt-heading,.assistant-surface .hero-inner>.prompt-intro,.assistant-surface .hero-inner>.architecture-stage,.assistant-surface .prompt-suggestions,.assistant-surface .composer{scale:none;filter:none;transition:none}
+ .assistant-surface .hero-inner .prompt-heading,.assistant-surface .hero-inner .prompt-intro,.assistant-surface .hero-inner>.architecture-stage,.assistant-surface .prompt-suggestions,.assistant-surface .composer{scale:none;filter:none;transition:none}
 }
 
 /* The same localized edge light as catalog cards, without tilt. */
@@ -1628,3 +1628,64 @@ to{transform:translateY(-110%)}
 .hero .stack-content .proposal-rationale{overflow:hidden;transition:height 320ms cubic-bezier(.22,1,.36,1)}
 .hero .stack-content .proposal-rationale p,.hero .stack-content .proposal-rationale.is-expanded p{display:block;overflow:visible;-webkit-line-clamp:unset}
 @media(prefers-reduced-motion:reduce){.hero .stack-content .proposal-rationale{transition:none}}
+
+/* Compact result header: the same mounted heading and live summary share a row. */
+.architecture-header{display:flow-root}
+.hero .hero-inner.has-architecture-header .architecture-header{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ column-gap:0;
+ align-items:stretch;
+ box-sizing:border-box;
+ padding:28px 32px;
+ margin-bottom:32px;
+ border:1px solid #ffffff1c;
+ border-radius:20px;
+ background:rgba(17,21,27,.55);
+ -webkit-backdrop-filter:blur(12px);
+ backdrop-filter:blur(12px);
+}
+.hero .hero-inner.has-architecture-header .prompt-heading,
+.hero .hero-inner.has-architecture-header .prompt-intro{
+ min-width:0;min-height:0;max-width:none;text-align:left;margin:0;
+}
+.hero .hero-inner.has-architecture-header .prompt-heading{box-sizing:border-box;padding:8px 32px 8px 0;align-content:center}
+.hero .hero-inner.has-architecture-header .prompt-intro{box-sizing:border-box;padding:8px 0 8px 32px;border-left:1px solid #ffffff18;align-content:center}
+.hero .hero-inner.has-architecture-header .prompt-heading-initial,
+.hero .hero-inner.has-architecture-header .intro-initial{display:none}
+.hero .hero-inner.has-architecture-header .prompt-heading h1.prompt-heading-result{
+ font-size:32px;line-height:1.2;font-weight:400;letter-spacing:-.035em;
+ text-align:left;text-wrap:balance;margin:0;max-width:none;
+}
+.hero .hero-inner.has-architecture-header .assistant-heading-content{justify-content:flex-start}
+.hero .hero-inner.has-architecture-header .prompt-intro .intro-result{
+ font-size:17px;line-height:1.6;text-align:left;text-wrap:pretty;max-width:none;
+}
+@media(max-width:760px){
+ .hero .hero-inner.has-architecture-header .architecture-header{grid-template-columns:minmax(0,1fr);gap:0;padding:24px;margin-bottom:28px}
+ .hero .hero-inner.has-architecture-header .prompt-heading{margin-bottom:0;padding:0 0 20px}
+ .hero .hero-inner.has-architecture-header .prompt-intro{margin-bottom:0;padding:20px 0 0;border-left:0;border-top:1px solid #ffffff18}
+ .hero .hero-inner.has-architecture-header .prompt-heading h1.prompt-heading-result{font-size:28px}
+ .hero .hero-inner.has-architecture-header .prompt-intro .intro-result{font-size:16px}
+}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ .hero .hero-inner.has-architecture-header .architecture-header{background:#11151b}
+}
+
+/* Reset only the assistant surfaces; the live background keeps running. */
+html[data-architecture-reset] {view-transition-name:none}
+html[data-architecture-reset] .prompt-form-slot {view-transition-name:reset-composer}
+html[data-architecture-reset] .architecture-header {view-transition-name:reset-heading}
+html[data-architecture-reset] .has-architecture-header .architecture-header {display:grid}
+html[data-architecture-reset] .architecture-stage.is-visible {view-transition-name:reset-result}
+::view-transition-group(reset-composer){animation-duration:640ms;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-group(reset-heading){animation-duration:480ms;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(reset-composer),::view-transition-new(reset-composer){animation-duration:320ms;animation-timing-function:ease-out}
+::view-transition-old(reset-heading),::view-transition-old(reset-result){animation:reset-surface-out 180ms ease-out both}
+::view-transition-new(reset-heading){animation:reset-surface-in 360ms 100ms cubic-bezier(.22,1,.36,1) both}
+@keyframes reset-surface-out{to{opacity:0;translate:0 -6px}}
+@keyframes reset-surface-in{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-group(reset-composer),::view-transition-group(reset-heading),::view-transition-old(reset-composer),::view-transition-new(reset-composer),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result){animation:none}
+}
