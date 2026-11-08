@@ -1,7 +1,7 @@
 {
-  "version": 2,
+  "version": 3,
   "source": "snapshot",
-  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
   "queries": [
     {
       "id": "msg-eventos",
@@ -59,112 +59,163 @@
     {
       "id": "none-pagos",
       "query": "cobrar suscripciones mensuales con tarjeta",
-      "expected": [],
-      "note": "Escrita a mano. El catálogo no tiene repos de pagos ni de facturación."
+      "expected": [
+        "killbill/killbill",
+        "getlago/lago"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
     },
     {
       "id": "none-login",
       "query": "inicio de sesión de usuarios con su cuenta",
-      "expected": [],
-      "note": "Escrita a mano. Casi. El catálogo no tiene repos de identidad de usuarios. vault ('privileged access management') guarda secretos de sistemas; no hace login de usuarios finales."
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
     },
     {
       "id": "none-recordatorios",
       "query": "enviar recordatorios por WhatsApp o correo",
-      "expected": [],
-      "note": "Escrita a mano. Casi. Sin repos de mensajería con clientes. alertmanager tiene topics email y notifications, pero envía alertas de monitoreo al equipo técnico."
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise",
+        "postalserver/postal"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp; postal: \"mail delivery platform\"."
     },
     {
       "id": "none-videos",
       "query": "guardar y servir videos de clases",
-      "expected": [],
-      "note": "Escrita a mano. El catálogo no tiene repos de almacenamiento de archivos ni de video."
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
     },
     {
       "id": "none-cms",
       "query": "editor para que periodistas publiquen artículos",
-      "expected": [],
-      "note": "Escrita a mano. Casi. Sin gestores de contenido. astro ('framework for content-driven websites') construye el sitio, no el editor de quien publica."
+      "expected": [
+        "TryGhost/Ghost",
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): Ghost: \"modern publishing\", topic cms; strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
     },
     {
       "id": "none-analitica-web",
       "query": "medir qué páginas se visitan más",
-      "expected": [],
-      "note": "Escrita a mano. Sin analítica web. grafana visualiza datos que ya existen; no recoge las visitas."
+      "expected": [
+        "plausible/analytics",
+        "umami-software/umami",
+        "PostHog/posthog"
+      ],
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): plausible: \"privacy-first web analytics\"; umami: \"web and product analytics … conversions\"; posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
     },
     {
       "id": "clinica-auth",
       "query": "gestion de identidad de usuarios",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
       "pair": "access",
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Con su cuenta\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
     },
     {
       "id": "clinica-auth-v2",
       "query": "gestion de cuentas de usuario",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso clinica-citas. \"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso clinica-citas. \"Con su cuenta\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
     },
     {
       "id": "clinica-communication",
       "query": "envio de notificaciones por canales digitales",
-      "expected": [],
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
     },
     {
       "id": "clinica-communication-v2",
       "query": "envio de mensajes a usuarios",
-      "expected": [],
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
     },
     {
       "id": "clinica-payments",
       "query": "procesamiento de pagos y cobros",
-      "expected": [],
+      "expected": [
+        "juspay/hyperswitch"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Paguen un abono\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Paguen un abono\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
     },
     {
       "id": "clinica-payments-v2",
       "query": "procesamiento de cobros en linea",
-      "expected": [],
+      "expected": [
+        "juspay/hyperswitch"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Paguen un abono\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Paguen un abono\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
     },
     {
       "id": "tienda-search",
       "query": "búsqueda tolerante a errores ortográficos",
       "expected": [
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "tienda-search-v2",
       "query": "búsqueda de texto con tolerancia a errores",
       "expected": [
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "tienda-payments",
       "query": "procesamiento de pagos con tarjeta",
-      "expected": [],
+      "expected": [
+        "juspay/hyperswitch"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
     },
     {
       "id": "tienda-payments-v2",
       "query": "procesamiento de pagos con tarjeta y transferencias",
-      "expected": [],
+      "expected": [
+        "juspay/hyperswitch"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
     },
     {
       "id": "tienda-automation",
@@ -177,54 +228,73 @@
       "id": "tienda-analytics",
       "query": "analítica de ventas de productos",
       "expected": [
-        "grafana/grafana"
+        "grafana/grafana",
+        "metabase/metabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros a quien vende; grafana sí."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros a quien vende; grafana sí. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
     },
     {
       "id": "tienda-analytics-v2",
       "query": "analítica de ventas y productos populares",
       "expected": [
-        "grafana/grafana"
+        "grafana/grafana",
+        "metabase/metabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros; grafana sí."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros; grafana sí. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
     },
     {
       "id": "academia-auth",
       "query": "inicio de sesión de usuarios",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Entran con su cuenta\". Sin repos de inicio de sesión de usuarios en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Entran con su cuenta\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
     },
     {
       "id": "academia-storage",
       "query": "almacenamiento de archivos de video",
-      "expected": [],
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. Catálogo de 127 (8-nov): seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
     },
     {
       "id": "academia-storage-v2",
       "query": "almacenamiento de archivos multimedia",
-      "expected": [],
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. Catálogo de 127 (8-nov): seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
     },
     {
       "id": "academia-payments",
       "query": "cobros de suscripciones recurrentes",
-      "expected": [],
+      "expected": [
+        "killbill/killbill",
+        "getlago/lago"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Pagan la mensualidad\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Pagan la mensualidad\". Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
     },
     {
       "id": "academia-payments-v2",
       "query": "cobro de suscripciones mensuales",
-      "expected": [],
+      "expected": [
+        "killbill/killbill",
+        "getlago/lago"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso academia-online. \"Pagan la mensualidad\". El catálogo no tiene repos de pagos."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso academia-online. \"Pagan la mensualidad\". Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
     },
     {
       "id": "academia-ai",
@@ -272,37 +342,41 @@
       "id": "logistica-database",
       "query": "almacenamiento de datos geoespaciales",
       "expected": [
-        "ClickHouse/ClickHouse"
+        "ClickHouse/ClickHouse",
+        "supabase/supabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Ningún repo del catálogo declara datos geoespaciales: la palabra la agregó el paso de entender. Se mantiene ClickHouse porque es lo que el usuario necesita (guardar eventos para analizarlos); si falla, la causa probable es la consulta, no la búsqueda."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Se mantiene ClickHouse porque es lo que el usuario necesita (guardar eventos para analizarlos); si falla, la causa probable es la consulta, no la búsqueda. Catálogo de 127 (8-nov): supabase: \"dedicated Postgres database\", topic postgis (datos geoespaciales)."
     },
     {
       "id": "logistica-database-v2",
       "query": "almacenamiento de datos geoespaciales y eventos",
       "expected": [
-        "ClickHouse/ClickHouse"
+        "ClickHouse/ClickHouse",
+        "supabase/supabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Ningún repo declara datos geoespaciales; se mantiene ClickHouse por la parte de eventos. Si falla, la causa probable es la consulta."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Se mantiene ClickHouse por la parte de eventos. Si falla, la causa probable es la consulta. Catálogo de 127 (8-nov): supabase: \"dedicated Postgres database\", topic postgis (datos geoespaciales)."
     },
     {
       "id": "logistica-analytics",
       "query": "visualizacion de tableros de negocio",
       "expected": [
-        "grafana/grafana"
+        "grafana/grafana",
+        "metabase/metabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
     },
     {
       "id": "logistica-analytics-v2",
       "query": "visualización de datos en tableros de control",
       "expected": [
-        "grafana/grafana"
+        "grafana/grafana",
+        "metabase/metabase"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
     },
     {
       "id": "soporte-ai",
@@ -328,19 +402,23 @@
       "id": "soporte-search",
       "query": "búsqueda de texto en documentos",
       "expected": [
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "soporte-search-v2",
       "query": "buscador de texto para centro de ayuda",
       "expected": [
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "soporte-observability",
@@ -367,16 +445,24 @@
     {
       "id": "periodico-cms",
       "query": "edición sencilla de contenidos periodísticos",
-      "expected": [],
+      "expected": [
+        "TryGhost/Ghost",
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Publiquen desde un editor sencillo\". Catálogo de 127 (8-nov): Ghost: \"modern publishing\", topic cms; strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
     },
     {
       "id": "periodico-cms-v2",
       "query": "gestion de contenido editorial",
-      "expected": [],
+      "expected": [
+        "TryGhost/Ghost",
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Publiquen desde un editor sencillo\". Catálogo de 127 (8-nov): Ghost: \"modern publishing\", topic cms; strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
     },
     {
       "id": "periodico-frontend",
@@ -403,44 +489,64 @@
     {
       "id": "periodico-communication",
       "query": "envío masivo de correo electrónico",
-      "expected": [],
+      "expected": [
+        "knadh/listmonk",
+        "postalserver/postal"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Boletín diario por correo\". Sin repos de envío de correo a clientes."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Boletín diario por correo\". Catálogo de 127 (8-nov): listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
     },
     {
       "id": "periodico-communication-v2",
       "query": "envio masivo de correos",
-      "expected": [],
+      "expected": [
+        "knadh/listmonk",
+        "postalserver/postal"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Boletín diario por correo\". Sin repos de envío de correo a clientes."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Boletín diario por correo\". Catálogo de 127 (8-nov): listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
     },
     {
       "id": "periodico-analytics",
       "query": "medición de lectura de notas",
-      "expected": [],
+      "expected": [
+        "plausible/analytics",
+        "umami-software/umami",
+        "PostHog/posthog"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. Catálogo de 127 (8-nov): plausible: \"privacy-first web analytics\"; umami: \"web and product analytics … conversions\"; posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
     },
     {
       "id": "periodico-analytics-v2",
       "query": "analitica de uso de contenido",
-      "expected": [],
+      "expected": [
+        "plausible/analytics",
+        "umami-software/umami",
+        "PostHog/posthog"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. Catálogo de 127 (8-nov): plausible: \"privacy-first web analytics\"; umami: \"web and product analytics … conversions\"; posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
     },
     {
       "id": "saas-largo-auth",
       "query": "autenticacion de usuarios mediante OIDC y RBAC",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "saas-largo-auth-v2",
       "query": "autenticación federada y control de acceso basado en roles",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "rag-largo-ai",
@@ -467,59 +573,77 @@
       "query": "búsqueda híbrida y vectorial de texto",
       "expected": [
         "opensearch-project/OpenSearch",
-        "pgvector/pgvector"
+        "pgvector/pgvector",
+        "meilisearch/meilisearch",
+        "qdrant/qdrant",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. Búsqueda híbrida y vectorial: OpenSearch ('search engine') y pgvector ('vector similarity search', agregado con evidencia; la búsqueda no filtra por licencia)."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. Búsqueda híbrida y vectorial: OpenSearch ('search engine') y pgvector ('vector similarity search', agregado con evidencia; la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "rag-largo-search-v2",
       "query": "búsqueda híbrida de texto y vectores",
       "expected": [
         "opensearch-project/OpenSearch",
-        "pgvector/pgvector"
+        "pgvector/pgvector",
+        "meilisearch/meilisearch",
+        "qdrant/qdrant",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Igual que la anterior: OpenSearch y pgvector."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Igual que la anterior: OpenSearch y pgvector. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "rag-largo-auth",
       "query": "control de acceso y permisos por documento",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. \"Permisos por documento\". Sin repos de control de acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. \"Permisos por documento\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "rag-largo-auth-v2",
       "query": "gestión de permisos por documento",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-rag-largo. \"Permisos por documento\". Sin repos de control de acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-rag-largo. \"Permisos por documento\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "api-largo-database",
       "query": "gestión de base de datos relacional",
-      "expected": [],
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. El usuario nombra PostgreSQL, que no está en el catálogo: debería decirlo en limitaciones, sin reemplazarlo en silencio por otra base. Casi: psycopg, sqlalchemy y sqlmodel son de la categoría base de datos (drivers y ORM), pero no son la base relacional que pide el usuario."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. Base de datos relacional. psycopg, sqlalchemy y sqlmodel son drivers y ORM, no la base. Catálogo de 127 (8-nov): postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
     },
     {
       "id": "api-largo-cache",
       "query": "caché distribuida en memoria",
       "expected": [
-        "redis/redis"
+        "redis/redis",
+        "valkey-io/valkey"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
     },
     {
       "id": "api-largo-cache-v2",
       "query": "almacenamiento en caché distribuida en memoria",
       "expected": [
-        "redis/redis"
+        "redis/redis",
+        "valkey-io/valkey"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
     },
     {
       "id": "api-largo-infrastructure",
@@ -544,16 +668,22 @@
     {
       "id": "saas-corto-auth",
       "query": "autenticacion y control de acceso por roles",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-corto. \"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-corto. \"Autenticación y roles\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "saas-corto-auth-v2",
       "query": "autenticación y gestión de roles",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-corto. \"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-corto. \"Autenticación y roles\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "rag-corto-ai",
@@ -578,34 +708,42 @@
     {
       "id": "rag-corto-auth",
       "query": "gestion de identidad y control de acceso",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-corto. \"Permisos de acceso\". Sin repos de control de acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-corto. \"Permisos de acceso\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "rag-corto-auth-v2",
       "query": "gestión de permisos de acceso",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-corto. \"Permisos de acceso\". Sin repos de control de acceso en el catálogo."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-corto. \"Permisos de acceso\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
     },
     {
       "id": "api-corto-cache",
       "query": "almacenamiento temporal en memoria",
       "expected": [
-        "redis/redis"
+        "redis/redis",
+        "valkey-io/valkey"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
     },
     {
       "id": "api-corto-cache-v2",
       "query": "almacenamiento en caché en memoria",
       "expected": [
-        "redis/redis"
+        "redis/redis",
+        "valkey-io/valkey"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
     },
     {
       "id": "api-corto-infrastructure",
@@ -673,17 +811,22 @@
       "id": "una-busqueda-search",
       "query": "búsqueda tolerante a errores de escritura",
       "expected": [
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-busqueda. OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-busqueda. OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "una-pagos-payments",
       "query": "cobro de suscripciones recurrentes",
-      "expected": [],
+      "expected": [
+        "killbill/killbill",
+        "getlago/lago"
+      ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-pagos. El catálogo no tiene repos de pagos ni de facturación."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-pagos. Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
     },
     {
       "id": "back-api",
@@ -827,10 +970,13 @@
       "query": "búsqueda por similitud de vectores",
       "expected": [
         "pgvector/pgvector",
-        "opensearch-project/OpenSearch"
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "qdrant/qdrant",
+        "typesense/typesense"
       ],
       "pair": null,
-      "note": "Escrita a mano. pgvector: 'vector similarity search for Postgres'. OpenSearch: motor de búsqueda (la búsqueda no filtra por licencia)."
+      "note": "Escrita a mano. pgvector: 'vector similarity search for Postgres'. OpenSearch: motor de búsqueda (la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
     },
     {
       "id": "none-contabilidad",
@@ -858,7 +1004,7 @@
       "query": "emisión de facturas electrónicas",
       "expected": [],
       "pair": null,
-      "note": "Escrita a mano. Sin repos de facturación."
+      "note": "Escrita a mano. Catálogo de 127 (8-nov): lago y killbill facturan suscripciones o uso; la factura electrónica fiscal no aparece en su evidencia."
     }
   ]
 }

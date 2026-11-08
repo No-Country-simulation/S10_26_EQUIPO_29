@@ -7,7 +7,8 @@ la respuesta debería mencionarlo como limitación.
 
 Las reglas que comparan contra otros archivos (categorías, catálogo) viven en
 ai/tests/test_assistant_cases.py.
-Los casos de validación, los reservados y los de negocios viven aparte, con el mismo esquema.
+Los casos de validación, los reservados, los de negocios y los de abstención viven aparte,
+con el mismo esquema.
 """
 
 from pathlib import Path
@@ -25,9 +26,13 @@ VALIDATION_CASES_FILE = EVAL_DIR / "assistant_cases_validation.json"
 # base y con la versión final. Sus textos no se leen para ajustar.
 HOLDOUT_CASES_FILE = EVAL_DIR / "assistant_cases_holdout.json"
 # Pedidos de pequeños negocios escritos por otro modelo sin ver el catálogo.
+# Pedidos de pequeños negocios escritos por otro modelo sin ver el catálogo.
 BUSINESS_CASES_FILE = EVAL_DIR / "assistant_cases_business.json"
+# Necesidades parecidas a algo del catálogo pero no cubiertas, junto a otras que sí lo están.
+ABSTENTION_CASES_FILE = EVAL_DIR / "assistant_cases_abstention.json"
 CASE_FILES = {"base": ASSISTANT_CASES_FILE, "validation": VALIDATION_CASES_FILE,
-              "holdout": HOLDOUT_CASES_FILE, "business": BUSINESS_CASES_FILE}
+              "holdout": HOLDOUT_CASES_FILE, "business": BUSINESS_CASES_FILE,
+              "abstention": ABSTENTION_CASES_FILE}
 
 # Mismos valores que el status de la respuesta del asistente.
 Status = AssistantResponse.model_fields["status"].annotation
