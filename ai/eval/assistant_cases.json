@@ -1,41 +1,120 @@
 {
-  "version": 1,
-  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "version": 2,
+  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
   "cases": [
     {
       "id": "clinica-citas",
       "query": "Mi cliente es una red de clínicas odontológicas. Quieren que los pacientes reserven citas en línea con su cuenta, reciban recordatorios por WhatsApp o correo y paguen un abono al reservar.",
-      "expected_status": "no_evidence",
+      "expected_status": "ok",
       "needs": [
-        {"category": "auth", "acceptable": [], "note": "\"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."},
-        {"category": "communication", "acceptable": [], "note": "\"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."},
-        {"category": "payments", "acceptable": [], "note": "\"Paguen un abono\". El catálogo no tiene repos de pagos."}
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"Con su cuenta\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise",
+            "postalserver/postal"
+          ],
+          "note": "\"Recordatorios por WhatsApp o correo\". Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp; postal: \"mail delivery platform\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"Paguen un abono\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
+        }
       ],
-      "note": "Negocio de varias necesidades donde ninguna tiene evidencia: debería responder sin evidencia y no con un mapa vacío. La reserva de citas es parte de la app del cliente."
+      "note": "Negocio de varias necesidades; la reserva de citas es parte de la app del cliente. Catálogo de 127 (8-nov): las tres necesidades tienen herramienta (con 100 repos, ninguna)."
     },
     {
       "id": "tienda-ropa",
       "query": "Tenemos una tienda de ropa y queremos vender en línea: un buscador que encuentre productos aunque el cliente escriba mal, pagos con tarjeta y PSE, que cada venta pase sola a nuestra hoja de cálculo contable y ver qué productos se venden más.",
       "expected_status": "ok",
       "needs": [
-        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."},
-        {"category": "payments", "acceptable": [], "note": "\"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."},
-        {"category": "automation", "acceptable": [], "note": "\"Cada venta pase sola a la hoja de cálculo\": flujo entre aplicaciones. ansible automatiza servidores; airflow y prefect son pipelines de datos."},
-        {"category": "analytics", "acceptable": ["grafana/grafana"], "note": "\"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql."}
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"Pagos con tarjeta y PSE\". Catálogo de 127 (8-nov): hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"Cada venta pase sola a la hoja de cálculo\": flujo entre aplicaciones. ansible automatiza servidores; airflow y prefect son pipelines de datos."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
       ],
-      "note": "Negocio de 4 necesidades con dos limitaciones: mapa con buscador y tableros, y pagos y automatización en limitaciones."
+      "note": "Negocio de 4 necesidades con una limitación: la automatización a la hoja de cálculo. Catálogo de 127 (8-nov): los pagos ya tienen herramienta.",
+      "quick_set": true
     },
     {
       "id": "academia-online",
       "query": "Una academia de inglés en línea: los alumnos entran con su cuenta, ven las clases grabadas que subimos, pagan la mensualidad y tienen un chatbot que responde dudas con nuestro material.",
       "expected_status": "ok",
       "needs": [
-        {"category": "auth", "acceptable": [], "note": "\"Entran con su cuenta\". Sin repos de inicio de sesión de usuarios en el catálogo."},
-        {"category": "storage", "acceptable": [], "note": "\"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."},
-        {"category": "payments", "acceptable": [], "note": "\"Pagan la mensualidad\". El catálogo no tiene repos de pagos."},
-        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain"], "note": "\"Chatbot que responde con nuestro material\": preguntas sobre documentos propios. llama_index: \"document processing platform for AI\". langchain: \"agent engineering platform\", topics ai-agents."}
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"Entran con su cuenta\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"Clases grabadas que subimos\": guardar videos. Catálogo de 127 (8-nov): seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"Pagan la mensualidad\". Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        },
+        {
+          "category": "ai",
+          "acceptable": [
+            "run-llama/llama_index",
+            "langchain-ai/langchain"
+          ],
+          "note": "\"Chatbot que responde con nuestro material\": preguntas sobre documentos propios. llama_index: \"document processing platform for AI\". langchain: \"agent engineering platform\", topics ai-agents."
+        }
       ],
-      "note": "Negocio de 4 necesidades con una sola cubierta: mapa pequeño con tres limitaciones."
+      "note": "Negocio de 4 necesidades. Catálogo de 127 (8-nov): las cuatro tienen herramienta; con 100 repos era un mapa pequeño con tres limitaciones."
     },
     {
       "id": "logistica-flota",
@@ -43,10 +122,36 @@
       "expected_status": "ok",
       "quick_set": true,
       "needs": [
-        {"category": "messaging", "acceptable": ["apache/kafka"], "note": "\"Envía su ubicación cada pocos segundos\": recibir un flujo continuo de eventos. kafka: \"distributed event streaming platform\"."},
-        {"category": "data-processing", "acceptable": ["apache/flink", "apache/beam"], "note": "\"Procesar esos eventos en tiempo real\". flink: \"stream processing framework\" (README). beam: \"unified programming model for Batch and Streaming\". spark fuera: su propósito principal es el análisis por lotes."},
-        {"category": "database", "acceptable": ["ClickHouse/ClickHouse"], "note": "\"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted."},
-        {"category": "analytics", "acceptable": ["grafana/grafana"], "note": "\"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."}
+        {
+          "category": "messaging",
+          "acceptable": [
+            "apache/kafka"
+          ],
+          "note": "\"Envía su ubicación cada pocos segundos\": recibir un flujo continuo de eventos. kafka: \"distributed event streaming platform\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/flink",
+            "apache/beam"
+          ],
+          "note": "\"Procesar esos eventos en tiempo real\". flink: \"stream processing framework\" (README). beam: \"unified programming model for Batch and Streaming\". spark fuera: su propósito principal es el análisis por lotes."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "ClickHouse/ClickHouse"
+          ],
+          "note": "\"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence. Catálogo de 127 (8-nov): metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
       ],
       "note": "Negocio de 4 necesidades, todas con evidencia: mapa completo sin limitaciones."
     },
@@ -55,9 +160,33 @@
       "query": "Una empresa de software quiere un asistente que responda a sus clientes usando su documentación, con un modelo que corra en sus propios servidores, un buscador para su centro de ayuda y saber cuánto tarda y cuántas veces falla el asistente.",
       "expected_status": "ok",
       "needs": [
-        {"category": "ai", "acceptable": ["run-llama/llama_index", "ollama/ollama", "vllm-project/vllm"], "note": "\"Asistente con su documentación\" y \"modelo en sus propios servidores\". llama_index: documentos para IA. ollama: correr modelos propios. vllm: \"inference and serving engine for LLMs\"."},
-        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."},
-        {"category": "observability", "acceptable": ["prometheus/prometheus", "grafana/grafana", "open-telemetry/opentelemetry-collector"], "note": "\"Cuánto tarda y cuántas veces falla\": métricas del servicio. prometheus: monitoring, metrics. grafana: observabilidad y tableros. opentelemetry-collector: metrics, observability."}
+        {
+          "category": "ai",
+          "acceptable": [
+            "run-llama/llama_index",
+            "ollama/ollama",
+            "vllm-project/vllm"
+          ],
+          "note": "\"Asistente con su documentación\" y \"modelo en sus propios servidores\". llama_index: documentos para IA. ollama: correr modelos propios. vllm: \"inference and serving engine for LLMs\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "observability",
+          "acceptable": [
+            "prometheus/prometheus",
+            "grafana/grafana",
+            "open-telemetry/opentelemetry-collector"
+          ],
+          "note": "\"Cuánto tarda y cuántas veces falla\": métricas del servicio. prometheus: monitoring, metrics. grafana: observabilidad y tableros. opentelemetry-collector: metrics, observability."
+        }
       ],
       "note": "Negocio de 3 necesidades, todas con evidencia."
     },
@@ -66,20 +195,66 @@
       "query": "Un periódico digital quiere que los periodistas publiquen desde un editor sencillo, un sitio web muy rápido, enviar el boletín diario por correo y saber qué notas se leen más.",
       "expected_status": "ok",
       "needs": [
-        {"category": "cms", "acceptable": [], "note": "\"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."},
-        {"category": "frontend", "acceptable": ["withastro/astro", "vercel/next.js", "nuxt/nuxt"], "note": "\"Un sitio web muy rápido\": aquí el sitio es una necesidad en sí. astro: \"framework for content-driven websites\" (licencia: el README indica MIT). next.js y nuxt: frameworks web completos."},
-        {"category": "communication", "acceptable": [], "note": "\"Boletín diario por correo\". Sin repos de envío de correo a clientes."},
-        {"category": "analytics", "acceptable": [], "note": "\"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."}
+        {
+          "category": "cms",
+          "acceptable": [
+            "TryGhost/Ghost",
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"Publiquen desde un editor sencillo\". Catálogo de 127 (8-nov): Ghost: \"modern publishing\", topic cms; strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+        },
+        {
+          "category": "frontend",
+          "acceptable": [
+            "withastro/astro",
+            "vercel/next.js",
+            "nuxt/nuxt"
+          ],
+          "note": "\"Un sitio web muy rápido\": aquí el sitio es una necesidad en sí. astro: \"framework for content-driven websites\" (licencia: el README indica MIT). next.js y nuxt: frameworks web completos."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "knadh/listmonk",
+            "postalserver/postal"
+          ],
+          "note": "\"Boletín diario por correo\". Catálogo de 127 (8-nov): listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "plausible/analytics",
+            "umami-software/umami",
+            "PostHog/posthog"
+          ],
+          "note": "\"Qué notas se leen más\": medir visitas. Catálogo de 127 (8-nov): plausible: \"privacy-first web analytics\"; umami: \"web and product analytics … conversions\"; posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
+        }
       ],
-      "note": "Negocio de 4 necesidades con tres limitaciones: sigue siendo ok porque una tiene evidencia."
+      "note": "Negocio de 4 necesidades. Catálogo de 127 (8-nov): las cuatro tienen herramienta; con 100 repos tenía tres limitaciones."
     },
     {
       "id": "pantalla-saas-largo",
       "query": "Diseña un SaaS multi-tenant con aislamiento de datos, SSO mediante OIDC y RBAC por organización.",
-      "expected_status": "no_evidence",
+      "expected_status": "ok",
       "needs": [
-        {"category": "auth", "acceptable": [], "note": "\"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."},
-        {"category": "database", "acceptable": [], "note": "\"Aislamiento de datos\" por cliente: base transaccional. El catálogo no tiene PostgreSQL ni MySQL; ClickHouse y DuckDB son analíticas."}
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"SSO mediante OIDC y RBAC\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Aislamiento de datos\" por cliente: base transaccional. Catálogo de 127 (8-nov): postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        }
       ],
       "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par saas)."
     },
@@ -88,9 +263,34 @@
       "query": "Diseña un RAG privado con búsqueda híbrida, permisos por documento y modelos alojados en nuestra infraestructura.",
       "expected_status": "ok",
       "needs": [
-        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain", "ollama/ollama"], "note": "\"RAG privado\" y \"modelos alojados en nuestra infraestructura\". llama_index y langchain: armar el RAG. ollama: correr modelos propios."},
-        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Búsqueda híbrida\". OpenSearch: \"search engine\". pgvector fuera: su licencia no se pudo confirmar en el README."},
-        {"category": "auth", "acceptable": [], "note": "\"Permisos por documento\". Sin repos de control de acceso en el catálogo."}
+        {
+          "category": "ai",
+          "acceptable": [
+            "run-llama/llama_index",
+            "langchain-ai/langchain",
+            "ollama/ollama"
+          ],
+          "note": "\"RAG privado\" y \"modelos alojados en nuestra infraestructura\". llama_index y langchain: armar el RAG. ollama: correr modelos propios."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "qdrant/qdrant",
+            "typesense/typesense",
+            "pgvector/pgvector"
+          ],
+          "note": "\"Búsqueda híbrida\". OpenSearch: \"search engine\". Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search; pgvector: \"vector similarity search for Postgres\" (licencia: el archivo LICENSE permite usar, copiar, modificar y distribuir sin costo)."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"Permisos por documento\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        }
       ],
       "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par rag)."
     },
@@ -99,18 +299,47 @@
       "query": "Propón una API de alta disponibilidad con PostgreSQL, caché distribuida y escalado horizontal para 10.000 solicitudes/s.",
       "expected_status": "ok",
       "needs": [
-        {"category": "database", "acceptable": [], "note": "El usuario nombra PostgreSQL, que no está en el catálogo: debería decirlo en limitaciones, sin reemplazarlo en silencio por otra base."},
-        {"category": "cache", "acceptable": ["redis/redis"], "note": "\"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."},
-        {"category": "infrastructure", "acceptable": ["kubernetes/kubernetes", "nginx/nginx", "traefik/traefik"], "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes: \"container scheduling\". nginx: topic load-balancer. traefik: \"application proxy\", topics gateway, ingress."}
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "supabase/supabase"
+          ],
+          "note": "El usuario nombra PostgreSQL. Catálogo de 127 (8-nov): postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); supabase: \"dedicated Postgres database\". MariaDB no: sería reemplazar en silencio la base que pidió."
+        },
+        {
+          "category": "cache",
+          "acceptable": [
+            "redis/redis",
+            "valkey-io/valkey"
+          ],
+          "note": "\"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
+        },
+        {
+          "category": "infrastructure",
+          "acceptable": [
+            "kubernetes/kubernetes",
+            "nginx/nginx",
+            "traefik/traefik"
+          ],
+          "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes: \"container scheduling\". nginx: topic load-balancer. traefik: \"application proxy\", topics gateway, ingress."
+        }
       ],
       "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par api)."
     },
     {
       "id": "pantalla-saas-corto",
       "query": "Diseña un SaaS multiempresa con autenticación y roles por organización.",
-      "expected_status": "no_evidence",
+      "expected_status": "ok",
       "needs": [
-        {"category": "auth", "acceptable": [], "note": "\"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."}
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"Autenticación y roles\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        }
       ],
       "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par saas)."
     },
@@ -118,20 +347,49 @@
       "id": "pantalla-rag-corto",
       "query": "Propón un RAG privado para consultar documentos con permisos de acceso.",
       "expected_status": "ok",
-      "quick_set": true,
       "needs": [
-        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain", "ollama/ollama"], "note": "\"RAG privado para consultar documentos\". llama_index y langchain: armar el RAG. ollama: modelos propios."},
-        {"category": "auth", "acceptable": [], "note": "\"Permisos de acceso\". Sin repos de control de acceso en el catálogo."}
+        {
+          "category": "ai",
+          "acceptable": [
+            "run-llama/llama_index",
+            "langchain-ai/langchain",
+            "ollama/ollama"
+          ],
+          "note": "\"RAG privado para consultar documentos\". llama_index y langchain: armar el RAG. ollama: modelos propios."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"Permisos de acceso\". Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        }
       ],
-      "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par rag): pedido corto con una limitación."
+      "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par rag). Catálogo de 127 (8-nov): los permisos ya tienen herramienta; con 100 repos era el pedido corto con una limitación."
     },
     {
       "id": "pantalla-api-corto",
       "query": "Diseña una API de alta disponibilidad con caché y escalado horizontal.",
       "expected_status": "ok",
       "needs": [
-        {"category": "cache", "acceptable": ["redis/redis"], "note": "\"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."},
-        {"category": "infrastructure", "acceptable": ["kubernetes/kubernetes", "nginx/nginx", "traefik/traefik"], "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes, nginx (load-balancer), traefik (proxy, ingress)."}
+        {
+          "category": "cache",
+          "acceptable": [
+            "redis/redis",
+            "valkey-io/valkey"
+          ],
+          "note": "\"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3. Catálogo de 127 (8-nov): valkey: \"key-value database optimized for caching\"."
+        },
+        {
+          "category": "infrastructure",
+          "acceptable": [
+            "kubernetes/kubernetes",
+            "nginx/nginx",
+            "traefik/traefik"
+          ],
+          "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes, nginx (load-balancer), traefik (proxy, ingress)."
+        }
       ],
       "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par api)."
     },
@@ -140,7 +398,14 @@
       "query": "Propón una arquitectura orientada a eventos con colas, reintentos e idempotencia para procesar pagos.",
       "expected_status": "ok",
       "needs": [
-        {"category": "messaging", "acceptable": ["apache/kafka", "celery/celery"], "note": "\"Colas y reintentos\". kafka: \"event streaming platform\". celery: \"Distributed Task Queue\", el README menciona reintentos automáticos; licencia: el README indica BSD."}
+        {
+          "category": "messaging",
+          "acceptable": [
+            "apache/kafka",
+            "celery/celery"
+          ],
+          "note": "\"Colas y reintentos\". kafka: \"event streaming platform\". celery: \"Distributed Task Queue\", el README menciona reintentos automáticos; licencia: el README indica BSD."
+        }
       ],
       "note": "Texto de ejemplo de la pantalla del asistente. Los pagos son el tema de la app, no una herramienta pedida."
     },
@@ -150,7 +415,15 @@
       "expected_status": "ok",
       "quick_set": true,
       "needs": [
-        {"category": "observability", "acceptable": ["open-telemetry/opentelemetry-collector", "jaegertracing/jaeger", "prometheus/prometheus"], "note": "\"Métricas, logs y trazas\". opentelemetry-collector: metrics, observability, telemetry. jaeger: \"Distributed Tracing Platform\". prometheus: monitoring, metrics."}
+        {
+          "category": "observability",
+          "acceptable": [
+            "open-telemetry/opentelemetry-collector",
+            "jaegertracing/jaeger",
+            "prometheus/prometheus"
+          ],
+          "note": "\"Métricas, logs y trazas\". opentelemetry-collector: metrics, observability, telemetry. jaeger: \"Distributed Tracing Platform\". prometheus: monitoring, metrics."
+        }
       ],
       "note": "Texto de ejemplo de la pantalla del asistente. Kubernetes es el entorno que ya tienen, no una necesidad."
     },
@@ -159,19 +432,47 @@
       "query": "Quiero agregar a mi sitio un buscador de productos que encuentre resultados aunque el cliente escriba mal.",
       "expected_status": "ok",
       "needs": [
-        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."}
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        }
       ],
       "note": "Una sola necesidad con evidencia: mapa pequeño (la app del cliente + una herramienta)."
     },
     {
       "id": "una-pagos",
       "query": "Necesito cobrar suscripciones mensuales a los clientes de mi software.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "El catálogo no tiene repos de pagos ni de facturación. Catálogo de 127 (8-nov): killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        }
+      ],
+      "note": "Una sola necesidad, clara. Catálogo de 127 (8-nov): ya tiene herramienta (killbill, lago); con 100 repos era el caso sin evidencia de una necesidad."
+    },
+    {
+      "id": "una-factura-electronica",
+      "query": "Necesito emitir facturas electrónicas válidas ante la DIAN para las ventas de mi tienda.",
       "expected_status": "no_evidence",
       "quick_set": true,
       "needs": [
-        {"category": "payments", "acceptable": [], "note": "El catálogo no tiene repos de pagos ni de facturación."}
+        {
+          "category": "payments",
+          "acceptable": [],
+          "note": "\"Emitir facturas electrónicas válidas ante la DIAN\". Catálogo de 127 (8-nov): lago y killbill facturan suscripciones o uso; la factura electrónica fiscal no aparece en su evidencia."
+        }
       ],
-      "note": "Una sola necesidad, clara, sin evidencia: sin evidencia y no una pregunta de aclaración."
+      "note": "Una sola necesidad, clara, sin herramienta en el catálogo: sin evidencia y no una pregunta de aclaración. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
     },
     {
       "id": "vago-mejorar-negocio",

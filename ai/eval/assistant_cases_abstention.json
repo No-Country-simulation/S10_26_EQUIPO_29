@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
+  "cases": [
+    {
+      "id": "telemedicina-consultas",
+      "query": "Una red de consultorios quiere que los médicos atiendan a sus pacientes por videollamada desde el navegador y guardar las historias clínicas en una base de datos relacional.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [],
+          "note": "\"atiendan a sus pacientes por videollamada\". Casi: novu y apprise envían notificaciones; ningún repo muestra videollamadas."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"base de datos relacional\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "red-profesional-contactos",
+      "query": "Una red profesional quiere guardar quién trabajó con quién en una base de datos de grafos para recomendar contactos, y que los usuarios entren con su cuenta de LinkedIn o Google.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [],
+          "note": "\"base de datos de grafos\". Casi: postgres y MariaDB son relacionales; ningún repo muestra grafos."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"entren con su cuenta de LinkedIn o Google\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "tienda-global-imagenes",
+      "query": "Una tienda en línea que vende en varios continentes quiere que las fotos de sus productos se sirvan desde servidores cercanos a cada comprador, y un buscador donde el cliente suba una foto y encuentre productos parecidos.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "infrastructure",
+          "acceptable": [],
+          "note": "\"se sirvan desde servidores cercanos a cada comprador\". Casi: nginx y caddy sirven desde un servidor propio y seaweedfs guarda archivos; ninguno es una red de distribución de contenido."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "qdrant/qdrant"
+          ],
+          "note": "\"suba una foto y encuentre productos parecidos\". qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "repuestos-factura-electronica",
+      "query": "Una distribuidora de repuestos necesita emitir la factura electrónica de cada venta ante la autoridad tributaria y guardar los PDF de las facturas en un almacenamiento de archivos.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [],
+          "note": "\"emitir la factura electrónica de cada venta ante la autoridad tributaria\". Casi: lago y killbill facturan suscripciones o uso; la factura electrónica fiscal no aparece en su evidencia."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar los PDF de las facturas\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "constructora-aprobaciones",
+      "query": "Una constructora quiere que las solicitudes de compra sigan un flujo de aprobación: el residente de obra la pide, el ingeniero la aprueba y compras la registra; y avisar por correo a cada persona cuando tenga una solicitud pendiente.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"flujo de aprobación\". Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise",
+            "postalserver/postal"
+          ],
+          "note": "\"avisar por correo a cada persona\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp; postal: \"mail delivery platform\"."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "tienda-mascotas-chat",
+      "query": "Una tienda de mascotas quiere un chat en vivo para que sus clientes conversen con un asesor desde la página, y medir cuántos visitantes llegan a la página de cada producto.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [],
+          "note": "\"chat en vivo para que sus clientes conversen con un asesor\". Casi: novu tiene una bandeja de notificaciones, no chat entre personas."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "plausible/analytics",
+            "umami-software/umami",
+            "PostHog/posthog"
+          ],
+          "note": "\"medir cuántos visitantes llegan a la página de cada producto\". plausible: \"privacy-first web analytics\"; umami: \"web and product analytics … conversions\"; posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "estudio-contable-respaldos",
+      "query": "Un estudio contable quiere copias de seguridad automáticas cada noche de las carpetas de sus clientes, y que cada contador entre con su cuenta y vea solo los clientes que tiene asignados.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "storage",
+          "acceptable": [],
+          "note": "\"copias de seguridad automáticas cada noche\". Casi: seaweedfs y rustfs guardan archivos, pero no hacen las copias."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"vea solo los clientes que tiene asignados\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    },
+    {
+      "id": "marca-ropa-redes",
+      "query": "Una marca de ropa quiere medir cuántas veces la mencionan en Instagram y TikTok, y enviar un boletín mensual por correo a sus suscriptores.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "analytics",
+          "acceptable": [],
+          "note": "\"medir cuántas veces la mencionan en Instagram y TikTok\". Casi: posthog, umami y plausible miden el sitio o el producto propio, no redes sociales."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "knadh/listmonk",
+            "postalserver/postal"
+          ],
+          "note": "\"enviar un boletín mensual por correo\". listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
+        }
+      ],
+      "note": "Una necesidad parecida a algo del catálogo pero no cubierta y una con herramienta. Escrito por Claude conociendo el catálogo de 127 (8-nov)."
+    }
+  ]
+}

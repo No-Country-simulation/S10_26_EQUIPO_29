@@ -234,7 +234,9 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--cases", choices=CASE_FILES, default="base",
                         help="base: los casos rápidos (por defecto); validation: los casos de "
-                             "validación; holdout: los reservados (solo línea base y versión final)")
+                             "validación; holdout: los reservados (solo línea base y versión final); "
+                             "business: pedidos de negocios escritos sin ver el catálogo; "
+                             "abstention: necesidades parecidas a algo del catálogo pero no cubiertas")
     parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
                         help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
     args = parser.parse_args()
