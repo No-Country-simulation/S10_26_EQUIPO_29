@@ -99,6 +99,9 @@ lectura y los permisos que faltan están en
   `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en `null`. El motor nunca
   convierte un dato faltante en 0; ver
   [`docs/health-score-implementation.md`](docs/health-score-implementation.md).
+- El contrato HTTP exacto que consume el frontend (URLs, endpoints, ubicación de
+  `health_score`, manejo de `null` y de errores) está en
+  [`docs/frontend-health-score-integration.md`](docs/frontend-health-score-integration.md).
 - `maintenance=active|inactive` es la aproximación local acordada con Frontend
   (`active` = ni archivado ni deshabilitado).
 - Orden del listado: `full_name ASC`, elegido para que la paginación sea
