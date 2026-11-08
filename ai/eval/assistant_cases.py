@@ -47,7 +47,7 @@ class ExpectedNeed(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     category: str = Field(min_length=1)
-    acceptable: list[str] = Field(max_length=3)
+    acceptable: list[str] = Field(max_length=5)   # hasta 5: los candidatos que ve el modelo por necesidad
     note: str = Field(min_length=1)
 
     @field_validator("acceptable")
