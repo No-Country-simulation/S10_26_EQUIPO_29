@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
+  "cases": [
+    {
+      "id": "clinica-veterinaria",
+      "query": "Tengo una clínica veterinaria y quiero llevar un historial de las mascotas y sus dueños. Necesito que cada empleado pueda consultar únicamente la información que le corresponde según su cargo. Quiero que los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas. También necesito enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar un historial de las mascotas y sus dueños\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada empleado pueda consultar únicamente la información que le corresponde según su cargo\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas\": búsqueda dentro de los datos de la aplicación. meilisearch: \"search engine API\" (licencia: el README indica MIT); typesense: topic full-text-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise",
+            "postalserver/postal"
+          ],
+          "note": "\"enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación\": aviso a una persona. novu: topics communication, email (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; postal: \"mail delivery platform\". listmonk es de boletines y listas: no aceptable (dudoso)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Combina historiales individuales con permisos diferenciados y recordatorios basados en fechas."
+    },
+    {
+      "id": "escuela-idiomas",
+      "query": "Dirijo una pequeña escuela de idiomas y quiero organizar las inscripciones y los datos de mis estudiantes. Necesito que cada profesor pueda acceder a sus grupos sin consultar información de otros cursos. Quiero que los estudiantes puedan hacer pruebas de nivel y recibir una recomendación automática del curso más adecuado. También quiero medir cuántos estudiantes pasan de una prueba inicial a una inscripción.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"organizar las inscripciones y los datos de mis estudiantes\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada profesor pueda acceder a sus grupos sin consultar información de otros cursos\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        },
+        {
+          "category": "ai",
+          "acceptable": [],
+          "note": "\"recibir una recomendación automática del curso más adecuado\": recomendar un curso según una prueba de nivel. scikit-learn (\"machine learning in Python\") es dudoso: la recomendación puede ser una regla. No aceptable: sin herramienta."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "PostHog/posthog",
+            "umami-software/umami",
+            "metabase/metabase"
+          ],
+          "note": "\"medir cuántos estudiantes pasan de una prueba inicial a una inscripción\": embudo de la prueba a la inscripción. posthog: topics analytics, ab-testing (licencia: el README indica MIT expat, salvo la carpeta ee); umami: \"web and product analytics\"; metabase: \"Business Intelligence\" (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Incluye recomendaciones personalizadas y medición del proceso de captación de estudiantes."
+    },
+    {
+      "id": "tienda-repuestos",
+      "query": "Tengo una tienda de repuestos para motocicletas y quiero controlar las existencias de cada referencia. Necesito encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto. Quiero que las ventas por internet se cobren antes de preparar cada pedido. También necesito que los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar las existencias de cada referencia\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto\": búsqueda dentro de los datos de la aplicación. meilisearch: \"search engine API\" (licencia: el README indica MIT); typesense: topic full-text-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"las ventas por internet se cobren antes de preparar cada pedido\": cobro de una venta. hyperswitch: \"composable payments platform\". killbill y lago facturan suscripciones o uso: no aceptables (dudosos)."
+        },
+        {
+          "category": "cache",
+          "acceptable": [
+            "valkey-io/valkey",
+            "redis/redis"
+          ],
+          "note": "\"los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados\": caché en memoria. valkey: \"optimized for caching\"; redis: topics cache, caching (licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). La búsqueda por compatibilidad es especialmente importante para un comercio con catálogos técnicos extensos."
+    },
+    {
+      "id": "agencia-turismo",
+      "query": "Gestiono una agencia de turismo y quiero ofrecer excursiones con diferentes fechas y cupos disponibles. Necesito guardar fotografías, documentos y autorizaciones de cada reserva. Quiero que los clientes puedan pagar por adelantado desde cualquier lugar. Cuando se confirme una reserva, quiero que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"ofrecer excursiones con diferentes fechas y cupos disponibles\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar fotografías, documentos y autorizaciones de cada reserva\": guardar archivos. seaweedfs: topics blob-storage, distributed-storage; rustfs: \"S3-compatible high-performance object storage\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"los clientes puedan pagar por adelantado desde cualquier lugar\": cobro de una venta. hyperswitch: \"composable payments platform\". killbill y lago facturan suscripciones o uso: no aceptables (dudosos)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise",
+            "postalserver/postal"
+          ],
+          "note": "\"el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios\": aviso a una persona. novu: topics communication, email (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; postal: \"mail delivery platform\". listmonk es de boletines y listas: no aceptable (dudoso)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Gestiona documentos de viaje y reservas cuyo estado depende de la confirmación del pago."
+    },
+    {
+      "id": "coworking",
+      "query": "Administro un espacio de coworking y quiero controlar las reservas de salas y puestos de trabajo. Necesito que los miembros puedan reservar únicamente los espacios incluidos en su plan. Quiero identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías. También quiero que las reservas se confirmen automáticamente y que los miembros reciban un aviso cuando se acerque su horario reservado.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar las reservas de salas y puestos de trabajo\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"los miembros puedan reservar únicamente los espacios incluidos en su plan\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "metabase/metabase",
+            "grafana/grafana"
+          ],
+          "note": "\"identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías\": tableros sobre datos propios (demanda por sala y horario). metabase: \"Business Intelligence\" (licencia: el README indica AGPL para la edición Open Source); grafana: topics business-intelligence, dashboard."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise",
+            "postalserver/postal"
+          ],
+          "note": "\"los miembros reciban un aviso cuando se acerque su horario reservado\": aviso a una persona. novu: topics communication, email (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; postal: \"mail delivery platform\". listmonk es de boletines y listas: no aceptable (dudoso)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Permite analizar la ocupación de espacios físicos y las restricciones de acceso según membresía."
+    },
+    {
+      "id": "taller-restauracion",
+      "query": "Tengo un taller dedicado a restaurar muebles antiguos y quiero documentar cada pieza desde que llega hasta que se entrega. Necesito conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble. Quiero que mis trabajadores puedan consultar los expedientes según el proyecto que tengan asignado. También necesito encontrar piezas por su época, material o procedencia.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"documentar cada pieza desde que llega hasta que se entrega\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble\": guardar archivos. seaweedfs: topics blob-storage, distributed-storage; rustfs: \"S3-compatible high-performance object storage\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"mis trabajadores puedan consultar los expedientes según el proyecto que tengan asignado\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"encontrar piezas por su época, material o procedencia\": búsqueda dentro de los datos de la aplicación. meilisearch: \"search engine API\" (licencia: el README indica MIT); typesense: topic full-text-search; OpenSearch: \"search engine\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Incorpora trazabilidad documental y catalogación histórica, poco habituales en talleres pequeños."
+    },
+    {
+      "id": "academia-musica",
+      "query": "Tengo una academia de música y quiero publicar información sobre los cursos, profesores y horarios disponibles. Necesito que los alumnos puedan consultar las partituras y grabaciones correspondientes a sus clases. Quiero que cada profesor pueda actualizar únicamente los materiales de sus propios grupos. También quiero saber cuáles son los cursos y materiales que reciben más consultas.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload",
+            "TryGhost/Ghost"
+          ],
+          "note": "\"publicar información sobre los cursos, profesores y horarios disponibles\": contenido que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topic cms; Ghost: topic cms."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"consultar las partituras y grabaciones correspondientes a sus clases\": guardar archivos. seaweedfs: topics blob-storage, distributed-storage; rustfs: \"S3-compatible high-performance object storage\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada profesor pueda actualizar únicamente los materiales de sus propios grupos\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "plausible/analytics",
+            "umami-software/umami",
+            "PostHog/posthog"
+          ],
+          "note": "\"saber cuáles son los cursos y materiales que reciben más consultas\": medir las consultas a cursos y materiales: analítica web. plausible: \"privacy-first web analytics\"; umami: \"web and product analytics\"; posthog: topic analytics (licencia: el README indica MIT expat, salvo la carpeta ee)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Combina publicación de contenido educativo con seguimiento del uso de materiales multimedia."
+    },
+    {
+      "id": "alquiler-equipos",
+      "query": "Tengo un negocio de alquiler de equipos audiovisuales y quiero controlar qué equipos tengo disponibles y cuáles están alquilados. Necesito conservar los contratos firmados y las fotografías del estado de cada equipo antes y después de cada alquiler. Quiero que el sistema genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes respecto a las iniciales. También necesito que cada empleado pueda consultar los alquileres que tiene asignados.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar qué equipos tengo disponibles y cuáles están alquilados\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"conservar los contratos firmados y las fotografías del estado de cada equipo antes y después de cada alquiler\": guardar archivos. seaweedfs: topics blob-storage, distributed-storage; rustfs: \"S3-compatible high-performance object storage\"."
+        },
+        {
+          "category": "ai",
+          "acceptable": [],
+          "note": "\"genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes respecto a las iniciales\": comparar fotografías para detectar daños. transformers (\"text, vision, audio\") es dudoso para esta tarea. No aceptable: sin herramienta."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada empleado pueda consultar los alquileres que tiene asignados\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topic authorization. kratos, supertokens-core y supabase solo declaran autenticación o identidad: no aceptables (dudosos)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (8-nov). Incluye una aplicación poco común de inteligencia artificial para comparar el estado visual de activos alquilados."
+    }
+  ]
+}
