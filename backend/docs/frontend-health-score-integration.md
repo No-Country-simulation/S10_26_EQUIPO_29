@@ -1,10 +1,10 @@
 # Health Score: contrato HTTP para el frontend
 
 Guía de consumo del campo `health_score` desde el frontend (Next.js). Todo lo que
-aparece aquí se verificó contra la API real el **8-nov-2026**, rama
-`feat/health-score-implementation` (commit publicado `e8c62f7`). No hay endpoints,
-URLs ni campos inventados: cada ruta sale de `backend/app/api/router.py` y
-`backend/app/api/routes/repos.py`.
+aparece aquí se verificó contra la API real el **8-nov-2026**, en la rama
+`feat/health-score-implementation` publicada en el remoto `equipo`. No hay
+endpoints, URLs ni campos inventados: cada ruta sale de
+`backend/app/api/router.py` y `backend/app/api/routes/repos.py`.
 
 Documentos relacionados:
 
