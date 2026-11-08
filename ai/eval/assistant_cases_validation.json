@@ -9,7 +9,9 @@
       "needs": [
         {
           "category": "search",
-          "acceptable": ["opensearch-project/OpenSearch"],
+          "acceptable": [
+            "opensearch-project/OpenSearch"
+          ],
           "note": "\"Buscar propiedades escribiendo\": búsqueda de texto libre. pgvector no se acepta: GitHub no identifica su licencia y su README no la menciona."
         },
         {
@@ -27,7 +29,11 @@
       "needs": [
         {
           "category": "frontend",
-          "acceptable": ["vercel/next.js", "withastro/astro", "nuxt/nuxt"],
+          "acceptable": [
+            "vercel/next.js",
+            "withastro/astro",
+            "nuxt/nuxt"
+          ],
           "note": "\"Un framework web para construir páginas\" rápidas y con buen posicionamiento. Astro: GitHub no identifica la licencia, su README declara licencia MIT."
         }
       ],
@@ -40,7 +46,11 @@
       "needs": [
         {
           "category": "backend",
-          "acceptable": ["fastapi/fastapi", "django/django", "pallets/flask"],
+          "acceptable": [
+            "fastapi/fastapi",
+            "django/django",
+            "pallets/flask"
+          ],
           "note": "\"Un framework para la API\", en Python."
         },
         {
@@ -58,7 +68,11 @@
       "needs": [
         {
           "category": "data-processing",
-          "acceptable": ["apache/airflow", "PrefectHQ/prefect", "dagster-io/dagster"],
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
           "note": "\"Cada noche debe calcular\": cálculo programado sobre los datos."
         },
         {
@@ -117,12 +131,16 @@
       "needs": [
         {
           "category": "search",
-          "acceptable": ["opensearch-project/OpenSearch"],
+          "acceptable": [
+            "opensearch-project/OpenSearch"
+          ],
           "note": "\"Un buscador de productos\": motor de búsqueda (\"distributed and RESTful search engine\"). Elasticsearch no está en el catálogo."
         },
         {
           "category": "observability",
-          "acceptable": ["prometheus/prometheus"],
+          "acceptable": [
+            "prometheus/prometheus"
+          ],
           "note": "\"Medir la latencia y los errores\": métricas (\"monitoring system and time series database\")."
         }
       ],
@@ -135,7 +153,11 @@
       "needs": [
         {
           "category": "data-processing",
-          "acceptable": ["apache/airflow", "PrefectHQ/prefect", "dagster-io/dagster"],
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
           "note": "\"Procesar cada noche las ventas\": proceso programado sobre los datos (orquestación de flujos de datos)."
         },
         {
@@ -153,17 +175,23 @@
       "needs": [
         {
           "category": "messaging",
-          "acceptable": ["apache/kafka"],
+          "acceptable": [
+            "apache/kafka"
+          ],
           "note": "\"Recibirlas en streaming con Kafka\": plataforma de eventos (\"distributed event streaming platform\")."
         },
         {
           "category": "database",
-          "acceptable": ["ClickHouse/ClickHouse"],
+          "acceptable": [
+            "ClickHouse/ClickHouse"
+          ],
           "note": "\"Guardarlas en una base de datos para series de tiempo\": ClickHouse es una base analítica en tiempo real (\"real-time analytics database\"). InfluxDB no está en el catálogo."
         },
         {
           "category": "analytics",
-          "acceptable": ["grafana/grafana"],
+          "acceptable": [
+            "grafana/grafana"
+          ],
           "note": "\"Tableros de consumo\": visualización de datos (topics dashboard, data-visualization, business-intelligence)."
         }
       ],
@@ -176,7 +204,10 @@
       "needs": [
         {
           "category": "ai",
-          "acceptable": ["ollama/ollama", "vllm-project/vllm"],
+          "acceptable": [
+            "ollama/ollama",
+            "vllm-project/vllm"
+          ],
           "note": "\"Un modelo de lenguaje que corra en sus propios servidores\": ejecutar modelos localmente (ollama: \"get up and running with ... models\"; vllm: \"inference and serving engine for LLMs\")."
         },
         {
