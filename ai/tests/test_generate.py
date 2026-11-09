@@ -61,7 +61,9 @@ def test_candidato_sin_licencia_identificada_y_sin_puntaje():
 
 def test_descripcion_larga_se_recorta():
     repo = REPOS["redis/redis"].model_copy(update={"description": "palabra " * 60})
-    description = assistant.candidate_line(result(repo), NOW).split(" · ")[1]
+    field = assistant.candidate_line(result(repo), NOW).split(" · ")[1]
+    description = field.removeprefix("<descripcion>").removesuffix("</descripcion>")
+    assert field != description                   # la descripción va marcada como dato
     assert description.endswith("…")
     assert len(description) <= assistant.DESCRIPTION_CHARS + 1
 

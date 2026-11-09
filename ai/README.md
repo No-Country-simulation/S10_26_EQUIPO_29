@@ -38,6 +38,13 @@ contrato `AssistantResponse` y reintenta una vez si no cumple. Todo el pedido ti
 presupuesto de 15 s, y si el proveedor principal falla por algo temporal, la llamada pasa al
 respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Servicio del asistente](#servicio-del-asistente)).
 
+**Defensa contra prompt injection.** `guardrails.py` revisa el pedido antes de llamar al
+modelo (si parece una orden al asistente, responde con preguntas, sin llamar al modelo),
+marca en el prompt el pedido y las descripciones de los repos como datos, y rechaza
+respuestas con enlaces, imágenes o copias de las reglas. Prueba final: resisten 7 de 10
+ataques; los pedidos corteses sin forma de orden todavía pasan. Detalle y límites en
+[`eval/GUARDRAILS_DECISION.md`](eval/GUARDRAILS_DECISION.md).
+
 **Modelo de lenguaje.** Principal: Gemini 3.5 Flash-Lite. Respaldo: gpt-oss-120b en Groq, con
 razonamiento bajo. Criterios, comparación y descartados en
 [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
@@ -67,6 +74,7 @@ ai/
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── llm.py                      # generar(): registro de proveedores de LLM, salida estructurada y errores
 ├── assistant.py                # entender(), generar_mapa() y asistir(): el flujo del asistente
+├── guardrails.py               # Defensa contra prompt injection: entrada, datos marcados y salida
 ├── catalog_diff.py             # Compara la vista con lo que tiene la IA (sin leer archivos ni la base)
 ├── requirements.txt
 ├── scripts/
@@ -83,6 +91,7 @@ ai/
 ├── eval/
 │   ├── README.md               # Evaluación de la búsqueda: cómo correrla y leerla
 │   ├── SEARCH_DECISION.md      # Modelo de embeddings y umbral: decisión y evidencia
+│   ├── GUARDRAILS_DECISION.md  # Defensa contra prompt injection: decisión, evidencia y límites
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
 │   ├── LLM_DECISION.md         # Elección del modelo de lenguaje: criterios, resultados y descartados
 │   ├── assistant_cases.json    # Casos de prueba del asistente
@@ -96,6 +105,7 @@ ai/
 │   ├── run_understand_eval.py  # Compara modelos en el paso de entender (18 casos)
 │   ├── flow_metrics.py         # Métricas del flujo completo
 │   ├── run_assistant_eval.py   # Compara modelos con el flujo completo (casos rápidos)
+│   ├── run_injection_eval.py   # Prueba de inyección (--cases test: prueba final, una sola vez)
 │   ├── diagnose_latency.py     # Dónde se va el tiempo del paso de generar
 │   └── results/                # Un reporte por evaluación y modelo
 └── tests/
@@ -110,6 +120,8 @@ ai/
     ├── test_llm.py               # generar(): opciones por proveedor y errores (proveedor simulado)
     ├── test_assistant.py         # Entender: esquema, reglas y reintento (modelo simulado)
     ├── test_generate.py          # Generar: mensaje, esquema, reglas y respuesta del contrato
+    ├── test_guardrails.py        # Revisión de entrada y de salida (sin modelo)
+    ├── test_injection_eval.py    # Criterio de la prueba de inyección (sin red)
     ├── test_asistir.py           # Flujo completo con búsqueda y modelo simulados
     ├── test_understand_metrics.py  # Métricas de entender
     └── test_flow_metrics.py      # Métricas del flujo completo
@@ -271,6 +283,7 @@ python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
 python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
 python -m ai.eval.run_assistant_eval gemini groq-low  # compara modelos con el flujo completo (--cases validation, --shown 3)
+python -m ai.eval.run_injection_eval gemini      # prueba de inyección con los casos de desarrollo
 python -m ai.eval.diagnose_latency gemini        # dónde se va el tiempo del paso de generar
 ```
 

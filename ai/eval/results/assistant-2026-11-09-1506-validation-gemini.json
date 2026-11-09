@@ -1,0 +1,4251 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y planos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.439
+        ],
+        [
+          "typesense/typesense",
+          0.403
+        ],
+        [
+          "qdrant/qdrant",
+          0.39
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.345
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.331
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.336
+        ],
+        [
+          "rustfs/rustfs",
+          0.311
+        ],
+        [
+          "hashicorp/vault",
+          0.253
+        ],
+        [
+          "etcd-io/etcd",
+          0.239
+        ],
+        [
+          "hashicorp/terraform",
+          0.231
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Búsqueda y Almacenamiento Inmobiliario Open Source",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzada para que los clientes encuentren propiedades según sus descripciones y un sistema de almacenamiento distribuido para gestionar fotos y planos subidos por los agentes.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda semántica de texto y el candidato Typesense ofrece un motor de búsqueda difusa en memoria y tolerante a errores.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "rationale": "Typesense permite construir experiencias de búsqueda rápidas y tolerantes a errores para que los clientes encuentren propiedades de manera eficiente. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y planos y el candidato SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos",
+          "rationale": "SeaweedFS proporciona almacenamiento distribuido optimizado para gestionar de forma eficiente las fotos y los planos subidos por los agentes. Cuenta con licencia Apache-2.0 y actualizaciones recientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la plataforma web se conectará con ambos servicios mediante APIs estándar para la indexación y recuperación de archivos."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la gestión de usuarios ni la interfaz frontend del portal inmobiliario."
+      ]
+    },
+    "response": {
+      "id": "f3114c0b235548a0a8408ad55a505521",
+      "status": "ok",
+      "title": "Sistema de Búsqueda y Almacenamiento Inmobiliario Open Source",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzada para que los clientes encuentren propiedades según sus descripciones y un sistema de almacenamiento distribuido para gestionar fotos y planos subidos por los agentes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense permite construir experiencias de búsqueda rápidas y tolerantes a errores para que los clientes encuentren propiedades de manera eficiente. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS proporciona almacenamiento distribuido optimizado para gestionar de forma eficiente las fotos y los planos subidos por los agentes. Cuenta con licencia Apache-2.0 y actualizaciones recientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la plataforma web se conectará con ambos servicios mediante APIs estándar para la indexación y recuperación de archivos."
+      ],
+      "limitations": [
+        "La propuesta no incluye la gestión de usuarios ni la interfaz frontend del portal inmobiliario."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T19:59:28.072684Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vercel/next.js",
+          0.518
+        ],
+        [
+          "nuxt/nuxt",
+          0.473
+        ],
+        [
+          "django/django",
+          0.449
+        ],
+        [
+          "sveltejs/svelte",
+          0.441
+        ],
+        [
+          "cypress-io/cypress",
+          0.44
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web rápida y optimizada para agencia de viajes",
+      "summary": "Esta propuesta selecciona un framework web moderno y eficiente para construir las páginas de destinos de la agencia, garantizando cargas rápidas y un óptimo posicionamiento en buscadores. No se han detectado necesidades sin resolver en el pedido inicial.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "La necesidad pide un framework web para renderizado y rendimiento, y Next.js ofrece un framework de React para desarrollo web híbrido y rápido.",
+          "fit": "serves",
+          "full_name": "vercel/next.js",
+          "label": "Next.js",
+          "role": "Construcción del sitio web y páginas de destinos",
+          "rationale": "Next.js permite desarrollar páginas de destinos que cargan muy rápido y se posicionan bien en Google gracias a su arquitectura híbrida y componentes optimizados. Cuenta con licencia MIT y alta actividad reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La agencia de viajes ya cuenta con un equipo o proveedor con conocimientos en React para aprovechar el framework elegido.",
+        "El contenido de los destinos se gestionará mediante una API externa o un sistema de gestión de contenidos (CMS)."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye herramientas específicas de pruebas automatizadas o testing para el sitio web."
+      ]
+    },
+    "response": {
+      "id": "fee7599683b4435f83a45f817babfd37",
+      "status": "ok",
+      "title": "Arquitectura web rápida y optimizada para agencia de viajes",
+      "summary": "Esta propuesta selecciona un framework web moderno y eficiente para construir las páginas de destinos de la agencia, garantizando cargas rápidas y un óptimo posicionamiento en buscadores. No se han detectado necesidades sin resolver en el pedido inicial.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Next.js",
+          "role": "Construcción del sitio web y páginas de destinos",
+          "full_name": "vercel/next.js",
+          "rationale": "Next.js permite desarrollar páginas de destinos que cargan muy rápido y se posicionan bien en Google gracias a su arquitectura híbrida y componentes optimizados. Cuenta con licencia MIT y alta actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La agencia de viajes ya cuenta con un equipo o proveedor con conocimientos en React para aprovechar el framework elegido.",
+        "El contenido de los destinos se gestionará mediante una API externa o un sistema de gestión de contenidos (CMS)."
+      ],
+      "limitations": [
+        "La propuesta no incluye herramientas específicas de pruebas automatizadas o testing para el sitio web."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T19:59:39.408889Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para desarrollo de api",
+          "evidence": "queremos elegir un framework para la api"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.537
+        ],
+        [
+          "pallets/flask",
+          0.438
+        ],
+        [
+          "strapi/strapi",
+          0.43
+        ],
+        [
+          "django/django",
+          0.425
+        ],
+        [
+          "anthropics/anthropic-sdk-python",
+          0.416
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.43
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.421
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.404
+        ],
+        [
+          "postgres/postgres",
+          0.367
+        ],
+        [
+          "duckdb/duckdb",
+          0.365
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de API y Base de Datos para Cooperativa Agrícola",
+      "summary": "La propuesta incluye un framework de alto rendimiento en Python para la API de registros y una base de datos relacional robusta adaptada al almacenamiento operativo de las entregas de café.",
+      "boxes": [
+        {
+          "need": "backend",
+          "fit_check": "La necesidad pide un framework para desarrollo de api, y FastAPI ofrece un framework rápido y de alto rendimiento.",
+          "fit": "serves",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Crear y gestionar la API para el registro de entregas.",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para Python en producción."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos relacional, y MariaDB ofrece un servidor de base de datos relacional con desarrollo activo.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Almacenar los registros de entregas de café de cada productor de forma relacional.",
+          "rationale": "MariaDB server es un sistema de base de datos desarrollado por la comunidad con soporte activo y características robustas."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "TCP/IP",
+          "description": "El backend se conecta a la base de datos para insertar y consultar los registros de café."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia o en la nube para alojar tanto la API en Python como el servidor de base de datos."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye herramientas específicas para la autenticación de productores ni paneles de visualización o reportes."
+      ]
+    },
+    "response": {
+      "id": "6e24120540c341fb9687bb40770d7098",
+      "status": "ok",
+      "title": "Arquitectura de API y Base de Datos para Cooperativa Agrícola",
+      "summary": "La propuesta incluye un framework de alto rendimiento en Python para la API de registros y una base de datos relacional robusta adaptada al almacenamiento operativo de las entregas de café.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Crear y gestionar la API para el registro de entregas.",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para Python en producción."
+        },
+        {
+          "key": "c2",
+          "label": "MariaDB",
+          "role": "Almacenar los registros de entregas de café de cada productor de forma relacional.",
+          "full_name": "MariaDB/server",
+          "rationale": "MariaDB server es un sistema de base de datos desarrollado por la comunidad con soporte activo y características robustas."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "TCP/IP",
+          "description": "El backend se conecta a la base de datos para insertar y consultar los registros de café."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia o en la nube para alojar tanto la API en Python como el servidor de base de datos."
+      ],
+      "limitations": [
+        "La propuesta no incluye herramientas específicas para la autenticación de productores ni paneles de visualización o reportes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T19:59:50.809062Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envão de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo de porcentajes de asistencia nocturno",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.362
+        ],
+        [
+          "knadh/listmonk",
+          0.27
+        ],
+        [
+          "novuhq/novu",
+          0.269
+        ],
+        [
+          "envoyproxy/envoy",
+          0.224
+        ],
+        [
+          "caronc/apprise",
+          0.217
+        ]
+      ],
+      "data-processing": []
+    },
+    "draft": {
+      "title": "Plataforma de avisos y notificaciones escolares",
+      "summary": "Esta propuesta integra una infraestructura de comunicación para enviar los avisos a los padres según los criterios del colegio. Queda pendiente el procesamiento de datos para calcular el porcentaje de asistencia nocturno.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide avisar por correo o SMS a los padres y el candidato novuhq/novu ofrece infraestructura de comunicación para correo.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Permite gestionar las notificaciones para cumplir con el envío de avisos al correo de los padres. La licencia no fue identificada por GitHub en sus datos recientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "El colegio cuenta con una base de datos o módulo externo para registrar la asistencia de los profesores.",
+        "El procesamiento diario de los porcentajes de asistencia se resolverá con scripts propios o herramientas externas adicionales."
+      ],
+      "other_limitations": [
+        "La solución propuesta no realiza el procesamiento nocturno de datos para calcular la baja del porcentaje de asistencia.",
+        "No se incluyeron herramientas de mensajería SMS tradicionales nativas en la selección principal más allá de la infraestructura general de Novu."
+      ]
+    },
+    "response": {
+      "id": "ffd78508481446c2b61616050eedceba",
+      "status": "ok",
+      "title": "Plataforma de avisos y notificaciones escolares",
+      "summary": "Esta propuesta integra una infraestructura de comunicación para enviar los avisos a los padres según los criterios del colegio. Queda pendiente el procesamiento de datos para calcular el porcentaje de asistencia nocturno.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "full_name": "novuhq/novu",
+          "rationale": "Permite gestionar las notificaciones para cumplir con el envío de avisos al correo de los padres. La licencia no fue identificada por GitHub en sus datos recientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "El colegio cuenta con una base de datos o módulo externo para registrar la asistencia de los profesores.",
+        "El procesamiento diario de los porcentajes de asistencia se resolverá con scripts propios o herramientas externas adicionales."
+      ],
+      "limitations": [
+        "Procesamiento de datos: no se encontraron herramientas del catálogo para «Cada noche debe calcular el porcentaje de asistencia de cada estudiante».",
+        "La solución propuesta no realiza el procesamiento nocturno de datos para calcular la baja del porcentaje de asistencia.",
+        "No se incluyeron herramientas de mensajería SMS tradicionales nativas en la selección principal más allá de la infraestructura general de Novu."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:00:02.922229Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante cuenta de google",
+          "evidence": "que sus voluntarios entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.381
+        ],
+        [
+          "keycloak/keycloak",
+          0.341
+        ],
+        [
+          "ory/kratos",
+          0.337
+        ],
+        [
+          "zitadel/zitadel",
+          0.276
+        ],
+        [
+          "plausible/analytics",
+          0.257
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.352
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de autenticación y gestión documental para ONG",
+      "summary": "La propuesta implementa una infraestructura completa para que los voluntarios accedan mediante identidad federada y almacenen sus documentos de forma distribuida. Cubre tanto el acceso seguro como el resguardo eficiente de archivos PDF.",
+      "boxes": [
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide autenticación de usuarios mediante cuenta de Google, y Keycloak ofrece gestión de identidad y acceso de código abierto con soporte para OIDC.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestión de identidad y autenticación",
+          "rationale": "Resuelve la autenticación permitiendo que los voluntarios entren de forma segura mediante estándares modernos. Cuenta con la licencia Apache-2.0 y actividad reciente constante."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y documentos en PDF, y Seaweedfs ofrece un sistema de almacenamiento distribuido diseñado para manejar archivos de forma eficiente.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "rationale": "Permite guardar los certificados escaneados de cada uno en PDF gracias a su arquitectura optimizada para almacenamiento de objetos y archivos. Utiliza licencia Apache-2.0 y recibe mantenimiento continuo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con infraestructura propia o servidores para el despliegue autohospedado de las herramientas.",
+        "Se asume que el sistema web o aplicación cliente se encargará de coordinar la sesión autenticada con Keycloak para luego enviar los archivos al almacenamiento."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz de usuario visual dedicada a la gestión directa de los perfiles de los voluntarios."
+      ]
+    },
+    "response": {
+      "id": "4c0c203afcc0492898b06d1ba2c58597",
+      "status": "ok",
+      "title": "Sistema de autenticación y gestión documental para ONG",
+      "summary": "La propuesta implementa una infraestructura completa para que los voluntarios accedan mediante identidad federada y almacenen sus documentos de forma distribuida. Cubre tanto el acceso seguro como el resguardo eficiente de archivos PDF.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Gestión de identidad y autenticación",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Resuelve la autenticación permitiendo que los voluntarios entren de forma segura mediante estándares modernos. Cuenta con la licencia Apache-2.0 y actividad reciente constante."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite guardar los certificados escaneados de cada uno en PDF gracias a su arquitectura optimizada para almacenamiento de objetos y archivos. Utiliza licencia Apache-2.0 y recibe mantenimiento continuo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con infraestructura propia o servidores para el despliegue autohospedado de las herramientas.",
+        "Se asume que el sistema web o aplicación cliente se encargará de coordinar la sesión autenticada con Keycloak para luego enviar los archivos al almacenamiento."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz de usuario visual dedicada a la gestión directa de los perfiles de los voluntarios."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:00:14.534243Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en linea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes por whatsapp",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "getlago/lago",
+          0.279
+        ],
+        [
+          "killbill/killbill",
+          0.261
+        ],
+        [
+          "knadh/listmonk",
+          0.211
+        ],
+        [
+          "juspay/hyperswitch",
+          0.207
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.196
+        ]
+      ],
+      "communication": [],
+      "database": [
+        [
+          "MariaDB/server",
+          0.385
+        ],
+        [
+          "etcd-io/etcd",
+          0.379
+        ],
+        [
+          "redis/redis",
+          0.377
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.371
+        ],
+        [
+          "valkey-io/valkey",
+          0.366
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de pagos y base de datos para gimnasio",
+      "summary": "Esta propuesta implementa una plataforma de pagos por suscripción para cobrar las mensualidades en línea y un servidor relacional para guardar el historial de pagos. Queda pendiente la comunicación por WhatsApp con los socios atrasados.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar las mensualidades en línea y Kill Bill ofrece una plataforma de suscripción y pagos.",
+          "fit": "serves",
+          "full_name": "killbill/killbill",
+          "label": "Kill Bill",
+          "role": "Plataforma de cobros y suscripciones",
+          "rationale": "Resuelve la necesidad de cobrar las mensualidades en línea mediante su plataforma de suscripción y pagos de código abierto bajo licencia Apache-2.0."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar el historial en una base de datos relacional y MariaDB ofrece un servidor relacional de base de datos.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "rationale": "Permite guardar el historial de pagos en una base de datos relacional gracias a su servidor desarrollado por la comunidad con licencia GPL-2.0."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "database",
+          "protocol": "SQL",
+          "description": "La plataforma de pagos registra el historial y las transacciones en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el gimnasio cuenta con una pasarela de pago externa compatible para procesar las tarjetas.",
+        "El negocio requiere una gestión centralizada para sus tres sedes.",
+        "Se necesita una herramienta de mensajería para los avisos por WhatsApp que no fue encontrada en los candidatos."
+      ],
+      "other_limitations": [
+        "No se incluye ninguna solución para enviar avisos por WhatsApp a los socios que se atrasan en el pago.",
+        "No se abordan aspectos específicos de la administración multi-sede."
+      ]
+    },
+    "response": {
+      "id": "d1dba4140f8843f9b93cd13d6139dbd9",
+      "status": "ok",
+      "title": "Sistema de pagos y base de datos para gimnasio",
+      "summary": "Esta propuesta implementa una plataforma de pagos por suscripción para cobrar las mensualidades en línea y un servidor relacional para guardar el historial de pagos. Queda pendiente la comunicación por WhatsApp con los socios atrasados.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Kill Bill",
+          "role": "Plataforma de cobros y suscripciones",
+          "full_name": "killbill/killbill",
+          "rationale": "Resuelve la necesidad de cobrar las mensualidades en línea mediante su plataforma de suscripción y pagos de código abierto bajo licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "full_name": "MariaDB/server",
+          "rationale": "Permite guardar el historial de pagos en una base de datos relacional gracias a su servidor desarrollado por la comunidad con licencia GPL-2.0."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL",
+          "description": "La plataforma de pagos registra el historial y las transacciones en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el gimnasio cuenta con una pasarela de pago externa compatible para procesar las tarjetas.",
+        "El negocio requiere una gestión centralizada para sus tres sedes.",
+        "Se necesita una herramienta de mensajería para los avisos por WhatsApp que no fue encontrada en los candidatos."
+      ],
+      "limitations": [
+        "Comunicación: no se encontraron herramientas del catálogo para «avisar por WhatsApp a los socios que se atrasan en el pago».",
+        "No se incluye ninguna solución para enviar avisos por WhatsApp a los socios que se atrasan en el pago.",
+        "No se abordan aspectos específicos de la administración multi-sede."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:00:26.495459Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "repuestos-buscador",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "bósqueda de texto completo",
+          "evidence": "buscador de productos por nombre o referencia"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de latencia y errores",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.342
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.299
+        ],
+        [
+          "typesense/typesense",
+          0.296
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.274
+        ],
+        [
+          "pgvector/pgvector",
+          0.254
+        ]
+      ],
+      "observability": [
+        [
+          "prometheus/prometheus",
+          0.357
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.335
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.309
+        ],
+        [
+          "grafana/grafana",
+          0.27
+        ],
+        [
+          "getlago/lago",
+          0.264
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de búsqueda y monitoreo para tienda en línea",
+      "summary": "La propuesta implementa un motor de búsqueda de alta velocidad para productos y una plataforma de visualización de métricas para medir la latencia y los errores de la API de Django. Ambas herramientas se integran para cubrir las necesidades operativas principales de la tienda de repuestos.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador de productos por nombre o referencia, y typesense/typesense ofrece un motor de búsqueda tolerante a fallos y rápido para crear experiencias de búsqueda.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "rationale": "Resuelve la búsqueda de productos con una alternativa rápida y tolerante a erratas. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide medir la latencia y los errores de la API, y grafana/grafana ofrece una plataforma de visualización y observabilidad para métricas, registros y trazas.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de métricas",
+          "rationale": "Permite visualizar el rendimiento y los errores mediante paneles de control. Utiliza licencia AGPL-3.0 y cuenta con actualizaciones recientes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "observability",
+          "to_need": "search",
+          "protocol": "HTTP",
+          "description": "Grafana puede consultar y visualizar métricas almacenadas en fuentes compatibles."
+        }
+      ],
+      "assumptions": [
+        "La API en Django cuenta con instrumentación para exportar métricas de latencia y errores hacia la plataforma de observabilidad.",
+        "El catálogo de repuestos de motos se sincroniza periódicamente desde la base de datos hacia el motor de búsqueda."
+      ],
+      "other_limitations": [
+        "El usuario mencionó Elasticsearch, pero la herramienta elegida es Typesense por sus ventajas de facilidad de uso como alternativa directa.",
+        "La solución no incluye un sistema de recolección de métricas dedicado como Prometheus de forma predeterminada en su única caja de observabilidad, requiriendo fuentes adicionales para alimentar los tableros."
+      ]
+    },
+    "response": {
+      "id": "e22090998284488aaf4aba5f1d9cddd3",
+      "status": "ok",
+      "title": "Arquitectura de búsqueda y monitoreo para tienda en línea",
+      "summary": "La propuesta implementa un motor de búsqueda de alta velocidad para productos y una plataforma de visualización de métricas para medir la latencia y los errores de la API de Django. Ambas herramientas se integran para cubrir las necesidades operativas principales de la tienda de repuestos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "full_name": "typesense/typesense",
+          "rationale": "Resuelve la búsqueda de productos con una alternativa rápida y tolerante a erratas. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Visualización de métricas",
+          "full_name": "grafana/grafana",
+          "rationale": "Permite visualizar el rendimiento y los errores mediante paneles de control. Utiliza licencia AGPL-3.0 y cuenta con actualizaciones recientes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTP",
+          "description": "Grafana puede consultar y visualizar métricas almacenadas en fuentes compatibles."
+        }
+      ],
+      "assumptions": [
+        "La API en Django cuenta con instrumentación para exportar métricas de latencia y errores hacia la plataforma de observabilidad.",
+        "El catálogo de repuestos de motos se sincroniza periódicamente desde la base de datos hacia el motor de búsqueda."
+      ],
+      "limitations": [
+        "El usuario mencionó Elasticsearch, pero la herramienta elegida es Typesense por sus ventajas de facilidad de uso como alternativa directa.",
+        "La solución no incluye un sistema de recolección de métricas dedicado como Prometheus de forma predeterminada en su única caja de observabilidad, requiriendo fuentes adicionales para alimentar los tableros."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:00:38.997660Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "procesamiento nocturno de ventas e inventario",
+          "evidence": "procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno"
+        },
+        {
+          "category": "communication",
+          "query": "envío automatizado de reportes por correo",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "data-processing": [
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.236
+        ],
+        [
+          "novuhq/novu",
+          0.231
+        ],
+        [
+          "PostHog/posthog",
+          0.228
+        ],
+        [
+          "prometheus/alertmanager",
+          0.226
+        ],
+        [
+          "valkey-io/valkey",
+          0.224
+        ]
+      ],
+      "communication": [
+        [
+          "knadh/listmonk",
+          0.359
+        ],
+        [
+          "postalserver/postal",
+          0.352
+        ],
+        [
+          "prometheus/alertmanager",
+          0.274
+        ],
+        [
+          "novuhq/novu",
+          0.258
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.251
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para procesar ventas nocturnas y enviar reportes",
+      "summary": "Esta propuesta cubre el procesamiento nocturno de datos y el envío automatizado de correos a los gerentes de cada restaurante de la cadena.",
+      "boxes": [
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide procesar las ventas y recalcular inventarios; el candidato más cercano es una base de datos distribuida optimizada para almacenamiento y consultas en tiempo real.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Procesamiento de datos",
+          "role": "Almacén de datos y consultas",
+          "rationale": "Ningún candidato de procesamiento realiza la lógica de negocio para recalcular inventarios nocturnos a partir de ventas, aunque permiten gestionar y consultar datos relacionados con el almacenamiento."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide mandar por correo el reporte a cada gerente; el candidato ofrece un gestor de listas de correo y boletines de alto rendimiento con panel moderno.",
+          "fit": "serves",
+          "full_name": "knadh/listmonk",
+          "label": "knadh/listmonk",
+          "role": "Gestor de envíos de correo",
+          "rationale": "Permite gestionar campañas y listas de correo para mandar el reporte a cada gerente de forma automatizada. Cuenta con licencia AGPL-3.0 y se mantiene activamente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "communication",
+          "protocol": "API REST / SMTP",
+          "description": "Envío de los reportes generados desde los datos procesados hacia la plataforma de correo para su distribución a los gerentes."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cadena de restaurantes cuenta con un entorno seguro para hospedar servicios autogestionados.",
+        "Se asume que la lógica de cálculo de inventarios se implementará mediante scripts propios o herramientas adicionales no incluidas en el catálogo."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una herramienta nativa para ejecutar la lógica específica del recálculo de inventario nocturno.",
+        "No se dispone de un conector directo entre los sistemas de punto de venta locales de cada restaurante y la base de datos centralizada."
+      ]
+    },
+    "response": {
+      "id": "40c871564d4a46e0b5290a30181fcb28",
+      "status": "ok",
+      "title": "Sistema para procesar ventas nocturnas y enviar reportes",
+      "summary": "Esta propuesta cubre el procesamiento nocturno de datos y el envío automatizado de correos a los gerentes de cada restaurante de la cadena.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "knadh/listmonk",
+          "role": "Gestor de envíos de correo",
+          "full_name": "knadh/listmonk",
+          "rationale": "Permite gestionar campañas y listas de correo para mandar el reporte a cada gerente de forma automatizada. Cuenta con licencia AGPL-3.0 y se mantiene activamente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la cadena de restaurantes cuenta con un entorno seguro para hospedar servicios autogestionados.",
+        "Se asume que la lógica de cálculo de inventarios se implementará mediante scripts propios o herramientas adicionales no incluidas en el catálogo."
+      ],
+      "limitations": [
+        "Procesamiento de datos: ninguna de las herramientas encontradas encaja. Ningún candidato de procesamiento realiza la lógica de negocio para recalcular inventarios nocturnos a partir de ventas, aunque permiten gestionar y consultar datos relacionados con el almacenamiento.",
+        "La propuesta no incluye una herramienta nativa para ejecutar la lógica específica del recálculo de inventario nocturno.",
+        "No se dispone de un conector directo entre los sistemas de punto de venta locales de cada restaurante y la base de datos centralizada."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:00:52.291149Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "energia-medidores",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de series temporales",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de eventos en streaming",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "observability",
+          "query": "visualizacion de metricas en tableros",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.34
+        ],
+        [
+          "prometheus/prometheus",
+          0.324
+        ],
+        [
+          "redis/redis",
+          0.302
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.281
+        ],
+        [
+          "etcd-io/etcd",
+          0.272
+        ]
+      ],
+      "messaging": [
+        [
+          "apache/flink",
+          0.459
+        ],
+        [
+          "apache/kafka",
+          0.428
+        ],
+        [
+          "apache/beam",
+          0.393
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.279
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.27
+        ]
+      ],
+      "observability": [
+        [
+          "grafana/grafana",
+          0.399
+        ],
+        [
+          "metabase/metabase",
+          0.324
+        ],
+        [
+          "prometheus/prometheus",
+          0.27
+        ],
+        [
+          "getlago/lago",
+          0.243
+        ],
+        [
+          "numpy/numpy",
+          0.229
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de streaming y visualizacion para medidores",
+      "summary": "La propuesta implementa procesamiento de eventos en streaming, almacenamiento de series temporales y visualizacion en tableros. Se utilizo Prometheus para metricas, Kafka para streaming y Grafana para los tableros, cubriendo las tecnologias solicitadas por el usuario.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de series temporales y Prometheus incluye una base de datos de series temporales.",
+          "fit": "serves",
+          "full_name": "prometheus/prometheus",
+          "label": "Prometheus",
+          "role": "Almacenar series de tiempo",
+          "rationale": "Prometheus es un sistema de monitoreo que incluye una base de datos de series temporales, bajo licencia Apache-2.0 y con actualizacion reciente."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide procesamiento de eventos en streaming y Apache Kafka provee una plataforma de streaming de eventos distribuida.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Recibir eventos en streaming",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida, con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide visualizacion de metricas en tableros y Grafana es una plataforma de observabilidad y visualizacion de datos.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Mostrar tableros de consumo",
+          "rationale": "Grafana ofrece una plataforma de visualizacion y observabilidad de datos con soporte para multiples fuentes, bajo licencia AGPL-3.0 y actualizacion reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envio de lecturas desde Kafka hacia el almacenamiento de series temporales."
+        },
+        {
+          "from_need": "database",
+          "to_need": "observability",
+          "protocol": "HTTP",
+          "description": "Consulta de datos temporales para su visualizacion en tableros."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con recursos suficientes para operar Kafka y Prometheus en paralelo."
+      ],
+      "other_limitations": [
+        "El usuario nombro InfluxDB para la base de datos, pero no se encuentra entre los candidatos de la necesidad correspondiente, por lo que se utilizo Prometheus.",
+        "El sistema no incluye un conector directo desde Kafka hacia Prometheus sin un componente intermediario de ingesta."
+      ]
+    },
+    "response": {
+      "id": "28e0137a6c3048938d7de0271dfc3452",
+      "status": "ok",
+      "title": "Arquitectura de streaming y visualizacion para medidores",
+      "summary": "La propuesta implementa procesamiento de eventos en streaming, almacenamiento de series temporales y visualizacion en tableros. Se utilizo Prometheus para metricas, Kafka para streaming y Grafana para los tableros, cubriendo las tecnologias solicitadas por el usuario.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Prometheus",
+          "role": "Almacenar series de tiempo",
+          "full_name": "prometheus/prometheus",
+          "rationale": "Prometheus es un sistema de monitoreo que incluye una base de datos de series temporales, bajo licencia Apache-2.0 y con actualizacion reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Apache Kafka",
+          "role": "Recibir eventos en streaming",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida, con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c3",
+          "label": "Grafana",
+          "role": "Mostrar tableros de consumo",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana ofrece una plataforma de visualizacion y observabilidad de datos con soporte para multiples fuentes, bajo licencia AGPL-3.0 y actualizacion reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "Envio de lecturas desde Kafka hacia el almacenamiento de series temporales."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "HTTP",
+          "description": "Consulta de datos temporales para su visualizacion en tableros."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con recursos suficientes para operar Kafka y Prometheus en paralelo."
+      ],
+      "limitations": [
+        "El usuario nombro InfluxDB para la base de datos, pero no se encuentra entre los candidatos de la necesidad correspondiente, por lo que se utilizo Prometheus.",
+        "El sistema no incluye un conector directo desde Kafka hacia Prometheus sin un componente intermediario de ingesta."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:01:06.747124Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "contable-chatbot",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de identidad y control de acceso",
+          "evidence": "que solo puedan entrar los empleados con cuenta"
+        },
+        {
+          "category": "ai",
+          "query": "servidor de inferencia para modelos locales",
+          "evidence": "usando un modelo de lenguaje que corra en sus propios servidores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.504
+        ],
+        [
+          "zitadel/zitadel",
+          0.492
+        ],
+        [
+          "ory/kratos",
+          0.468
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.413
+        ],
+        [
+          "hashicorp/vault",
+          0.385
+        ]
+      ],
+      "ai": [
+        [
+          "ollama/ollama",
+          0.483
+        ],
+        [
+          "vllm-project/vllm",
+          0.453
+        ],
+        [
+          "huggingface/transformers",
+          0.366
+        ],
+        [
+          "huggingface/datasets",
+          0.337
+        ],
+        [
+          "tensorflow/tensorflow",
+          0.334
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de chatbot interno con autenticación para estudio contable",
+      "summary": "Esta propuesta implementa un chatbot interno para consultar manuales de procedimientos utilizando un motor de inferencia local y asegura el acceso exclusivo para empleados mediante una solución de gestión de identidad robusta.",
+      "boxes": [
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide gestión de identidad y control de acceso, y el candidato ofrece código abierto para la gestión de identidad y accesos modernos.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestiona las cuentas y el acceso seguro de los empleados.",
+          "rationale": "Resuelve la solicitud de que solo puedan entrar los empleados con cuenta mediante una solución de gestión de identidad y control de acceso moderna con licencia Apache-2.0 y alta actividad reciente."
+        },
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide un servidor de inferencia para modelos locales, y el candidato ofrece un motor para ejecutar y utilizar modelos de lenguaje.",
+          "fit": "serves",
+          "full_name": "ollama/ollama",
+          "label": "Ollama",
+          "role": "Ejecuta el modelo de lenguaje en los servidores propios.",
+          "rationale": "Permite correr un modelo de lenguaje en sus propios servidores de forma sencilla, utilizando software de código abierto con licencia MIT y gran adopción."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "ai",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales de los empleados antes de permitir el acceso a la interfaz del chatbot."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia con capacidad suficiente para hospedar modelos de lenguaje y servicios de identidad."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la interfaz de usuario conversacional para el chatbot ni el almacenamiento vectorial con los manuales de procedimientos."
+      ]
+    },
+    "response": {
+      "id": "572f176374984bb7bb0249706655afcb",
+      "status": "ok",
+      "title": "Sistema de chatbot interno con autenticación para estudio contable",
+      "summary": "Esta propuesta implementa un chatbot interno para consultar manuales de procedimientos utilizando un motor de inferencia local y asegura el acceso exclusivo para empleados mediante una solución de gestión de identidad robusta.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Gestiona las cuentas y el acceso seguro de los empleados.",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Resuelve la solicitud de que solo puedan entrar los empleados con cuenta mediante una solución de gestión de identidad y control de acceso moderna con licencia Apache-2.0 y alta actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Ollama",
+          "role": "Ejecuta el modelo de lenguaje en los servidores propios.",
+          "full_name": "ollama/ollama",
+          "rationale": "Permite correr un modelo de lenguaje en sus propios servidores de forma sencilla, utilizando software de código abierto con licencia MIT y gran adopción."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales de los empleados antes de permitir el acceso a la interfaz del chatbot."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia con capacidad suficiente para hospedar modelos de lenguaje y servicios de identidad."
+      ],
+      "limitations": [
+        "La propuesta no incluye la interfaz de usuario conversacional para el chatbot ni el almacenamiento vectorial con los manuales de procedimientos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:01:29.792028Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 20.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.439
+        ],
+        [
+          "typesense/typesense",
+          0.403
+        ],
+        [
+          "qdrant/qdrant",
+          0.39
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.345
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.331
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.407
+        ],
+        [
+          "rustfs/rustfs",
+          0.391
+        ],
+        [
+          "hashicorp/vault",
+          0.284
+        ],
+        [
+          "etcd-io/etcd",
+          0.281
+        ],
+        [
+          "valkey-io/valkey",
+          0.261
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Portal Inmobiliario Con Búsqueda Avanzada Y Almacenamiento",
+      "summary": "La propuesta cubre la búsqueda semántica de propiedades y el almacenamiento eficiente de fotos y planos subidos por los agentes inmobiliarios, utilizando herramientas de código abierto con alto rendimiento y mantenimiento activo.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda semántica de texto para consultas complejas, y el candidato ofrece un motor de búsqueda vectorial de alto rendimiento para IA.",
+          "fit": "serves",
+          "full_name": "qdrant/qdrant",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda vectorial",
+          "rationale": "Qdrant funciona como una base de datos vectorial y motor de búsqueda de alta escala para IA, permitiendo procesar las consultas de los clientes sobre las propiedades de forma eficiente. Su licencia es Apache-2.0 y recibe actualizaciones constantes."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y objetos para fotos y planos, y el candidato ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Sistema de almacenamiento de archivos",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido ideal para gestionar los archivos y objetos subidos por los agentes inmobiliarios. Cuenta con licencia Apache-2.0 y soporte activo para un gran volumen de datos."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda puede indexar referencias o metadatos de los archivos almacenados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el portal web contará con un backend propio para gestionar la lógica de negocio y la autenticación de los agentes inmobiliarios."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la interfaz de usuario del portal web ni el sistema de gestión de usuarios."
+      ]
+    },
+    "response": {
+      "id": "2966ec5c0ccc44ceb27690e2250339c0",
+      "status": "ok",
+      "title": "Portal Inmobiliario Con Búsqueda Avanzada Y Almacenamiento",
+      "summary": "La propuesta cubre la búsqueda semántica de propiedades y el almacenamiento eficiente de fotos y planos subidos por los agentes inmobiliarios, utilizando herramientas de código abierto con alto rendimiento y mantenimiento activo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda vectorial",
+          "full_name": "qdrant/qdrant",
+          "rationale": "Qdrant funciona como una base de datos vectorial y motor de búsqueda de alta escala para IA, permitiendo procesar las consultas de los clientes sobre las propiedades de forma eficiente. Su licencia es Apache-2.0 y recibe actualizaciones constantes."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Sistema de almacenamiento de archivos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido ideal para gestionar los archivos y objetos subidos por los agentes inmobiliarios. Cuenta con licencia Apache-2.0 y soporte activo para un gran volumen de datos."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda puede indexar referencias o metadatos de los archivos almacenados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el portal web contará con un backend propio para gestionar la lógica de negocio y la autenticación de los agentes inmobiliarios."
+      ],
+      "limitations": [
+        "La propuesta no incluye la interfaz de usuario del portal web ni el sistema de gestión de usuarios."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:02:06.685815Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y seo",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vercel/next.js",
+          0.502
+        ],
+        [
+          "nuxt/nuxt",
+          0.487
+        ],
+        [
+          "withastro/astro",
+          0.473
+        ],
+        [
+          "django/django",
+          0.446
+        ],
+        [
+          "sveltejs/svelte",
+          0.432
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de framework web para agencia de viajes",
+      "summary": "Se seleccionó el framework web para construir las páginas de destinos de la agencia, logrando una carga rápida y buen posicionamiento en Google. La propuesta cubre la necesidad principal de desarrollo frontend basada en contenido.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "La necesidad pide un framework web para páginas rápidas y SEO, y Astro es un framework web orientado a sitios basados en contenido.",
+          "fit": "serves",
+          "full_name": "withastro/astro",
+          "label": "Astro",
+          "role": "Construcción del sitio web y páginas de destinos",
+          "rationale": "Astro es un framework web para sitios orientados a contenido, ideal para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google. Su licencia no fue identificada por GitHub y su último cambio fue hace 1 mes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el equipo de desarrollo cuenta con experiencia en JavaScript o web components para trabajar con el framework seleccionado."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un sistema de gestión de contenidos (CMS) para administrar los destinos de forma visual."
+      ]
+    },
+    "response": {
+      "id": "b1522bc300f04dac982e97eab157346e",
+      "status": "ok",
+      "title": "Propuesta de framework web para agencia de viajes",
+      "summary": "Se seleccionó el framework web para construir las páginas de destinos de la agencia, logrando una carga rápida y buen posicionamiento en Google. La propuesta cubre la necesidad principal de desarrollo frontend basada en contenido.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Astro",
+          "role": "Construcción del sitio web y páginas de destinos",
+          "full_name": "withastro/astro",
+          "rationale": "Astro es un framework web para sitios orientados a contenido, ideal para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google. Su licencia no fue identificada por GitHub y su último cambio fue hace 1 mes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el equipo de desarrollo cuenta con experiencia en JavaScript o web components para trabajar con el framework seleccionado."
+      ],
+      "limitations": [
+        "La propuesta no incluye un sistema de gestión de contenidos (CMS) para administrar los destinos de forma visual."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:02:17.786200Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API en Python",
+          "evidence": "queremos elegir un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.574
+        ],
+        [
+          "pallets/flask",
+          0.526
+        ],
+        [
+          "anthropics/anthropic-sdk-python",
+          0.486
+        ],
+        [
+          "openai/openai-python",
+          0.485
+        ],
+        [
+          "Kludex/starlette",
+          0.481
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.385
+        ],
+        [
+          "etcd-io/etcd",
+          0.379
+        ],
+        [
+          "redis/redis",
+          0.377
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.371
+        ],
+        [
+          "valkey-io/valkey",
+          0.366
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura Python para API de entregas de café",
+      "summary": "La propuesta integra FastAPI como framework de alto rendimiento para la API y MariaDB como servidor de base de datos relacional para gestionar los registros de los productores de café.",
+      "boxes": [
+        {
+          "need": "backend",
+          "fit_check": "La necesidad pide un framework para la API y FastAPI ofrece un framework web de alto rendimiento y fácil de aprender para construir APIs.",
+          "fit": "serves",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para la API de registros de café",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para crear la API que registra las entregas de los productores."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos relacional y MariaDB server proporciona un servidor de base de datos relacional desarrollado por la comunidad.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Almacenamiento de datos relacionales",
+          "rationale": "MariaDB server es una base de datos relacional desarrollada por la comunidad que permite guardar los registros de las entregas de café de cada productor."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "TCP/IP con SQL",
+          "description": "El backend en FastAPI se conecta a MariaDB para guardar y consultar los registros de entregas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia para alojar MariaDB.",
+        "Se asume que el equipo tiene experiencia con Python y bases de datos SQL."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un ORM para facilitar las consultas a la base de datos desde Python."
+      ]
+    },
+    "response": {
+      "id": "f83419aa848147af9aeb00c734e12c06",
+      "status": "ok",
+      "title": "Arquitectura Python para API de entregas de café",
+      "summary": "La propuesta integra FastAPI como framework de alto rendimiento para la API y MariaDB como servidor de base de datos relacional para gestionar los registros de los productores de café.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para la API de registros de café",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para crear la API que registra las entregas de los productores."
+        },
+        {
+          "key": "c2",
+          "label": "MariaDB",
+          "role": "Almacenamiento de datos relacionales",
+          "full_name": "MariaDB/server",
+          "rationale": "MariaDB server es una base de datos relacional desarrollada por la comunidad que permite guardar los registros de las entregas de café de cada productor."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "TCP/IP con SQL",
+          "description": "El backend en FastAPI se conecta a MariaDB para guardar y consultar los registros de entregas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia para alojar MariaDB.",
+        "Se asume que el equipo tiene experiencia con Python y bases de datos SQL."
+      ],
+      "limitations": [
+        "La propuesta no incluye un ORM para facilitar las consultas a la base de datos desde Python."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:02:29.631145Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.342
+        ],
+        [
+          "novuhq/novu",
+          0.258
+        ],
+        [
+          "knadh/listmonk",
+          0.256
+        ],
+        [
+          "TryGhost/Ghost",
+          0.211
+        ],
+        [
+          "caronc/apprise",
+          0.206
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones automatizadas de asistencia escolar",
+      "summary": "Esta propuesta cubre la necesidad de comunicación para enviar avisos a los padres mediante una plataforma de notificaciones con múltiples integraciones. Se asume que el cálculo nocturno de asistencia y el registro de los profesores se resolverán con un desarrollo propio o módulo adicional.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar correos o mensajes de texto a los padres, y el candidato ofrece notificaciones push y alertas compatibles con múltiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Centralizar el envío de alertas y notificaciones a los padres",
+          "rationale": "Permite enviar notificaciones push y alertas que se conectan con prácticamente cualquier plataforma de mensajería. Su licencia es BSD-2-Clause y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "El colegio cuenta con un sistema interno o desarrollo propio para que los profesores registren la asistencia y ejecuten el cálculo nocturno del porcentaje.",
+        "Se requiere integrar la herramienta elegida con pasarelas externas de SMS y servicios de correo electrónico para completar el envío a los padres."
+      ],
+      "other_limitations": [
+        "No se incluye una herramienta específica para la gestión interna de la asistencia de los estudiantes ni para la base de datos escolar."
+      ]
+    },
+    "response": {
+      "id": "1c14cfadb9264d4aa198f239a30334b0",
+      "status": "ok",
+      "title": "Sistema de notificaciones automatizadas de asistencia escolar",
+      "summary": "Esta propuesta cubre la necesidad de comunicación para enviar avisos a los padres mediante una plataforma de notificaciones con múltiples integraciones. Se asume que el cálculo nocturno de asistencia y el registro de los profesores se resolverán con un desarrollo propio o módulo adicional.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apprise",
+          "role": "Centralizar el envío de alertas y notificaciones a los padres",
+          "full_name": "caronc/apprise",
+          "rationale": "Permite enviar notificaciones push y alertas que se conectan con prácticamente cualquier plataforma de mensajería. Su licencia es BSD-2-Clause y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "El colegio cuenta con un sistema interno o desarrollo propio para que los profesores registren la asistencia y ejecuten el cálculo nocturno del porcentaje.",
+        "Se requiere integrar la herramienta elegida con pasarelas externas de SMS y servicios de correo electrónico para completar el envío a los padres."
+      ],
+      "limitations": [
+        "No se incluye una herramienta específica para la gestión interna de la asistencia de los estudiantes ni para la base de datos escolar."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:02:41.963818Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante proveedor externo",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos en formato PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.464
+        ],
+        [
+          "ory/kratos",
+          0.422
+        ],
+        [
+          "keycloak/keycloak",
+          0.414
+        ],
+        [
+          "zitadel/zitadel",
+          0.372
+        ],
+        [
+          "supabase/supabase",
+          0.301
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.306
+        ],
+        [
+          "rustfs/rustfs",
+          0.268
+        ],
+        [
+          "etcd-io/etcd",
+          0.262
+        ],
+        [
+          "hashicorp/vault",
+          0.23
+        ],
+        [
+          "pnpm/pnpm",
+          0.229
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de identidad y almacenamiento para ONG",
+      "summary": "Esta propuesta implementa un sistema para gestionar el acceso de los voluntarios mediante inicio de sesión social y un almacenamiento distribuido para guardar sus certificados en PDF de forma segura.",
+      "boxes": [
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide autenticación con proveedor externo y Ory Kratos ofrece autenticación cloud-native, social sign-in y OIDC.",
+          "fit": "serves",
+          "full_name": "ory/kratos",
+          "label": "Ory Kratos",
+          "role": "Gestionar la identidad y el inicio de sesión de los voluntarios.",
+          "rationale": "Ory Kratos permite implementar la autenticación y el inicio de sesión social requerido por la ONG. Utiliza licencia Apache-2.0 y cuenta con actividad reciente en su desarrollo."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar archivos y documentos en formato PDF y SeaweedFS ofrece un sistema de almacenamiento distribuido para archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenar los certificados escaneados en PDF de cada voluntario.",
+          "rationale": "SeaweedFS provee un sistema de almacenamiento distribuido capaz de manejar miles de archivos con acceso rápido. Cuenta con licencia Apache-2.0 y soporte activo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "La aplicación utiliza la sesión autenticada para asociar y enviar los certificados en PDF del usuario al almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la ONG cuenta con una infraestructura básica para alojar los contenedores de los servicios propuestos.",
+        "Se asume que existe una aplicación web o interfaz propia para conectar el inicio de sesión con el almacenamiento de archivos."
+      ],
+      "other_limitations": [
+        "No se incluyeron herramientas específicas para la interfaz de usuario de la ONG.",
+        "El usuario mencionó explícitamente la cuenta de Google, la cual debe configurarse como proveedor social en Ory Kratos."
+      ]
+    },
+    "response": {
+      "id": "7a8aea6e2a4a4868af8cd7df00209415",
+      "status": "ok",
+      "title": "Sistema de gestión de identidad y almacenamiento para ONG",
+      "summary": "Esta propuesta implementa un sistema para gestionar el acceso de los voluntarios mediante inicio de sesión social y un almacenamiento distribuido para guardar sus certificados en PDF de forma segura.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Ory Kratos",
+          "role": "Gestionar la identidad y el inicio de sesión de los voluntarios.",
+          "full_name": "ory/kratos",
+          "rationale": "Ory Kratos permite implementar la autenticación y el inicio de sesión social requerido por la ONG. Utiliza licencia Apache-2.0 y cuenta con actividad reciente en su desarrollo."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Almacenar los certificados escaneados en PDF de cada voluntario.",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS provee un sistema de almacenamiento distribuido capaz de manejar miles de archivos con acceso rápido. Cuenta con licencia Apache-2.0 y soporte activo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTPS",
+          "description": "La aplicación utiliza la sesión autenticada para asociar y enviar los certificados en PDF del usuario al almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la ONG cuenta con una infraestructura básica para alojar los contenedores de los servicios propuestos.",
+        "Se asume que existe una aplicación web o interfaz propia para conectar el inicio de sesión con el almacenamiento de archivos."
+      ],
+      "limitations": [
+        "No se incluyeron herramientas específicas para la interfaz de usuario de la ONG.",
+        "El usuario mencionó explícitamente la cuenta de Google, la cual debe configurarse como proveedor social en Ory Kratos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:02:54.225143Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en linea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes por whatsapp",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "getlago/lago",
+          0.279
+        ],
+        [
+          "killbill/killbill",
+          0.261
+        ],
+        [
+          "knadh/listmonk",
+          0.211
+        ],
+        [
+          "juspay/hyperswitch",
+          0.207
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.196
+        ]
+      ],
+      "communication": [],
+      "database": [
+        [
+          "MariaDB/server",
+          0.385
+        ],
+        [
+          "etcd-io/etcd",
+          0.379
+        ],
+        [
+          "redis/redis",
+          0.377
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.371
+        ],
+        [
+          "valkey-io/valkey",
+          0.366
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de pagos y base de datos para gimnasio",
+      "summary": "Esta propuesta implementa una plataforma de pagos por suscripción para cobrar las mensualidades en línea y una base de datos relacional para resguardar el historial de pagos. Quedan sin resolver el envío de avisos por WhatsApp y la gestión de tres sedes.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar las mensualidades en línea y Kill Bill ofrece una plataforma de suscripciones y pagos.",
+          "fit": "serves",
+          "full_name": "killbill/killbill",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos",
+          "rationale": "Resuelve el cobro de mensualidades en línea mediante su plataforma de facturación por suscripción y pagos, con licencia Apache-2.0 y mantenimiento activo reciente."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar el historial de pagos en una base de datos relacional y MariaDB Server ofrece un servidor de base de datos relacional compatible.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "rationale": "Permite guardar el historial de pagos de forma segura en un servidor de base de datos relacional desarrollado por la comunidad, bajo licencia GPL-2.0 y con actualización reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "database",
+          "protocol": "SQL/TCP",
+          "description": "La plataforma de pagos registra y consulta las transacciones en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal técnico para desplegar y mantener los servicios seleccionados.",
+        "Se requiere integrar una herramienta externa de mensajería para cumplir con los avisos por WhatsApp."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta candidata para cubrir el envío de avisos por WhatsApp a los socios que se atrasan en el pago.",
+        "La propuesta no incluye funciones específicas para administrar de forma separada las tres sedes del gimnasio."
+      ]
+    },
+    "response": {
+      "id": "641326a54aa14319a81eb7f23fd08288",
+      "status": "ok",
+      "title": "Sistema de pagos y base de datos para gimnasio",
+      "summary": "Esta propuesta implementa una plataforma de pagos por suscripción para cobrar las mensualidades en línea y una base de datos relacional para resguardar el historial de pagos. Quedan sin resolver el envío de avisos por WhatsApp y la gestión de tres sedes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos",
+          "full_name": "killbill/killbill",
+          "rationale": "Resuelve el cobro de mensualidades en línea mediante su plataforma de facturación por suscripción y pagos, con licencia Apache-2.0 y mantenimiento activo reciente."
+        },
+        {
+          "key": "c2",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "full_name": "MariaDB/server",
+          "rationale": "Permite guardar el historial de pagos de forma segura en un servidor de base de datos relacional desarrollado por la comunidad, bajo licencia GPL-2.0 y con actualización reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL/TCP",
+          "description": "La plataforma de pagos registra y consulta las transacciones en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal técnico para desplegar y mantener los servicios seleccionados.",
+        "Se requiere integrar una herramienta externa de mensajería para cumplir con los avisos por WhatsApp."
+      ],
+      "limitations": [
+        "Comunicación: no se encontraron herramientas del catálogo para «avisar por WhatsApp a los socios que se atrasan en el pago».",
+        "No se encontró ninguna herramienta candidata para cubrir el envío de avisos por WhatsApp a los socios que se atrasan en el pago.",
+        "La propuesta no incluye funciones específicas para administrar de forma separada las tres sedes del gimnasio."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:03:19.353426Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "repuestos-buscador",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo de productos",
+          "evidence": "buscador de productos por nombre o referencia (el equipo pensaba en Elasticsearch)"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de latencia y errores",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.368
+        ],
+        [
+          "typesense/typesense",
+          0.343
+        ],
+        [
+          "qdrant/qdrant",
+          0.304
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.278
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.276
+        ]
+      ],
+      "observability": [
+        [
+          "prometheus/prometheus",
+          0.357
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.335
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.309
+        ],
+        [
+          "grafana/grafana",
+          0.27
+        ],
+        [
+          "getlago/lago",
+          0.264
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Buscador y monitoreo para tienda de repuestos",
+      "summary": "La propuesta implementa un motor de búsqueda rápida para encontrar repuestos de motos por nombre y referencia, junto con una plataforma de visualización de métricas para medir la latencia y los errores de la API en Django. Queda pendiente el uso específico de Elasticsearch ya que se sugirió Typesense como alternativa open source.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda de texto completo y el candidato más cercano ofrece un motor de búsqueda difusa y de texto completo en memoria.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda de productos",
+          "rationale": "Typesense es un motor de búsqueda tolerante a errores tipográficos y rápido para construir experiencias de búsqueda. Utiliza licencia GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide monitoreo de latencia y errores y el candidato más cercano ofrece una plataforma de visualización y observabilidad para métricas, registros y trazas.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de métricas y errores",
+          "rationale": "Grafana permite visualizar métricas, registros y trazas desde múltiples fuentes para analizar el rendimiento. Cuenta con licencia AGPL-3.0 y actualización reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda en línea cuenta con infraestructura propia para hospedar los servicios seleccionados.",
+        "El equipo preferiría ElasticSearch, pero se optó por Typesense por estar disponible en el catálogo."
+      ],
+      "other_limitations": [
+        "El usuario mencionó Elasticsearch, pero la herramienta elegida es Typesense como alternativa open source."
+      ]
+    },
+    "response": {
+      "id": "0473652ad16d4514a835a52e5876293e",
+      "status": "ok",
+      "title": "Buscador y monitoreo para tienda de repuestos",
+      "summary": "La propuesta implementa un motor de búsqueda rápida para encontrar repuestos de motos por nombre y referencia, junto con una plataforma de visualización de métricas para medir la latencia y los errores de la API en Django. Queda pendiente el uso específico de Elasticsearch ya que se sugirió Typesense como alternativa open source.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Motor de búsqueda de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense es un motor de búsqueda tolerante a errores tipográficos y rápido para construir experiencias de búsqueda. Utiliza licencia GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Visualización de métricas y errores",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas, registros y trazas desde múltiples fuentes para analizar el rendimiento. Cuenta con licencia AGPL-3.0 y actualización reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda en línea cuenta con infraestructura propia para hospedar los servicios seleccionados.",
+        "El equipo preferiría ElasticSearch, pero se optó por Typesense por estar disponible en el catálogo."
+      ],
+      "limitations": [
+        "El usuario mencionó Elasticsearch, pero la herramienta elegida es Typesense como alternativa open source."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:03:31.770665Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "procesamiento y cálculo nocturno de datos",
+          "evidence": "procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno"
+        },
+        {
+          "category": "communication",
+          "query": "envío automatizado de correos electrónicos",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "data-processing": [
+        [
+          "apache/spark",
+          0.28
+        ],
+        [
+          "apache/beam",
+          0.279
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.276
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.272
+        ],
+        [
+          "apache/flink",
+          0.265
+        ]
+      ],
+      "communication": [
+        [
+          "postalserver/postal",
+          0.36
+        ],
+        [
+          "knadh/listmonk",
+          0.36
+        ],
+        [
+          "prometheus/alertmanager",
+          0.269
+        ],
+        [
+          "novuhq/novu",
+          0.264
+        ],
+        [
+          "microsoft/playwright",
+          0.238
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema nocturno de procesamiento de ventas y reportes",
+      "summary": "La propuesta utiliza Apache Spark para el procesamiento y cálculo nocturno de las ventas y el inventario, complementado con Postal para el envío de los reportes por correo electrónico a los gerentes.",
+      "boxes": [
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide un motor de procesamiento y cálculo nocturno de datos, y Apache Spark ofrece un motor analítico unificado para el procesamiento de datos a gran escala.",
+          "fit": "serves",
+          "full_name": "apache/spark",
+          "label": "Apache Spark",
+          "role": "Procesamiento y cálculo nocturno de datos",
+          "rationale": "Apache Spark procesa cada noche las ventas del día de todos los locales para recalcular el inventario de cada uno gracias a su motor analítico unificado para el procesamiento de datos a gran escala."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide el envío automatizado de correos electrónicos, y Postal ofrece una plataforma completa de entrega de correo para correos salientes.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Envío automatizado de correos",
+          "rationale": "Postal permite mandar por correo el reporte a cada gerente a primera hora mediante su plataforma de entrega de correo electrónico."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "communication",
+          "protocol": "API interna",
+          "description": "Envía los reportes de inventario calculados para que sean distribuidos por correo"
+        }
+      ],
+      "assumptions": [
+        "Se asume que los locales cuentan con un sistema centralizado para consolidar las ventas del día antes de la ejecución del proceso nocturno."
+      ],
+      "other_limitations": [
+        "No se incluyen herramientas específicas de gestión de bases de datos operacionales para almacenar los inventarios en tiempo real más allá del procesamiento por lotes."
+      ]
+    },
+    "response": {
+      "id": "ab4686aa625b4b0e9d8d30d7241c1c1a",
+      "status": "ok",
+      "title": "Sistema nocturno de procesamiento de ventas y reportes",
+      "summary": "La propuesta utiliza Apache Spark para el procesamiento y cálculo nocturno de las ventas y el inventario, complementado con Postal para el envío de los reportes por correo electrónico a los gerentes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apache Spark",
+          "role": "Procesamiento y cálculo nocturno de datos",
+          "full_name": "apache/spark",
+          "rationale": "Apache Spark procesa cada noche las ventas del día de todos los locales para recalcular el inventario de cada uno gracias a su motor analítico unificado para el procesamiento de datos a gran escala."
+        },
+        {
+          "key": "c2",
+          "label": "Postal",
+          "role": "Envío automatizado de correos",
+          "full_name": "postalserver/postal",
+          "rationale": "Postal permite mandar por correo el reporte a cada gerente a primera hora mediante su plataforma de entrega de correo electrónico."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API interna",
+          "description": "Envía los reportes de inventario calculados para que sean distribuidos por correo"
+        }
+      ],
+      "assumptions": [
+        "Se asume que los locales cuentan con un sistema centralizado para consolidar las ventas del día antes de la ejecución del proceso nocturno."
+      ],
+      "limitations": [
+        "No se incluyen herramientas específicas de gestión de bases de datos operacionales para almacenar los inventarios en tiempo real más allá del procesamiento por lotes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:03:43.650905Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "energia-medidores",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento para series de tiempo",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "messaging",
+          "query": "streaming de eventos",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "observability",
+          "query": "visualización de tableros y métricas",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.335
+        ],
+        [
+          "redis/redis",
+          0.318
+        ],
+        [
+          "prometheus/prometheus",
+          0.307
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.285
+        ],
+        [
+          "etcd-io/etcd",
+          0.282
+        ]
+      ],
+      "messaging": [
+        [
+          "apache/kafka",
+          0.348
+        ],
+        [
+          "apache/flink",
+          0.29
+        ],
+        [
+          "apache/beam",
+          0.253
+        ],
+        [
+          "strapi/strapi",
+          0.218
+        ],
+        [
+          "microsoft/playwright",
+          0.199
+        ]
+      ],
+      "observability": [
+        [
+          "grafana/grafana",
+          0.47
+        ],
+        [
+          "metabase/metabase",
+          0.386
+        ],
+        [
+          "prometheus/prometheus",
+          0.317
+        ],
+        [
+          "getlago/lago",
+          0.288
+        ],
+        [
+          "plausible/analytics",
+          0.279
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de streaming y almacenamiento para medidores de energía",
+      "summary": "La propuesta implementa una plataforma de streaming y visualización utilizando herramientas open source para procesar lecturas de medidores. Se eligió Apache Kafka para la ingesta de eventos en tiempo real, Prometheus como base de datos de series de tiempo y Grafana para los tableros de consumo. El usuario solicitó InfluxDB y se nombró a Kafka, pero se utilizaron las alternativas disponibles en los candidatos.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento para series de tiempo y Prometheus ofrece un sistema de monitoreo y base de datos de series de tiempo.",
+          "fit": "serves",
+          "full_name": "prometheus/prometheus",
+          "label": "Prometheus",
+          "role": "Base de datos de series de tiempo",
+          "rationale": "Prometheus es un sistema de monitoreo y base de datos de series de tiempo bajo licencia Apache-2.0. Almacena las métricas recolectadas para alimentar los tableros de consumo."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide streaming de eventos y Apache Kafka funciona como una plataforma de streaming de eventos distribuida.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Plataforma de streaming",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida bajo licencia Apache-2.0 que permite recibir las lecturas de los medidores."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide visualización de tableros y métricas y Grafana ofrece una plataforma de observabilidad y visualización de datos.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de tableros",
+          "rationale": "Grafana es una plataforma de observabilidad y visualización de datos bajo licencia AGPL-3.0 que permite mostrar los tableros de consumo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envía las lecturas en streaming hacia la base de datos de series de tiempo"
+        },
+        {
+          "from_need": "database",
+          "to_need": "observability",
+          "protocol": "HTTP",
+          "description": "Suministra las series de tiempo para la visualización en los tableros"
+        }
+      ],
+      "assumptions": [
+        "La infraestructura soporta la ingesta y procesamiento de las lecturas de 50.000 medidores cada 15 minutos."
+      ],
+      "other_limitations": [
+        "El usuario solicitó InfluxDB para la base de datos de series de tiempo, pero no se encuentra entre los candidatos de la necesidad y se utilizó Prometheus.",
+        "El usuario mencionó Kafka para el streaming, el cual sí se pudo resolver con el candidato correspondiente."
+      ]
+    },
+    "response": {
+      "id": "a2e3b5a53de94a94a28abdaf1b7fd053",
+      "status": "ok",
+      "title": "Arquitectura de streaming y almacenamiento para medidores de energía",
+      "summary": "La propuesta implementa una plataforma de streaming y visualización utilizando herramientas open source para procesar lecturas de medidores. Se eligió Apache Kafka para la ingesta de eventos en tiempo real, Prometheus como base de datos de series de tiempo y Grafana para los tableros de consumo. El usuario solicitó InfluxDB y se nombró a Kafka, pero se utilizaron las alternativas disponibles en los candidatos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Prometheus",
+          "role": "Base de datos de series de tiempo",
+          "full_name": "prometheus/prometheus",
+          "rationale": "Prometheus es un sistema de monitoreo y base de datos de series de tiempo bajo licencia Apache-2.0. Almacena las métricas recolectadas para alimentar los tableros de consumo."
+        },
+        {
+          "key": "c2",
+          "label": "Apache Kafka",
+          "role": "Plataforma de streaming",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida bajo licencia Apache-2.0 que permite recibir las lecturas de los medidores."
+        },
+        {
+          "key": "c3",
+          "label": "Grafana",
+          "role": "Visualización de tableros",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana es una plataforma de observabilidad y visualización de datos bajo licencia AGPL-3.0 que permite mostrar los tableros de consumo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "Envía las lecturas en streaming hacia la base de datos de series de tiempo"
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "HTTP",
+          "description": "Suministra las series de tiempo para la visualización en los tableros"
+        }
+      ],
+      "assumptions": [
+        "La infraestructura soporta la ingesta y procesamiento de las lecturas de 50.000 medidores cada 15 minutos."
+      ],
+      "limitations": [
+        "El usuario solicitó InfluxDB para la base de datos de series de tiempo, pero no se encuentra entre los candidatos de la necesidad y se utilizó Prometheus.",
+        "El usuario mencionó Kafka para el streaming, el cual sí se pudo resolver con el candidato correspondiente."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:03:57.439459Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "contable-chatbot",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "ejecución de modelos de lenguaje locales",
+          "evidence": "usando un modelo de lenguaje que corra en sus propios servidores"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios por cuenta",
+          "evidence": "solo puedan entrar los empleados con cuenta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "ai": [
+        [
+          "ollama/ollama",
+          0.414
+        ],
+        [
+          "langchain-ai/langchain",
+          0.379
+        ],
+        [
+          "vllm-project/vllm",
+          0.326
+        ],
+        [
+          "huggingface/transformers",
+          0.299
+        ],
+        [
+          "rust-lang/rust",
+          0.277
+        ]
+      ],
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.44
+        ],
+        [
+          "ory/kratos",
+          0.42
+        ],
+        [
+          "keycloak/keycloak",
+          0.414
+        ],
+        [
+          "zitadel/zitadel",
+          0.362
+        ],
+        [
+          "supabase/supabase",
+          0.275
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura segura para chatbot interno con modelos locales",
+      "summary": "Esta propuesta implementa un motor de inferencia local para ejecutar modelos en los propios servidores y un sistema de gestión de acceso e identidad para asegurar que solo ingresen empleados autorizados. Queda pendiente el desarrollo de la interfaz de usuario del chatbot y la ingesta documental de los manuales.",
+      "boxes": [
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide ejecutar un modelo de lenguaje en propios servidores y el candidato ofrece un motor de inferencia y servicio eficiente en memoria para modelos de lenguaje.",
+          "fit": "serves",
+          "full_name": "vllm-project/vllm",
+          "label": "vLLM",
+          "role": "Motor de inferencia para el modelo",
+          "rationale": "Provee un motor de inferencia y servicio de alto rendimiento y eficiente en memoria para modelos de lenguaje, permitiendo correrlos en servidores propios."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide permitir el acceso solo a empleados con cuenta y el candidato ofrece infraestructura de gestión de identidad y acceso para aplicaciones.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestión de autenticación de empleados",
+          "rationale": "Ofrece gestión de identidad y acceso de código abierto para aplicaciones modernas, asegurando que solo los empleados con cuenta puedan ingresar."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "ai",
+          "protocol": "HTTP",
+          "description": "El sistema de autenticación valida las credenciales de los empleados antes de permitirles acceder al servicio de chat."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con hardware con aceleración por GPU compatible para desplegar los modelos de lenguaje locales.",
+        "Se asume que existe una interfaz de usuario o aplicación de chat conectada al motor de inferencia."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz visual de chat para los empleados.",
+        "No se incluye la base de datos vectorial ni las herramientas de recuperación de información para consultar los manuales de procedimientos."
+      ]
+    },
+    "response": {
+      "id": "54c22d3861c945fa99fb124df27db6e7",
+      "status": "ok",
+      "title": "Arquitectura segura para chatbot interno con modelos locales",
+      "summary": "Esta propuesta implementa un motor de inferencia local para ejecutar modelos en los propios servidores y un sistema de gestión de acceso e identidad para asegurar que solo ingresen empleados autorizados. Queda pendiente el desarrollo de la interfaz de usuario del chatbot y la ingesta documental de los manuales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "vLLM",
+          "role": "Motor de inferencia para el modelo",
+          "full_name": "vllm-project/vllm",
+          "rationale": "Provee un motor de inferencia y servicio de alto rendimiento y eficiente en memoria para modelos de lenguaje, permitiendo correrlos en servidores propios."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestión de autenticación de empleados",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Ofrece gestión de identidad y acceso de código abierto para aplicaciones modernas, asegurando que solo los empleados con cuenta puedan ingresar."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTP",
+          "description": "El sistema de autenticación valida las credenciales de los empleados antes de permitirles acceder al servicio de chat."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con hardware con aceleración por GPU compatible para desplegar los modelos de lenguaje locales.",
+        "Se asume que existe una interfaz de usuario o aplicación de chat conectada al motor de inferencia."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz visual de chat para los empleados.",
+        "No se incluye la base de datos vectorial ni las herramientas de recuperación de información para consultar los manuales de procedimientos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:04:10.032217Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "b squeda sem ntica de texto",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balc n cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de im genes y documentos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "typesense/typesense",
+          0.29
+        ],
+        [
+          "qdrant/qdrant",
+          0.272
+        ],
+        [
+          "pgvector/pgvector",
+          0.241
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.237
+        ],
+        [
+          "tc39/ecma262",
+          0.234
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.329
+        ],
+        [
+          "hashicorp/vault",
+          0.296
+        ],
+        [
+          "rustfs/rustfs",
+          0.276
+        ],
+        [
+          "etcd-io/etcd",
+          0.255
+        ],
+        [
+          "qdrant/qdrant",
+          0.25
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Portal Inmobiliario Open Source con Búsqueda y Almacenamiento",
+      "summary": "Esta propuesta implementa un sistema para la inmobiliaria que permite a los clientes buscar propiedades mediante consultas en lenguaje natural y capacita a los agentes para almacenar fotos y planos de cada inmueble. Se emplean motores especializados para el manejo de vectores y almacenamiento de objetos con alta eficiencia.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda semántica de texto y Qdrant ofrece un motor de búsqueda y base de datos vectorial de alto rendimiento para IA.",
+          "fit": "serves",
+          "full_name": "qdrant/qdrant",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda semántica y vectorial",
+          "rationale": "Resuelve la búsqueda de propiedades procesando consultas avanzadas mediante vectores y similitud de embeddings bajo licencia Apache-2.0 con actividad reciente."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de imágenes y documentos, y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Sistema de almacenamiento de fotos y planos",
+          "rationale": "Permite que los agentes suban y organicen las fotos y los planos de cada inmueble gracias a su capacidad de almacenamiento de objetos con acceso rápido a disco, bajo licencia Apache-2.0 y mantenimiento constante."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el portal web de la inmobiliaria contará con una interfaz de desarrollo propio para conectar la aplicación con los servicios de búsqueda y almacenamiento seleccionados."
+      ],
+      "other_limitations": [
+        "No se incluyen herramientas específicas para la autenticación de agentes inmobiliarios o la gestión de bases de datos relacionales tradicionales para metadatos estructurados de las propiedades."
+      ]
+    },
+    "response": {
+      "id": "153da805c7644e0fb04220f01696a8d3",
+      "status": "ok",
+      "title": "Portal Inmobiliario Open Source con Búsqueda y Almacenamiento",
+      "summary": "Esta propuesta implementa un sistema para la inmobiliaria que permite a los clientes buscar propiedades mediante consultas en lenguaje natural y capacita a los agentes para almacenar fotos y planos de cada inmueble. Se emplean motores especializados para el manejo de vectores y almacenamiento de objetos con alta eficiencia.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda semántica y vectorial",
+          "full_name": "qdrant/qdrant",
+          "rationale": "Resuelve la búsqueda de propiedades procesando consultas avanzadas mediante vectores y similitud de embeddings bajo licencia Apache-2.0 con actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Sistema de almacenamiento de fotos y planos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite que los agentes suban y organicen las fotos y los planos de cada inmueble gracias a su capacidad de almacenamiento de objetos con acceso rápido a disco, bajo licencia Apache-2.0 y mantenimiento constante."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el portal web de la inmobiliaria contará con una interfaz de desarrollo propio para conectar la aplicación con los servicios de búsqueda y almacenamiento seleccionados."
+      ],
+      "limitations": [
+        "No se incluyen herramientas específicas para la autenticación de agentes inmobiliarios o la gestión de bases de datos relacionales tradicionales para metadatos estructurados de las propiedades."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:04:22.997049Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vercel/next.js",
+          0.518
+        ],
+        [
+          "nuxt/nuxt",
+          0.473
+        ],
+        [
+          "django/django",
+          0.449
+        ],
+        [
+          "sveltejs/svelte",
+          0.441
+        ],
+        [
+          "cypress-io/cypress",
+          0.44
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "La propuesta integra herramientas orientadas al desarrollo frontend para construir páginas de destinos con renderizado eficiente y optimización para buscadores. Se cubren los requerimientos principales de velocidad y posicionamiento web mediante frameworks modernos.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "La necesidad pide un framework web para páginas rápidas y SEO, y Next.js ofrece un framework de React con renderizado híbrido y componentes optimizados para la web.",
+          "fit": "serves",
+          "full_name": "vercel/next.js",
+          "label": "Next.js",
+          "role": "Framework web para el desarrollo del sitio de destinos",
+          "rationale": "Resuelve la necesidad de construir páginas de destinos con alta velocidad y buen posicionamiento en Google gracias a sus capacidades híbridas y de renderizado. Su licencia es MIT y cuenta con mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la agencia de viajes cuenta con un equipo de desarrollo con experiencia en React.",
+        "El contenido de los destinos se gestionará mediante una API externa o un sistema de gestión de contenidos headless."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye herramientas específicas para analíticas de tráfico o gestión de reservas."
+      ]
+    },
+    "response": {
+      "id": "6b4bfc5b6b664b29b8dd5220d7e897d8",
+      "status": "ok",
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "La propuesta integra herramientas orientadas al desarrollo frontend para construir páginas de destinos con renderizado eficiente y optimización para buscadores. Se cubren los requerimientos principales de velocidad y posicionamiento web mediante frameworks modernos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Next.js",
+          "role": "Framework web para el desarrollo del sitio de destinos",
+          "full_name": "vercel/next.js",
+          "rationale": "Resuelve la necesidad de construir páginas de destinos con alta velocidad y buen posicionamiento en Google gracias a sus capacidades híbridas y de renderizado. Su licencia es MIT y cuenta con mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la agencia de viajes cuenta con un equipo de desarrollo con experiencia en React.",
+        "El contenido de los destinos se gestionará mediante una API externa o un sistema de gestión de contenidos headless."
+      ],
+      "limitations": [
+        "La propuesta no incluye herramientas específicas para analíticas de tráfico o gestión de reservas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:04:34.646022Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir la API",
+          "evidence": "un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "motor de base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.547
+        ],
+        [
+          "pallets/flask",
+          0.47
+        ],
+        [
+          "langchain-ai/langchain",
+          0.442
+        ],
+        [
+          "Kludex/starlette",
+          0.424
+        ],
+        [
+          "strapi/strapi",
+          0.423
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.428
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.397
+        ],
+        [
+          "redis/redis",
+          0.382
+        ],
+        [
+          "qdrant/qdrant",
+          0.362
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.359
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de sistema para registro de café en cooperativa",
+      "summary": "Se propone una solución basada en Python utilizando FastAPI para la construcción de la API de registro y MariaDB como motor de base de datos relacional para almacenar las entregas de los productores.",
+      "boxes": [
+        {
+          "need": "backend",
+          "fit_check": "La necesidad pide un framework para construir una API, y FastAPI ofrece un framework de alto rendimiento, fácil de aprender y listo para producción.",
+          "fit": "serves",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para la API",
+          "rationale": "FastAPI permite construir la API de manera rápida y eficiente para registrar las entregas de café de cada productor. Cuenta con licencia MIT y un desarrollo activo."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos relacional, y MariaDB ofrece un servidor de base de datos desarrollado por la comunidad con soporte para motores robustos.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "rationale": "MariaDB almacena de forma segura los registros de las entregas de café mediante un sistema relacional consolidado. Utiliza la licencia GPL-2.0 y tiene actualizaciones recientes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "TCP/IP",
+          "description": "La API se conecta al motor de base de datos para guardar y consultar las entregas de café."
+        }
+      ],
+      "assumptions": [
+        "La cooperativa cuenta con infraestructura propia para alojar la base de datos y la API.",
+        "Se requiere autenticación básica para los desarrolladores o administradores que operan el sistema."
+      ],
+      "other_limitations": [
+        "No se incluye un ORM en la propuesta principal, el cual se podría complementar con herramientas como SQLAlchemy."
+      ]
+    },
+    "response": {
+      "id": "cf4fcdc674864e40b26463fbcffa670b",
+      "status": "ok",
+      "title": "Propuesta de sistema para registro de café en cooperativa",
+      "summary": "Se propone una solución basada en Python utilizando FastAPI para la construcción de la API de registro y MariaDB como motor de base de datos relacional para almacenar las entregas de los productores.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para la API",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI permite construir la API de manera rápida y eficiente para registrar las entregas de café de cada productor. Cuenta con licencia MIT y un desarrollo activo."
+        },
+        {
+          "key": "c2",
+          "label": "MariaDB",
+          "role": "Base de datos relacional",
+          "full_name": "MariaDB/server",
+          "rationale": "MariaDB almacena de forma segura los registros de las entregas de café mediante un sistema relacional consolidado. Utiliza la licencia GPL-2.0 y tiene actualizaciones recientes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "TCP/IP",
+          "description": "La API se conecta al motor de base de datos para guardar y consultar las entregas de café."
+        }
+      ],
+      "assumptions": [
+        "La cooperativa cuenta con infraestructura propia para alojar la base de datos y la API.",
+        "Se requiere autenticación básica para los desarrolladores o administradores que operan el sistema."
+      ],
+      "limitations": [
+        "No se incluye un ORM en la propuesta principal, el cual se podría complementar con herramientas como SQLAlchemy."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:04:57.648277Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.342
+        ],
+        [
+          "novuhq/novu",
+          0.258
+        ],
+        [
+          "knadh/listmonk",
+          0.256
+        ],
+        [
+          "TryGhost/Ghost",
+          0.211
+        ],
+        [
+          "caronc/apprise",
+          0.206
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones de asistencia escolar",
+      "summary": "Esta propuesta integra una plataforma para la gestión de correos electrónicos y notificaciones para avisar a los padres cuando el porcentaje de asistencia baje del límite establecido. El registro de asistencia diario y el cálculo nocturno de los porcentajes no se cubren con las herramientas de los candidatos actuales.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar correos o SMS a los padres, y el candidato ofrece una plataforma de entrega de correo electrónico para mensajes salientes.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Envío de correos",
+          "rationale": "Resuelve el aviso por correo electrónico a los padres cuando la asistencia baje del 80 por ciento. Cuenta con licencia MIT y se mantiene de manera activa con actualizaciones recientes sin requerir configuraciones complejas adicionales para correo saliente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el colegio cuenta con una base de datos propia o un sistema externo donde los profesores registran la asistencia de los estudiantes y se calculan los porcentajes cada noche.",
+        "El envío de mensajes de texto (SMS) queda fuera de la herramienta principal elegida, ya que Postal se enfoca exclusivamente en correo electrónico."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la interfaz ni la lógica para que los profesores registren la asistencia de los estudiantes.",
+        "No se realiza el cálculo automático nocturno del porcentaje de asistencia dentro de las herramientas seleccionadas.",
+        "El envío por SMS solicitado no es cubierto por la herramienta principal de correo elegida."
+      ]
+    },
+    "response": {
+      "id": "2c91180b580549ef85b76dacb7508862",
+      "status": "ok",
+      "title": "Sistema de notificaciones de asistencia escolar",
+      "summary": "Esta propuesta integra una plataforma para la gestión de correos electrónicos y notificaciones para avisar a los padres cuando el porcentaje de asistencia baje del límite establecido. El registro de asistencia diario y el cálculo nocturno de los porcentajes no se cubren con las herramientas de los candidatos actuales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Postal",
+          "role": "Envío de correos",
+          "full_name": "postalserver/postal",
+          "rationale": "Resuelve el aviso por correo electrónico a los padres cuando la asistencia baje del 80 por ciento. Cuenta con licencia MIT y se mantiene de manera activa con actualizaciones recientes sin requerir configuraciones complejas adicionales para correo saliente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el colegio cuenta con una base de datos propia o un sistema externo donde los profesores registran la asistencia de los estudiantes y se calculan los porcentajes cada noche.",
+        "El envío de mensajes de texto (SMS) queda fuera de la herramienta principal elegida, ya que Postal se enfoca exclusivamente en correo electrónico."
+      ],
+      "limitations": [
+        "La propuesta no incluye la interfaz ni la lógica para que los profesores registren la asistencia de los estudiantes.",
+        "No se realiza el cálculo automático nocturno del porcentaje de asistencia dentro de las herramientas seleccionadas.",
+        "El envío por SMS solicitado no es cubierto por la herramienta principal de correo elegida."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:05:09.521266Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesion con proveedores externos",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.414
+        ],
+        [
+          "keycloak/keycloak",
+          0.307
+        ],
+        [
+          "ory/kratos",
+          0.29
+        ],
+        [
+          "zitadel/zitadel",
+          0.274
+        ],
+        [
+          "juspay/hyperswitch",
+          0.264
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.352
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Autenticacion y Almacenamiento para ONG",
+      "summary": "Esta propuesta implementa la gestion de identidad con inicio de sesion externo y el almacenamiento de certificados en formato PDF para los voluntarios de la ONG.",
+      "boxes": [
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide autenticacion y el candidato Keycloak provee gestion de identidad y acceso de codigo abierto.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestion de identidad y acceso",
+          "rationale": "Keycloak ofrece gestion de identidad de codigo abierto con la licencia Apache-2.0 y soporte activo para protocolos modernos de autenticacion."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y el candidato SeaweedFS provee un sistema de almacenamiento distribuido para archivos y objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de certificados PDF",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de archivos con acceso eficiente, bajo licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "El servicio de autenticacion valida al usuario antes de permitirle gestionar sus certificados en el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la ONG cuenta con infraestructura propia para alojar las herramientas seleccionadas.",
+        "Se asume que la aplicacion cliente integrara el flujo de inicio de sesion con Google mediante OIDC."
+      ],
+      "other_limitations": [
+        "No se incluye explicitamente la configuracion especifica del proveedor de identidad de Google dentro de Keycloak.",
+        "No se abordan funciones avanzadas de procesamiento o validacion automatica de los archivos PDF escaneados."
+      ]
+    },
+    "response": {
+      "id": "788e532a554c4d358b79463645b4a191",
+      "status": "ok",
+      "title": "Sistema de Autenticacion y Almacenamiento para ONG",
+      "summary": "Esta propuesta implementa la gestion de identidad con inicio de sesion externo y el almacenamiento de certificados en formato PDF para los voluntarios de la ONG.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Gestion de identidad y acceso",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak ofrece gestion de identidad de codigo abierto con la licencia Apache-2.0 y soporte activo para protocolos modernos de autenticacion."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de certificados PDF",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de archivos con acceso eficiente, bajo licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTPS",
+          "description": "El servicio de autenticacion valida al usuario antes de permitirle gestionar sus certificados en el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la ONG cuenta con infraestructura propia para alojar las herramientas seleccionadas.",
+        "Se asume que la aplicacion cliente integrara el flujo de inicio de sesion con Google mediante OIDC."
+      ],
+      "limitations": [
+        "No se incluye explicitamente la configuracion especifica del proveedor de identidad de Google dentro de Keycloak.",
+        "No se abordan funciones avanzadas de procesamiento o validacion automatica de los archivos PDF escaneados."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:05:21.326048Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en línea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes de notificación por WhatsApp",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "getlago/lago",
+          0.27
+        ],
+        [
+          "killbill/killbill",
+          0.263
+        ],
+        [
+          "knadh/listmonk",
+          0.201
+        ],
+        [
+          "juspay/hyperswitch",
+          0.196
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.187
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.306
+        ],
+        [
+          "novuhq/novu",
+          0.244
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.385
+        ],
+        [
+          "etcd-io/etcd",
+          0.379
+        ],
+        [
+          "redis/redis",
+          0.377
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.371
+        ],
+        [
+          "valkey-io/valkey",
+          0.366
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema integral de pagos y notificaciones para gimnasio",
+      "summary": "La propuesta implementa una plataforma de pagos y suscripciones para cobrar en línea, infraestructura de comunicación para enviar avisos y un servidor de base de datos relacional para guardar el historial de pagos de las tres sedes del gimnasio.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar las mensualidades en línea y el candidato Kill Bill ofrece una plataforma de facturación de suscripciones y pagos de código abierto.",
+          "fit": "serves",
+          "full_name": "killbill/killbill",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos",
+          "rationale": "Resuelve el cobro de mensualidades en línea gestionando las suscripciones y pagos recurrentes de los socios con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide avisar por WhatsApp a los socios y el candidato Novu ofrece infraestructura de comunicación de código abierto para enviar notificaciones.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Permite gestionar el envío de avisos a los socios atrasados utilizando infraestructura de comunicación centralizada. Su licencia no está identificada por GitHub."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar el historial de pagos en una base de datos relacional y el candidato MariaDB Server ofrece un servidor de base de datos relacional.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB Server",
+          "role": "Base de datos relacional",
+          "rationale": "Almacena de forma segura y estructurada el historial de pagos del gimnasio con soporte para motores transaccionales. Utiliza licencia GPL-2.0 y cuenta con desarrollo activo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "database",
+          "protocol": "SQL/TCP",
+          "description": "La plataforma de pagos guarda el registro de las transacciones y mensualidades en la base de datos relacional."
+        },
+        {
+          "from_need": "payments",
+          "to_need": "communication",
+          "protocol": "API REST",
+          "description": "Cuando se detecta un pago atrasado, se solicita el envío de la notificación de aviso al socio."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el gimnasio cuenta con conectividad a internet en sus tres sedes para operar los servicios en la nube o servidores locales.",
+        "Se asume que la integración con la pasarela de pagos específica de WhatsApp requiere un proveedor de API de WhatsApp Business conectado a la infraestructura de comunicación."
+      ],
+      "other_limitations": [
+        "No se incluyeron herramientas específicas para la administración presencial de accesos en las tres sedes del gimnasio."
+      ]
+    },
+    "response": {
+      "id": "b665e086a9dd47d1b8dcf5598bc567e9",
+      "status": "ok",
+      "title": "Sistema integral de pagos y notificaciones para gimnasio",
+      "summary": "La propuesta implementa una plataforma de pagos y suscripciones para cobrar en línea, infraestructura de comunicación para enviar avisos y un servidor de base de datos relacional para guardar el historial de pagos de las tres sedes del gimnasio.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos",
+          "full_name": "killbill/killbill",
+          "rationale": "Resuelve el cobro de mensualidades en línea gestionando las suscripciones y pagos recurrentes de los socios con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "full_name": "novuhq/novu",
+          "rationale": "Permite gestionar el envío de avisos a los socios atrasados utilizando infraestructura de comunicación centralizada. Su licencia no está identificada por GitHub."
+        },
+        {
+          "key": "c3",
+          "label": "MariaDB Server",
+          "role": "Base de datos relacional",
+          "full_name": "MariaDB/server",
+          "rationale": "Almacena de forma segura y estructurada el historial de pagos del gimnasio con soporte para motores transaccionales. Utiliza licencia GPL-2.0 y cuenta con desarrollo activo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "SQL/TCP",
+          "description": "La plataforma de pagos guarda el registro de las transacciones y mensualidades en la base de datos relacional."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API REST",
+          "description": "Cuando se detecta un pago atrasado, se solicita el envío de la notificación de aviso al socio."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el gimnasio cuenta con conectividad a internet en sus tres sedes para operar los servicios en la nube o servidores locales.",
+        "Se asume que la integración con la pasarela de pagos específica de WhatsApp requiere un proveedor de API de WhatsApp Business conectado a la infraestructura de comunicación."
+      ],
+      "limitations": [
+        "No se incluyeron herramientas específicas para la administración presencial de accesos en las tres sedes del gimnasio."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:05:33.973637Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "repuestos-buscador",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "b%c3%ada de productos en texto",
+          "evidence": "buscador de productos por nombre o referencia"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de rendimiento y errores",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "PostHog/posthog",
+          0.225
+        ],
+        [
+          "umami-software/umami",
+          0.22
+        ],
+        [
+          "testing-library/react-testing-library",
+          0.219
+        ],
+        [
+          "pydantic/pydantic",
+          0.217
+        ],
+        [
+          "TryGhost/Ghost",
+          0.215
+        ]
+      ],
+      "observability": [
+        [
+          "prometheus/prometheus",
+          0.4
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.351
+        ],
+        [
+          "grafana/grafana",
+          0.349
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.325
+        ],
+        [
+          "PostHog/posthog",
+          0.318
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de observabilidad para la API de repuestos",
+      "summary": "Esta propuesta cubre la medición de latencia y errores de la API utilizando una plataforma de visualización y monitoreo. La necesidad de búsqueda quedó sin una herramienta adecuada entre los candidatos disponibles, requiriendo una solución externa.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador de productos por nombre o referencia, pero los candidatos disponibles ofrecen análisis, pruebas, validación o publicación, sin incluir un motor de búsqueda de texto.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Búsqueda",
+          "role": "No asignado",
+          "rationale": "Ninguno de los candidatos en el catálogo resuelve la búsqueda de productos en texto solicitada por el usuario."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide medir la latencia y los errores de la API, y Grafana provee una plataforma de visualización y observabilidad para métricas.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de métricas de la API",
+          "rationale": "Grafana es una plataforma de observabilidad y visualización de datos que permite visualizar métricas, registros y trazas desde múltiples fuentes para monitorear el rendimiento de la API. Cuenta con licencia AGPL-3.0 y actividad reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la API en Django cuenta con un sistema base de métricas compatible con Grafana.",
+        "El usuario mencionó Elasticsearch para la búsqueda, pero esta tecnología no se encuentra entre los candidatos de la necesidad."
+      ],
+      "other_limitations": [
+        "La tecnología Elasticsearch mencionada por el equipo no está disponible entre los candidatos de búsqueda.",
+        "No se incluye un motor de búsqueda de productos por nombre o referencia."
+      ]
+    },
+    "response": {
+      "id": "ad58a7f1aee34acdb82b00b1aec60849",
+      "status": "ok",
+      "title": "Propuesta de observabilidad para la API de repuestos",
+      "summary": "Esta propuesta cubre la medición de latencia y errores de la API utilizando una plataforma de visualización y monitoreo. La necesidad de búsqueda quedó sin una herramienta adecuada entre los candidatos disponibles, requiriendo una solución externa.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Grafana",
+          "role": "Visualización de métricas de la API",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana es una plataforma de observabilidad y visualización de datos que permite visualizar métricas, registros y trazas desde múltiples fuentes para monitorear el rendimiento de la API. Cuenta con licencia AGPL-3.0 y actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la API en Django cuenta con un sistema base de métricas compatible con Grafana.",
+        "El usuario mencionó Elasticsearch para la búsqueda, pero esta tecnología no se encuentra entre los candidatos de la necesidad."
+      ],
+      "limitations": [
+        "Búsqueda: ninguna de las herramientas encontradas encaja. Ninguno de los candidatos en el catálogo resuelve la búsqueda de productos en texto solicitada por el usuario."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:05:46.248676Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos automáticos",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "knadh/listmonk",
+          0.326
+        ],
+        [
+          "postalserver/postal",
+          0.326
+        ],
+        [
+          "prometheus/alertmanager",
+          0.258
+        ],
+        [
+          "caronc/apprise",
+          0.245
+        ],
+        [
+          "novuhq/novu",
+          0.236
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificacion y correo para reportes de restaurantes",
+      "summary": "La propuesta cubre el envio automatizado de los reportes diarios por correo electronico a los gerentes de cada restaurante utilizando una plataforma de entrega de correo confiable. Queda pendiente el procesamiento nocturno de las ventas y el recalculo de inventario al no haber candidatos para esa necesidad en el catalogo.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar correos electronicos y el candidato mas cercano es una plataforma completa de envio de correo para correos entrantes y salientes.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Servidor de correo saliente",
+          "rationale": "Permite el envio masivo y controlado de los reportes por correo a cada gerente a primera hora. Cuenta con licencia MIT y alta actividad reciente para asegurar estabilidad en la entrega diaria."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que existe un proceso nocturno externo no contemplado en el catalogo para recalcular el inventario y generar los datos del reporte."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye el procesamiento nocturno de ventas ni el recalculo de inventario por falta de candidatos para esa funcion."
+      ]
+    },
+    "response": {
+      "id": "9d7f7207653b40e58b88ab61aed1c100",
+      "status": "ok",
+      "title": "Sistema de notificacion y correo para reportes de restaurantes",
+      "summary": "La propuesta cubre el envio automatizado de los reportes diarios por correo electronico a los gerentes de cada restaurante utilizando una plataforma de entrega de correo confiable. Queda pendiente el procesamiento nocturno de las ventas y el recalculo de inventario al no haber candidatos para esa necesidad en el catalogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Postal",
+          "role": "Servidor de correo saliente",
+          "full_name": "postalserver/postal",
+          "rationale": "Permite el envio masivo y controlado de los reportes por correo a cada gerente a primera hora. Cuenta con licencia MIT y alta actividad reciente para asegurar estabilidad en la entrega diaria."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que existe un proceso nocturno externo no contemplado en el catalogo para recalcular el inventario y generar los datos del reporte."
+      ],
+      "limitations": [
+        "La propuesta no incluye el procesamiento nocturno de ventas ni el recalculo de inventario por falta de candidatos para esa funcion."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:05:57.275651Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "energia-medidores",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento para series de tiempo",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "messaging",
+          "query": "streaming de eventos",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "observability",
+          "query": "tableros de monitoreo y visualización",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.335
+        ],
+        [
+          "redis/redis",
+          0.318
+        ],
+        [
+          "prometheus/prometheus",
+          0.307
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.285
+        ],
+        [
+          "etcd-io/etcd",
+          0.282
+        ]
+      ],
+      "messaging": [
+        [
+          "apache/kafka",
+          0.348
+        ],
+        [
+          "apache/flink",
+          0.29
+        ],
+        [
+          "apache/beam",
+          0.253
+        ],
+        [
+          "strapi/strapi",
+          0.218
+        ],
+        [
+          "microsoft/playwright",
+          0.199
+        ]
+      ],
+      "observability": [
+        [
+          "grafana/grafana",
+          0.431
+        ],
+        [
+          "prometheus/prometheus",
+          0.331
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.313
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.273
+        ],
+        [
+          "metabase/metabase",
+          0.269
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de streaming y tableros para consumo energético",
+      "summary": "Se propone una solución con Kafka para la ingesta en streaming de las lecturas de los medidores, Prometheus como base de datos de series de tiempo y Grafana para la visualización en tableros de consumo.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento para series de tiempo y Prometheus ofrece un sistema de monitoreo y base de datos de series de tiempo.",
+          "fit": "serves",
+          "full_name": "prometheus/prometheus",
+          "label": "Prometheus",
+          "role": "Base de datos para series de tiempo",
+          "rationale": "Funciona como sistema de monitoreo y base de datos de series de tiempo con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide streaming de eventos y Apache Kafka ofrece una plataforma de streaming de eventos distribuida.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Plataforma de streaming de eventos",
+          "rationale": "Proporciona una plataforma distribuida de streaming de eventos bajo licencia Apache-2.0 para recibir las lecturas de los medidores."
+        },
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide tableros de monitoreo y visualización y Grafana ofrece una plataforma de visualización de datos y tableros.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Plataforma de visualización y tableros",
+          "rationale": "Permite mostrar tableros de consumo mediante su plataforma abierta y componible de visualización de datos bajo licencia AGPL-3.0."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envía las lecturas de los medidores recibidas en streaming hacia la base de datos de series de tiempo."
+        },
+        {
+          "from_need": "database",
+          "to_need": "observability",
+          "protocol": "HTTP",
+          "description": "Suministra las series de tiempo almacenadas para que la plataforma de visualización muestre los tableros de consumo."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con la capacidad de red necesaria para procesar las 50.000 lecturas cada 15 minutos.",
+        "Se asume que existe un componente de procesamiento o conector intermediario para ingerir los datos desde Kafka hacia Prometheus."
+      ],
+      "other_limitations": [
+        "El usuario solicitó InfluxDB, pero no se encuentra entre los candidatos de la necesidad de bases de datos, por lo que se utilizó Prometheus como alternativa.",
+        "No se incluye un componente específico de procesamiento intermedio (como Flink o Beam) para transformar los datos en tránsito desde Kafka antes de guardarlos."
+      ]
+    },
+    "response": {
+      "id": "2b82e2dad1f74b8896e07ff1e4846e6e",
+      "status": "ok",
+      "title": "Arquitectura de streaming y tableros para consumo energético",
+      "summary": "Se propone una solución con Kafka para la ingesta en streaming de las lecturas de los medidores, Prometheus como base de datos de series de tiempo y Grafana para la visualización en tableros de consumo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Prometheus",
+          "role": "Base de datos para series de tiempo",
+          "full_name": "prometheus/prometheus",
+          "rationale": "Funciona como sistema de monitoreo y base de datos de series de tiempo con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Apache Kafka",
+          "role": "Plataforma de streaming de eventos",
+          "full_name": "apache/kafka",
+          "rationale": "Proporciona una plataforma distribuida de streaming de eventos bajo licencia Apache-2.0 para recibir las lecturas de los medidores."
+        },
+        {
+          "key": "c3",
+          "label": "Grafana",
+          "role": "Plataforma de visualización y tableros",
+          "full_name": "grafana/grafana",
+          "rationale": "Permite mostrar tableros de consumo mediante su plataforma abierta y componible de visualización de datos bajo licencia AGPL-3.0."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "Envía las lecturas de los medidores recibidas en streaming hacia la base de datos de series de tiempo."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "HTTP",
+          "description": "Suministra las series de tiempo almacenadas para que la plataforma de visualización muestre los tableros de consumo."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con la capacidad de red necesaria para procesar las 50.000 lecturas cada 15 minutos.",
+        "Se asume que existe un componente de procesamiento o conector intermediario para ingerir los datos desde Kafka hacia Prometheus."
+      ],
+      "limitations": [
+        "El usuario solicitó InfluxDB, pero no se encuentra entre los candidatos de la necesidad de bases de datos, por lo que se utilizó Prometheus como alternativa.",
+        "No se incluye un componente específico de procesamiento intermedio (como Flink o Beam) para transformar los datos en tránsito desde Kafka antes de guardarlos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:06:09.715589Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "contable-chatbot",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "ejecución local de modelos de lenguaje",
+          "evidence": "un modelo de lenguaje que corra en sus propios servidores"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios empleados",
+          "evidence": "solo puedan entrar los empleados con cuenta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "ai": [
+        [
+          "ollama/ollama",
+          0.467
+        ],
+        [
+          "langchain-ai/langchain",
+          0.42
+        ],
+        [
+          "vllm-project/vllm",
+          0.378
+        ],
+        [
+          "huggingface/transformers",
+          0.335
+        ],
+        [
+          "run-llama/llama_index",
+          0.323
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.388
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.378
+        ],
+        [
+          "zitadel/zitadel",
+          0.377
+        ],
+        [
+          "ory/kratos",
+          0.374
+        ],
+        [
+          "supabase/supabase",
+          0.274
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Chatbot interno para estudio contable con modelos locales",
+      "summary": "Esta propuesta implementa un chatbot interno para consultar manuales de procedimientos ejecutando un modelo de lenguaje en servidores propios, complementado con un sistema de gestión de identidad para asegurar el acceso exclusivo de los empleados.",
+      "boxes": [
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide un modelo de lenguaje que corra en sus propios servidores y Ollama provee una plataforma para levantar y ejecutar modelos localmente.",
+          "fit": "serves",
+          "full_name": "ollama/ollama",
+          "label": "Ollama",
+          "role": "Ejecución local de modelos de lenguaje",
+          "rationale": "Permite ejecutar modelos de lenguaje en sus propios servidores para responder preguntas sobre los manuales de procedimientos."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide que solo puedan entrar los empleados con cuenta y Keycloak provee gestión de identidad y acceso para aplicaciones.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Autenticación de empleados",
+          "rationale": "Gestiona la identidad y el acceso para garantizar que solo los empleados con cuenta puedan entrar al sistema."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "ai",
+          "protocol": "HTTPS",
+          "description": "El sistema autentica a los empleados antes de permitirles interactuar con el chatbot de inteligencia artificial."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el estudio contable dispone de hardware propio con capacidad suficiente para ejecutar inferencia de modelos de lenguaje localmente.",
+        "Se asume que los manuales de procedimientos están digitalizados y accesibles para ser procesados."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz de usuario visual para el chat ni un motor de búsqueda sobre documentos indexados, lo cual requeriría herramientas adicionales como LlamaIndex o LangChain."
+      ]
+    },
+    "response": {
+      "id": "1699c9ed5ac24a50a17df527ec2ec207",
+      "status": "ok",
+      "title": "Chatbot interno para estudio contable con modelos locales",
+      "summary": "Esta propuesta implementa un chatbot interno para consultar manuales de procedimientos ejecutando un modelo de lenguaje en servidores propios, complementado con un sistema de gestión de identidad para asegurar el acceso exclusivo de los empleados.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Ollama",
+          "role": "Ejecución local de modelos de lenguaje",
+          "full_name": "ollama/ollama",
+          "rationale": "Permite ejecutar modelos de lenguaje en sus propios servidores para responder preguntas sobre los manuales de procedimientos."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Autenticación de empleados",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Gestiona la identidad y el acceso para garantizar que solo los empleados con cuenta puedan entrar al sistema."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "El sistema autentica a los empleados antes de permitirles interactuar con el chatbot de inteligencia artificial."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el estudio contable dispone de hardware propio con capacidad suficiente para ejecutar inferencia de modelos de lenguaje localmente.",
+        "Se asume que los manuales de procedimientos están digitalizados y accesibles para ser procesados."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz de usuario visual para el chat ni un motor de búsqueda sobre documentos indexados, lo cual requeriría herramientas adicionales como LlamaIndex o LangChain."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T20:06:23.740666Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]
