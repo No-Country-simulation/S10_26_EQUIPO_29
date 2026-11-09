@@ -1,12 +1,14 @@
 import {ButtonAppearance} from './ButtonAppearance';
 import React,{useState,useEffect,useLayoutEffect,useRef} from 'react';
 import {useExamplePlaceholder} from './useExamplePlaceholder';
-import {ArrowUp,Square} from 'lucide-react';
+import {ArrowUp,RotateCw,Square} from 'lucide-react';
 import {ElasticPromptBorder} from '../../ElasticPromptBorder';
-import {PromptError} from '../../PromptError';
-export function PromptComposer({query,error,canRetry,finished,pending,phase,isDetail,input,exampleReveal,submit,stop,workspace=false,setQuery,setError,setCanRetry}){
+export function PromptComposer({query,error,canRetry,finished,pending,phase,isDetail,input,exampleReveal,submit,stop,newArchitecture,assistantResponse,hasResult,workspace=false,setQuery,setError,setCanRetry}){
  const [hovered,setHovered]=useState(false);
- return ( <div className="prompt-form-slot"><div className="prompt-form-clip"><form className={'composer '+(error&&!canRetry?'invalid':'')} data-error={error?'true':undefined} onPointerEnter={event=>{if(event.pointerType!=='touch')setHovered(true);}} onPointerLeave={()=>setHovered(false)} onSubmit={submit}>{!workspace&&<><ElasticPromptBorder/><span className="prompt-surface-glare" aria-hidden="true"/></>}<label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><PromptInput {...{query,error,canRetry,finished,pending,phase,isDetail,input,exampleReveal,workspace,hovered,setQuery,setError,setCanRetry}}/><div className="composer-footer flex items-center justify-end gap-[10px]"><PromptError message={error} canRetry={canRetry&&!pending} onRetry={()=>submit()}/><button className="primary prompt-submit" type={pending?'button':'submit'} onClick={pending?event=>{event.preventDefault();stop();}:undefined} aria-label={pending?'Detener consulta':'Generar propuesta'} title={pending?'Detener consulta':'Generar propuesta'}><span className="submit-symbol" aria-hidden="true">{pending?<Square size={16} fill="currentColor" strokeWidth={0}/>:<ArrowUp className="submit-arrow" size={24} strokeWidth={2}/>}</span></button></div></form><ButtonAppearance/></div></div>
+ const retry=Boolean(error&&canRetry&&!pending);
+ const submitLabel=pending?'Detener consulta':retry?'Reintentar':'Generar propuesta';
+ const showNewArchitecture=workspace&&hasResult&&!pending&&Boolean(assistantResponse);
+ return ( <div className={"prompt-form-slot"+(showNewArchitecture?" has-new-architecture":"")}><div className="prompt-form-clip"><form className={'composer '+(error&&!canRetry?'invalid':'')} data-error={error?'true':undefined} onPointerEnter={event=>{if(event.pointerType!=='touch')setHovered(true);}} onPointerLeave={()=>setHovered(false)} onSubmit={submit}>{!workspace&&<><ElasticPromptBorder/><span className="prompt-surface-glare" aria-hidden="true"/></>}<label htmlFor="prompt" className="sr-only">Describe tu aplicación</label><PromptInput {...{query,error,canRetry,finished,pending,phase,isDetail,input,exampleReveal,workspace,hovered,setQuery,setError,setCanRetry}}/><div className="composer-footer flex items-center justify-end gap-[10px]"><button className="primary prompt-submit" type={pending?'button':'submit'} onClick={pending?event=>{event.preventDefault();stop();}:undefined} aria-label={submitLabel} title={submitLabel}><span className="submit-symbol" aria-hidden="true">{pending?<Square size={16} fill="currentColor" strokeWidth={0}/>:retry?<RotateCw size={22} strokeWidth={2}/>:<ArrowUp className="submit-arrow" size={24} strokeWidth={2}/>}</span></button></div></form>{showNewArchitecture&&<button type="button" className="ui-button ui-button--primary composer-new-architecture" onClick={newArchitecture}>Crear nueva arquitectura</button>}<ButtonAppearance/></div></div>
 );
 }
 

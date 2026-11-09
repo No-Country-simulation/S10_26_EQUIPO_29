@@ -59,7 +59,7 @@ export function Assistant({flow,workspace=false}){
    const height=element.getBoundingClientRect().height;
    const previous=headerSizes.current.get(selector);
    headerSizes.current.set(selector,height);
-   if(previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+   if(!document.documentElement.hasAttribute('data-architecture-reset')&&previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
     animations.push(element.animate([{height:`${previous}px`},{height:`${height}px`}],{duration:360,easing:'cubic-bezier(.22,1,.36,1)'}));
    }
   }

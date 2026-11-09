@@ -37,7 +37,7 @@ export function useAssistantFlow(isDetail){
  function newArchitecture(){
   request.current?.abort();request.current=null;attempts.current=0;setSlow(false);setCanRetry(false);setAssistantResponse(null);setOriginalPrompt('');setQuery('');setError('');
   dispatchPresentation({type:'reset'});
-  requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));
+  // The page coordinator restores focus after the reset transition settles.
  }
  async function submit(e){
   e?.preventDefault();if(pending||request.current)return;

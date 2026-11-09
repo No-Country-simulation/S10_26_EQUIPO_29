@@ -2,9 +2,21 @@ import React from 'react';
 import {ArrowUpRight} from 'lucide-react';
 
 const suggestions=[
- {title:'Gestionar varias tiendas',summary:'Pedidos, inventario y acceso por sucursal.',prompt:'Quiero una plataforma web para gestionar los pedidos y el inventario de cinco tiendas. Cada sucursal debe ver sus ventas y existencias, mientras administración puede consultar todo. Necesitamos buscar productos, actualizar el stock al confirmar pedidos y procesar reportes sin bloquear la aplicación. Empezaremos con 30 empleados y unos 500 pedidos diarios. Queremos alojarla en nuestro servidor y detectar fallos del servicio.'},
- {title:'Consultar documentos internos',summary:'Respuestas con fuentes y permisos por equipo.',prompt:'Necesito un portal donde 50 empleados puedan buscar respuestas en manuales y documentos internos. Cada respuesta debe indicar de qué documento salió y respetar los permisos de cada equipo. Los documentos se actualizan semanalmente y deben procesarse sin interrumpir las consultas. Queremos mantener los datos en nuestra infraestructura y conocer los tiempos de respuesta y los errores.'},
- {title:'Unificar reportes de ventas',summary:'Importaciones automáticas y métricas del negocio.',prompt:'Quiero reunir las ventas de nuestras tiendas y nuestra web en un panel para gerencia. Necesitamos importar datos cada hora, detectar registros duplicados y comparar ingresos, productos y sucursales. Si una importación falla, debe poder reintentarse sin repetir ventas. Empezaremos con unos 100.000 registros diarios y necesitamos controlar si la información está actualizada.'}
+  {
+    "title": "Unificar mis tiendas",
+    "summary": "Accesos, pedidos, búsqueda y resultados del negocio.",
+    "prompt": "Tengo tres tiendas y quiero unificar su operación. Necesito cinco capacidades conectadas: inicio de sesión con permisos para vendedores y gerencia; una base de datos que guarde clientes, productos, stock y pedidos; búsqueda rápida de productos por nombre y descripción; almacenamiento de fotos de productos y comprobantes; y tableros para comparar ventas por tienda. Cuando un vendedor entra, solo puede consultar y registrar pedidos de su tienda. Cada producto guardado debe poder encontrarse en el buscador y mostrar su foto; cada pedido debe quedar relacionado con su comprobante y alimentar los tableros de ventas. Seremos 30 empleados y gestionaremos unos 500 pedidos diarios. Queremos herramientas open source para construir estas capacidades en nuestra propia infraestructura."
+  },
+  {
+    "title": "Organizar los documentos de mi empresa",
+    "summary": "Permisos, archivos, búsqueda y seguimiento de actividad.",
+    "prompt": "Quiero un portal interno para que 80 empleados encuentren contratos, manuales y documentos de clientes. Necesitamos inicio de sesión con permisos por equipo, almacenamiento de los archivos, una base de datos relacional SQL para guardar documentos, versiones, propietarios y permisos con relaciones entre esos registros, un buscador por palabras y una herramienta de tableros para ver consultas y documentos utilizados. Al subir un archivo, debe guardarse su contenido en el almacenamiento, registrarse su ficha en la base de datos y actualizarse el índice del buscador. Al buscar, cada persona solo debe acceder a documentos autorizados. La actividad registrada debe alimentar los tableros de gerencia. Queremos implementar estas cinco capacidades con herramientas open source en nuestros servidores."
+  },
+  {
+    "title": "Crear un portal para mis clientes",
+    "summary": "Catálogo de productos, pedidos y análisis comercial.",
+    "prompt": "Tengo un negocio de venta mayorista y quiero que mis clientes consulten productos y hagan pedidos desde un portal. Necesito cinco capacidades conectadas: inicio de sesión con cuentas y permisos para cada empresa cliente; una base de datos relacional SQL para guardar clientes, productos y pedidos; búsqueda de productos por nombre, descripción y filtros; almacenamiento de fotos y comprobantes; y tableros para analizar las ventas y los pedidos pendientes. Cuando un cliente inicia sesión, consulta el buscador y ve las fotos almacenadas; al confirmar un pedido se guarda en la base de datos junto a su comprobante, y esa información alimenta los tableros del equipo comercial. Esperamos 100 empresas y 1000 pedidos diarios. Queremos construir estas capacidades con herramientas open source en nuestros servidores."
+  }
 ];
 
 export function PromptSuggestions({flow,onSelect,workspace=false}){

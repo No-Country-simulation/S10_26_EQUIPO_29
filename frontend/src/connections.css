@@ -87,3 +87,39 @@
  .hero .has-architecture-header .architecture-header,
  .hero .stack-layers-panel :is(.proposal-tools,.context-panel){animation:none}
 }
+
+/* ELK owns geometry; existing endpoints and following tooltips own presentation. */
+.elk-scroll{max-width:100%;overflow:auto;overscroll-behavior-x:contain;padding:4px;scrollbar-width:none}
+@media(min-width:641px){.elk-scroll{overflow:visible;overscroll-behavior:auto}}
+.elk-map{position:relative;margin-inline:auto;min-height:160px}
+.elk-node{width:200px;position:absolute;visibility:hidden}
+.elk-map.is-ready .elk-node{visibility:visible;animation:proposal-content-reveal 400ms cubic-bezier(.22,1,.36,1) both}
+.elk-wires{position:absolute;inset:0;pointer-events:none;color:#9aafca;overflow:visible}
+.elk-wire-base{fill:none;stroke:currentColor;stroke-width:1.5;stroke-dasharray:1 5;stroke-linecap:round;stroke-linejoin:round}
+.elk-label{position:absolute;display:flex;justify-content:center;align-items:center;text-align:center}
+.elk-label .connection-route-protocol{font-family:inherit;cursor:help;line-height:22px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.elk-label .connection-route-protocol:focus-visible{outline:2px solid #dcedff;outline-offset:3px}
+.elk-map.has-fallback .elk-node{position:relative;visibility:visible;margin-bottom:12px}
+@media(prefers-reduced-motion:reduce){.elk-map.is-ready .elk-node{animation:none}}
+
+/* Connection hover feedback preserves each tool's own palette. */
+.elk-label .connection-route-protocol{transition:background-color 160ms ease,color 160ms ease,border-color 160ms ease}
+.connection-node{transition:filter 200ms cubic-bezier(.22,1,.36,1)}
+@media(hover:hover){
+ .elk-label .connection-route-protocol:hover{background:#fff;color:#111318;border-color:#fff}
+ .connection-node:hover{filter:brightness(1.2)}
+}
+.elk-label .connection-route-protocol:focus-visible{background:#fff;color:#111318;border-color:#fff}
+.connection-node:focus-visible{filter:brightness(1.2)}
+@media(prefers-reduced-motion:reduce){.elk-label .connection-route-protocol,.connection-node{transition:none}}
+
+.elk-scroll::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* One continuous light per edge, including the path beneath its protocol badge. */
+.elk-wire-sweep{fill:none;stroke:white;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18 200;animation:connection-light-travel var(--wire-duration,4s) linear var(--wire-delay,0s) infinite alternate;pointer-events:none}
+.elk-wire-lit-dots{fill:none;stroke:#edf8ff;stroke-width:1.5;stroke-dasharray:1 5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 2px #b8e1ff)}
+@keyframes connection-light-travel{0%{stroke-dashoffset:18;opacity:0}8%{opacity:.85}92%{opacity:.85}100%{stroke-dashoffset:-100;opacity:0}}
+@media(prefers-reduced-motion:reduce){.elk-wire-sweep,.elk-wire-lit-dots{display:none;animation:none}}
+
+.hero .stack-content .proposal-connections-empty{min-height:300px;justify-content:center;padding:24px 20px 56px}
+.hero .stack-content .proposal-connections-empty>p{font-size:clamp(22px,2.2vw,30px);font-weight:400;line-height:1.35;text-align:center;margin:0;color:#eee}

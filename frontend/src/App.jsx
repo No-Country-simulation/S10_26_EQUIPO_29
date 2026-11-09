@@ -23,16 +23,33 @@ export function App(){
  const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
  useSmoothPageScroll(isDetail);
  const resetting=useRef(false);
- function resetArchitecture(){
+ async function resetArchitecture(){
   if(resetting.current)return;
   const reset=()=>{flow.newArchitecture();workspace.reset();};
-  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){reset();return;}
+  const focus=()=>flow.input.current?.focus({preventScroll:true});
+  const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};
+  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}
   resetting.current=true;
+  const form=flow.input.current?.closest('form');
+  const action=form?.parentElement.querySelector('.composer-new-architecture');
+  let centerMotion,buttonMotion;
+  if(form&&action){
+   const bounds=form.getBoundingClientRect();
+   const width=Math.min(756,document.documentElement.clientWidth-(innerWidth<=640?24:48));
+   const left=(document.documentElement.clientWidth-width)/2;
+   centerMotion=form.animate([
+    {translate:'0px 0px',width:`${bounds.width}px`,marginRight:'0px',flex:'none'},
+    {translate:`${left-bounds.left}px 0px`,width:`${width}px`,marginRight:`${bounds.width-width}px`,flex:'none'}
+   ],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
+   buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});
+   await centerMotion.finished.catch(()=>{});
+  }
   document.documentElement.dataset.architectureReset='true';
-  const transition=document.startViewTransition(()=>flushSync(reset));
+  const transition=document.startViewTransition(()=>{centerMotion?.cancel();buttonMotion?.cancel();commit();});
   transition.finished.catch(()=>{}).finally(()=>{
    delete document.documentElement.dataset.architectureReset;
    resetting.current=false;
+   focus();
   });
  }
 
