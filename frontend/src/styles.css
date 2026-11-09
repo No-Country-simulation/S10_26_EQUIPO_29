@@ -1240,7 +1240,7 @@ to{transform:translateY(0)}
 .hero .proposal-tool>a{color:#fff;border:1px solid #ffffff80;border-radius:999px;padding:9px 16px;font-size:14px;transition:background .14s}
 .hero .proposal-tool>a:hover{background:#ffffff18;text-decoration:none}
 .proposal-original{border-left:2px solid #ffffff35;max-width:100%;margin:32px 0;padding-left:22px}
-.hero .stack-content .proposal-original h3{color:#d4d9e2;margin:0 0 10px;font-size:14px}
+.hero .stack-content .proposal-original h3{color:#d4d9e2;margin:0 0 10px;font-size:18px}
 .hero .stack-content .proposal-original p{white-space:pre-wrap;overflow-wrap:anywhere;color:#eef1f5;margin:0;font-size:19px;line-height:1.6}
 .proposal-context-open{text-align:left;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;display:grid}
 .hero .stack-content .proposal-context-open h3{margin:0 0 14px;font-size:22px}
@@ -1689,3 +1689,9 @@ html[data-architecture-reset] .architecture-stage.is-visible {view-transition-na
 @media(prefers-reduced-motion:reduce){
  ::view-transition-group(reset-composer),::view-transition-group(reset-heading),::view-transition-old(reset-composer),::view-transition-new(reset-composer),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result){animation:none}
 }
+
+/* Product name and exact repository form one identity group. */
+.tool-name-group{min-width:0;flex:1}
+.tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name{margin:4px 0 0;font-size:13px;font-weight:400;line-height:20px;letter-spacing:0;color:#d4d9e2;width:fit-content;max-width:100%;box-sizing:border-box;padding:2px 7px;border-radius:6px;background:rgb(255 255 255 / 12%);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.tool-card .tool-repo-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail-identity .tool-repo-name{overflow-wrap:anywhere}

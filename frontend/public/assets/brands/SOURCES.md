@@ -162,3 +162,29 @@ Las nuevas identidades usan tonos oscuros derivados del color `hex` de Simple Ic
 - `vuejs/core`: color de referencia `#4FC08D`.
 - `withastro/astro`: color de referencia `#BC52EE`.
 - `ziglang/zig`: color de referencia `#F7A41D`.
+
+## Ampliación — 2026-11-08
+
+SVG de Simple Icons 16.35.0, sin modificar sus trazados. Se aplica el filtro blanco existente; se conservan los fondos del catálogo. Ory corresponde a la marca del proyecto Kratos.
+
+- `MariaDB/server` → `mariadb.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/mariadb.svg. Fuente de marca: https://mariadb.com/about-us/logos/
+
+- `PostHog/posthog` → `posthog.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/posthog.svg. Fuente de marca: https://posthog.com/handbook/company/brand-assets
+
+- `TryGhost/Ghost` → `ghost.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/ghost.svg. Fuente de marca: https://github.com/TryGhost/Admin/blob/e3e1fa3353767c3729b1658ad42cc35f883470c5/public/assets/icons/icon.svg
+
+- `knadh/listmonk` → `listmonk.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/listmonk.svg. Fuente de marca: https://listmonk.app
+
+- `metabase/metabase` → `metabase.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/metabase.svg. Fuente de marca: https://www.metabase.com
+
+- `novuhq/novu` → `novu.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/novu.svg. Fuente de marca: https://handbook.novu.co/logos-assets
+
+- `ory/kratos` → `ory.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/ory.svg. Fuente de marca: https://www.ory.com/brand
+
+- `payloadcms/payload` → `payloadcms.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/payloadcms.svg. Fuente de marca: https://payloadcms.com
+
+- `rustfs/rustfs` → `rustfs.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/rustfs.svg. Fuente de marca: https://github.com/rustfs/console/blob/3b632beee404cf195e55f558e94f343326e564f9/public/logo.svg
+
+- `strapi/strapi` → `strapi.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/strapi.svg. Fuente de marca: https://handbook.strapi.io/strapi-brand-book-2022/strapi-logo
+
+- `supabase/supabase` → `supabase.svg`: https://cdn.jsdelivr.net/npm/simple-icons@16.35.0/icons/supabase.svg. Fuente de marca: https://github.com/supabase/supabase/blob/4031a7549f5d46da7bc79c01d56be4177dc7c114/packages/common/assets/images/supabase-logo-wordmark--light.svg

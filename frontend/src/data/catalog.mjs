@@ -1,3 +1,4 @@
+import brandIdentities from './brand-identities.json' with {type:'json'};
 import fixtures from '../mocks/catalog.fixtures.json' with {type:'json'};
 import presentation from '../mocks/catalog-presentation.json' with {type:'json'};
 import categoryList from '../generated/categories.json' with {type:'json'};
@@ -13,7 +14,7 @@ const dateLabel=value=>value?new Intl.DateTimeFormat('es-CL',{day:'numeric',mont
 // Translate the contract once; presentation metadata is local, never API payload.
 export function toTool(repo,local=presentation[repo.full_name]??{}){
  const categories=(repo.categories??[]).map(({category_id})=>({id:category_id,name:categoryNames.get(category_id)??category_id}));
- return {id:local.id??String(repo.github_id),githubId:repo.github_id,name:local.name??repo.full_name.split('/').at(-1),full_name:repo.full_name,repo:repo.full_name,
+ return {id:local.id??String(repo.github_id),githubId:repo.github_id,name:brandIdentities.identities[repo.full_name.toLowerCase()]?.displayName??local.name??repo.full_name.split('/').at(-1),full_name:repo.full_name,repo:repo.full_name,
  category:categories[0]?.name??'Sin categoría',categories,description:repo.summary_es??repo.description??'Sin descripción disponible.',
  license_spdx_id:repo.license_spdx_id,language:repo.language??'Sin datos',license:!repo.license_spdx_id||repo.license_spdx_id==='NOASSERTION'?'Revisar licencia':repo.license_spdx_id,
  stars:repo.stargazers_count,activity:dateLabel(repo.pushed_at),maintained:local.maintained??null,archived:repo.archived,disabled:local.disabled??false,dataSource:local.dataSource,syncedAt:local.syncedAt};

@@ -32,7 +32,7 @@ export function ToolCard({ tool, onOpen }) {
    {identity.watermark && (postgres ? <div className="card-watermark" aria-hidden="true"><img src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=""/></div> : <img className="brand-watermark" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt="" aria-hidden="true"/>)}
    <div className="tool-card-title">
     {identity.fallback ? <span className="brand-initials" aria-hidden="true">{identity.initials}</span> : postgres ? <div className="tool-logo"><img src={logo} onError={()=>markBrandFailed(logo)} alt=""/></div> : <img className={identity.wordmark ? 'brand-logo brand-wordmark' : 'brand-logo'} src={logo} onError={()=>markBrandFailed(logo)} alt=""/>}
-    <h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>
+    <div className="tool-name-group"><h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>{tool.full_name&&<p className="tool-repo-name" title={tool.full_name}>{tool.full_name}</p>}</div>
    </div>
    <div className="tool-tags">
     {categoryNames.slice(0,2).map(category=><span key={category}>{category}</span>)}
