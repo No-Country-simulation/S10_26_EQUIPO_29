@@ -51,6 +51,7 @@ evaluación construye el índice con ese mismo catálogo.
 |---|---|---|---|
 | `catalog` (por defecto) | `search_queries_catalog.json` | Snapshot del catálogo real (`ai/data/catalog/`, 127 repos) | Medir la búsqueda que usa el asistente y calibrar el umbral |
 | `catalog-validation` | `search_queries_catalog_validation.json` | Snapshot del catálogo real | Validar con consultas nuevas el texto de búsqueda elegido con `catalog`; no se usa para ajustar |
+| `catalog-test` | `search_queries_catalog_test.json` | Snapshot del catálogo real | Prueba final: consultas de pedidos escritos sin ver el catálogo; se mide una sola vez |
 | `sample` | `search_queries.json` | 20 repos de ejemplo (`ai/data/`) | Repetir la elección del modelo de embeddings |
 
 - Cada consulta tiene sus repos aceptables (`expected`). Una lista vacía
@@ -88,6 +89,8 @@ archivo de licencia, nunca el resumen de la IA) y las revisó una persona.
 | Asistente `holdout` | Asistente de IA, después de leer el catálogo (7-nov) | abstención (7-nov) | desarrollo |
 | Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
 | Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
+| Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
+| Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
 
 Las cifras que se publican salen de un conjunto de prueba final que no se usa para
 decidir nada y se corre una sola vez.

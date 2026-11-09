@@ -129,6 +129,25 @@ catálogo, antes de ver respuestas del asistente con él: son de desarrollo.
 python -m ai.eval.run_assistant_eval gemini --cases abstention
 ```
 
+## Prueba final (16 casos)
+
+`assistant_cases_test.json`. Pedidos de pequeños negocios escritos por otro modelo
+de lenguaje sin ver el catálogo, filtrados con reglas fijas antes de leerlos y sin
+editar; las etiquetas se pusieron después. Sus consultas de búsqueda
+(`search_queries_catalog_test.json`) las escribió el paso de entender, una sola vez.
+
+Se corre **una sola vez**, con la versión ya elegida; sus cifras son las que se
+publican. Si se cambia algo mirando sus resultados, deja de ser prueba final y hacen
+falta casos nuevos.
+
+Con el catálogo de 127 repos, 2 de sus 61 necesidades no tienen herramienta: mide
+sobre todo la recomendación. La abstención se mide con los casos de abstención.
+
+```bash
+python -m ai.eval.run_assistant_eval gemini --cases test
+python -m ai.eval.run_search_eval --golden catalog-test
+```
+
 ## Qué no se mide aquí
 
 Los textos (título, resumen, roles, razones) y las conexiones: hay muchas
