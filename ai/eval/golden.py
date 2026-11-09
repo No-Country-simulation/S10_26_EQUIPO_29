@@ -69,3 +69,22 @@ def load_search_queries(name: GoldenName = DEFAULT_GOLDEN) -> SearchGoldenSet:
     if name not in GOLDEN_FILES:
         raise ValueError(f"El golden set {name!r} no existe; opciones: {', '.join(GOLDEN_FILES)}")
     return SearchGoldenSet.model_validate_json(GOLDEN_FILES[name].read_bytes())
+
+
+def load_goldens(names: list[str]) -> list[tuple[str, SearchGoldenSet]]:
+    """Carga uno o varios golden sets para medirlos como uno solo.
+
+    Lanza `ValueError` si son de catálogos distintos o si repiten ids de consulta.
+    """
+    goldens = [(name, load_search_queries(name)) for name in dict.fromkeys(names)]
+    if len({golden.source for _, golden in goldens}) > 1:
+        raise ValueError("solo se miden juntos golden sets del mismo catálogo")
+    ids = [q.id for _, golden in goldens for q in golden.queries]
+    if len(ids) != len(set(ids)):
+        raise ValueError("los golden sets repiten ids de consulta")
+    return goldens
+
+
+def report_name(names: list[str]) -> str:
+    """Prefijo del reporte: el del golden set, o los nombres unidos con '+' si son varios."""
+    return REPORT_PREFIX[names[0]] if len(names) == 1 else "search-" + "+".join(names)
