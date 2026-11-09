@@ -54,7 +54,7 @@ def test_pares_completos_y_distintos(golden):
         assert set(qs[0].expected) != set(qs[1].expected), f"par {name}: mismas respuestas"
 
 
-@pytest.mark.parametrize("name", ["catalog", "catalog-validation"])
+@pytest.mark.parametrize("name", ["catalog", "catalog-validation", "catalog-test"])
 def test_golden_del_catalogo_lleva_la_fecha_del_snapshot_actual(name):
     # Si el snapshot se renueva, este test falla a propósito: hay que revisar las
     # consultas (repos nuevos pueden responder las que hoy no tienen respuesta).

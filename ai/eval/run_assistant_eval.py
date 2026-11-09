@@ -236,7 +236,8 @@ def main() -> None:
                         help="base: los casos rápidos (por defecto); validation: los casos de "
                              "validación; holdout: los reservados (solo línea base y versión final); "
                              "business: pedidos de negocios escritos sin ver el catálogo; "
-                             "abstention: necesidades parecidas a algo del catálogo pero no cubiertas")
+                             "abstention: necesidades parecidas a algo del catálogo pero no cubiertas; "
+                             "test: la prueba final (una sola corrida, con la versión elegida)")
     parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
                         help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
     args = parser.parse_args()
