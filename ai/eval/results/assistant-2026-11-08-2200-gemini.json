@@ -1,0 +1,1973 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-ropa",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta y transferencias",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de registro en hoja de cálculo",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de productos más vendidos",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "typesense/typesense",
+          0.536
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.415
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.341
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.328
+        ],
+        [
+          "pgvector/pgvector",
+          0.319
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.359
+        ],
+        [
+          "killbill/killbill",
+          0.241
+        ]
+      ],
+      "automation": [
+        [
+          "apache/airflow",
+          0.302
+        ],
+        [
+          "knadh/listmonk",
+          0.28
+        ],
+        [
+          "microsoft/playwright",
+          0.277
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.268
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.263
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.379
+        ],
+        [
+          "plausible/analytics",
+          0.349
+        ],
+        [
+          "PostHog/posthog",
+          0.336
+        ],
+        [
+          "duckdb/duckdb",
+          0.26
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.26
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Implementamos una solución completa para la tienda de ropa con buscador tolerante a errores, pagos con tarjeta y pasarelas, automatización de flujos de datos y analítica detallada de productos.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador tolerante a errores ortográficos, y typesense/typesense es un motor de búsqueda rápido en memoria con tolerancia a errores tipográficos.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "rationale": "Typesense es un motor de búsqueda rápido, en memoria y tolerante a errores tipográficos, ideal para encontrar productos aunque el cliente escriba mal. Cuenta con la licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide procesamiento de pagos con tarjeta y transferencias, y juspay/hyperswitch es una plataforma de pagos componible que permite conectar múltiples proveedores de pago.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos",
+          "rationale": "Hyperswitch es una plataforma de pagos abierta y componible que permite la conectividad a múltiples proveedores de pago y tokenización. Utiliza la licencia Apache-2.0 y se mantiene activamente."
+        },
+        {
+          "need": "automation",
+          "fit_check": "La necesidad pide automatización de registro en hoja de cálculo, y apache/airflow es una plataforma para programar, autorizar y monitorear flujos de trabajo.",
+          "fit": "serves",
+          "full_name": "apache/airflow",
+          "label": "Apache Airflow",
+          "role": "Automatización de flujos de datos",
+          "rationale": "Apache Airflow es una plataforma para autorizar, programar y monitorear flujos de trabajo y automatización de datos. Posee licencia Apache-2.0 y mantenimiento constante."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analítica de productos más vendidos, y PostHog/posthog es una plataforma que ofrece analítica de producto, eventos, conversiones e ingresos.",
+          "fit": "serves",
+          "full_name": "PostHog/posthog",
+          "label": "PostHog",
+          "role": "Analítica de ventas",
+          "rationale": "PostHog es una plataforma líder para analítica de productos, seguimiento de conversiones e ingresos en un solo lugar. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "automation",
+          "protocol": "Webhook / API",
+          "description": "Notifica cada pago exitoso para activar el flujo automatizado de registro."
+        },
+        {
+          "from_need": "payments",
+          "to_need": "analytics",
+          "protocol": "API",
+          "description": "Envía los datos de las transacciones y productos vendidos para su análisis."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda online cuenta con una interfaz web propia donde se integrarán el buscador y la pasarela de pagos.",
+        "Se asume que la integración con PSE específica de la región se puede conectar a través de la plataforma de pagos elegida o mediante adaptadores personalizados."
+      ],
+      "other_limitations": [
+        "La integración específica con métodos de pago locales como PSE puede requerir configuración adicional en la plataforma de pagos.",
+        "La automatización con Apache Airflow requiere la creación de DAGs personalizados para enlazar los datos de ventas directamente con la hoja de cálculo contable."
+      ]
+    },
+    "response": {
+      "id": "641777ee1a7041d781b8a2a0d2c51746",
+      "status": "ok",
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Implementamos una solución completa para la tienda de ropa con buscador tolerante a errores, pagos con tarjeta y pasarelas, automatización de flujos de datos y analítica detallada de productos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense es un motor de búsqueda rápido, en memoria y tolerante a errores tipográficos, ideal para encontrar productos aunque el cliente escriba mal. Cuenta con la licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch es una plataforma de pagos abierta y componible que permite la conectividad a múltiples proveedores de pago y tokenización. Utiliza la licencia Apache-2.0 y se mantiene activamente."
+        },
+        {
+          "key": "c3",
+          "label": "Apache Airflow",
+          "role": "Automatización de flujos de datos",
+          "full_name": "apache/airflow",
+          "rationale": "Apache Airflow es una plataforma para autorizar, programar y monitorear flujos de trabajo y automatización de datos. Posee licencia Apache-2.0 y mantenimiento constante."
+        },
+        {
+          "key": "c4",
+          "label": "PostHog",
+          "role": "Analítica de ventas",
+          "full_name": "PostHog/posthog",
+          "rationale": "PostHog es una plataforma líder para analítica de productos, seguimiento de conversiones e ingresos en un solo lugar. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "Webhook / API",
+          "description": "Notifica cada pago exitoso para activar el flujo automatizado de registro."
+        },
+        {
+          "from_key": "c2",
+          "to_key": "c4",
+          "protocol": "API",
+          "description": "Envía los datos de las transacciones y productos vendidos para su análisis."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda online cuenta con una interfaz web propia donde se integrarán el buscador y la pasarela de pagos.",
+        "Se asume que la integración con PSE específica de la región se puede conectar a través de la plataforma de pagos elegida o mediante adaptadores personalizados."
+      ],
+      "limitations": [
+        "La integración específica con métodos de pago locales como PSE puede requerir configuración adicional en la plataforma de pagos.",
+        "La automatización con Apache Airflow requiere la creación de DAGs personalizados para enlazar los datos de ventas directamente con la hoja de cálculo contable."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:56:32.988737Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "logistica-flota",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos geográficos",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualización de datos y tableros",
+          "evidence": "ver tableros de entregas por ciudad"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento de eventos en tiempo real",
+          "evidence": "procesar esos eventos en tiempo real"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "pgvector/pgvector",
+          0.295
+        ],
+        [
+          "redis/redis",
+          0.284
+        ],
+        [
+          "etcd-io/etcd",
+          0.279
+        ],
+        [
+          "valkey-io/valkey",
+          0.257
+        ],
+        [
+          "typesense/typesense",
+          0.24
+        ]
+      ],
+      "analytics": [
+        [
+          "grafana/grafana",
+          0.413
+        ],
+        [
+          "metabase/metabase",
+          0.348
+        ],
+        [
+          "pandas-dev/pandas",
+          0.298
+        ],
+        [
+          "dbt-labs/dbt",
+          0.297
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.257
+        ]
+      ],
+      "data-processing": [
+        [
+          "apache/beam",
+          0.316
+        ],
+        [
+          "apache/kafka",
+          0.316
+        ],
+        [
+          "apache/flink",
+          0.314
+        ],
+        [
+          "redis/redis",
+          0.304
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.287
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de datos en tiempo real para flota de camiones",
+      "summary": "Esta propuesta implementa un sistema para procesar flujos de ubicación en tiempo real, almacenarlos eficientemente y visualizarlos mediante tableros de control por ciudad.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de datos geográficos y Redis ofrece almacenamiento en memoria y motor de consultas vectoriales.",
+          "fit": "serves",
+          "full_name": "redis/redis",
+          "label": "Redis",
+          "role": "Almacenamiento de datos",
+          "rationale": "Redis es un servidor de estructuras de datos rápido y con licencia no identificada por GitHub, ideal para construir aplicaciones en tiempo real y guardar información de los camiones."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide visualización de datos y tableros, y Grafana es una plataforma de visualización de datos y tableros.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Tableros de control",
+          "rationale": "Grafana permite visualizar métricas y crear tableros de entregas por ciudad de manera composable bajo licencia AGPL-3.0."
+        },
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide procesamiento de eventos en tiempo real y Apache Kafka es una plataforma de transmisión de eventos distribuidos.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Procesamiento de eventos",
+          "rationale": "Apache Kafka gestiona el streaming de eventos en tiempo real con licencia Apache-2.0, adecuado para recibir la ubicación de los camiones cada pocos segundos."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envía los eventos procesados de ubicación para ser guardados."
+        },
+        {
+          "from_need": "database",
+          "to_need": "analytics",
+          "protocol": "HTTP",
+          "description": "Suministra los datos almacenados para generar las visualizaciones."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia o en la nube para desplegar los servicios seleccionados."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye herramientas específicas para optimización de rutas geográficas complejas fuera del almacenamiento básico."
+      ]
+    },
+    "response": {
+      "id": "ac11e6153d1645a99da8cb8986c1c94d",
+      "status": "ok",
+      "title": "Arquitectura de datos en tiempo real para flota de camiones",
+      "summary": "Esta propuesta implementa un sistema para procesar flujos de ubicación en tiempo real, almacenarlos eficientemente y visualizarlos mediante tableros de control por ciudad.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Redis",
+          "role": "Almacenamiento de datos",
+          "full_name": "redis/redis",
+          "rationale": "Redis es un servidor de estructuras de datos rápido y con licencia no identificada por GitHub, ideal para construir aplicaciones en tiempo real y guardar información de los camiones."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Tableros de control",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas y crear tableros de entregas por ciudad de manera composable bajo licencia AGPL-3.0."
+        },
+        {
+          "key": "c3",
+          "label": "Apache Kafka",
+          "role": "Procesamiento de eventos",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka gestiona el streaming de eventos en tiempo real con licencia Apache-2.0, adecuado para recibir la ubicación de los camiones cada pocos segundos."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "Envía los eventos procesados de ubicación para ser guardados."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP",
+          "description": "Suministra los datos almacenados para generar las visualizaciones."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia o en la nube para desplegar los servicios seleccionados."
+      ],
+      "limitations": [
+        "La propuesta no incluye herramientas específicas para optimización de rutas geográficas complejas fuera del almacenamiento básico."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:56:45.265837Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recopilación de métricas logs y trazas",
+          "evidence": "un stack de observabilidad con métricas, logs y trazas distribuidas"
+        },
+        {
+          "category": "infrastructure",
+          "query": "orquestación de contenedores en clúster",
+          "evidence": "microservicios en Kubernetes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "grafana/grafana",
+          0.442
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.38
+        ],
+        [
+          "prometheus/prometheus",
+          0.38
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.371
+        ],
+        [
+          "getlago/lago",
+          0.355
+        ]
+      ],
+      "infrastructure": [
+        [
+          "docker/compose",
+          0.437
+        ],
+        [
+          "containerd/containerd",
+          0.424
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.419
+        ],
+        [
+          "opencontainers/runc",
+          0.387
+        ],
+        [
+          "dagster-io/dagster",
+          0.346
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Stack de Observabilidad e Infraestructura para Microservicios",
+      "summary": "Esta propuesta implementa un clúster en Kubernetes para la ejecución de microservicios y una plataforma de visualización en Grafana para la recopilación de métricas, logs y trazas. Se asume que el usuario integrará recolectores adicionales para completar el pipeline de telemetría.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide recopilación de métricas, logs y trazas, y Grafana visualiza métricas, logs y trazas desde múltiples fuentes.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización y análisis de datos de observabilidad",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes como Prometheus, Loki y Elasticsearch. Cuenta con licencia AGPL-3.0 y actividad reciente."
+        },
+        {
+          "need": "infrastructure",
+          "fit_check": "La necesidad pide orquestación de contenedores en clúster y Kubernetes ofrece programación y gestión de contenedores a nivel de producción.",
+          "fit": "serves",
+          "full_name": "kubernetes/kubernetes",
+          "label": "Kubernetes",
+          "role": "Orquestador de contenedores para los microservicios",
+          "rationale": "Kubernetes gestiona la programación y administración de contenedores lista para producción. Utiliza licencia Apache-2.0 y tiene un mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los microservicios se desplegarán directamente sobre Kubernetes y enviarán sus datos de telemetría a Grafana."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye bases de datos de series temporales dedicadas como Prometheus ni recolectores como OpenTelemetry para la ingesta inicial de datos."
+      ]
+    },
+    "response": {
+      "id": "766066fbe55e46b999c90155a5c20842",
+      "status": "ok",
+      "title": "Stack de Observabilidad e Infraestructura para Microservicios",
+      "summary": "Esta propuesta implementa un clúster en Kubernetes para la ejecución de microservicios y una plataforma de visualización en Grafana para la recopilación de métricas, logs y trazas. Se asume que el usuario integrará recolectores adicionales para completar el pipeline de telemetría.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Grafana",
+          "role": "Visualización y análisis de datos de observabilidad",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes como Prometheus, Loki y Elasticsearch. Cuenta con licencia AGPL-3.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Kubernetes",
+          "role": "Orquestador de contenedores para los microservicios",
+          "full_name": "kubernetes/kubernetes",
+          "rationale": "Kubernetes gestiona la programación y administración de contenedores lista para producción. Utiliza licencia Apache-2.0 y tiene un mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los microservicios se desplegarán directamente sobre Kubernetes y enviarán sus datos de telemetría a Grafana."
+      ],
+      "limitations": [
+        "La propuesta no incluye bases de datos de series temporales dedicadas como Prometheus ni recolectores como OpenTelemetry para la ingesta inicial de datos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:56:56.895699Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "una-factura-electronica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisi3n de facturas electr3nicas",
+          "evidence": "emitir facturas electrónicas válidas ante la DIAN"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.238
+        ],
+        [
+          "getlago/lago",
+          0.208
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de facturación electrónica y pagos open source",
+      "summary": "Propuesta para gestionar los pagos y la facturación de tu tienda utilizando una plataforma de código abierto adecuada para la administración de cobros. Ten en cuenta que ninguna de las herramientas candidatas incluye de forma nativa la integración directa con la DIAN para facturación electrónica en Colombia.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir facturas electrónicas válidas ante la DIAN, y Kill Bill ofrece una plataforma de gestión de suscripciones, facturación y pagos.",
+          "fit": "serves",
+          "full_name": "killbill/killbill",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos y facturación",
+          "rationale": "Kill Bill resuelve la gestión de pagos y facturación recurrente de tu tienda gracias a su arquitectura abierta bajo licencia Apache-2.0. Cuenta con una comunidad activa y mantenimiento reciente, permitiéndote administrar ciclos de cobro y transacciones de manera centralizada."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda online cuenta con un adaptador o desarrollo propio para conectar el sistema de pagos con los servicios de la DIAN para la validación fiscal.",
+        "El negocio requiere una gestión automatizada de cobros y suscripciones además de la emisión de comprobantes."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas del catálogo incluye soporte nativo para la emisión de facturas electrónicas válidas ante la DIAN.",
+        "Get lago complementaría la parte de medición y cobro por consumo, pero tampoco resuelve el requisito fiscal de la DIAN."
+      ]
+    },
+    "response": {
+      "id": "ab7d04a939df4690af703184714f6151",
+      "status": "ok",
+      "title": "Sistema de facturación electrónica y pagos open source",
+      "summary": "Propuesta para gestionar los pagos y la facturación de tu tienda utilizando una plataforma de código abierto adecuada para la administración de cobros. Ten en cuenta que ninguna de las herramientas candidatas incluye de forma nativa la integración directa con la DIAN para facturación electrónica en Colombia.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos y facturación",
+          "full_name": "killbill/killbill",
+          "rationale": "Kill Bill resuelve la gestión de pagos y facturación recurrente de tu tienda gracias a su arquitectura abierta bajo licencia Apache-2.0. Cuenta con una comunidad activa y mantenimiento reciente, permitiéndote administrar ciclos de cobro y transacciones de manera centralizada."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda online cuenta con un adaptador o desarrollo propio para conectar el sistema de pagos con los servicios de la DIAN para la validación fiscal.",
+        "El negocio requiere una gestión automatizada de cobros y suscripciones además de la emisión de comprobantes."
+      ],
+      "limitations": [
+        "Ninguna de las herramientas del catálogo incluye soporte nativo para la emisión de facturas electrónicas válidas ante la DIAN.",
+        "Get lago complementaría la parte de medición y cobro por consumo, pero tampoco resuelve el requisito fiscal de la DIAN."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:57:08.189548Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "vago-startup",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o servicio planeas ofrecer con tu startup?",
+        "¿Qué funcionalidades principales tendrá la primera versión de tu aplicación?",
+        "¿Tienes alguna preferencia de lenguaje de programación o experiencia previa con alguna tecnología?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "c0cf56bfea934eba91b4505c27c3ae90",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o servicio planeas ofrecer con tu startup?",
+        "¿Qué funcionalidades principales tendrá la primera versión de tu aplicación?",
+        "¿Tienes alguna preferencia de lenguaje de programación o experiencia previa con alguna tecnología?"
+      ],
+      "generated_at": "2026-11-09T02:57:17.784262Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-ropa",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta y transferencias",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de registro en hoja de cálculo",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y productos populares",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "typesense/typesense",
+          0.536
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.415
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.341
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.328
+        ],
+        [
+          "pgvector/pgvector",
+          0.319
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.359
+        ],
+        [
+          "killbill/killbill",
+          0.241
+        ]
+      ],
+      "automation": [
+        [
+          "apache/airflow",
+          0.302
+        ],
+        [
+          "knadh/listmonk",
+          0.28
+        ],
+        [
+          "microsoft/playwright",
+          0.277
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.268
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.263
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.352
+        ],
+        [
+          "plausible/analytics",
+          0.332
+        ],
+        [
+          "PostHog/posthog",
+          0.297
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.262
+        ],
+        [
+          "metabase/metabase",
+          0.258
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Esta propuesta integra herramientas open source para implementar un motor de búsqueda tolerante a errores, procesamiento de pagos y analítica de ventas. No se incluyeron integraciones nativas para hojas de cálculo contables ni conectores específicos para pasarelas de pago locales como PSE.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador tolerante a errores ortográficos y Typesense ofrece un motor de búsqueda rápido y tolerante a errores tipográficos.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "rationale": "Typesense es un motor de búsqueda rápido en memoria con tolerancia a errores tipográficos, ideal para encontrar productos aunque el cliente escriba mal. Cuenta con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide pagos con tarjeta y transferencias y Hyperswitch ofrece una plataforma de pagos composable para conectar múltiples proveedores de pagos.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos",
+          "rationale": "Hyperswitch es una plataforma de pagos abierta y de alto rendimiento que permite conectar múltiples proveedores de pago. Su licencia es Apache-2.0 y tiene actualizaciones constantes."
+        },
+        {
+          "need": "automation",
+          "fit_check": "La necesidad pide automatización de registro en hoja de cálculo y Apache Airflow ofrece una plataforma para programar y monitorizar flujos de trabajo.",
+          "fit": "serves",
+          "full_name": "apache/airflow",
+          "label": "Apache Airflow",
+          "role": "Automatización de flujos",
+          "rationale": "Apache Airflow permite autor y programar flujos de trabajo para automatizar tareas de ingeniería de datos. Utiliza licencia Apache-2.0 y mantiene un desarrollo activo."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analítica de ventas y productos populares y Metabase ofrece una herramienta de inteligencia de negocios para trabajar con datos y gráficos.",
+          "fit": "serves",
+          "full_name": "metabase/metabase",
+          "label": "Metabase",
+          "role": "Analítica y reportes",
+          "rationale": "Metabase facilita la creación de paneles y consultas para analizar los datos del negocio y ver qué productos se venden más. Su licencia no fue identificada por GitHub y presenta actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "automation",
+          "protocol": "API REST / Webhooks",
+          "description": "Envía los datos de cada venta completada para activar el flujo de registro."
+        },
+        {
+          "from_need": "automation",
+          "to_need": "analytics",
+          "protocol": "SQL / Conexión a Base de Datos",
+          "description": "Alimenta la base de datos analítica con los registros procesados de las ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda de ropa cuenta con una base de datos central para almacenar los productos y las transacciones.",
+        "Se asume que los clientes accederán a la tienda a través de una aplicación web conectada al motor de búsqueda."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos de pagos garantiza soporte nativo específico para el medio de pago local PSE sin configuración adicional de pasarelas compatibles.",
+        "Ninguna de las herramientas de automatización incluye un conector directo o nativo hacia hojas de cálculo contables sin desarrollo adicional."
+      ]
+    },
+    "response": {
+      "id": "6ccd87ad0f9a4b4e87cedad064f4041f",
+      "status": "ok",
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Esta propuesta integra herramientas open source para implementar un motor de búsqueda tolerante a errores, procesamiento de pagos y analítica de ventas. No se incluyeron integraciones nativas para hojas de cálculo contables ni conectores específicos para pasarelas de pago locales como PSE.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense es un motor de búsqueda rápido en memoria con tolerancia a errores tipográficos, ideal para encontrar productos aunque el cliente escriba mal. Cuenta con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch es una plataforma de pagos abierta y de alto rendimiento que permite conectar múltiples proveedores de pago. Su licencia es Apache-2.0 y tiene actualizaciones constantes."
+        },
+        {
+          "key": "c3",
+          "label": "Apache Airflow",
+          "role": "Automatización de flujos",
+          "full_name": "apache/airflow",
+          "rationale": "Apache Airflow permite autor y programar flujos de trabajo para automatizar tareas de ingeniería de datos. Utiliza licencia Apache-2.0 y mantiene un desarrollo activo."
+        },
+        {
+          "key": "c4",
+          "label": "Metabase",
+          "role": "Analítica y reportes",
+          "full_name": "metabase/metabase",
+          "rationale": "Metabase facilita la creación de paneles y consultas para analizar los datos del negocio y ver qué productos se venden más. Su licencia no fue identificada por GitHub y presenta actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "API REST / Webhooks",
+          "description": "Envía los datos de cada venta completada para activar el flujo de registro."
+        },
+        {
+          "from_key": "c3",
+          "to_key": "c4",
+          "protocol": "SQL / Conexión a Base de Datos",
+          "description": "Alimenta la base de datos analítica con los registros procesados de las ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda de ropa cuenta con una base de datos central para almacenar los productos y las transacciones.",
+        "Se asume que los clientes accederán a la tienda a través de una aplicación web conectada al motor de búsqueda."
+      ],
+      "limitations": [
+        "Ninguno de los candidatos de pagos garantiza soporte nativo específico para el medio de pago local PSE sin configuración adicional de pasarelas compatibles.",
+        "Ninguna de las herramientas de automatización incluye un conector directo o nativo hacia hojas de cálculo contables sin desarrollo adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:57:43.283888Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "logistica-flota",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos geográficos",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualización de datos en tableros",
+          "evidence": "ver tableros de entregas por ciudad"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento de eventos en streaming",
+          "evidence": "procesar esos eventos en tiempo real"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "pgvector/pgvector",
+          0.295
+        ],
+        [
+          "redis/redis",
+          0.284
+        ],
+        [
+          "etcd-io/etcd",
+          0.279
+        ],
+        [
+          "valkey-io/valkey",
+          0.257
+        ],
+        [
+          "typesense/typesense",
+          0.24
+        ]
+      ],
+      "analytics": [
+        [
+          "grafana/grafana",
+          0.388
+        ],
+        [
+          "metabase/metabase",
+          0.325
+        ],
+        [
+          "pandas-dev/pandas",
+          0.276
+        ],
+        [
+          "dbt-labs/dbt",
+          0.275
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.256
+        ]
+      ],
+      "data-processing": [
+        [
+          "apache/flink",
+          0.459
+        ],
+        [
+          "apache/kafka",
+          0.428
+        ],
+        [
+          "apache/beam",
+          0.393
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.279
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.27
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura en tiempo real para logística de camiones",
+      "summary": "La propuesta integra herramientas open source para procesar flujos masivos de eventos en tiempo real, almacenar la información geolocalizada y visualizar tableros de control por ciudad para la empresa de logística.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento y consulta de datos geográficos y el candidato Redis ofrece un motor de consulta de vectores, estructuras de datos en memoria y base de datos con licencia no identificada por GitHub.",
+          "fit": "serves",
+          "full_name": "redis/redis",
+          "label": "Redis",
+          "role": "Almacén en memoria",
+          "rationale": "Redis permite construir aplicaciones en tiempo real y ofrece un motor de consulta vectorial y de estructuras de datos para guardar la información de los camiones. Su licencia no fue identificada por GitHub y cuenta con actualización reciente."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide visualización de datos en tableros y el candidato Grafana ofrece una plataforma de visualización y observabilidad con paneles y licencias AGPL-3.0.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de tableros",
+          "rationale": "Grafana permite visualizar datos en tiempo real mediante tableros para ver las entregas por ciudad de forma centralizada. Su licencia es AGPL-3.0 y se mantiene activamente."
+        },
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide procesamiento de eventos en streaming y el candidato Apache Kafka ofrece una plataforma distribuida de transmisión de eventos con licencia Apache-2.0.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Procesamiento en streaming",
+          "rationale": "Apache Kafka gestiona la transmisión de flujos de eventos distribuidos para procesar la ubicación de los camiones en tiempo real. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "TCP/IP",
+          "description": "Envía los eventos procesados de ubicación de los camiones para su persistencia."
+        },
+        {
+          "from_need": "database",
+          "to_need": "analytics",
+          "protocol": "HTTP",
+          "description": "Suministra los datos almacenados para poblar los tableros de entregas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la red celular de los 200 camiones tiene cobertura constante para reportar la ubicación cada pocos segundos.",
+        "Se asume infraestructura propia o en la nube para desplegar los componentes seleccionados."
+      ],
+      "other_limitations": [
+        "No se incluyeron herramientas específicas para geocodificación avanzada de ciudades, delegando esta lógica al procesamiento o almacenamiento."
+      ]
+    },
+    "response": {
+      "id": "a94d078f65e6470086b287660dc05e94",
+      "status": "ok",
+      "title": "Arquitectura en tiempo real para logística de camiones",
+      "summary": "La propuesta integra herramientas open source para procesar flujos masivos de eventos en tiempo real, almacenar la información geolocalizada y visualizar tableros de control por ciudad para la empresa de logística.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Redis",
+          "role": "Almacén en memoria",
+          "full_name": "redis/redis",
+          "rationale": "Redis permite construir aplicaciones en tiempo real y ofrece un motor de consulta vectorial y de estructuras de datos para guardar la información de los camiones. Su licencia no fue identificada por GitHub y cuenta con actualización reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Visualización de tableros",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar datos en tiempo real mediante tableros para ver las entregas por ciudad de forma centralizada. Su licencia es AGPL-3.0 y se mantiene activamente."
+        },
+        {
+          "key": "c3",
+          "label": "Apache Kafka",
+          "role": "Procesamiento en streaming",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka gestiona la transmisión de flujos de eventos distribuidos para procesar la ubicación de los camiones en tiempo real. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "TCP/IP",
+          "description": "Envía los eventos procesados de ubicación de los camiones para su persistencia."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP",
+          "description": "Suministra los datos almacenados para poblar los tableros de entregas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la red celular de los 200 camiones tiene cobertura constante para reportar la ubicación cada pocos segundos.",
+        "Se asume infraestructura propia o en la nube para desplegar los componentes seleccionados."
+      ],
+      "limitations": [
+        "No se incluyeron herramientas específicas para geocodificación avanzada de ciudades, delegando esta lógica al procesamiento o almacenamiento."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:57:55.864080Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recolección de métricas y trazas distribuidas",
+          "evidence": "Define un stack de observabilidad con métricas, logs y trazas distribuidas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "jaegertracing/jaeger",
+          0.406
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.402
+        ],
+        [
+          "prometheus/prometheus",
+          0.364
+        ],
+        [
+          "grafana/grafana",
+          0.359
+        ],
+        [
+          "getlago/lago",
+          0.296
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Stack de observabilidad para microservicios",
+      "summary": "La propuesta implementa una plataforma centralizada de visualización y análisis para recopilar métricas, logs y trazas distribuidas utilizando Grafana. Quedan sin herramienta específica las funciones individuales de recolección profunda de trazas y métricas al haber seleccionado una plataforma visual integradora.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide recolección de métricas y trazas distribuidas, y Grafana es la plataforma abierta y componible de observabilidad y visualización de datos que permite visualizar métricas, logs y trazas de múltiples fuentes.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización y análisis de datos",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes como Prometheus y otros sistemas, cubriendo el stack de observabilidad solicitado para microservicios. Utiliza la licencia AGPL-3.0 y cuenta con mantenimiento activo reciente y una amplia adopción en la comunidad."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los microservicios en Kubernetes ya generan telemetría estandarizada compatible con Grafana."
+      ],
+      "other_limitations": [
+        "No se incluyeron herramientas dedicadas exclusivamente a bases de datos de series temporales como Prometheus o recolectores específicos de trazas como Jaeger, ya que se seleccionó a Grafana como la plataforma principal de visualización."
+      ]
+    },
+    "response": {
+      "id": "65fba1575d4a4eec8737593b1b86aa42",
+      "status": "ok",
+      "title": "Stack de observabilidad para microservicios",
+      "summary": "La propuesta implementa una plataforma centralizada de visualización y análisis para recopilar métricas, logs y trazas distribuidas utilizando Grafana. Quedan sin herramienta específica las funciones individuales de recolección profunda de trazas y métricas al haber seleccionado una plataforma visual integradora.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Grafana",
+          "role": "Visualización y análisis de datos",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes como Prometheus y otros sistemas, cubriendo el stack de observabilidad solicitado para microservicios. Utiliza la licencia AGPL-3.0 y cuenta con mantenimiento activo reciente y una amplia adopción en la comunidad."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los microservicios en Kubernetes ya generan telemetría estandarizada compatible con Grafana."
+      ],
+      "limitations": [
+        "No se incluyeron herramientas dedicadas exclusivamente a bases de datos de series temporales como Prometheus o recolectores específicos de trazas como Jaeger, ya que se seleccionó a Grafana como la plataforma principal de visualización."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:58:20.365699Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "una-factura-electronica",
+    "error": null,
+    "waited": 10.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisión de facturas electrónicas legales",
+          "evidence": "emitir facturas electrónicas válidas ante la DIAN"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.241
+        ],
+        [
+          "getlago/lago",
+          0.219
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Plataforma de facturación electrónica y pagos para tienda",
+      "summary": "Se propone una herramienta para la gestión de pagos y facturación, aunque no cubre directamente la validación específica ante la DIAN local. Queda pendiente asegurar el cumplimiento de la normativa fiscal colombiana para facturación electrónica.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir facturas electrónicas válidas ante la DIAN, y Kill Bill ofrece una plataforma de facturación y pagos por suscripción.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos",
+          "rationale": "Kill Bill gestiona la facturación y los pagos de suscripciones, pero no incluye la integración ni la validación nativa para la emisión de facturas electrónicas ante la DIAN."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda opera en Colombia y requiere cumplimiento normativo estricto de la DIAN.",
+        "Se requiere un conector adicional o desarrollo propio para integrar la emisión de facturas electrónicas con la entidad fiscal."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas candidatas incluye soporte nativo para la emisión de facturas electrónicas válidas ante la DIAN.",
+        "La herramienta alternativa getlago/lago se centra en facturación basada en uso pero tampoco cumple con el requisito fiscal específico de la DIAN."
+      ]
+    },
+    "response": {
+      "id": "38a2262599064f15aebf9d2a52d6f513",
+      "status": "no_evidence",
+      "title": "Plataforma de facturación electrónica y pagos para tienda",
+      "summary": "Se propone una herramienta para la gestión de pagos y facturación, aunque no cubre directamente la validación específica ante la DIAN local. Queda pendiente asegurar el cumplimiento de la normativa fiscal colombiana para facturación electrónica.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda opera en Colombia y requiere cumplimiento normativo estricto de la DIAN.",
+        "Se requiere un conector adicional o desarrollo propio para integrar la emisión de facturas electrónicas con la entidad fiscal."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Kill Bill gestiona la facturación y los pagos de suscripciones, pero no incluye la integración ni la validación nativa para la emisión de facturas electrónicas ante la DIAN.",
+        "Ninguna de las herramientas candidatas incluye soporte nativo para la emisión de facturas electrónicas válidas ante la DIAN.",
+        "La herramienta alternativa getlago/lago se centra en facturación basada en uso pero tampoco cumple con el requisito fiscal específico de la DIAN."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:58:44.553845Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "vago-startup",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o aplicación quieres construir para tu startup?",
+        "¿Qué funcionalidades principales tendrá el sistema en su primera versión?",
+        "¿Qué tecnologías, lenguajes o plataformas prefieres o ya sabes utilizar?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "ce2e0c6118534ef4942d0fe1a8360907",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o aplicación quieres construir para tu startup?",
+        "¿Qué funcionalidades principales tendrá el sistema en su primera versión?",
+        "¿Qué tecnologías, lenguajes o plataformas prefieres o ya sabes utilizar?"
+      ],
+      "generated_at": "2026-11-09T02:58:54.562167Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-ropa",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta y transferencias",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de registro de ventas",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de productos más vendidos",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "typesense/typesense",
+          0.536
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.415
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.341
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.328
+        ],
+        [
+          "pgvector/pgvector",
+          0.319
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.359
+        ],
+        [
+          "killbill/killbill",
+          0.241
+        ]
+      ],
+      "automation": [
+        [
+          "knadh/listmonk",
+          0.297
+        ],
+        [
+          "getlago/lago",
+          0.275
+        ],
+        [
+          "ansible/ansible",
+          0.256
+        ],
+        [
+          "microsoft/playwright",
+          0.235
+        ],
+        [
+          "apache/airflow",
+          0.234
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.379
+        ],
+        [
+          "plausible/analytics",
+          0.349
+        ],
+        [
+          "PostHog/posthog",
+          0.336
+        ],
+        [
+          "duckdb/duckdb",
+          0.26
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.26
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Esta propuesta integra herramientas open source para implementar un motor de búsqueda tolerante a errores, una plataforma de pagos y una base de datos analítica para monitorear las ventas de la tienda. Quedan sin resolver de forma directa la automatización nativa hacia hojas de cálculo mediante conectores específicos y la pasarela de pagos para el método local PSE.",
+      "boxes": [
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador tolerante a errores ortográficos, y typesense/typesense ofrece un motor de búsqueda rápido y tolerante a errores ortográficos en memoria.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda de productos",
+          "rationale": "Typesense resuelve la necesidad de un buscador que encuentre productos aunque el cliente escriba mal, gracias a su motor de búsqueda difuso y tolerante a errores con licencia GPL-3.0 y alta actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide procesamiento de pagos con tarjeta y transferencias, y juspay/hyperswitch ofrece una plataforma de pagos componible para conectar múltiples proveedores.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Plataforma de procesamiento de pagos",
+          "rationale": "Hyperswitch permite gestionar pagos con tarjeta bajo cumplimiento PCI y cuenta con licencia Apache-2.0 y mantenimiento constante."
+        },
+        {
+          "need": "automation",
+          "fit_check": "La necesidad pide automatización de registro de ventas hacia una hoja de cálculo, pero los candidatos disponibles son herramientas de desarrollo, pruebas, correo o facturación por uso que no automatizan directamente hojas de cálculo.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Automatización de ventas",
+          "role": "Sincronización de transacciones",
+          "rationale": "Ningún candidato de esta necesidad resuelve de forma directa la escritura automática en una hoja de cálculo contable, ya que están orientados a infraestructura, marketing o pruebas."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analítica de productos más vendidos, y ClickHouse/ClickHouse ofrece un sistema de gestión de bases de datos analíticas en tiempo real.",
+          "fit": "serves",
+          "full_name": "ClickHouse/ClickHouse",
+          "label": "ClickHouse",
+          "role": "Base de datos analítica de ventas",
+          "rationale": "ClickHouse resuelve la necesidad de ver qué productos se venden más mediante analítica en tiempo real para grandes volúmenes de datos, con licencia Apache-2.0 y actualización reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "analytics",
+          "protocol": "API REST",
+          "description": "Envía los datos de las transacciones completadas a la base de datos analítica para el reporte de ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda de ropa cuenta con personal técnico para desplegar y mantener aplicaciones autoalojadas.",
+        "El método de pago local PSE requiere integraciones adicionales que no se resuelven de manera nativa con la plataforma de pagos elegida."
+      ],
+      "other_limitations": [
+        "La herramienta de pagos seleccionada no especifica soporte directo para el método de pago local PSE sin conectores adicionales.",
+        "No se encontró una herramienta específica para sincronizar automáticamente cada venta hacia una hoja de cálculo contable."
+      ]
+    },
+    "response": {
+      "id": "21a5f50ed58547f5b17f35ffa3bc6bba",
+      "status": "ok",
+      "title": "Plataforma Open Source para Tienda de Ropa en Línea",
+      "summary": "Esta propuesta integra herramientas open source para implementar un motor de búsqueda tolerante a errores, una plataforma de pagos y una base de datos analítica para monitorear las ventas de la tienda. Quedan sin resolver de forma directa la automatización nativa hacia hojas de cálculo mediante conectores específicos y la pasarela de pagos para el método local PSE.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Motor de búsqueda de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense resuelve la necesidad de un buscador que encuentre productos aunque el cliente escriba mal, gracias a su motor de búsqueda difuso y tolerante a errores con licencia GPL-3.0 y alta actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Plataforma de procesamiento de pagos",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch permite gestionar pagos con tarjeta bajo cumplimiento PCI y cuenta con licencia Apache-2.0 y mantenimiento constante."
+        },
+        {
+          "key": "c3",
+          "label": "ClickHouse",
+          "role": "Base de datos analítica de ventas",
+          "full_name": "ClickHouse/ClickHouse",
+          "rationale": "ClickHouse resuelve la necesidad de ver qué productos se venden más mediante analítica en tiempo real para grandes volúmenes de datos, con licencia Apache-2.0 y actualización reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "API REST",
+          "description": "Envía los datos de las transacciones completadas a la base de datos analítica para el reporte de ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda de ropa cuenta con personal técnico para desplegar y mantener aplicaciones autoalojadas.",
+        "El método de pago local PSE requiere integraciones adicionales que no se resuelven de manera nativa con la plataforma de pagos elegida."
+      ],
+      "limitations": [
+        "Automatización: ninguna de las herramientas encontradas encaja. Ningún candidato de esta necesidad resuelve de forma directa la escritura automática en una hoja de cálculo contable, ya que están orientados a infraestructura, marketing o pruebas.",
+        "La herramienta de pagos seleccionada no especifica soporte directo para el método de pago local PSE sin conectores adicionales.",
+        "No se encontró una herramienta específica para sincronizar automáticamente cada venta hacia una hoja de cálculo contable."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:59:07.558351Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "logistica-flota",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento de eventos en tiempo real",
+          "evidence": "procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de datos geoespaciales",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualización de métricas de entregas",
+          "evidence": "ver tableros de entregas por ciudad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "messaging": [
+        [
+          "apache/beam",
+          0.316
+        ],
+        [
+          "apache/kafka",
+          0.316
+        ],
+        [
+          "apache/flink",
+          0.314
+        ],
+        [
+          "redis/redis",
+          0.304
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.287
+        ]
+      ],
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.294
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.29
+        ],
+        [
+          "valkey-io/valkey",
+          0.279
+        ],
+        [
+          "pgvector/pgvector",
+          0.264
+        ],
+        [
+          "redis/redis",
+          0.254
+        ]
+      ],
+      "analytics": [
+        [
+          "grafana/grafana",
+          0.385
+        ],
+        [
+          "prometheus/prometheus",
+          0.31
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.304
+        ],
+        [
+          "getlago/lago",
+          0.295
+        ],
+        [
+          "metabase/metabase",
+          0.29
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura open source para logística y flotas en tiempo real",
+      "summary": "Esta propuesta integra una plataforma de streaming de eventos para procesar la ubicación de los camiones, un sistema de almacenamiento distribuido para guardar los datos y una herramienta de visualización para ver tableros de entregas por ciudad.",
+      "boxes": [
+        {
+          "need": "messaging",
+          "fit_check": "Apache Kafka ofrece la capacidad de procesar eventos en tiempo real actuando como una plataforma distribuida de transmisión de eventos.",
+          "fit": "serves",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Procesamiento y streaming de eventos de ubicación.",
+          "rationale": "Apache Kafka es una plataforma distribuida de transmisión de eventos ideal para procesar los flujos de datos generados por los camiones en tiempo real. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "database",
+          "fit_check": "SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar archivos y objetos a gran escala.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento persistente de datos de la flota.",
+          "rationale": "SeaweedFS provee almacenamiento distribuido para guardar los datos de manera eficiente y con acceso rápido a disco. Utiliza licencia Apache-2.0 y recibe actualizaciones continuas."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "Grafana provee una plataforma de visualización y tableros para analizar métricas e información de múltiples fuentes.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Tableros de control y visualización de entregas.",
+          "rationale": "Grafana es una plataforma de visualización y análisis ideal para crear los tableros de entregas requeridos por el negocio. Utiliza licencia AGPL-3.0 y cuenta con alta adopción y actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envío de eventos de ubicación procesados para su almacenamiento persistente."
+        },
+        {
+          "from_need": "database",
+          "to_need": "analytics",
+          "protocol": "HTTP",
+          "description": "Consulta de datos históricos y métricas para alimentar los tableros de control."
+        }
+      ],
+      "assumptions": [
+        "Se asume conectividad constante vía red móvil en los 200 camiones para la transmisión de las coordenadas.",
+        "El procesamiento geoespacial detallado se resolverá a nivel de aplicación o mediante consultas en la capa de base de datos."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas elegidas incluye de forma nativa procesamiento analítico geoespacial avanzado sin componentes adicionales."
+      ]
+    },
+    "response": {
+      "id": "ff0c555afe194dbfaa0b18f24ef29b5b",
+      "status": "ok",
+      "title": "Arquitectura open source para logística y flotas en tiempo real",
+      "summary": "Esta propuesta integra una plataforma de streaming de eventos para procesar la ubicación de los camiones, un sistema de almacenamiento distribuido para guardar los datos y una herramienta de visualización para ver tableros de entregas por ciudad.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apache Kafka",
+          "role": "Procesamiento y streaming de eventos de ubicación.",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka es una plataforma distribuida de transmisión de eventos ideal para procesar los flujos de datos generados por los camiones en tiempo real. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento persistente de datos de la flota.",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS provee almacenamiento distribuido para guardar los datos de manera eficiente y con acceso rápido a disco. Utiliza licencia Apache-2.0 y recibe actualizaciones continuas."
+        },
+        {
+          "key": "c3",
+          "label": "Grafana",
+          "role": "Tableros de control y visualización de entregas.",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana es una plataforma de visualización y análisis ideal para crear los tableros de entregas requeridos por el negocio. Utiliza licencia AGPL-3.0 y cuenta con alta adopción y actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "TCP",
+          "description": "Envío de eventos de ubicación procesados para su almacenamiento persistente."
+        },
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "HTTP",
+          "description": "Consulta de datos históricos y métricas para alimentar los tableros de control."
+        }
+      ],
+      "assumptions": [
+        "Se asume conectividad constante vía red móvil en los 200 camiones para la transmisión de las coordenadas.",
+        "El procesamiento geoespacial detallado se resolverá a nivel de aplicación o mediante consultas en la capa de base de datos."
+      ],
+      "limitations": [
+        "Ninguna de las herramientas elegidas incluye de forma nativa procesamiento analítico geoespacial avanzado sin componentes adicionales."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:59:20.416002Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recoleccion de metricas logs y trazas",
+          "evidence": "un stack de observabilidad con métricas, logs y trazas distribuidas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "grafana/grafana",
+          0.423
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.405
+        ],
+        [
+          "prometheus/prometheus",
+          0.393
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.384
+        ],
+        [
+          "getlago/lago",
+          0.358
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Stack de observabilidad para microservicios",
+      "summary": "Se propone una plataforma centralizada para la visualización y análisis de datos de telemetría en arquitecturas de microservicios sobre Kubernetes.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide un stack con métricas, logs y trazas, y Grafana visualiza métricas, logs y trazas de múltiples fuentes.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización y análisis",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes en una plataforma de observabilidad abierta y componible. Su licencia es AGPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el negocio opera con una arquitectura de microservicios desplegada en Kubernetes.",
+        "Se requiere un panel central para unificar la visualización de los datos recolectados."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la recolección ni el almacenamiento nativo de trazas y métricas provistos por herramientas especializadas como Prometheus o Jaeger, las cuales complementarían este despliegue."
+      ]
+    },
+    "response": {
+      "id": "bd4dbf02ee3642efa019c147bb28b0a5",
+      "status": "ok",
+      "title": "Stack de observabilidad para microservicios",
+      "summary": "Se propone una plataforma centralizada para la visualización y análisis de datos de telemetría en arquitecturas de microservicios sobre Kubernetes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Grafana",
+          "role": "Visualización y análisis",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes en una plataforma de observabilidad abierta y componible. Su licencia es AGPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el negocio opera con una arquitectura de microservicios desplegada en Kubernetes.",
+        "Se requiere un panel central para unificar la visualización de los datos recolectados."
+      ],
+      "limitations": [
+        "La propuesta no incluye la recolección ni el almacenamiento nativo de trazas y métricas provistos por herramientas especializadas como Prometheus o Jaeger, las cuales complementarían este despliegue."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:59:31.930111Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "una-factura-electronica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisión de facturas electrónicas legales",
+          "evidence": "emitir facturas electrónicas válidas ante la DIAN para las ventas de mi tienda"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.241
+        ],
+        [
+          "getlago/lago",
+          0.219
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de facturación electrónica y pagos para tienda",
+      "summary": "La propuesta utiliza plataformas de gestión de pagos y facturación por suscripción para la tienda. Sin embargo, ninguna de las herramientas candidatas aborda directamente la emisión de facturas electrónicas válidas ante la DIAN.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir facturas electrónicas válidas ante la DIAN y Kill Bill ofrece una plataforma de facturación por suscripción y pagos.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Kill Bill",
+          "role": "Gestión de pagos",
+          "rationale": "Kill Bill gestiona pagos y facturación por suscripción, pero no incluye soporte nativo ni validación para la emisión de facturas electrónicas ante la DIAN."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda opera en Colombia, por lo cual se requiere cumplimiento con la normativa de la DIAN.",
+        "El procesamiento de pagos y la emisión fiscal requerirán integraciones adicionales con un proveedor autorizado por la DIAN."
+      ],
+      "other_limitations": [
+        "La solución propuesta no resuelve la validación ni la emisión legal de facturas electrónicas ante la DIAN."
+      ]
+    },
+    "response": {
+      "id": "e850842998e841abb21f069606d4ced7",
+      "status": "no_evidence",
+      "title": "Sistema de facturación electrónica y pagos para tienda",
+      "summary": "La propuesta utiliza plataformas de gestión de pagos y facturación por suscripción para la tienda. Sin embargo, ninguna de las herramientas candidatas aborda directamente la emisión de facturas electrónicas válidas ante la DIAN.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda opera en Colombia, por lo cual se requiere cumplimiento con la normativa de la DIAN.",
+        "El procesamiento de pagos y la emisión fiscal requerirán integraciones adicionales con un proveedor autorizado por la DIAN."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Kill Bill gestiona pagos y facturación por suscripción, pero no incluye soporte nativo ni validación para la emisión de facturas electrónicas ante la DIAN.",
+        "La solución propuesta no resuelve la validación ni la emisión legal de facturas electrónicas ante la DIAN."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-09T02:59:45.141414Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "vago-startup",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o aplicación quieres construir para tu startup?",
+        "¿Qué funcionalidades principales tendrá el sistema en su primera versión?",
+        "¿Tienes experiencia previa con algún lenguaje de programación o plataforma?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "9378b71b0af74551813ec1048492b1b9",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o aplicación quieres construir para tu startup?",
+        "¿Qué funcionalidades principales tendrá el sistema en su primera versión?",
+        "¿Tienes experiencia previa con algún lenguaje de programación o plataforma?"
+      ],
+      "generated_at": "2026-11-09T02:59:54.764709Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]

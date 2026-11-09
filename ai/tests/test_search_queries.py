@@ -7,7 +7,12 @@ from datetime import datetime
 import pytest
 
 from ai.catalog import load_raw
-from ai.eval.golden import GOLDEN_FILES, REPORT_PREFIX, SearchGoldenSet, load_search_queries
+from ai.eval.golden import (GOLDEN_FILES,
+                            load_goldens,
+                            load_search_queries,
+                            report_name,
+                            REPORT_PREFIX,
+                            SearchGoldenSet)
 from ai.scripts.export_catalog_snapshot import META_FILE
 
 
@@ -74,3 +79,18 @@ def test_golden_desconocido_es_error():
 def test_cada_golden_set_tiene_nombre_de_reporte():
     # Sin esto, un golden set nuevo fallaría al final de la evaluación, al escribir el reporte.
     assert set(REPORT_PREFIX) == set(GOLDEN_FILES)
+
+
+def test_varios_golden_sets_del_mismo_catalogo_se_miden_juntos():
+    goldens = load_goldens(["catalog", "catalog-validation", "catalog"])
+    assert [name for name, _ in goldens] == ["catalog", "catalog-validation"]
+
+
+def test_no_se_juntan_golden_sets_de_catalogos_distintos():
+    with pytest.raises(ValueError):
+        load_goldens(["catalog", "sample"])
+
+
+def test_nombre_del_reporte_de_uno_o_varios_golden_sets():
+    assert report_name(["catalog"]) == REPORT_PREFIX["catalog"]
+    assert report_name(["catalog", "catalog-validation"]) == "search-catalog+catalog-validation"

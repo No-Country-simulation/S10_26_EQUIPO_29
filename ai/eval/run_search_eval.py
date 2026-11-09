@@ -4,6 +4,7 @@ Uso, desde la raíz del repo:
     python -m ai.eval.run_search_eval                  # catálogo real (snapshot)
     python -m ai.eval.run_search_eval --golden sample  # 20 repos de ejemplo
     python -m ai.eval.run_search_eval --texto base     # variante del texto embebido (ver TEXT_VARIANTS en ai/search.py)
+    python -m ai.eval.run_search_eval --golden catalog catalog-validation  # varios, medidos como uno solo
 """
 
 import argparse
@@ -14,10 +15,10 @@ from ai import catalog, embeddings
 from ai.eval.golden import (DEFAULT_GOLDEN,
                             EVAL_DIR,
                             GOLDEN_FILES,
-                            REPORT_PREFIX,
                             SearchGoldenSet,
                             SearchQuery,
-                            load_search_queries,)
+                            load_goldens,
+                            report_name,)
 from ai.eval.metrics import (QueryOutcome,
                              expected_ranks,
                              suggest_min_score,
@@ -37,30 +38,34 @@ def top_cell(results: list[SearchResult]) -> str:
     return " · ".join(f"{short(r.repo.full_name)} {r.score:.3f}" for r in results)
 
 
-def render_report(model: str, min_score: float | None, golden_name: str,
-                  golden: SearchGoldenSet, n_repos: int, summary: dict, times: dict,
-                  rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]],
+def render_report(model: str, min_score: float | None,
+                  goldens: list[tuple[str, SearchGoldenSet]], n_repos: int, summary: dict,
+                  times: dict, rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]],
                   fields: tuple[TextField, ...] = TEXT_FIELDS, variant: str | None = None,
                   snapshot_at: str | None = None) -> str:
-    labels = (f" (etiquetas del catálogo del {golden.catalog_taken_at:%Y-%m-%d})"
-              if golden.catalog_taken_at else "")
+    names = " ".join(name for name, _ in goldens)
+    sets = ", ".join(f"`{name}` v{golden.version}" for name, golden in goldens)
+    dates = sorted({f"{g.catalog_taken_at:%Y-%m-%d}" for _, g in goldens if g.catalog_taken_at})
+    labels = f" (etiquetas del catálogo del {', '.join(dates)})" if dates else ""
+    source = goldens[0][1].source
     measured = f" del {snapshot_at[:10]}" if snapshot_at else ""
     option = f" --texto {variant}" if variant else ""
     lines = [
         f"# Evaluación de la búsqueda · {model}",
         "",
-        f"Generado con `python -m ai.eval.run_search_eval --golden {golden_name}{option}` "
+        f"Generado con `python -m ai.eval.run_search_eval --golden {names}{option}` "
         f"el {date.today()}. "
-        f"Golden set `{golden_name}` v{golden.version}{labels} · "
-        f"catálogo `{golden.source}`{measured} · "
+        f"Golden set {sets}{labels} · catálogo `{source}`{measured} · "
         f"{n_repos} repos · k = {K} · CPU · "
         f"datos de la IA en el texto: {', '.join(fields) or 'ninguno'}.",
         "",
     ]
-    if (snapshot_at and golden.catalog_taken_at
-            and golden.catalog_taken_at != datetime.fromisoformat(snapshot_at)):
-        lines += ["> ⚠ Las etiquetas son de otro catálogo: estas cifras no son válidas ni "
-                  "comparables hasta volver a etiquetar.", ""]
+    stale = [name for name, g in goldens if snapshot_at and g.catalog_taken_at
+             and g.catalog_taken_at != datetime.fromisoformat(snapshot_at)]
+    if stale:
+        lines += [f"> ⚠ Las etiquetas de {', '.join(f'`{n}`' for n in stale)} son de otro "
+                  "catálogo: estas cifras no son válidas ni comparables hasta volver a etiquetar.",
+                  ""]
     lines += [
         "## Resumen",
         "",
@@ -140,19 +145,38 @@ def render_report(model: str, min_score: float | None, golden_name: str,
         ]
     lines += ["", f"Fallos de búsqueda (no cuentan para el umbral): {ids(unresolved)}"]
 
+    if len(goldens) > 1:
+        by_set = {q.id: name for name, g in goldens for q in g.queries}
+        lines += ["", "## Por conjunto (dato; las decisiones usan el conjunto combinado)", "",
+                  f"| Conjunto | hit@{K} | MRR@{K} | Sin respuesta |", "|---|---|---|---|"]
+        for name, g in goldens:
+            part = summarize([o for o in outcomes if by_set[o.query_id] == name], K)
+            no_answer = sum(1 for q in g.queries if not q.answerable)
+            lines.append(f"| `{name}` | {part['hits']}/{part['n']} | {part['mrr']:.2f} "
+                         f"| {no_answer} |")
+
     return "\n".join(lines) + "\n"
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Mide la búsqueda contra un golden set.")
-    parser.add_argument("--golden", choices=sorted(GOLDEN_FILES), default=DEFAULT_GOLDEN,
-                        help="golden set a medir (por defecto: %(default)s)")
+    parser = argparse.ArgumentParser(description="Mide la búsqueda contra uno o varios golden sets.")
+    parser.add_argument("--golden", nargs="+", choices=sorted(GOLDEN_FILES),
+                        default=[DEFAULT_GOLDEN], metavar="GOLDEN",
+                        help="uno o varios golden sets del mismo catálogo; varios se miden como "
+                             f"uno solo (opciones: {', '.join(sorted(GOLDEN_FILES))}; "
+                             "por defecto: %(default)s)")
     parser.add_argument("--texto", choices=list(TEXT_VARIANTS),
                         help="variante del texto embebido; sin ella, la que usa la búsqueda")
     args = parser.parse_args(argv)
     fields = TEXT_VARIANTS[args.texto] if args.texto else TEXT_FIELDS
 
-    golden = load_search_queries(args.golden)
+    try:
+        goldens = load_goldens(args.golden)
+    except ValueError as err:
+        parser.error(str(err))
+    names = [name for name, _ in goldens]
+    source = goldens[0][1].source
+    queries = [q for _, golden in goldens for q in golden.queries]
     spec = embeddings.model_spec()
     model = spec.name
 
@@ -161,12 +185,12 @@ def main(argv: list[str] | None = None) -> None:
     load_s = time.perf_counter() - start
 
     start = time.perf_counter()
-    index = SearchIndex.build(source=golden.source, fields=fields)   # el catálogo del golden set
+    index = SearchIndex.build(source=source, fields=fields)   # el catálogo de los golden sets
     build_s = time.perf_counter() - start
     n_repos = len(index.repos)
 
     rows, outcomes, query_s = [], [], []
-    for q in golden.queries:
+    for q in queries:
         start = time.perf_counter()
         results = index.search(q.query, k=n_repos)   # ranking completo
         query_s.append(time.perf_counter() - start)
@@ -183,13 +207,13 @@ def main(argv: list[str] | None = None) -> None:
 
     RESULTS_DIR.mkdir(exist_ok=True)
     suffix = f"-texto-{args.texto}" if args.texto else ""
-    path = RESULTS_DIR / f"{REPORT_PREFIX[args.golden]}-{short(model).lower()}{suffix}.md"
-    snapshot_at = catalog.snapshot_taken_at() if golden.source == "snapshot" else None
-    path.write_text(render_report(model, spec.min_score, args.golden, golden, n_repos,
+    path = RESULTS_DIR / f"{report_name(names)}-{short(model).lower()}{suffix}.md"
+    snapshot_at = catalog.snapshot_taken_at() if source == "snapshot" else None
+    path.write_text(render_report(model, spec.min_score, goldens, n_repos,
                                   summary, times, rows, fields, args.texto, snapshot_at),
                     encoding="utf-8",)
 
-    print(f"Modelo: {model} · golden set: {args.golden} · catálogo: {golden.source} ({n_repos} repos)")
+    print(f"Modelo: {model} · golden set: {' '.join(names)} · catálogo: {source} ({n_repos} repos)")
     print(f"hit@{K}: {summary['hits']}/{summary['n']}  MRR@{K}: {summary['mrr']:.2f}  "
           f"recall@{K}: {summary['recall']:.0%}")
     suggested = suggest_min_score(outcomes, K)
