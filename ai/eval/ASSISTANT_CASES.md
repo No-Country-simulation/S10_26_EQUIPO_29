@@ -148,6 +148,47 @@ python -m ai.eval.run_assistant_eval gemini --cases test
 python -m ai.eval.run_search_eval --golden catalog-test
 ```
 
+## Cómo escribir una prueba final nueva
+
+Hace falta cuando una prueba final ya se usó para decidir algo, o cuando el catálogo
+cambió tanto que sus pedidos ya no prueban lo importante.
+
+1. En un chat nuevo de otro modelo de lenguaje, sin darle el catálogo, pedir 24 pedidos
+   con este mensaje. Las categorías se copian de `shared/contracts/categories.json`
+   (`id: description`, sin las notas); los negocios excluidos son los de los archivos
+   de casos existentes.
+
+   ```
+   Necesito pedidos de prueba para un asistente que recomienda herramientas de software. Escribe 24 pedidos como los escribiría el dueño o la dueña de un negocio pequeño o mediano de Latinoamérica que no es técnico: en español, en primera persona, de 2 a 6 frases, describiendo su negocio y lo que quiere que haga el sistema.
+
+   Reglas:
+   - No nombres tecnologías, productos, marcas, lenguajes de programación ni herramientas.
+   - Cada pedido tiene entre 2 y 5 necesidades. Etiqueta cada necesidad con uno de estos ids, según su definición:
+     {categorías: una línea "id: descripción" por categoría}
+   - Una necesidad es algo que el pedido dice que quiere, con esas u otras palabras. Lo que tiene cualquier aplicación (tener pantallas, una app o un servidor) no es una necesidad.
+   - Para cada necesidad, copia la frase exacta del pedido que la expresa.
+   - Varía los negocios, el largo de los pedidos y las necesidades.
+   - No uses estos negocios: {negocios de los casos existentes}
+
+   Formato, sin texto antes ni después:
+   id: <negocio-en-minusculas-con-guiones>
+   pedido: <texto>
+   necesidades:
+   - <id>: "<frase exacta>"
+
+   Deja una línea en blanco entre pedidos.
+   ```
+
+2. Guardar la respuesta sin editar, con el modelo y la fecha.
+3. Filtrar con reglas fijadas antes de leerla: de 20 a 2000 caracteres; de 2 a 5
+   necesidades con ids válidos y sin repetir; la frase de cada necesidad, literal en el
+   pedido; sin nombres de tecnologías; negocio fuera de la lista; la etiqueta corresponde
+   a la definición (en duda, se descarta). Se toman los primeros 16 que pasan, en orden,
+   sin editar ninguno.
+4. Generar las consultas de búsqueda con el paso de entender, una sola vez, y guardarlas.
+5. Etiquetar después, con evidencia de GitHub, revisando todo el catálogo para cada
+   necesidad.
+
 ## Qué no se mide aquí
 
 Los textos (título, resumen, roles, razones) y las conexiones: hay muchas

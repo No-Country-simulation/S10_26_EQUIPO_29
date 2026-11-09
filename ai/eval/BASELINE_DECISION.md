@@ -117,6 +117,72 @@ Rango entre las 3 corridas.
 Reportes: `results/assistant-2026-11-08-2132-abstention-gemini.md`, `…-2140-holdout-…`,
 `…-2148-validation-…`, `…-2154-business-…` y `…-2200-gemini.md` (casos rápidos).
 
-## Resultados · prueba final
+## Resultados · prueba final (cifras publicables)
 
-(Pendiente: se corre una sola vez, con esta configuración ya en `main`.)
+Una sola corrida, con la configuración de `main` en `ba94ef4`: catálogo de 127 repos
+(snapshot del 2026-11-08), enriquecimiento v5, texto de búsqueda con resumen y casos de
+uso de la IA, umbral 0,18, EmbeddingGemma-300m y Gemini 3.5 Flash-Lite. Búsqueda medida
+el 8-nov; asistente el 9-nov (una corrida anterior se cortó por la cuota diaria sin
+escribir reporte y se repitió entera, sin cambios).
+
+### Búsqueda (`catalog-test`: 58 consultas del paso de entender, 56 con respuesta)
+
+| | Valor |
+|---|---|
+| hit@3 | **41 de 56 (73 %)** |
+| MRR@3 | 0,65 |
+| recall@3 | 58 % |
+| Consultas resueltas que bloquea el umbral 0,18 | 0 de 41 |
+| Consultas sin respuesta que pasan el umbral | 2 de 2 |
+
+- Los fallos se concentran en tres tipos de necesidad: **base de datos** (0 de 6
+  consultas; "almacenamiento y consulta de registros" trae almacenamiento de archivos o
+  caché, y postgres queda entre el puesto 7 y el 71), **reportes sobre datos propios**
+  (1 de 6) y **orquestación de flujos de datos** (1 de 3). Inicio de sesión,
+  almacenamiento, búsqueda, pagos, comunicación, CMS, caché, observabilidad y
+  automatización aciertan todas.
+- Dato (regla 3): sin los datos de la IA en el texto, también 41 de 56 (MRR 0,62). No
+  cambia nada.
+
+### Asistente (`test`: 16 pedidos escritos sin ver el catálogo, 61 necesidades, 3 corridas)
+
+De las 59 necesidades que tienen herramienta en el catálogo (177 oportunidades: necesidad ×
+corrida):
+
+| Paso | Llegan | Sobre el paso anterior |
+|---|---|---|
+| El paso de entender las detecta | 165 de 177 | 93 % |
+| Hay una herramienta aceptable entre los 5 candidatos | 131 de 165 | 79 % |
+| El asistente elige una aceptable | 123 de 131 | **94 %** (88–100 % entre corridas) |
+| **Como lo ve el usuario: recibe una herramienta aceptable** | **123 de 177** | **69 %** |
+
+- Punta a punta sobre las detectadas: 75 % (69–79 % entre corridas). Status correcto en
+  los 48 flujos. Sin errores del proveedor. Mediana de 5,0 s por pedido.
+- Por tipo de necesidad, como lo ve el usuario: inicio de sesión 18/18, almacenamiento
+  24/24, búsqueda 12/12, observabilidad 6/6, caché 3/3, comunicación 19/21, pagos 16/18,
+  CMS 7/9, automatización 5/6; **base de datos 1/21**, **reportes sobre datos propios
+  8/21**, procesamiento de datos 4/12, colas de mensajes 0/3, aprendizaje automático 0/3.
+  La pérdida principal está en la búsqueda (34 oportunidades), no en la elección.
+- **Abstención:** solo 2 de las 61 necesidades no tienen herramienta (6 oportunidades);
+  en las 6 recomendó algo que no sirve. Con un denominador tan chico no es una cifra:
+  la abstención se mide en desarrollo (ver arriba), y allí es el punto débil.
+- En 2 de los 16 pedidos el asistente dio el mismo resultado en las 3 corridas; en los
+  demás cambia la herramienta elegida entre corridas, muchas veces entre dos aceptables.
+- Textos del modelo que mencionan "el catálogo": 22 en 48 flujos.
+
+### Desarrollo frente a prueba final
+
+Las cifras de desarrollo salieron más altas (búsqueda 92 % frente a 73 %): esos
+conjuntos se usaron para decidir o se escribieron conociendo el catálogo. La diferencia
+es la razón de tener una prueba final, y las cifras que se publican son estas.
+
+### Para mejoras futuras (medir con casos nuevos)
+
+- Búsqueda de bases de datos y de herramientas de reportes con pedidos en lenguaje de
+  negocio ("llevar un registro", "consultar reportes").
+- Abstención frente a necesidades parecidas a algo del catálogo (chat, copias de
+  seguridad automáticas, factura electrónica) y detección de las que hoy no se ven.
+- Una regla de umbral que no dependa de una sola consulta, o prescindir del umbral.
+
+Reportes: `results/search-catalog-test-embeddinggemma-300m.md`, `…-texto-base.md` y
+`results/assistant-2026-11-09-0833-test-gemini.md`.

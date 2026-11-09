@@ -16,14 +16,13 @@ eligieron el modelo de embeddings y el umbral, con su evidencia:
 |---|---|
 | Modelo de embeddings | EmbeddingGemma-300m |
 | Texto de cada repo | nombre, resumen de la IA, descripción, topics y casos de uso de la IA (sin categorías) |
-| Umbral de "sin evidencia" (`min_score`) | 0,23 |
-| Acierto en el catálogo real (hit@3) | 52 de 60 consultas (87 %) con el catálogo de 100 repos (6-nov); pendiente de medir con 127 |
+| Umbral de "sin evidencia" (`min_score`) | 0,18 (catálogo de 127 repos, 8-nov) |
+| Acierto de la búsqueda (hit@3), prueba final | 41 de 56 consultas (73 %), catálogo de 127 repos; detalle en [`BASELINE_DECISION.md`](BASELINE_DECISION.md) |
 | Golden set | `catalog` v3: 100 consultas (95 con respuesta, 5 sin respuesta), catálogo de 127 repos (snapshot del 2026-11-08) |
 
-Con el catálogo de 100 repos (6-nov), el umbral frenaba la mitad de los pedidos sin
-respuesta (20 de 40 pasaban). Los que *suenan* parecido a un repo que no los resuelve
-(por ejemplo, "comunicación conclientes" → alertmanager, "inicio de sesión" → vault)
-pasan, y el freno tiene que venir del paso que elige entre los candidatos.
+Con 127 repos el umbral no frena las consultas sin respuesta (las 14 de desarrollo
+pasan): solo evita consultas vacías. El freno real es el juicio del asistente sobre
+cada candidato. Cifras del asistente y de la prueba final: [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
 
 Para comparar variantes del texto: `python -m ai.eval.run_search_eval --texto <variante>`
 (variantes en `TEXT_VARIANTS`, `ai/search.py`).

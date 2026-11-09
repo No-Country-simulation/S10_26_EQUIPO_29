@@ -200,6 +200,13 @@ respuesta de más.
 Reportes: `results/search-catalog-validation-embeddinggemma-300m.md` y
 `results/search-catalog-validation-embeddinggemma-300m-texto-base.md`.
 
+## Catálogo de 127 repos (8-nov-2026)
+
+Se mantiene el texto con resumen y casos de uso (111 de 121 aciertos en desarrollo
+frente a 105 sin los datos de la IA) y el umbral pasa a 0,18. Las reglas, las cifras de
+desarrollo y las de la prueba final están en [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
+Las secciones de arriba describen el catálogo de 100 repos.
+
 ## Límites
 
 - **Los números indican una dirección, no son precisos:** 60 consultas con
