@@ -56,7 +56,7 @@ function Endpoint({component}){
   {trigger=><button type="button" className="connection-node" onPointerMove={trackBorder} {...trigger} style={{'--node-start':identity.palette.start,'--node-end':identity.palette.end}}><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></button>}
  </FollowingTooltip>;
 }
-export function ProposalTabs({response,onNewArchitecture}){
+export function ProposalTabs({response}){
  const [tab,setTab]=useState('tools');
  const tabs=useRef([]);
  const connections=response.connections??[];
@@ -67,7 +67,6 @@ export function ProposalTabs({response,onNewArchitecture}){
   <div role="tablist" data-active={tab} aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
    {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type="button" role="tab" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>setTab(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
   </div>
-  {onNewArchitecture&&<button type="button" className="ui-button ui-button--secondary" onClick={onNewArchitecture}>Crear nueva arquitectura</button>}
   </div>
   <div className="proposal-panels">
    <section id="proposal-panel-tools" role="tabpanel" aria-labelledby="proposal-tab-tools" hidden={tab!=='tools'} tabIndex={0}>

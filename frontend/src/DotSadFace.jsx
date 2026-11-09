@@ -30,3 +30,26 @@ export function DotSadFace({variant='sad'}){
   <g className="dot-face-light">{points.map((dot,i)=><circle key={i} cx={dot.x} cy={dot.y} r="1.8" style={{animationDelay:`${-6+(dot.x-84)/160*1.8+(dot.y-96)/128*.65}s`}}/>)}</g>
  </svg>;
 }
+
+// A compact dotted question mark shares the faces' restrained light sweep.
+const questionRows=[
+ '  XXXXX  ',
+ ' XXXXXXX ',
+ 'XX     XX',
+ 'XX     XX',
+ '       XX',
+ '      XX ',
+ '     XX  ',
+ '    XX   ',
+ '    XX   ',
+ '         ',
+ '    XX   ',
+ '    XX   ',
+];
+const questionDots=questionRows.flatMap((row,y)=>Array.from(row,(cell,x)=>cell==='X'?{x:8+x*5,y:6+y*5}:null).filter(Boolean));
+export function DotQuestion({index=0}){
+ return <svg className="clarification-symbol" viewBox="0 0 56 68" width="56" height="68" aria-hidden="true" focusable="false">
+  <g fill="#b9cadb" opacity=".4">{questionDots.map((dot,i)=><circle key={i} cx={dot.x} cy={dot.y} r="1.5"/>)}</g>
+  <g className="dot-face-light">{questionDots.map((dot,i)=><circle key={i} cx={dot.x} cy={dot.y} r="1.5" style={{animationDelay:`${-6+dot.x/56*1.8+dot.y/68*.65-index*.7}s`}}/>)}</g>
+ </svg>;
+}

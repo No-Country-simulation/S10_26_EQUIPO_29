@@ -177,5 +177,21 @@
     "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
+  },
+  "needs_clarification_three": {
+    "id": "clarification-three-preview",
+    "status": "needs_clarification",
+    "title": "Precisemos tu idea",
+    "summary": "Necesito algunos detalles antes de proponer una arquitectura.",
+    "components": [],
+    "assumptions": [],
+    "limitations": [],
+    "clarification_questions": [
+      "¿Quiénes usarán la aplicación y qué necesitan hacer?",
+      "¿Cuántas personas esperas que la usen y dónde se alojará?",
+      "¿Qué función necesitas tener lista primero para tu negocio?"
+    ],
+    "generated_at": "2026-10-20T12:00:00Z",
+    "connections": []
   }
 }

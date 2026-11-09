@@ -1416,8 +1416,8 @@ to{opacity:1;transform:translateY(0)}
 .hero .stack-outcome.evidence-outcome{max-width:850px;margin-inline:auto;padding:8px 0 24px}
 .evidence-outcome .proposal-context-open{margin-top:0}
 .evidence-outcome .context-panel:only-child{grid-column:1/-1}
-.hero .stack-outcome .clarification-questions{text-align:left;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:850px;margin:0 auto;padding:0;list-style:none;display:grid}
-.hero .stack-outcome .clarification-question{min-width:0;animation:clarification-arrive .32s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--question-delay);background:#ffffff03;border:1px solid #ffffff20;border-radius:22px;margin:0;padding:28px;display:flex;align-items:center;min-height:128px}
+.hero .stack-outcome .clarification-questions{position:relative;text-align:left;gap:16px;max-width:1100px;margin:0 auto;padding:0;list-style:none;display:flex;flex-wrap:wrap;justify-content:center}
+.hero .stack-outcome .clarification-question{flex:0 1 calc((100% - 32px)/3);min-width:0;animation:clarification-arrive .32s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--question-delay);background:#ffffff03;border:1px solid #ffffff20;border-radius:22px;margin:0;padding:28px;display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-height:220px}
 .hero .clarification-question p{position:relative;z-index:1;color:#e0e7ef;overflow-wrap:anywhere;text-wrap:pretty;margin:0;font-size:18px;font-weight:300;line-height:1.5}
 .hero .clarification-questions>li:only-child{grid-column:1/-1}
 @keyframes clarification-arrive{0%{opacity:0;transform:translateY(8px)}
@@ -1429,7 +1429,7 @@ to{opacity:1;transform:translateY(0)}
 }
 @media (prefers-reduced-motion:reduce){.hero .stack-outcome .clarification-question{animation:none}
 }
-.hero .stack-outcome .clarification-question{isolation:isolate;background:linear-gradient(135deg,#242c35 0%,#191e25 52%,#15191f 100%);border-color:#c9dced24;position:relative;box-shadow:inset 0 1px 0 #e3efff08,0 8px 24px #00000012}
+.hero .stack-outcome .clarification-question{isolation:isolate;background-color:#15191f;background-image:radial-gradient(ellipse at 0% 0%,#bedcff24 0%,#9bc6f810 35%,transparent 78%);background-size:var(--light-width,1100px) var(--light-height,440px);background-position:var(--light-x,0px) var(--light-y,0px);background-repeat:no-repeat;border-color:rgb(201 220 237 / .07);border-top-color:rgb(220 237 255 / var(--edge-light,.22));border-left-color:rgb(220 237 255 / var(--edge-light,.22));position:relative;box-shadow:0 8px 24px #00000012}
 .clarification-question:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(240px circle at var(--glare-x,50%) var(--glare-y,50%),#d6eaff0a,transparent 75%);opacity:0;transition:opacity .22s ease}
 @media(hover:hover) and (pointer:fine){.clarification-question:hover:before{opacity:1}}
 @media(prefers-reduced-motion:reduce){.clarification-question:before,.clarification-question:after{transition:none}}
@@ -1478,7 +1478,7 @@ to{transform:translateY(-110%)}
 .hero .hero-inner .prompt-intro{margin-bottom:24px}
 }
 .hero .proposal-tabs [role=tablist]{isolation:isolate;box-sizing:border-box;background:#161a20;border:1px solid #ffffff24;border-radius:999px;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;width:fit-content;max-width:100%;margin:0 auto 28px;padding:4px;display:grid;position:relative}
-.hero .proposal-tabs [role=tablist]:before{content:"";z-index:-1;pointer-events:none;background:#30363f;border-radius:999px;width:calc(50% - 4px);transition:transform .24s cubic-bezier(.22,1,.36,1);position:absolute;top:4px;bottom:4px;left:4px;box-shadow:inset 0 0 0 1px #ffffff18}
+.hero .proposal-tabs [role=tablist]:before{content:"";z-index:-1;pointer-events:none;background:var(--button-brand);border-radius:999px;width:calc(50% - 4px);transition:transform .24s cubic-bezier(.22,1,.36,1);position:absolute;top:4px;bottom:4px;left:4px;box-shadow:inset 0 0 0 1px #ffffff18}
 .hero .proposal-tabs [role=tablist][data-active=connections]:before{transform:translate(100%)}
 .hero .proposal-tabs [role=tab]{color:#abb2bd;white-space:nowrap;background:0 0;border:0;border-radius:999px;justify-content:center;min-height:44px;padding:10px 18px;position:relative}
 .hero .proposal-tabs [role=tab][aria-selected=true]{color:#fff;background:0 0}
@@ -1549,7 +1549,7 @@ to{transform:translateY(-110%)}
 .hero.assistant-workspace .hero-inner .composer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:10px 14px;min-height:60px}
 .hero.assistant-workspace .hero-inner .composer-footer{height:auto;min-height:40px;margin:0;padding:0;align-self:end}
 .hero.assistant-workspace .prompt-input-compact{position:relative;min-width:0;align-self:center;transition:height .32s cubic-bezier(.22,1,.36,1)}
-.hero.assistant-workspace .hero-inner .prompt-input-compact textarea{position:absolute;inset:0;width:100%;height:100%;min-height:0;max-height:none;padding:0;line-height:24px;opacity:0;transition:opacity .12s;resize:none}
+.hero.assistant-workspace .hero-inner .prompt-input-compact textarea{position:absolute;inset:0;width:100%;height:100%;min-height:0;max-height:none;padding:0;font:inherit;font-size:16px;letter-spacing:inherit;line-height:24px;opacity:0;transition:opacity .12s;resize:none}
 .prompt-text-preview,.prompt-text-measure{font:inherit;font-size:16px;line-height:24px;letter-spacing:inherit}
 .prompt-text-preview{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;color:#eee}
 .prompt-text-measure{position:absolute;inset:0 0 auto;visibility:hidden;pointer-events:none;white-space:pre-wrap;overflow-wrap:anywhere}
@@ -1677,7 +1677,7 @@ to{transform:translateY(-110%)}
 
 /* Reset only the assistant surfaces; the live background keeps running. */
 html[data-architecture-reset] {view-transition-name:none}
-html[data-architecture-reset] .prompt-form-slot {view-transition-name:reset-composer}
+html[data-architecture-reset] .composer {view-transition-name:reset-composer}
 html[data-architecture-reset] .architecture-header {view-transition-name:reset-heading}
 html[data-architecture-reset] .has-architecture-header .architecture-header {display:grid}
 html[data-architecture-reset] .architecture-stage.is-visible {view-transition-name:reset-result}
@@ -1718,3 +1718,20 @@ html[data-architecture-reset] .architecture-stage.is-visible {view-transition-na
 
 .evidence-face{display:flex;justify-content:center;padding:0 0 24px}
 .evidence-face .dot-sad-face{margin:-32px 0 -24px}
+
+.clarification-symbol{display:block;flex:none;width:42px;height:51px;overflow:visible}
+@media(min-width:641px) and (max-width:900px){.hero .stack-outcome .clarification-question{flex-basis:calc((100% - 16px)/2)}}
+@media(max-width:640px){.hero .stack-outcome .clarification-question{flex-basis:100%;gap:16px}.clarification-symbol{width:34px;height:42px}}
+
+.hero.assistant-workspace .prompt-form-slot.has-new-architecture{width:min(980px,100% - 48px)}
+.prompt-form-slot.has-new-architecture .prompt-form-clip{display:flex;align-items:flex-end;justify-content:center;gap:16px}
+.prompt-form-slot.has-new-architecture .composer{flex:1;min-width:0;margin:0}
+.composer-new-architecture{flex:none;white-space:nowrap;height:62px;min-height:62px;padding-inline:24px}
+@media(max-width:640px){
+ .hero.assistant-workspace .prompt-form-slot.has-new-architecture{width:calc(100% - 24px)}
+ .prompt-form-slot.has-new-architecture .prompt-form-clip{flex-direction:column;align-items:center;gap:10px}
+ .prompt-form-slot.has-new-architecture .composer{width:100%}
+}
+
+/* The reset snapshot owns geometry; nested height transitions must settle first. */
+html[data-architecture-reset] .prompt-input-wrap,html[data-architecture-reset] .prompt-heading,html[data-architecture-reset] .prompt-intro{transition:none}

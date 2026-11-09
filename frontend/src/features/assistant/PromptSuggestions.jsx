@@ -2,21 +2,21 @@ import React from 'react';
 import {ArrowUpRight} from 'lucide-react';
 
 const suggestions=[
- {
-  "title": "Llevar mi negocio a internet",
-  "summary": "Ventas online, pagos y seguimiento de pedidos.",
-  "prompt": "Tengo un negocio de productos para el hogar con tres tiendas y quiero empezar a vender por internet. Necesito que los clientes encuentren productos, paguen online y consulten el estado de sus pedidos. Mi equipo debe gestionar las ventas en un solo lugar y mantener actualizado el stock para no vender productos agotados. Al principio esperamos unos 200 pedidos al día y queremos avisar a los clientes cuando su compra esté lista para retirar o haya sido enviada."
- },
- {
-  "title": "Atender mejor a mis clientes",
-  "summary": "Consultas organizadas y respuestas a tiempo.",
-  "prompt": "Tenemos una empresa de servicios y recibimos unas 300 consultas diarias de clientes. Hoy se nos pierden mensajes y a veces dos personas responden lo mismo. Quiero un portal donde los clientes puedan enviar consultas, adjuntar documentos y ver cómo avanza su solicitud. Nuestro equipo de 12 personas necesita asignar cada caso, consultar el historial del cliente y encontrar respuestas en nuestros manuales. También queremos avisar cuando un caso esté resuelto y saber cuánto tardamos en responder."
- },
- {
-  "title": "Entender qué impulsa mis ventas",
-  "summary": "Productos, sucursales y resultados en un solo panel.",
-  "prompt": "Tengo cinco tiendas y una tienda online, pero cada semana perdemos horas reuniendo planillas para saber cómo va el negocio. Quiero un panel que reúna las ventas automáticamente, compare los resultados de cada sucursal y muestre qué productos se venden más. Cada encargado debe ver su tienda y gerencia debe poder ver todo. Necesitamos evitar ventas duplicadas, recibir un resumen diario y saber si falta información antes de tomar decisiones de compra."
- }
+  {
+    "title": "Unificar mis tiendas",
+    "summary": "Accesos, pedidos, búsqueda y resultados del negocio.",
+    "prompt": "Tengo tres tiendas y quiero unificar su operación. Necesito cinco capacidades conectadas: inicio de sesión con permisos para vendedores y gerencia; una base de datos que guarde clientes, productos, stock y pedidos; búsqueda rápida de productos por nombre y descripción; almacenamiento de fotos de productos y comprobantes; y tableros para comparar ventas por tienda. Cuando un vendedor entra, solo puede consultar y registrar pedidos de su tienda. Cada producto guardado debe poder encontrarse en el buscador y mostrar su foto; cada pedido debe quedar relacionado con su comprobante y alimentar los tableros de ventas. Seremos 30 empleados y gestionaremos unos 500 pedidos diarios. Queremos herramientas open source para construir estas capacidades en nuestra propia infraestructura."
+  },
+  {
+    "title": "Organizar los documentos de mi empresa",
+    "summary": "Permisos, archivos, búsqueda y seguimiento de actividad.",
+    "prompt": "Quiero un portal interno para que 80 empleados encuentren contratos, manuales y documentos de clientes. Necesitamos inicio de sesión con permisos por equipo, almacenamiento de los archivos, una base de datos relacional SQL para guardar documentos, versiones, propietarios y permisos con relaciones entre esos registros, un buscador por palabras y una herramienta de tableros para ver consultas y documentos utilizados. Al subir un archivo, debe guardarse su contenido en el almacenamiento, registrarse su ficha en la base de datos y actualizarse el índice del buscador. Al buscar, cada persona solo debe acceder a documentos autorizados. La actividad registrada debe alimentar los tableros de gerencia. Queremos implementar estas cinco capacidades con herramientas open source en nuestros servidores."
+  },
+  {
+    "title": "Crear un portal para mis clientes",
+    "summary": "Catálogo de productos, pedidos y análisis comercial.",
+    "prompt": "Tengo un negocio de venta mayorista y quiero que mis clientes consulten productos y hagan pedidos desde un portal. Necesito cinco capacidades conectadas: inicio de sesión con cuentas y permisos para cada empresa cliente; una base de datos relacional SQL para guardar clientes, productos y pedidos; búsqueda de productos por nombre, descripción y filtros; almacenamiento de fotos y comprobantes; y tableros para analizar las ventas y los pedidos pendientes. Cuando un cliente inicia sesión, consulta el buscador y ve las fotos almacenadas; al confirmar un pedido se guarda en la base de datos junto a su comprobante, y esa información alimenta los tableros del equipo comercial. Esperamos 100 empresas y 1000 pedidos diarios. Queremos construir estas capacidades con herramientas open source en nuestros servidores."
+  }
 ];
 
 export function PromptSuggestions({flow,onSelect,workspace=false}){
