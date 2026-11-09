@@ -37,10 +37,12 @@ MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B", dims=1024,
                                       # Formatos de su ficha. Requiere aceptar licencia HF
                                       query_prompt="task: search result | query: ",
                                       document_prompt="title: none | text: ",
-                                      # Calibrado con ai/eval (catálogo real, 100 repos, texto
-                                      # con resumen y casos de uso de la IA, 100 consultas).
-                                      # Cambiar el texto de los repos obliga a recalibrarlo.
-                                      min_score=0.23),
+                                      # Calibrado con ai/eval (catálogo de 127 repos, texto con
+                                      # resumen y casos de uso de la IA; golden sets catalog y
+                                      # catalog-validation juntos, 135 consultas). Ver
+                                      # ai/eval/BASELINE_DECISION.md. Cambiar el texto de los
+                                      # repos o el catálogo obliga a recalibrarlo.
+                                      min_score=0.18),
 }
 DEFAULT_MODEL = "embeddinggemma"
 
