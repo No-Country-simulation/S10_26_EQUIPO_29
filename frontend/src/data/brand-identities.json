@@ -718,6 +718,50 @@
         "end": "#5c4115",
         "tag": "#795720"
       }
+    },
+    "mariadb/server": {
+      "logo": "/assets/brands/mariadb.svg",
+      "displayName": "MariaDB"
+    },
+    "posthog/posthog": {
+      "logo": "/assets/brands/posthog.svg",
+      "displayName": "PostHog"
+    },
+    "tryghost/ghost": {
+      "logo": "/assets/brands/ghost.svg",
+      "displayName": "Ghost"
+    },
+    "knadh/listmonk": {
+      "logo": "/assets/brands/listmonk.svg",
+      "displayName": "listmonk"
+    },
+    "metabase/metabase": {
+      "logo": "/assets/brands/metabase.svg",
+      "displayName": "Metabase"
+    },
+    "novuhq/novu": {
+      "logo": "/assets/brands/novu.svg",
+      "displayName": "Novu"
+    },
+    "ory/kratos": {
+      "logo": "/assets/brands/ory.svg",
+      "displayName": "Ory Kratos"
+    },
+    "payloadcms/payload": {
+      "logo": "/assets/brands/payloadcms.svg",
+      "displayName": "Payload"
+    },
+    "rustfs/rustfs": {
+      "logo": "/assets/brands/rustfs.svg",
+      "displayName": "RustFS"
+    },
+    "strapi/strapi": {
+      "logo": "/assets/brands/strapi.svg",
+      "displayName": "Strapi"
+    },
+    "supabase/supabase": {
+      "logo": "/assets/brands/supabase.svg",
+      "displayName": "Supabase"
     }
   }
 }

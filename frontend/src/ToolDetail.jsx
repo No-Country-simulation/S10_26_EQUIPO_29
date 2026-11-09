@@ -40,7 +40,7 @@ export function ToolDetail({id,onBack}){
   <section className="detail-cover" data-tool-id={id} aria-label={`Portada de ${tool.name}`}>
    {identity.watermark && <img className="detail-watermark" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt="" aria-hidden="true"/>}
    <div className="wrap detail-cover-inner">
-   <div className="detail-identity">{identity.fallback ? <span className="brand-initials" aria-hidden="true">{identity.initials}</span> : <img src={logo} onError={()=>markBrandFailed(logo)} alt=""/>}<h1 id="detail-title" tabIndex={-1}>{tool.name}</h1></div>
+   <div className="detail-identity">{identity.fallback ? <span className="brand-initials" aria-hidden="true">{identity.initials}</span> : <img src={logo} onError={()=>markBrandFailed(logo)} alt=""/>}<div className="tool-name-group"><h1 id="detail-title" tabIndex={-1}>{tool.name}</h1>{tool.full_name&&<p className="tool-repo-name">{tool.full_name}</p>}</div></div>
    <div className="tool-tags">{toolCategoryNames(tool).map(category=><span key={category}>{category}</span>)}<span>{tool.language}</span></div></div>
   </section>
   <div className="detail-tabs" role="tablist" aria-label="Ficha técnica">
