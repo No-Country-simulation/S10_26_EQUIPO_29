@@ -11,8 +11,8 @@
     "preview:stable": "node scripts/stable-preview.mjs",
     "preview:lan": "node scripts/lan-preview.mjs",
     "test": "node --test tests/*.test.mjs",
-    "predev": "node scripts/sync-contracts.mjs",
-    "prebuild": "node scripts/sync-contracts.mjs",
+    "predev": "node scripts/sync-contracts.mjs && node scripts/prepare-elk-worker.mjs",
+    "prebuild": "node scripts/sync-contracts.mjs && node scripts/prepare-elk-worker.mjs",
     "pretest": "node scripts/sync-contracts.mjs",
     "prepreview:stable": "node scripts/sync-contracts.mjs",
     "prepreview:lan": "node scripts/sync-contracts.mjs"
@@ -21,6 +21,7 @@
     "@fontsource-variable/dm-sans": "^5.3.0",
     "@paper-design/shaders-react": "^0.0.81",
     "@tailwindcss/postcss": "^4.3.3",
+    "elkjs": "^0.12.1",
     "lucide-react": "^1.57.0",
     "next": "^16.4.2",
     "postcss": "^8.5.31",

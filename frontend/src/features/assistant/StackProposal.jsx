@@ -1,3 +1,4 @@
+import {DotSadFace} from '../../DotSadFace';
 import {ProposalSkeleton} from './ProposalSkeleton';
 import {ProposalTabs} from './ProposalTabs';
 
@@ -14,7 +15,8 @@ export function StackProposal({expanded,pending,hasResult,slow,response,original
  </section>}
  {hasResult&&!ok&&<section className={'stack-outcome'+(response?.status==='needs_clarification'?' clarification-outcome':' evidence-outcome')} aria-label={response?.status==='needs_clarification'?'Aclaraciones necesarias':'Sin evidencia suficiente'}>
 
- {response?.status==='needs_clarification'?<ol className="clarification-questions" key={response.id}>{response.clarification_questions.map((q,i)=><li className="clarification-question" onPointerMove={event=>{if(event.pointerType==='touch'||!matchMedia('(hover:hover) and (prefers-reduced-motion:no-preference)').matches)return;const card=event.currentTarget,rect=card.getBoundingClientRect();card.style.setProperty('--glare-x',`${event.clientX-rect.left}px`);card.style.setProperty('--glare-y',`${event.clientY-rect.top}px`);}} key={i} style={{'--question-delay':`${Math.min(i,5)*55}ms`}}><span className="clarification-number" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><p>{q}</p></li>)}</ol>:null}
+ {response?.status==='needs_clarification'?<ul className="clarification-questions" key={response.id}>{response.clarification_questions.map((q,i)=><li className="clarification-question" onPointerMove={event=>{if(event.pointerType==='touch'||!matchMedia('(hover:hover) and (prefers-reduced-motion:no-preference)').matches)return;const card=event.currentTarget,rect=card.getBoundingClientRect();card.style.setProperty('--glare-x',`${event.clientX-rect.left}px`);card.style.setProperty('--glare-y',`${event.clientY-rect.top}px`);}} key={i} style={{'--question-delay':`${Math.min(i,5)*55}ms`}}><p>{q}</p></li>)}</ul>:null}
+ {response?.status==='no_evidence'&&<div className="evidence-face"><DotSadFace variant="dizzy"/></div>}
  <ResponseContext response={response} onNewArchitecture={onNewArchitecture}/>
  {originalPrompt&&response?.status!=='needs_clarification'&&<section className="proposal-original"><h3>Tu idea original</h3><p>{originalPrompt}</p></section>}</section>}
  </div></div></div></div>;

@@ -1,3 +1,5 @@
+import {DotSadFace} from '../../DotSadFace';
+import {ConnectionDiagram} from './ConnectionDiagram';
 import {toolHref} from '../../data/detailTarget.mjs';
 import {useId,useRef,useState,useLayoutEffect} from 'react';
 import {FollowingTooltip} from '../../FollowingTooltip';
@@ -54,63 +56,10 @@ function Endpoint({component}){
   {trigger=><button type="button" className="connection-node" onPointerMove={trackBorder} {...trigger} style={{'--node-start':identity.palette.start,'--node-end':identity.palette.end}}><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></button>}
  </FollowingTooltip>;
 }
-function ConnectionGroup({from,connections,components}){
- const root=useRef(null);
- const markerId=useId().replaceAll(':','');
- const [geometry,setGeometry]=useState({paths:[],sourceTop:0});
- useLayoutEffect(()=>{
-  const element=root.current;
-  const measure=()=>{
-   const box=element.getBoundingClientRect();
-   const source=element.querySelector('.connection-source').getBoundingClientRect();
-   const mobile=window.matchMedia('(max-width:640px)').matches;
-   const targets=[...element.querySelectorAll('.connection-destination')].map(target=>{
-    const end=target.getBoundingClientRect();
-    return {x:end.left-box.left,y:end.top-box.top+end.height/2};
-   });
-   if(!targets.length)return;
-   // Align with the nodes, not the height of their descriptive text.
-   const center=(targets[0].y+targets[targets.length-1].y)/2;
-   const sourceTop=mobile?0:Math.max(0,center-source.height/2);
-   const x=mobile?source.left-box.left+20:source.right-box.left;
-   const y=mobile?source.bottom-box.top:sourceTop+source.height/2;
-   const paths=targets.map(({x:tx,y:ty})=>{
-    if(mobile)return `M ${x} ${y} V ${ty-12} Q ${x} ${ty} ${x+12} ${ty} H ${tx-4}`;
-    if(Math.abs(ty-y)<1)return `M ${x} ${y} H ${tx-4}`;
-    const bend=x+(tx-x)*0.25;
-    const direction=Math.sign(ty-y);
-    const radius=Math.min(16,Math.abs(ty-y)/2);
-    return `M ${x} ${y} H ${bend-radius} Q ${bend} ${y} ${bend} ${y+direction*radius} V ${ty-direction*radius} Q ${bend} ${ty} ${bend+radius} ${ty} H ${tx-4}`;
-   });
-   const next={paths,sourceTop};
-   setGeometry(previous=>JSON.stringify(previous)===JSON.stringify(next)?previous:next);
-  };
-  const observer=new ResizeObserver(measure);
-  observer.observe(element);
-  element.querySelectorAll('.connection-source,.connection-destination,.connection-branch').forEach(node=>observer.observe(node));
-  measure();
-  return()=>observer.disconnect();
- },[connections]);
- return <li className="connection-group" ref={root}>
-  <svg className="connection-wires" aria-hidden="true"><defs><marker id={markerId} markerUnits="userSpaceOnUse" markerWidth="6" markerHeight="6" refX="3" refY="3"><circle cx="3" cy="3" r="2.5" fill="currentColor"/></marker></defs>{geometry.paths.map((path,index)=><path key={index} d={path} markerEnd={`url(#${markerId})`}/>)}</svg>
-  <div className="connection-source" style={{marginTop:geometry.sourceTop}}><Endpoint component={from}/></div>
-  <ul className="connection-branches">{connections.map((connection,index)=><li className="connection-branch" key={`${connection.to_key}-${index}`}>
-   <span className="sr-only">{from.label} hacia {components.get(connection.to_key).label}</span>
-   <div className="connection-route-copy">{connection.protocol&&<span className="connection-route-protocol">{connection.protocol}</span>}{connection.description&&<p>{connection.description}</p>}</div>
-   <div className="connection-destination"><Endpoint component={components.get(connection.to_key)}/></div>
-  </li>)}</ul>
- </li>;
-}
 export function ProposalTabs({response,onNewArchitecture}){
  const [tab,setTab]=useState('tools');
  const tabs=useRef([]);
  const connections=response.connections??[];
- const components=new Map(response.components.map(c=>[c.key,c]));
- const groups=new Map();
- connections.forEach(connection=>{
-  if(!groups.has(connection.from_key))groups.set(connection.from_key,[]);
-  groups.get(connection.from_key).push(connection);
- });
  const select=(index)=>{setTab(index===0?'tools':'connections');tabs.current[index]?.focus();};
  const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};
  return <div className="proposal-tabs">
@@ -125,7 +74,7 @@ export function ProposalTabs({response,onNewArchitecture}){
     <ul className="proposal-tools">{response.components.map((component,index)=><ToolRecommendation key={component.key} component={component} index={index}/>)}</ul>
    </section>
    <section id="proposal-panel-connections" role="tabpanel" aria-labelledby="proposal-tab-connections" hidden={tab!=='connections'} tabIndex={0}>
-    {connections.length===0?<p className="proposal-empty">Esta propuesta no incluye conexiones.</p>:<ul className="connection-map">{[...groups].map(([key,items])=><ConnectionGroup key={key} from={components.get(key)} connections={items} components={components}/>)}</ul>}
+    {connections.length===0?<div className="catalog-error proposal-connections-empty"><DotSadFace/><p>¡Lo sentimos! Esta propuesta no incluye ninguna conexión.</p></div>:tab==='connections'&&<ConnectionDiagram components={response.components} connections={connections} Endpoint={Endpoint}/>}
    </section>
   </div>
  </div>;

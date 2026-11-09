@@ -2,9 +2,21 @@ import React from 'react';
 import {ArrowUpRight} from 'lucide-react';
 
 const suggestions=[
- {title:'Gestionar varias tiendas',summary:'Pedidos, inventario y acceso por sucursal.',prompt:'Quiero una plataforma web para gestionar los pedidos y el inventario de cinco tiendas. Cada sucursal debe ver sus ventas y existencias, mientras administración puede consultar todo. Necesitamos buscar productos, actualizar el stock al confirmar pedidos y procesar reportes sin bloquear la aplicación. Empezaremos con 30 empleados y unos 500 pedidos diarios. Queremos alojarla en nuestro servidor y detectar fallos del servicio.'},
- {title:'Consultar documentos internos',summary:'Respuestas con fuentes y permisos por equipo.',prompt:'Necesito un portal donde 50 empleados puedan buscar respuestas en manuales y documentos internos. Cada respuesta debe indicar de qué documento salió y respetar los permisos de cada equipo. Los documentos se actualizan semanalmente y deben procesarse sin interrumpir las consultas. Queremos mantener los datos en nuestra infraestructura y conocer los tiempos de respuesta y los errores.'},
- {title:'Unificar reportes de ventas',summary:'Importaciones automáticas y métricas del negocio.',prompt:'Quiero reunir las ventas de nuestras tiendas y nuestra web en un panel para gerencia. Necesitamos importar datos cada hora, detectar registros duplicados y comparar ingresos, productos y sucursales. Si una importación falla, debe poder reintentarse sin repetir ventas. Empezaremos con unos 100.000 registros diarios y necesitamos controlar si la información está actualizada.'}
+ {
+  "title": "Llevar mi negocio a internet",
+  "summary": "Ventas online, pagos y seguimiento de pedidos.",
+  "prompt": "Tengo un negocio de productos para el hogar con tres tiendas y quiero empezar a vender por internet. Necesito que los clientes encuentren productos, paguen online y consulten el estado de sus pedidos. Mi equipo debe gestionar las ventas en un solo lugar y mantener actualizado el stock para no vender productos agotados. Al principio esperamos unos 200 pedidos al día y queremos avisar a los clientes cuando su compra esté lista para retirar o haya sido enviada."
+ },
+ {
+  "title": "Atender mejor a mis clientes",
+  "summary": "Consultas organizadas y respuestas a tiempo.",
+  "prompt": "Tenemos una empresa de servicios y recibimos unas 300 consultas diarias de clientes. Hoy se nos pierden mensajes y a veces dos personas responden lo mismo. Quiero un portal donde los clientes puedan enviar consultas, adjuntar documentos y ver cómo avanza su solicitud. Nuestro equipo de 12 personas necesita asignar cada caso, consultar el historial del cliente y encontrar respuestas en nuestros manuales. También queremos avisar cuando un caso esté resuelto y saber cuánto tardamos en responder."
+ },
+ {
+  "title": "Entender qué impulsa mis ventas",
+  "summary": "Productos, sucursales y resultados en un solo panel.",
+  "prompt": "Tengo cinco tiendas y una tienda online, pero cada semana perdemos horas reuniendo planillas para saber cómo va el negocio. Quiero un panel que reúna las ventas automáticamente, compare los resultados de cada sucursal y muestre qué productos se venden más. Cada encargado debe ver su tienda y gerencia debe poder ver todo. Necesitamos evitar ventas duplicadas, recibir un resumen diario y saber si falta información antes de tomar decisiones de compra."
+ }
 ];
 
 export function PromptSuggestions({flow,onSelect,workspace=false}){
