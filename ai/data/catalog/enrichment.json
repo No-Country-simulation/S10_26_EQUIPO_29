@@ -67,29 +67,28 @@
       "github_id": 590187800,
       "full_name": "anthropics/anthropic-sdk-python",
       "categories": [
-        "ai",
-        "dev-tools"
+        "ai"
       ],
-      "summary_es": "SDK de Python que proporciona acceso a la API de Claude para aplicaciones de Python.",
+      "summary_es": "Librería de Python para acceder a la API de Claude desde aplicaciones de Python.",
       "use_cases": [
-        "Acceder a la API de Claude desde aplicaciones en Python"
+        "Proveer acceso a la API de Claude desde aplicaciones en Python"
       ],
       "evidence": [
-        "The Claude SDK for Python provides access to the Claude API from Python applications."
+        "The Anthropic SDK for Python provides access to the Claude API from Python applications."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "fe19862f50f25522108f4520b04e5fdd04be2ad5f40c671e39389e9b41679809",
+      "ai_input_hash": "c58f3c6c97f7847dcec1c006efbe1e05ad1f85fe2d01404c4b0341a3d81f593a",
       "review": {
-        "readme_chars": 3142,
+        "readme_chars": 1014,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2858,
-        "output_tokens": 106,
-        "seconds": 1.18
+        "input_tokens": 2295,
+        "output_tokens": 102,
+        "seconds": 1.17
       }
     },
     {
@@ -99,21 +98,21 @@
         "data-processing",
         "automation"
       ],
-      "summary_es": "Plataforma para programar, planificar y supervisar flujos de trabajo de manera programática.",
+      "summary_es": "Plataforma para programar, planificar y monitorizar flujos de trabajo mediante código.",
       "use_cases": [
-        "Programar flujos de trabajo mediante código",
-        "Orquestar tuberías de datos y machine learning",
-        "Visualizar canalizaciones en producción y supervisar su progreso"
+        "Programar y planificar flujos de trabajo",
+        "Orquestar tareas utilizando dependencias especificadas",
+        "Visualizar pipelines de datos en producción y monitorizar su progreso"
       ],
       "evidence": [
         "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows.",
-        "Beyond traditional data pipelines, Airflow is widely used to orchestrate machine learning workflows — training, retraining, evaluation, and deployment",
+        "The Airflow scheduler executes your tasks on an array of workers while following the specified dependencies.",
         "The rich user interface makes it easy to visualize pipelines running in production, monitor progress, and troubleshoot issues when needed."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "4bf448a3d8b64d661d4c362be1ee1d186ba060c126021694e9b7267b0b436b1a",
+      "ai_input_hash": "d3b000b0e06bc415d1e12c860841abd82732f7333f00914fc9b4955ba40ed85c",
       "review": {
         "readme_chars": 7992,
         "attempts": 1,
@@ -121,8 +120,8 @@
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 4021,
-        "output_tokens": 228,
-        "seconds": 1.36
+        "output_tokens": 219,
+        "seconds": 1.17
       }
     },
     {
@@ -131,28 +130,34 @@
       "categories": [
         "data-processing"
       ],
-      "summary_es": "Modelo de programación unificado para procesamiento de datos por lotes y en tiempo real (batch y streaming).",
+      "summary_es": "Modelo de programación unificado para procesamiento de datos por lotes y en streaming.",
       "use_cases": [
-        "Definir pipelines de procesamiento de datos paralelos para batch y streaming",
-        "Ejecutar programas escritos contra el modelo Beam en múltiples backends de procesamiento distribuido"
+        "Definir pipelines de procesamiento de datos paralelos para lotes y streaming",
+        "Construir pipelines utilizando SDKs específicos de lenguajes como Java, Python o Go"
       ],
       "evidence": [
         "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines",
-        "Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet."
+        "as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "87c65540aa01ebe6d292b29ce0b659417f8ba3c10b59f6691c84009e7562612c",
+      "ai_input_hash": "d21d4b8f378c37c30b4d7f49086f5d23cea5387bf48eedcc190f15e07f286dba",
       "review": {
-        "readme_chars": 4554,
+        "readme_chars": 4414,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
-        "dropped_use_cases": [],
-        "input_tokens": 3067,
-        "output_tokens": 180,
-        "seconds": 1.2
+        "dropped_use_cases": [
+          {
+            "use_case": "Ejecutar pipelines en backends de procesamiento distribuido como Apache Flink, Apache Spark o Google Cloud Dataflow",
+            "evidence": "Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3026,
+        "output_tokens": 245,
+        "seconds": 1.44
       }
     },
     {
@@ -161,32 +166,34 @@
       "categories": [
         "data-processing"
       ],
-      "summary_es": "Framework de procesamiento de streams open source con capacidades de procesamiento por lotes y de flujos.",
+      "summary_es": "Framework de procesamiento de streams open source con capacidades de procesamiento de flujos y lotes.",
       "use_cases": [
-        "Procesar flujos de datos y programas por lotes",
-        "Procesar eventos fuera de orden en la DataStream API",
-        "Garantizar procesamiento exactamente una vez ante fallos",
-        "Gestionar memoria de manera personalizada para algoritmos de procesamiento de datos"
+        "Procesar flujos de datos y lotes",
+        "Soportar procesamiento de eventos fuera de orden",
+        "Ejecutar procesamiento con garantías de entrega exactamente una vez",
+        "Analizar grafos"
       ],
       "evidence": [
-        "A streaming-first runtime that supports both batch processing and data streaming programs",
+        "Apache Flink is an open source stream processing framework with powerful stream- and batch-processing capabilities.",
         "Support for *event time* and *out-of-order* processing in the DataStream API, based on the *Dataflow Model*",
         "Fault-tolerance with *exactly-once* processing guarantees",
-        "Custom memory management for efficient and robust switching between in-memory and out-of-core data processing algorithms"
+        "Libraries for Graph processing (batch), Machine Learning (batch), and Complex Event Processing (streaming)"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "184b3732dbdc473efda88563bc9c9172cc7eb19ea665c63d427c8be02785d570",
+      "ai_input_hash": "e90bdc511ba5a727f1e680389605a6ee5a1557a1a3c7df8e778cb29510bcc58a",
       "review": {
-        "readme_chars": 6147,
-        "attempts": 1,
-        "problems_first": [],
+        "readme_chars": 6183,
+        "attempts": 2,
+        "problems_first": [
+          "summary_es usa palabras de marketing (potentes): describe la herramienta sin ellas"
+        ],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3595,
-        "output_tokens": 266,
-        "seconds": 1.44
+        "input_tokens": 7507,
+        "output_tokens": 510,
+        "seconds": 2.64
       }
     },
     {
@@ -231,32 +238,32 @@
         "data-processing",
         "ai"
       ],
-      "summary_es": "Motor de analítica unificado para el procesamiento de datos a gran escala que admite análisis de datos, aprendizaje automático, procesamiento de grafos y procesamiento de flujos.",
+      "summary_es": "Motor de analítica unificado para el procesamiento de datos a gran escala. Incluye herramientas para SQL, aprendizaje automático, procesamiento de grafos y streaming.",
       "use_cases": [
-        "Procesar datos a gran escala",
-        "Realizar análisis de datos",
-        "Ejecutar cargas de trabajo de aprendizaje automático",
-        "Realizar procesamiento de grafos"
+        "Realizar análisis de datos con Spark SQL para SQL y DataFrames",
+        "Ejecutar cargas de trabajo de pandas con la API de pandas en Spark",
+        "Implementar aprendizaje automático utilizando MLlib",
+        "Procesar flujos de datos en tiempo real mediante Structured Streaming"
       ],
       "evidence": [
-        "Spark is a unified analytics engine for large-scale data processing.",
-        "an optimized engine that supports general computation graphs for data analysis.",
+        "Spark SQL for SQL and DataFrames",
+        "pandas API on Spark for pandas workloads",
         "MLlib for machine learning",
-        "GraphX for graph processing"
+        "Structured Streaming for stream processing"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "d82608b8f150778b9eacbcc7be718b79b245a9a48f0834c0083ea9ec563d4158",
+      "ai_input_hash": "755ae679b66a3833a4fd25496f7327e25cb73ae6a9122aac25f49680771de2ed",
       "review": {
-        "readme_chars": 4227,
+        "readme_chars": 4221,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3231,
-        "output_tokens": 224,
-        "seconds": 2.0
+        "input_tokens": 3227,
+        "output_tokens": 234,
+        "seconds": 1.32
       }
     },
     {
@@ -295,21 +302,21 @@
       "categories": [
         "dev-tools"
       ],
-      "summary_es": "Linter y formateador de código Python rápido escrito en Rust.",
+      "summary_es": "Linter y formateador de código Python de alto rendimiento escrito en Rust.",
       "use_cases": [
-        "Analizar código para encontrar errores y problemas de estilo en proyectos de Python",
+        "Inspeccionar y analizar código Python en busca de errores o problemas de estilo",
         "Formatear archivos de código fuente en Python",
         "Corregir automáticamente errores detectados en el código"
       ],
       "evidence": [
         "ruff check # Lint all files in the current directory (and any subdirectories).",
         "ruff format # Format all files in the current directory (and any subdirectories).",
-        "- id: ruff-check\n  args: [ --fix ]"
+        "Fix support, for automatic error correction (e.g., automatically remove unused imports)"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "ccacbdc540a8c098b4da782d759b2f9404201ca1bd461057b018510dfb808bda",
+      "ai_input_hash": "7bc0a54de4b7a09385929df351c74eac40c62606491513d2bfc490298fca8d5b",
       "review": {
         "readme_chars": 7816,
         "attempts": 2,
@@ -318,9 +325,9 @@
         ],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 8865,
-        "output_tokens": 392,
-        "seconds": 3.17
+        "input_tokens": 8867,
+        "output_tokens": 397,
+        "seconds": 2.68
       }
     },
     {
@@ -395,28 +402,32 @@
       "categories": [
         "dev-tools"
       ],
-      "summary_es": "Herramienta para proyectos web que incluye formateador y linter rápido para JavaScript, TypeScript, JSON, CSS y otros lenguajes.",
+      "summary_es": "Toolchain para proyectos web que ofrece formateador y linter con soporte para múltiples lenguajes, utilizable mediante CLI y LSP.",
       "use_cases": [
-        "Formatear código fuente",
-        "Analizar código estático en busca de errores"
+        "Analizar código con un linter y aplicar correcciones seguras"
       ],
       "evidence": [
-        "Biome is a fast formatter for JavaScript, TypeScript, JSX, JSON, CSS, GraphQL, Markdown, YAML, and SCSS that scores 97% compatibility with Prettier.",
-        "Biome is a performant linter for JavaScript, TypeScript, JSX, JSON, CSS, GraphQL, Markdown, YAML, and SCSS that features more than 500 rules from ESLint, typescript-eslint, and other sources."
+        "lint files and apply the safe fixes"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "314ad9ebedd7489c151f1c986555a2137dad29571ae3c39f0664eede75acd0c5",
+      "ai_input_hash": "d86c1032714795aaddfdd804a3f590ac42a9805002ccb645018aceea788da148",
       "review": {
-        "readme_chars": 2915,
+        "readme_chars": 2931,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
-        "dropped_use_cases": [],
-        "input_tokens": 2738,
-        "output_tokens": 206,
-        "seconds": 1.16
+        "dropped_use_cases": [
+          {
+            "use_case": "Formatear archivos de código fuente",
+            "evidence": "format files",
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 2744,
+        "output_tokens": 138,
+        "seconds": 1.27
       }
     },
     {
@@ -526,26 +537,28 @@
         "messaging",
         "automation"
       ],
-      "summary_es": "Distributed Task Queue.",
+      "summary_es": "Cola de tareas distribuida basada en mensajes que permite distribuir trabajo a través de hilos o máquinas, usando un broker para mediar entre clientes y workers.",
       "use_cases": [
-        "Distribuir trabajo a través de hilos o máquinas"
+        "Distribuir trabajo a través de hilos o máquinas",
+        "Monitorear la cola de forma constante en busca de nuevo trabajo a realizar"
       ],
       "evidence": [
-        "Task queues are used as a mechanism to distribute work across threads or machines."
+        "Task queues are used as a mechanism to distribute work across threads or machines.",
+        "dedicated worker processes then constantly monitor the queue for new work to perform."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "a21edd39993b6988d18c4bc45a5058daafe65efc1b8f1754af32e6213b2728ec",
+      "ai_input_hash": "637cc0b4606b32017c82452ffa012b3bbea7196de25a3a67f8dd19b9cad571aa",
       "review": {
-        "readme_chars": 7976,
+        "readme_chars": 7977,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 4231,
-        "output_tokens": 92,
-        "seconds": 1.13
+        "output_tokens": 169,
+        "seconds": 1.34
       }
     },
     {
@@ -582,34 +595,34 @@
       "categories": [
         "infrastructure",
         "observability",
-        "backend"
+        "search"
       ],
-      "summary_es": "Solución de redes, observabilidad y seguridad basada en eBPF para contenedores y Kubernetes.",
+      "summary_es": "Solucion de redes, observabilidad y seguridad basada en eBPF para contenedores y Kubernetes.",
       "use_cases": [
-        "Proveer una red rápida, escalable y segura para clústeres de Kubernetes mediante un plugin CNI",
-        "Implementar balanceo de carga distribuido para el tráfico entre contenedores y servicios externos",
-        "Habilitar conectividad segura y fluida entre múltiples clústeres de Kubernetes",
-        "Aplicar políticas de red basadas en identidad que abarcan las capas L3 a L7"
+        "Implementar redes y seguridad basadas en eBPF",
+        "Reemplazar kube-proxy con balanceo de carga distribuido",
+        "Conectar multiples clusters de Kubernetes de forma segura",
+        "Aplicar politicas de red basadas en identidad"
       ],
       "evidence": [
-        "Cilium as a CNI plugin provides a fast, scalable, and secure networking layer for Kubernetes clusters.",
-        "Cilium implements distributed load balancing for traffic between application containers and to/from external services.",
+        "Cilium is a networking, observability, and security solution with an eBPF-based dataplane.",
+        "Cilium implements distributed load balancing for traffic between pods and to external services, and is able to fully replace kube-proxy, using efficient hash tables in eBPF, allowing for almost unlimited scale.",
         "Cilium Cluster Mesh enables secure, seamless connectivity across multiple Kubernetes clusters.",
-        "Cilium Network Policy provides identity-aware enforcement across L3-L7."
+        "It is L7-protocol aware and can enforce network policies on L3-L7 using an identity-based security model that is decoupled from network addressing."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "25e5e67156206124219b312f869da19a97affafaf46a1cb766c0f477b95f7684",
+      "ai_input_hash": "2309184ca8d13ad886039c7635a0160b6a8ed6763547b55658c3d2ad4b4a435d",
       "review": {
-        "readme_chars": 7880,
+        "readme_chars": 7881,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3726,
-        "output_tokens": 294,
-        "seconds": 1.45
+        "input_tokens": 3727,
+        "output_tokens": 299,
+        "seconds": 1.56
       }
     },
     {
@@ -644,9 +657,10 @@
       "github_id": 60246359,
       "full_name": "ClickHouse/ClickHouse",
       "categories": [
-        "database"
+        "database",
+        "analytics"
       ],
-      "summary_es": "Sistema de gestión de bases de datos analíticas orientado a columnas que permite generar informes de datos analíticos en tiempo real.",
+      "summary_es": "Base de datos orientada a columnas de código abierto que permite generar informes de datos analíticos en tiempo real.",
       "use_cases": [
         "Generar informes de datos analíticos en tiempo real"
       ],
@@ -656,16 +670,16 @@
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "eabd82036d48d00018479679f8a6024834dc3c27f31beb2ab6b5e34466c6dad2",
+      "ai_input_hash": "4a483865d5011bfbf54037d72ca372b9a7a62b497d4bb72c54e20170be63f9ef",
       "review": {
-        "readme_chars": 3146,
+        "readme_chars": 4034,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2917,
-        "output_tokens": 117,
-        "seconds": 1.48
+        "input_tokens": 3241,
+        "output_tokens": 119,
+        "seconds": 1.18
       }
     },
     {
@@ -956,22 +970,22 @@
       "categories": [
         "infrastructure"
       ],
-      "summary_es": "Proxy de borde, intermediario y de servicios de alto rendimiento y nativo para la nube.",
+      "summary_es": "Proxy de borde, intermedio y de servicios nativo de la nube de alto rendimiento.",
       "use_cases": [],
       "evidence": [],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "6b71dfaf241cb475953b0e27e6c366a7c4f3c7d4ae109257927c1d351db05e39",
+      "ai_input_hash": "e5a33a1d1d025a245f8d2365345d1fe180882784bdd77f1a3ee88c81e4e47396",
       "review": {
-        "readme_chars": 3532,
+        "readme_chars": 3533,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 2847,
-        "output_tokens": 52,
-        "seconds": 1.07
+        "output_tokens": 51,
+        "seconds": 1.1
       }
     },
     {
@@ -1838,30 +1852,30 @@
         "dev-tools",
         "automation"
       ],
-      "summary_es": "Framework para pruebas web y automatización que permite controlar Chromium, Firefox y WebKit mediante una única API.",
+      "summary_es": "Framework para pruebas web y automatización de navegadores que permite controlar Chromium, Firefox y WebKit con una única API.",
       "use_cases": [
-        "Realizar pruebas end-to-end",
-        "Ejecutar automatización de navegadores para agentes de IA",
-        "Crear scripts de automatización de navegador"
+        "Ejecutar pruebas end-to-end en múltiples navegadores",
+        "Automatizar interacciones web con agentes de IA",
+        "Desarrollar scripts de automatización de navegadores"
       ],
       "evidence": [
-        "Playwright Test is a full-featured test runner built for end-to-end testing.",
+        "Playwright Test is a full-featured test runner built for end-to-end testing. It runs tests across Chromium, Firefox, and WebKit with full browser isolation, auto-waiting, and web-first assertions.",
         "Playwright is a framework for web automation and testing. It drives Chromium, Firefox, and WebKit with a single API — in your tests, in your scripts, and as a tool for AI agents.",
-        "Use playwright as a library for browser automation scripts — web scraping, PDF generation, screenshot capture, and any workflow that needs programmatic browser control without a test runner."
+        "Use `playwright` as a library for browser automation scripts — web scraping, PDF generation, screenshot capture, and any workflow that needs programmatic browser control without a test runner."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "a8bb5597507f91b1035f74439e270b5f9b8ce078c234c083c8d3b0f29aaa671e",
+      "ai_input_hash": "b72b8a535898541649d7fee6042cc51409d488730ae073e77bafe1a256107c79",
       "review": {
-        "readme_chars": 7869,
+        "readme_chars": 7870,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 4083,
-        "output_tokens": 247,
-        "seconds": 5.25
+        "input_tokens": 4084,
+        "output_tokens": 284,
+        "seconds": 1.38
       }
     },
     {
@@ -1872,26 +1886,24 @@
       ],
       "summary_es": "Lenguaje para JavaScript a escala de aplicación que añade tipos opcionales y compila a JavaScript legible basado en estándares.",
       "use_cases": [
-        "Añadir tipos opcionales a JavaScript",
-        "Compilar código a JavaScript estándar"
+        "Instalar la versión estable más reciente"
       ],
       "evidence": [
-        "TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS.",
-        "TypeScript compiles to readable, standards-based JavaScript."
+        "npm install -D typescript"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "a2f1f9e89282e0c9ac590e51030466460a019ba4791345dacde3af7bfb7a3625",
+      "ai_input_hash": "1b7c019d4401846033aec46dba438f47a1fe0b36be97f657f5553c5bee2514bd",
       "review": {
-        "readme_chars": 1310,
+        "readme_chars": 1304,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2311,
-        "output_tokens": 156,
-        "seconds": 1.59
+        "input_tokens": 2312,
+        "output_tokens": 97,
+        "seconds": 1.34
       }
     },
     {
@@ -2148,28 +2160,28 @@
       "categories": [
         "frontend"
       ],
-      "summary_es": "Framework web full-stack libre y de código abierto para crear aplicaciones web y sitios con Vue.js.",
+      "summary_es": "Framework web full-stack basado en Vue.js para crear aplicaciones y sitios web con renderizado híbrido y optimización.",
       "use_cases": [
-        "Crear aplicaciones web y sitios web full-stack con Vue.js",
-        "Construir aplicaciones web rápidas, optimizadas para motores de búsqueda y escalables"
+        "Crear aplicaciones web full-stack y sitios web con Vue.js",
+        "Implementar renderizado del lado del servidor, generación estática e híbrida"
       ],
       "evidence": [
         "Nuxt is a free and open-source framework with an intuitive and extendable way to create type-safe, performant and production-grade full-stack web applications and websites with Vue.js.",
-        "It provides a number of features that make it easy to build fast, SEO-friendly, and scalable web applications, including:"
+        "Server-side rendering, static site generation, hybrid rendering and edge-side rendering"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "b23d09863c3bd7026a41234004bfc264d850ace569caa4bfbb9c2177feda6221",
+      "ai_input_hash": "d58a3d55a1cb853dc87749d8507c92c11dbb72187c500bb3f8b201a615d1355c",
       "review": {
-        "readme_chars": 2884,
+        "readme_chars": 2695,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2762,
-        "output_tokens": 196,
-        "seconds": 1.26
+        "input_tokens": 2702,
+        "output_tokens": 192,
+        "seconds": 1.44
       }
     },
     {
@@ -2178,28 +2190,28 @@
       "categories": [
         "ai"
       ],
-      "summary_es": "Servidor de inferencia y herramientas para ejecutar y gestionar modelos de lenguaje de código abierto de forma local o en la nube.",
+      "summary_es": "Servidor de inferencia y herramientas para ejecutar modelos de inteligencia artificial de código abierto de forma local o en la nube.",
       "use_cases": [
-        "Ejecutar y chatear con modelos de lenguaje localmente",
-        "Integrar modelos mediante una API REST"
+        "Ejecutar y chatear con modelos de IA localmente",
+        "Gestionar y ejecutar modelos mediante una API REST"
       ],
       "evidence": [
-        "Run and chat with Gemma 4",
+        "Run and chat with Gemma 4:",
         "Ollama has a REST API for running and managing models."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "b015c8f416d6a6f48c13e09ff137be0ac65311efd04fdcb183f945c595cc1da3",
+      "ai_input_hash": "5211a3e5b231a1cc2bc3cc3f0839557a12e36ca7ff69326b1a433b20a970d7ce",
       "review": {
-        "readme_chars": 7624,
+        "readme_chars": 7669,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 4100,
-        "output_tokens": 143,
-        "seconds": 1.09
+        "input_tokens": 4107,
+        "output_tokens": 144,
+        "seconds": 1.12
       }
     },
     {
@@ -2388,32 +2400,32 @@
       "categories": [
         "data-processing"
       ],
-      "summary_es": "Librería de Python para análisis y manipulación de datos que proporciona estructuras de datos etiquetadas y funciones estadísticas.",
+      "summary_es": "Librería de Python para análisis y manipulación de datos que ofrece estructuras etiquetadas rápidas y flexibles.",
       "use_cases": [
         "Gestionar datos faltantes",
-        "Alinear datos de forma automática o explícita",
         "Realizar operaciones de agrupación",
-        "Cargar datos desde archivos planos, Excel y bases de datos"
+        "Combinar y unir conjuntos de datos",
+        "Cargar y guardar datos con herramientas de E/S"
       ],
       "evidence": [
         "Easy handling of missing data (represented as NaN, NA, or NaT) in floating point as well as non-floating point data",
-        "Automatic and explicit data alignment: objects can be explicitly aligned to a set of labels, or the user can simply ignore the labels and let Series, DataFrame, etc. automatically align the data for you in computations",
         "Powerful, flexible group by functionality to perform split-apply-combine operations on data sets, for both aggregating and transforming data",
+        "Intuitive merging and joining data sets",
         "Robust I/O tools for loading data from flat files (CSV and delimited), Excel files, databases, and saving/loading data from the ultrafast HDF5 format"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "03e3e4f7bd58879db064c723a9b265efdc74db03c0f242187cd309903385b25f",
+      "ai_input_hash": "d9567e8c06e396f9c88276935e853e16795ab60e86f14a4f834dbee897fb96b0",
       "review": {
-        "readme_chars": 5473,
+        "readme_chars": 4618,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3272,
-        "output_tokens": 308,
-        "seconds": 1.35
+        "input_tokens": 3070,
+        "output_tokens": 269,
+        "seconds": 1.49
       }
     },
     {
@@ -2739,10 +2751,10 @@
         "observability",
         "database"
       ],
-      "summary_es": "Sistema de monitoreo de sistemas y servicios y base de datos de series temporales que recopila métricas, evalúa reglas y genera alertas.",
+      "summary_es": "Sistema de monitoreo de sistemas y servicios que recopila métricas, evalúa reglas, muestra resultados y activa alertas.",
       "use_cases": [
-        "Recolectar métricas de objetivos configurados a intervalos determinados",
-        "Disparar alertas cuando se observan condiciones específicas"
+        "Recopilar métricas de objetivos configurados a intervalos dados",
+        "Disparar alertas cuando se observen condiciones especificadas"
       ],
       "evidence": [
         "It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.",
@@ -2751,7 +2763,7 @@
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "40c9081b9885e640d236a44034b117b2f1fe3b75eb1b894fc9fd98a594072562",
+      "ai_input_hash": "9367516c3437aded0db60bb46367190bb7890dcb02d33f455f6a01d61c367f15",
       "review": {
         "readme_chars": 6989,
         "attempts": 1,
@@ -2759,8 +2771,8 @@
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 3772,
-        "output_tokens": 191,
-        "seconds": 1.11
+        "output_tokens": 187,
+        "seconds": 1.33
       }
     },
     {
@@ -2769,19 +2781,21 @@
       "categories": [
         "dev-tools"
       ],
-      "summary_es": "Formateador de código Python inflexible y con opiniones definidas que aplica un estilo consistente automáticamente.",
+      "summary_es": "Formateador de código Python opinionado y sin concesiones que aplica un estilo uniforme de manera determinista.",
       "use_cases": [
-        "Formatear cuadernos Jupyter en proyectos de Python",
-        "Leer valores predeterminados específicos de un archivo de configuración"
+        "Formatear código Python automáticamente",
+        "Acelerar las revisiones de código",
+        "Formatear cuadernos Jupyter"
       ],
       "evidence": [
-        "If you want to format Jupyter Notebooks, install with pip install \"black[jupyter]\".",
-        "Black is able to read project-specific default values for its command line options from a pyproject.toml file."
+        "Black is the uncompromising Python code formatter.",
+        "Black makes code review faster by producing the smallest diffs possible.",
+        "If you want to format Jupyter Notebooks, install with pip install \"black[jupyter]\"."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "5decd6f16b8cc91da82a22ee13801689cbf201f9076af12b3cccc9c812fcd07c",
+      "ai_input_hash": "f2ca3e9d5b51d1e11a456f45303269e00ef8ce6ccd2c1f87139e48d12c1042a6",
       "review": {
         "readme_chars": 6508,
         "attempts": 1,
@@ -2789,8 +2803,8 @@
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 3598,
-        "output_tokens": 162,
-        "seconds": 1.16
+        "output_tokens": 184,
+        "seconds": 1.35
       }
     },
     {
@@ -2799,22 +2813,22 @@
       "categories": [
         "database"
       ],
-      "summary_es": "Adaptador de base de datos PostgreSQL de nueva generación para el lenguaje de programación Python.",
+      "summary_es": "Adaptador de base de datos PostgreSQL para el lenguaje de programación Python.",
       "use_cases": [],
       "evidence": [],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "d76a4ec917fb4f73cfcf17e748566222afd45a99b2091efb051e3e3a778ad553",
+      "ai_input_hash": "f7326c47f6cb3ce3f1565c43be2288faf0227fe5d691f02876ce7e02ad32fdab",
       "review": {
-        "readme_chars": 3182,
+        "readme_chars": 4179,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2798,
-        "output_tokens": 50,
-        "seconds": 36.71
+        "input_tokens": 3040,
+        "output_tokens": 48,
+        "seconds": 1.15
       }
     },
     {
@@ -2824,9 +2838,9 @@
         "backend",
         "dev-tools"
       ],
-      "summary_es": "Librería para validación de datos usando anotaciones de tipos de Python.",
+      "summary_es": "Librería para validación de datos y análisis sintáctico en Python utilizando anotaciones de tipos.",
       "use_cases": [
-        "Validar datos utilizando anotaciones de tipos de Python"
+        "Validar datos utilizando anotaciones de tipos en Python"
       ],
       "evidence": [
         "Data validation using Python type hints"
@@ -2834,16 +2848,16 @@
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "10e4149898a6b7ad37d708c888531ad330d6fb7c8cbc86a40d5d2538621023d1",
+      "ai_input_hash": "0146644954707f8c39981bd155fda60d5bbcbb3d937de45addf6afeae73d9cb9",
       "review": {
-        "readme_chars": 1936,
+        "readme_chars": 1933,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 2613,
-        "output_tokens": 97,
-        "seconds": 1.22
+        "input_tokens": 2610,
+        "output_tokens": 102,
+        "seconds": 1.07
       }
     },
     {
@@ -2917,10 +2931,10 @@
         "ai",
         "backend"
       ],
-      "summary_es": "Framework de aprendizaje automático en Python que proporciona computación de tensores acelerada por GPU y redes neuronales dinámicas con diferenciación automática.",
+      "summary_es": "Librería de Python para computación de tensores con aceleración por GPU y redes neuronales profundas basadas en un sistema de autogradación con cinta.",
       "use_cases": [
-        "Reemplazar a NumPy para utilizar la potencia de las GPUs.",
-        "Desarrollar plataformas de investigación en aprendizaje profundo."
+        "Reemplazar a NumPy para utilizar la potencia de las GPU",
+        "Desarrollar investigación en aprendizaje profundo con flexibilidad y velocidad"
       ],
       "evidence": [
         "A replacement for NumPy to use the power of GPUs.",
@@ -2929,7 +2943,7 @@
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "f149713a4ab15176c2eb88fb9d0572e1a8bcada2ce9f69f0c382e61c89945e04",
+      "ai_input_hash": "8ad835e65f1a9fe4592af516f64851fadf840ee6ca32edf3da291cf379e90ae0",
       "review": {
         "readme_chars": 7960,
         "attempts": 1,
@@ -2937,8 +2951,8 @@
         "problems_final": [],
         "dropped_use_cases": [],
         "input_tokens": 3893,
-        "output_tokens": 156,
-        "seconds": 1.87
+        "output_tokens": 163,
+        "seconds": 1.23
       }
     },
     {
@@ -3214,30 +3228,33 @@
       "full_name": "seaweedfs/seaweedfs",
       "categories": [
         "storage",
+        "search",
         "database"
       ],
-      "summary_es": "Sistema de almacenamiento distribuido para objetos S3, sistemas de archivos, buckets de tablas Iceberg y buckets vectoriales Lance, diseñado para miles de millones de archivos.",
+      "summary_es": "Sistema de almacenamiento distribuido para objetos S3, sistemas de archivos, cubos de tablas Iceberg y cubos vectoriales Lance con escala horizontal.",
       "use_cases": [
-        "Almacenar miles de millones de archivos",
-        "Servir archivos rápidamente"
+        "Almacenar y servir objetos compatibles con la API de S3",
+        "Gestionar un sistema de archivos POSIX distribuido",
+        "Implementar búsqueda vectorial en cubos S3"
       ],
       "evidence": [
-        "to store billions of files!",
-        "to serve the files fast!"
+        "One SeaweedFS cluster serves an S3 object store, a POSIX file system, a lakehouse with S3 Tables and a built-in Iceberg REST Catalog, and vector search with S3 Vector Buckets, all on shared storage.",
+        "One SeaweedFS cluster serves an S3 object store, a POSIX file system, a lakehouse with S3 Tables and a built-in Iceberg REST Catalog, and vector search with S3 Vector Buckets, all on shared storage.",
+        "One SeaweedFS cluster serves an S3 object store, a POSIX file system, a lakehouse with S3 Tables and a built-in Iceberg REST Catalog, and vector search with S3 Vector Buckets, all on shared storage."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "174a2962addc71c36a9c4eb3edbe13b3ffb1c21d2d717a7d2ecb4dbfd74bfd2d",
+      "ai_input_hash": "6b09639e4897661b60f0bdea9e480183018e1e52d4e4e9234ad0cf5118945f37",
       "review": {
-        "readme_chars": 7600,
+        "readme_chars": 7798,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 4193,
-        "output_tokens": 140,
-        "seconds": 1.07
+        "input_tokens": 4247,
+        "output_tokens": 321,
+        "seconds": 1.63
       }
     },
     {
@@ -3283,30 +3300,28 @@
       ],
       "summary_es": "Taller frontend para construir, documentar y probar componentes de interfaz de usuario de forma aislada.",
       "use_cases": [
-        "Construir componentes y páginas de interfaz de usuario en aislamiento",
-        "Probar componentes para la accesibilidad de los usuarios en Storybook",
-        "Añadir documentación de alta calidad a los componentes",
-        "Cambiar tamaños de pantalla y diseños para componentes responsivos usando Storybook"
+        "Construir componentes de interfaz de usuario en aislamiento",
+        "Documentar componentes de interfaz de usuario",
+        "Probar componentes de interfaz de usuario"
       ],
       "evidence": [
         "Storybook is a frontend workshop for building UI components and pages in isolation.",
-        "Test components for user accessibility in Storybook",
-        "Add high quality documentation to your components",
-        "Change display sizes and layouts for responsive components using Storybook"
+        "Thousands of teams use it for UI development, testing, and documentation.",
+        "Thousands of teams use it for UI development, testing, and documentation."
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "d837dc5c4b3a7a92ee1a765b55ff867107305de2721d0ef15be81f80e075d12c",
+      "ai_input_hash": "7f4a656fc263c0514f456283eab859471c373de068847252794153bc88fba7f6",
       "review": {
-        "readme_chars": 5311,
+        "readme_chars": 5325,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3289,
-        "output_tokens": 240,
-        "seconds": 1.73
+        "input_tokens": 3295,
+        "output_tokens": 193,
+        "seconds": 1.42
       }
     },
     {
@@ -3855,30 +3870,32 @@
       "categories": [
         "ai"
       ],
-      "summary_es": "Librería rápida y eficiente en memoria para la inferencia y el servicio de modelos de lenguaje grande (LLM).",
+      "summary_es": "Librería para la inferencia y servicio de modelos de lenguaje grandes (LLMs), optimizada para ofrecer alta velocidad y eficiencia de memoria.",
       "use_cases": [
-        "Servir modelos de lenguaje grande con alto rendimiento",
-        "Gestionar eficientemente la memoria de atención con PagedAttention",
-        "Implementar un servidor de API compatible con OpenAI"
+        "Servir modelos de lenguaje grandes con alta velocidad de transferencia",
+        "Gestionar eficientemente la memoria de atención mediante PagedAttention",
+        "Ejecutar inferencia distribuida usando paralelismo de tensores, pipelines y datos",
+        "Exponer un servidor de API compatible con OpenAI"
       ],
       "evidence": [
-        "vLLM is a fast and easy-to-use library for LLM inference and serving.",
+        "State-of-the-art serving throughput",
         "Efficient management of attention key and value memory with PagedAttention",
+        "Tensor, pipeline, data, expert, and context parallelism for distributed inference",
         "OpenAI-compatible API server, plus Anthropic Messages API and gRPC support"
       ],
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
       "prompt_version": "5",
-      "ai_input_hash": "e4cdf665ba787a5be2c10c86814b21685705c0b75bdb5b665ea9a75feb9f3772",
+      "ai_input_hash": "06abc3c21b7b91bec5caac1b2e180592df1c88e79cd7d59183d08fc04c6d53b6",
       "review": {
-        "readme_chars": 4034,
+        "readme_chars": 4054,
         "attempts": 1,
         "problems_first": [],
         "problems_final": [],
         "dropped_use_cases": [],
-        "input_tokens": 3131,
-        "output_tokens": 205,
-        "seconds": 1.5
+        "input_tokens": 3138,
+        "output_tokens": 254,
+        "seconds": 1.4
       }
     },
     {
