@@ -20,12 +20,15 @@ escribir la base · 3 detenida por el freno (sin llamar al modelo ni publicar).
 """
 
 import argparse
+import os
 import shutil
 import sys
 import tempfile
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
+
+import psycopg
 
 from ai.catalog import ENRICHMENT_FILE, load_categories
 from ai.catalog_diff import NAME_CHANGED, CatalogDiff, diff_catalog
@@ -34,11 +37,12 @@ from ai.ideas import PROMPT_VERSION as IDEAS_VERSION
 from ai.llm import PROVIDERS
 from ai.scripts import write_enrichment, write_ideas
 from ai.scripts.batch import load_records
-from ai.scripts.compare_catalog import read_published, read_view
+from ai.scripts.compare_catalog import fail, read_published, read_view
 from ai.scripts.enrich_catalog import enrich
-from ai.scripts.export_catalog_snapshot import AI_FIELDS
+from ai.scripts.export_catalog_snapshot import AI_FIELDS, redact
 from ai.scripts.generate_ideas import OUT_FILE as IDEAS_FILE
 from ai.scripts.generate_ideas import generate
+from ai.scripts.load_seed_example import ENV_VAR as WRITER_ENV_VAR
 from ai.scripts.refresh_ai_data import (Plan, check_provider, edit_records, make_plan,
                                         version_block, write_database)
 from shared.contracts.repo import Repo
@@ -63,6 +67,19 @@ class Outcome:
         if self.stopped:
             return STOPPED
         return PARTIAL if self.failed else DONE
+
+
+def check_writer() -> None:
+    """Conecta con el escritor sin escribir nada: un secreto mal puesto falla en la primera
+    corrida y no recién el día que haya algo que publicar."""
+    url = os.environ.get(WRITER_ENV_VAR)
+    if not url:
+        fail(f"Falta {WRITER_ENV_VAR} en .env (ver .env.example)")
+    try:
+        with psycopg.connect(url, connect_timeout=10) as conn:
+            conn.execute("select 1")
+    except psycopg.Error as e:
+        fail(f"No se pudo conectar con el escritor de la IA: {redact(str(e), url)}")
 
 
 def plan_auto(public: CatalogDiff, draft: CatalogDiff, enrichment_block: str | None = None,
@@ -214,6 +231,7 @@ def main() -> None:
 
     live, _ = read_view()
     published = read_published()
+    check_writer()
     with tempfile.TemporaryDirectory() as tmp:
         files = (Path(tmp) / "enrichment.json", Path(tmp) / "ideas.json")
         for source, copy in zip((ENRICHMENT_FILE, IDEAS_FILE), files):

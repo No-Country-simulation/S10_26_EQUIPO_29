@@ -156,6 +156,7 @@ def simulated(monkeypatch, data, tmp_path):
     repos, _, _ = data
     calls = {"generate": [], "enrich": [], "write": []}
     monkeypatch.setattr(auto, "read_view", lambda: (repos, ["github_id"]))
+    monkeypatch.setattr(auto, "check_writer", lambda: None)
     monkeypatch.setattr(auto, "generate", lambda rs, out, provider: calls["generate"].append(out))
     monkeypatch.setattr(auto, "enrich", lambda rs, out, provider: calls["enrich"].append(out))
     monkeypatch.setattr(auto, "write_database",
@@ -211,3 +212,26 @@ def test_si_el_proveedor_corta_publica_lo_que_alcanzo(simulated, data, monkeypat
     code, text = run({"enrichment": without(enrichment, missing), "ideas": without(ideas, missing)})
     assert "cortó la corrida" in text and "gemini: límite de uso alcanzado" in text
     assert len(calls["write"]) == 1
+
+
+
+
+def test_sin_el_escritor_falla_antes_de_hacer_nada(monkeypatch):
+    monkeypatch.delenv(auto.WRITER_ENV_VAR, raising=False)
+    with pytest.raises(SystemExit) as exit_:
+        auto.check_writer()
+    assert exit_.value.code == 2
+
+
+def test_si_el_escritor_no_conecta_lo_dice_sin_el_host(monkeypatch, capsys):
+    import psycopg
+    monkeypatch.setenv(auto.WRITER_ENV_VAR, "postgresql://escritor@db.servidor-secreto.com/base")
+
+    def fails(url, **kwargs):
+        raise psycopg.OperationalError('connection to server at "db.servidor-secreto.com" failed')
+    monkeypatch.setattr(auto.psycopg, "connect", fails)
+    with pytest.raises(SystemExit) as exit_:
+        auto.check_writer()
+    assert exit_.value.code == 2
+    error = capsys.readouterr().err
+    assert "escritor" in error and "servidor-secreto" not in error
