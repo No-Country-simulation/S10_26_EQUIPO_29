@@ -345,7 +345,8 @@ vuelve a correr el mismo comando.
    solo se listan; con `--borrar-huerfanos` se borran sus filas regenerables (nunca categorías humanas
    ni ideas revisadas), con un máximo de `--max-borrar` (10) para no vaciar las tablas si la vista
    devolviera de menos.
-5. Reiniciar el servicio del asistente (carga el catálogo al arrancar) y hacer commit de los archivos.
+5. Hacer commit de los archivos. El servicio del asistente carga lo publicado solo (revisa cada
+   `AI_CATALOG_RELOAD_MINUTES` minutos): no hace falta reiniciarlo.
 
 La primera vez después de aplicar `ai/sql/004_procesamiento_ia.sql`, `ai.ai_processing` está vacía: el
 plan muestra todos los repos para publicar y 0 llamadas al modelo, y `--escribir` llena el registro sin
@@ -353,6 +354,30 @@ cambiar los textos publicados.
 
 Un cambio de reglas no se regenera aquí: si el archivo está en otra versión de las reglas que el
 código, o un registro es de otro modelo, el plan lo muestra como pendiente.
+
+### Actualización automática (diaria)
+
+El workflow `.github/workflows/ai_refresh.yml` corre cada día a las 07:17 de Bogotá (12:17 UTC)
+`python -m ai.scripts.auto_refresh_ai_data`: compara la vista con lo publicado, regenera con el
+modelo solo los repos cuya descripción, topics o README cambiaron y los publica, sin revisión
+humana. Un cambio de estrellas o fechas no hace nada.
+
+- **Freno:** si cambió de una vez más del 40 % del catálogo o harían falta más de 100 llamadas al
+  modelo, se detiene sin llamar al modelo ni publicar.
+- **Aviso:** si algo se detiene o falla, abre o actualiza el issue "Actualización de los datos de la
+  IA: requiere atención" con el informe completo, y lo cierra cuando una corrida termina sin
+  pendientes. El informe también queda en el resumen de cada ejecución (pestaña Actions).
+- **Correrlo a mano:** Actions → ai-refresh → Run workflow. Para destrabar un freno legítimo, marcar
+  "Levantar el freno de volumen solo en esta corrida".
+- **Apagarlo:** Actions → ai-refresh → ⋯ → Disable workflow (sin tocar código).
+- **Secretos:** en el environment `datos-ia` (solo la rama `main`): `AI_READER_DATABASE_URL`,
+  `AI_DATABASE_URL`, `GEMINI_API_KEY` y `HF_TOKEN`. Las URL de la base deben usar el pooler de
+  Supabase: GitHub Actions no tiene IPv6.
+- **Sigue a mano:** borrar filas de repos que salieron (`refresh_ai_data --escribir
+  --borrar-huerfanos`), regenerar por un cambio de versión de las reglas y actualizar la copia de
+  `ai/data/catalog/` para las evaluaciones.
+- GitHub desactiva los workflows programados de un repo público tras 60 días sin actividad; se
+  reactivan desde la misma pestaña.
 
 ## Datos de ejemplo en las tablas de la IA
 

@@ -1,0 +1,135 @@
+name: ai-refresh
+
+# Actualiza los datos de la IA cuando cambia en el catálogo algo que lee el modelo
+# (descripción, topics o README). Corre cada día a las 07:17 de Bogotá (12:17 UTC),
+# después de la sincronización del catálogo. Para apagarlo: Actions → ai-refresh →
+# Disable workflow. Detalle en ai/README.md.
+on:
+  schedule:
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+    inputs:
+      permitir_mas_cambios:
+        description: "Levantar el freno de volumen solo en esta corrida"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Una corrida a la vez; no cancela una que ya empezó.
+concurrency:
+  group: ai-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Actualizar los datos de la IA
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # Los secretos de la IA viven en este environment, limitado a la rama main.
+    environment: datos-ia
+    permissions:
+      contents: read
+      issues: write
+    env:
+      PYTHONUNBUFFERED: "1"
+      AI_READER_DATABASE_URL: ${{ secrets.AI_READER_DATABASE_URL }}
+      AI_DATABASE_URL: ${{ secrets.AI_DATABASE_URL }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: ai/requirements.txt
+
+      # torch en su versión para CPU (la máquina no tiene GPU): mucho más liviana.
+      - name: Instalar dependencias
+        run: |
+          python -m pip install "$(grep -E '^torch==' ai/requirements.txt)" \
+            --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --requirement ai/requirements.txt
+
+      # El modelo de embeddings se descarga solo si hay vectores que calcular.
+      - name: Caché del modelo de embeddings
+        uses: actions/cache@v4
+        with:
+          path: .cache/huggingface
+          key: hf-${{ runner.os }}-embeddinggemma-300m
+
+      # 0 nada que hacer o todo publicado · 1 publicó con fallas · 2 error · 3 freno.
+      # Python también sale con 1 si se cae: sin informe, se trata como error.
+      - name: Actualizar los datos
+        id: run
+        shell: bash
+        env:
+          ALLOW_MORE: ${{ inputs.permitir_mas_cambios }}
+        run: |
+          report="$RUNNER_TEMP/informe.md"
+          args=(--informe "$report")
+          if [ "$ALLOW_MORE" = "true" ]; then args+=(--permitir-mas-cambios); fi
+          set +e
+          python -m ai.scripts.auto_refresh_ai_data "${args[@]}"
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ] && [ ! -f "$report" ]; then
+            printf '## Actualización de los datos de la IA\n\n**Error** (código %s): la corrida terminó sin informe. El detalle está en el log de la ejecución.\n' "$code" > "$report"
+            code=2
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          cat "$report" >> "$GITHUB_STEP_SUMMARY"
+
+      # Un solo issue: se abre o se actualiza si algo requiere atención y se cierra
+      # cuando una corrida termina sin pendientes. Solo comenta cuando el informe cambia.
+      - name: Aviso en un issue
+        if: always() && steps.run.outputs.code != ''
+        uses: actions/github-script@v7
+        env:
+          CODE: ${{ steps.run.outputs.code }}
+          REPORT: ${{ runner.temp }}/informe.md
+        with:
+          script: |
+            const fs = require('fs');
+            const title = 'Actualización de los datos de la IA: requiere atención';
+            const assignee = 'andigles';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const report = fs.readFileSync(process.env.REPORT, 'utf8');
+            const { data: open } = await github.rest.issues.listForRepo({
+              ...context.repo, state: 'open', per_page: 100,
+            });
+            const existing = open.find((issue) => issue.title === title && !issue.pull_request);
+            if (process.env.CODE === '0') {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  ...context.repo, issue_number: existing.number,
+                  body: `Resuelto: la última corrida terminó sin pendientes.\n\n${runUrl}`,
+                });
+                await github.rest.issues.update({
+                  ...context.repo, issue_number: existing.number, state: 'closed',
+                });
+              }
+              return;
+            }
+            const body = `${report}\n---\nEjecución: ${runUrl}`;
+            if (!existing) {
+              await github.rest.issues.create({
+                ...context.repo, title, body, labels: ['ia'], assignees: [assignee],
+              });
+            } else if (!(existing.body || '').startsWith(report)) {
+              await github.rest.issues.update({ ...context.repo, issue_number: existing.number, body });
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: existing.number,
+                body: `Cambió la situación (ver el cuerpo del issue).\n\n${runUrl}`,
+              });
+            }
+
+      - name: Marcar error
+        if: steps.run.outputs.code == '2'
+        run: exit 1
