@@ -57,7 +57,12 @@ Reglas:
    vean el estado de su carro y reciban un correo cuando esté listo", la
    app es la del usuario y la necesidad es enviar correos; en "necesitamos
    un framework para construir la app móvil", "frontend" sí es una
-   necesidad.
+   necesidad. Guardar y consultar los datos del negocio sí es una necesidad
+   ("database") cuando el pedido lo pide, con esas u otras palabras, aunque
+   no nombre una base de datos. Por ejemplo, en "una lavandería quiere tener
+   a mano qué prendas dejó cada cliente y cuándo las retiró", la necesidad es
+   una base de datos; en "una lavandería quiere avisarles a sus clientes
+   cuando la ropa esté lista", no: la necesidad es enviar avisos.
 3. En "evidence", copia el fragmento exacto del pedido que justifica cada
    necesidad.
 4. Una necesidad por categoría. Si varias partes del pedido caen en la misma
