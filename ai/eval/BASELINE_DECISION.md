@@ -176,6 +176,26 @@ Las cifras de desarrollo salieron más altas (búsqueda 92 % frente a 73 %): eso
 conjuntos se usaron para decidir o se escribieron conociendo el catálogo. La diferencia
 es la razón de tener una prueba final, y las cifras que se publican son estas.
 
+### Tildes en los textos del modelo (limitación medida, 9-nov)
+
+En 31 de 610 respuestas de Gemini (5,1 %) aparece al menos una palabra común escrita
+sin tilde ("autenticacion", "gestion", "busqueda"). En 29 de esas 31, la respuesta
+entera está escrita sin ninguna tilde: no son palabras sueltas.
+
+- Cómo se midió: con los reportes JSON de `results/` del 2 al 9 de noviembre
+  (`assistant-*`, `injection-*`, `understand-*`), sin corridas nuevas. Cuenta solo los
+  textos que escribe el modelo y ve el usuario. Usa una lista de 20 palabras con tilde
+  obligatoria y sin homógrafos, fijada antes de contar junto con los umbrales (hasta 5 %:
+  limitación; 20 % o más: arreglo).
+- Denominador: respuestas de Gemini con al menos un texto del modelo, sin errores ni
+  pedidos frenados en la entrada. Cubre varias versiones del asistente (2 a 9 de noviembre).
+- No lo explica el pedido: pasa con 5 de 70 pedidos escritos sin tildes y con 27 de 540
+  escritos con tildes. Tampoco cambia con la defensa contra prompt injection (mismos
+  casos antes y después).
+- Otros proveedores: 0 de 133 respuestas, con muestras chicas.
+- Las entidades HTML (`Qu&eacute;`) sí se corrigen en el código desde #109. Una tilde que
+  falta no se puede restaurar sin un diccionario.
+
 ### Para mejoras futuras (medir con casos nuevos)
 
 - Búsqueda de bases de datos y de herramientas de reportes con pedidos en lenguaje de
@@ -183,6 +203,9 @@ es la razón de tener una prueba final, y las cifras que se publican son estas.
 - Abstención frente a necesidades parecidas a algo del catálogo (chat, copias de
   seguridad automáticas, factura electrónica) y detección de las que hoy no se ven.
 - Una regla de umbral que no dependa de una sola consulta, o prescindir del umbral.
+- Tildes en los textos del modelo (ver la sección anterior): detectar un texto largo del
+  modelo sin ninguna tilde y reintentar; no necesita diccionario. Medirlo pide muchas
+  respuestas nuevas: con un 5 % de base, ver si baja exige cientos, más la regresión.
 
 Reportes: `results/search-catalog-test-embeddinggemma-300m.md`, `…-texto-base.md` y
 `results/assistant-2026-11-09-0833-test-gemini.md`.
