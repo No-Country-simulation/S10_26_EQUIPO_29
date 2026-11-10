@@ -88,3 +88,5 @@
 .ds-type-size li small { display: block; margin-top: 4px; color: #aaa; }
 
 .ds-footer-label{color:var(--neutral-800);margin-left:var(--space-component-8)}
+
+.ds-tool-logo-white{filter:brightness(0) invert(1)}
