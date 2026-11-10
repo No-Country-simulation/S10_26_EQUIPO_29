@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="88 3 32 32">
+<defs>
+<mask id="symbol-cutouts" maskUnits="userSpaceOnUse" x="90" y="5" width="28" height="28" style="mask-type:luminance">
+<rect x="90" y="5" width="28" height="28" fill="white"/>
+<path d="M90 23.6666H91.1961C94.2317 23.6666 96.9615 21.8185 98.0889 19L99.9556 14.3333" stroke="black" stroke-width="3.11111"/>
+<path d="M118 23.6666H116.804C113.768 23.6666 111.039 21.8185 109.911 19L108.044 14.3333" stroke="black" stroke-width="3.11111"/>
+</mask>
+</defs>
+<rect x="90" y="5" width="28" height="28" rx="14" fill="white" mask="url(#symbol-cutouts)"/>
+</svg>
