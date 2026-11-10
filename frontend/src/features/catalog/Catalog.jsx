@@ -1,3 +1,4 @@
+import {ArrowUpRight} from 'lucide-react';
 import {DotSadFace} from '../../DotSadFace';
 import {reloadHome} from '../../reloadHome.mjs';
 import {interfaceErrors,errorActions} from '../../errorPresentation.mjs';
@@ -6,7 +7,6 @@ import {CatalogPagination} from './CatalogPagination';
 import {paginateCatalog} from './pagination.mjs';
 import {scrollToCatalogPage} from './scrollToCatalogPage.mjs';
 import {useCatalogData} from '../../data/CatalogProvider';
-import {Search} from 'lucide-react';
 import {RevealHeading,usePageReveal} from '../../PageReveal';
 import {useAnimatedCatalog} from '../../useAnimatedCatalog';
 import {CatalogSkeleton} from './CatalogSkeleton';
@@ -48,10 +48,10 @@ export const Catalog=memo(function Catalog({onOpen,phase}){
  {status==='loading'&&<CatalogSkeleton/>}
  {status==='error'&&<div className="catalog-error" role="alert"><DotSadFace/><p>{interfaceErrors.catalog}</p><button className="ui-button ui-button--secondary" onClick={retry}>{errorActions.retry}</button></div>}
  {status!=='loading'&&<div ref={gridRef} className="grid catalog-results" tabIndex={-1} aria-label={`Herramientas, página ${pagination.page} de ${pagination.pages}`}>{displayed.map(tool=><ToolCard key={tool.id} tool={tool} onOpen={onOpen}/>)}</div>}
- {status==='ready'&&filtered.length===0&&displayed.length===0&&<div className="empty"><Search size={30}/><h3>No encontramos coincidencias</h3><button onClick={clear} className="ui-button ui-button--primary">Ver todas las herramientas</button></div>}
+ {status==='ready'&&filtered.length===0&&displayed.length===0&&<div className="catalog-error catalog-empty" role="status"><DotSadFace/><p>No encontramos coincidencias</p><button onClick={clear} className="ui-button ui-button--primary">Ver todas las herramientas</button></div>}
  {status==='ready'&&filtered.length>0&&<>
   <p className="sr-only" role="status">Página {pagination.page} de {pagination.pages}. {pagination.items.length} herramientas de {filtered.length}.</p>
   <CatalogPagination page={pagination.page} pages={pagination.pages} onChange={changePage}/>
  </>}
- </section><footer className="catalog-footer"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><a className="ui-button ui-button--secondary catalog-design-link" href="/design-system/">Design System</a></footer></div></div>);
+ </section><footer className="catalog-footer"><section className="catalog-design-banner" aria-labelledby="catalog-design-title"><div><h2 id="catalog-design-title">Descubre cómo diseñamos OpenBridge</h2><p>Explora los colores, componentes y detalles que dan forma a esta plataforma.</p></div><a className="ui-button ui-button--secondary" href="/design-system/">Explorar Design System <ArrowUpRight size={16} aria-hidden="true"/></a></section><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a></footer></div></div>);
 });

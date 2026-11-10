@@ -1,0 +1,15 @@
+/* Shared neutral primitives. Alpha remains local to preserve lighting and depth. */
+:root{
+ --neutral-000:#000000; --neutral-000-rgb:0 0 0;
+ --neutral-100:#101010; --neutral-100-rgb:16 16 16;
+ --neutral-200:#181818; --neutral-200-rgb:24 24 24;
+ --neutral-300:#292929; --neutral-300-rgb:41 41 41;
+ --neutral-400:#3a3a3a; --neutral-400-rgb:58 58 58;
+ --neutral-500:#555555; --neutral-500-rgb:85 85 85;
+ --neutral-600:#777777; --neutral-600-rgb:119 119 119;
+ --neutral-700:#929292; --neutral-700-rgb:146 146 146;
+ --neutral-800:#aaaaaa; --neutral-800-rgb:170 170 170;
+ --neutral-900:#c7c7c7; --neutral-900-rgb:199 199 199;
+ --neutral-1000:#ebebeb; --neutral-1000-rgb:235 235 235;
+ --neutral-1100:#ffffff; --neutral-1100-rgb:255 255 255;
+}
