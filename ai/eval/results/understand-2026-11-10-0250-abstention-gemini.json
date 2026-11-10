@@ -1,0 +1,611 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "telemedicina-consultas",
+    "error": "LLMTimeout: gemini: sin respuesta en 15.0 s",
+    "data": null,
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de bases de datos de grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "inicio de sesión con proveedores externos",
+          "evidence": "que los usuarios entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.62,
+    "input_tokens": 2126,
+    "output_tokens": 86,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y semántica",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2135,
+    "output_tokens": 120,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisión de factura electrónica fiscal",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2127,
+    "output_tokens": 116,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 2139,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo con asesor",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de tráfico web",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2127,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "respaldo automatico de archivos nocturno",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de identidad y control de acceso",
+          "evidence": "que cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.09,
+    "input_tokens": 2131,
+    "output_tokens": 123,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analitica de menciones en redes sociales",
+          "evidence": "medir cuántas veces la mencionan en Instagram y TikTok"
+        },
+        {
+          "category": "communication",
+          "query": "envio masivo de correos electronicos",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.99,
+    "input_tokens": 2123,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "telemedicina-consultas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "videollamadas web para pacientes y medicos",
+          "evidence": "que los médicos atiendan a sus pacientes por videollamada desde el navegador"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de historias clinicas relacionales",
+          "evidence": "guardar las historias clínicas en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 2128,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de bases de datos de grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación mediante inicio de sesión social",
+          "evidence": "entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2126,
+    "output_tokens": 86,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución global de archivos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y similitud de imágenes",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2135,
+    "output_tokens": 123,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de factura electronica fiscal",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos pdf",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.0,
+    "input_tokens": 2127,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de notificaciones por correo electronico",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.95,
+    "input_tokens": 2139,
+    "output_tokens": 41,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo para clientes",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de tráfico web",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2127,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "copias de seguridad de carpetas",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "que cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2131,
+    "output_tokens": 121,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío masivo de correo electrónico",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2123,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "telemedicina-consultas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "videollamadas web para pacientes",
+          "evidence": "atiendan a sus pacientes por videollamada desde el navegador"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "guardar las historias clínicas en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 2128,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de base de datos de grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios con proveedores externos",
+          "evidence": "que los usuarios entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2126,
+    "output_tokens": 122,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución global de archivos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y similitud de imágenes",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2135,
+    "output_tokens": 123,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de facturas electronicas",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.97,
+    "input_tokens": 2127,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2139,
+    "output_tokens": 49,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo con asesor",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de tráfico web de productos",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2127,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "copias de seguridad automáticas de archivos",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.97,
+    "input_tokens": 2131,
+    "output_tokens": 74,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio masivo de correos electronicos",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2123,
+    "output_tokens": 71,
+    "waited": 0.0
+  }
+]

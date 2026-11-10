@@ -1,0 +1,855 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de pacientes",
+          "evidence": "llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "que cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de registros médicos",
+          "evidence": "encontrar rápidamente los registros de vacunación y tratamientos anteriores"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios automáticos",
+          "evidence": "enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.9,
+    "input_tokens": 2273,
+    "output_tokens": 215,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-idiomas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos de estudiantes",
+          "evidence": "organizar las inscripciones y los datos de mis estudiantes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y permisos",
+          "evidence": "que cada profesor pueda acceder a sus grupos sin consultar información de otros cursos"
+        },
+        {
+          "category": "ai",
+          "query": "generación de recomendaciones automáticas de cursos",
+          "evidence": "recibir una recomendación automática del curso más adecuado"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de conversión y embudos de inscripción",
+          "evidence": "medir cuántos estudiantes pasan de una prueba inicial a una inscripción"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2269,
+    "output_tokens": 132,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-repuestos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de referencias",
+          "evidence": "controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada por descripción y compatibilidad",
+          "evidence": "encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "cobro en línea antes de despachar",
+          "evidence": "las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal para consultas frecuentes",
+          "evidence": "que los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2273,
+    "output_tokens": 220,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-turismo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de reservas y cupos",
+          "evidence": "guardar fotografías, documentos y autorizaciones de cada reserva"
+        },
+        {
+          "category": "payments",
+          "query": "pasarela de pagos en línea",
+          "evidence": "Quiero que los clientes puedan pagar por adelantado desde cualquier lugar"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes transaccionales",
+          "evidence": "quiero que el cliente reciba un mensaje con los detalles del viaje"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar fotografías, documentos y autorizaciones"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 2266,
+    "output_tokens": 126,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "coworking",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de reservas y planes de miembros",
+          "evidence": "controlar las reservas de salas y puestos de trabajo. Necesito que los miembros puedan reservar únicamente los espacios incluidos en su plan"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de uso y ocupación de espacios",
+          "evidence": "identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones y avisos automáticos",
+          "evidence": "los miembros reciban un aviso cuando se acerque su horario reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2272,
+    "output_tokens": 188,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-restauracion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de expedientes",
+          "evidence": "documentar cada pieza desde que llega hasta que se entrega. [...] consultar los expedientes según el proyecto"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia y documentos",
+          "evidence": "conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de registros por atributos",
+          "evidence": "encontrar piezas por su época, material o procedencia"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.27,
+    "input_tokens": 2273,
+    "output_tokens": 178,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "academia-musica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos del negocio",
+          "evidence": "publicar información sobre los cursos, profesores y horarios disponibles. Necesito que los alumnos puedan consultar las partituras y grabaciones"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por roles",
+          "evidence": "que cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de uso y consultas de contenido",
+          "evidence": "saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2264,
+    "output_tokens": 180,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "alquiler-equipos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de inventario y contratos",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados. Necesito conservar los contratos firmados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia y documentos",
+          "evidence": "fotografías del estado de cada equipo antes y después de cada alquiler"
+        },
+        {
+          "category": "ai",
+          "query": "análisis de imágenes para detección de daños",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2283,
+    "output_tokens": 180,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de registros",
+          "evidence": "encontrar rápidamente los registros de vacunación y tratamientos anteriores"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios programados",
+          "evidence": "enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2273,
+    "output_tokens": 213,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-idiomas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos de estudiantes",
+          "evidence": "organizar las inscripciones y los datos de mis estudiantes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y permisos",
+          "evidence": "cada profesor pueda acceder a sus grupos sin consultar información de otros cursos"
+        },
+        {
+          "category": "ai",
+          "query": "modelo para evaluación y recomendación automática",
+          "evidence": "pruebas de nivel y recibir una recomendación automática del curso más adecuado"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de conversión y embudos de usuarios",
+          "evidence": "medir cuántos estudiantes pasan de una prueba inicial a una inscripción"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.37,
+    "input_tokens": 2269,
+    "output_tokens": 217,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-repuestos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de existencias",
+          "evidence": "controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de texto y características",
+          "evidence": "encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en línea",
+          "evidence": "las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal en memoria",
+          "evidence": "los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2273,
+    "output_tokens": 217,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-turismo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de reservas y cupos",
+          "evidence": "quiero ofrecer excursiones con diferentes fechas y cupos disponibles. Necesito guardar fotografías, documentos y autorizaciones de cada reserva"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar fotografías, documentos y autorizaciones de cada reserva"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "los clientes puedan pagar por adelantado desde cualquier lugar"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes de confirmación",
+          "evidence": "Cuando se confirme una reserva, quiero que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2266,
+    "output_tokens": 232,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "coworking",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de reservas de espacios",
+          "evidence": "controlar las reservas de salas y puestos de trabajo"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de planes y permisos de usuarios",
+          "evidence": "que los miembros puedan reservar únicamente los espacios incluidos en su plan"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de demanda y ocupacion de espacios",
+          "evidence": "identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías"
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones recordatorias a usuarios",
+          "evidence": "que los miembros reciban un aviso cuando se acerque su horario reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.39,
+    "input_tokens": 2272,
+    "output_tokens": 220,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-restauracion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros estructurados",
+          "evidence": "documentar cada pieza desde que llega hasta que se entrega"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos e imágenes",
+          "evidence": "conservar fotografías del estado original, informes de restauración y documentos"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda por filtros y atributos",
+          "evidence": "encontrar piezas por su época, material o procedencia"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2273,
+    "output_tokens": 164,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "academia-musica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de cursos y horarios",
+          "evidence": "publicar información sobre los cursos, profesores y horarios disponibles"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de partituras y grabaciones",
+          "evidence": "consultar las partituras y grabaciones correspondientes a sus clases"
+        },
+        {
+          "category": "auth",
+          "query": "control de permisos por roles",
+          "evidence": "cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de consultas de cursos",
+          "evidence": "saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2264,
+    "output_tokens": 211,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "alquiler-equipos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos del negocio",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "conservar los contratos firmados y las fotografías del estado de cada equipo"
+        },
+        {
+          "category": "ai",
+          "query": "analizar imágenes y generar reportes automáticos",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias"
+        },
+        {
+          "category": "auth",
+          "query": "gestión de usuarios y permisos",
+          "evidence": "cada empleado pueda consultar los alquileres que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2283,
+    "output_tokens": 218,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de pacientes y propietarios",
+          "evidence": "llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de registros médicos",
+          "evidence": "los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios automatizados",
+          "evidence": "enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2273,
+    "output_tokens": 219,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-idiomas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "organizar las inscripciones y los datos de mis estudiantes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "cada profesor pueda acceder a sus grupos sin consultar información de otros cursos"
+        },
+        {
+          "category": "ai",
+          "query": "generación de recomendaciones automáticas",
+          "evidence": "recibir una recomendación automática del curso más adecuado"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de conversión y embudos",
+          "evidence": "medir cuántos estudiantes pasan de una prueba inicial a una inscripción"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.41,
+    "input_tokens": 2269,
+    "output_tokens": 206,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-repuestos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control y registro de existencias",
+          "evidence": "controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de texto y características",
+          "evidence": "encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "cobro en línea de ventas",
+          "evidence": "que las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal para alto tráfico",
+          "evidence": "que los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2273,
+    "output_tokens": 218,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-turismo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de reservas y cupos",
+          "evidence": "quiero ofrecer excursiones con diferentes fechas y cupos disponibles. Necesito guardar fotografías, documentos y autorizaciones de cada reserva."
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar fotografías, documentos y autorizaciones de cada reserva"
+        },
+        {
+          "category": "payments",
+          "query": "pasarela de pagos en línea",
+          "evidence": "Quiero que los clientes puedan pagar por adelantado desde cualquier lugar."
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes transaccionales",
+          "evidence": "Cuando se confirme una reserva, quiero que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.39,
+    "input_tokens": 2266,
+    "output_tokens": 236,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "coworking",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de reservas",
+          "evidence": "controlar las reservas de salas y puestos de trabajo"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de planes y permisos de usuario",
+          "evidence": "que los miembros puedan reservar únicamente los espacios incluidos en su plan"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de ocupacion y demanda",
+          "evidence": "identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías"
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones de reserva",
+          "evidence": "que los miembros reciban un aviso cuando se acerque su horario reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.45,
+    "input_tokens": 2272,
+    "output_tokens": 214,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-restauracion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia y documentos",
+          "evidence": "conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de expedientes",
+          "evidence": "consultar los expedientes según el proyecto que tengan asignado"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de registros por atributos",
+          "evidence": "encontrar piezas por su época, material o procedencia"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2273,
+    "output_tokens": 128,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "academia-musica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos del negocio",
+          "evidence": "publicar información sobre los cursos, profesores y horarios disponibles. Necesito que los alumnos puedan consultar las partituras y grabaciones"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "consultar las partituras y grabaciones correspondientes a sus clases"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de uso y consultas de contenido",
+          "evidence": "saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.43,
+    "input_tokens": 2264,
+    "output_tokens": 228,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "alquiler-equipos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de inventario y contratos",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados. Necesito conservar los contratos firmados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos fotográficos",
+          "evidence": "fotografías del estado de cada equipo antes y después de cada alquiler"
+        },
+        {
+          "category": "ai",
+          "query": "comparación y análisis visual",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2283,
+    "output_tokens": 177,
+    "waited": 0.0
+  }
+]
