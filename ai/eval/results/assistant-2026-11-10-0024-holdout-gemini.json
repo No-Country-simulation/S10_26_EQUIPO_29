@@ -1,0 +1,4390 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario y ventas",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "caché en memoria para respuestas rápidas",
+          "evidence": "consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.261
+        ],
+        [
+          "redis/redis",
+          0.259
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.243
+        ],
+        [
+          "hashicorp/vault",
+          0.232
+        ],
+        [
+          "etcd-io/etcd",
+          0.219
+        ]
+      ],
+      "cache": [
+        [
+          "redis/redis",
+          0.469
+        ],
+        [
+          "valkey-io/valkey",
+          0.406
+        ],
+        [
+          "nginx/nginx",
+          0.319
+        ],
+        [
+          "vllm-project/vllm",
+          0.319
+        ],
+        [
+          "vitejs/vite",
+          0.277
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Inventario y Caché para Ferreterías",
+      "summary": "La propuesta implementa una base de datos distribuida basada en valores clave para el almacenamiento y una herramienta optimizada para la caché en memoria que acelera las consultas repetidas al catálogo en las cinco sucursales.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento y consulta de inventario y ventas con aislamiento por sucursal, y el candidato ofrece un almacén de clave-valor distribuido optimizado para cargas de trabajo en tiempo real.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Almacenamiento de inventario y ventas",
+          "rationale": "Valkey es una base de datos de clave-valor distribuida y flexible optimizada para cargas de trabajo en tiempo real, adecuada para gestionar el inventario y las ventas de las sucursales. Su licencia es BSD-3-Clause y cuenta con mantenimiento reciente."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide caché en memoria para respuestas rápidas, y el candidato ofrece una base de datos y servidor de estructuras de datos en memoria para aplicaciones en tiempo real.",
+          "fit": "serves",
+          "full_name": "redis/redis",
+          "label": "Redis",
+          "role": "Caché para el catálogo de productos",
+          "rationale": "Redis funciona como un servidor de estructuras de datos y caché en memoria ideal para acelerar las consultas repetidas al catálogo de productos. Su licencia no está identificada por GitHub y presenta actividad reciente de mantenimiento."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "cache",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "La capa de caché consulta la base de datos principal cuando no encuentra el producto en memoria."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la lógica de aplicación se encargará de filtrar la información para que cada sucursal vea exclusivamente su propio inventario y sus ventas.",
+        "Se asume que las cinco sucursales se conectan a una infraestructura centralizada o distribuida accesible por red."
+      ],
+      "other_limitations": [
+        "La solución no incluye un módulo nativo de interfaz de usuario o panel de administración para las sucursales."
+      ]
+    },
+    "response": {
+      "id": "089d66a948934222af1d39e9dff2ceeb",
+      "status": "ok",
+      "title": "Sistema de Inventario y Caché para Ferreterías",
+      "summary": "La propuesta implementa una base de datos distribuida basada en valores clave para el almacenamiento y una herramienta optimizada para la caché en memoria que acelera las consultas repetidas al catálogo en las cinco sucursales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Valkey",
+          "role": "Almacenamiento de inventario y ventas",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Valkey es una base de datos de clave-valor distribuida y flexible optimizada para cargas de trabajo en tiempo real, adecuada para gestionar el inventario y las ventas de las sucursales. Su licencia es BSD-3-Clause y cuenta con mantenimiento reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Redis",
+          "role": "Caché para el catálogo de productos",
+          "full_name": "redis/redis",
+          "rationale": "Redis funciona como un servidor de estructuras de datos y caché en memoria ideal para acelerar las consultas repetidas al catálogo de productos. Su licencia no está identificada por GitHub y presenta actividad reciente de mantenimiento."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "La capa de caché consulta la base de datos principal cuando no encuentra el producto en memoria."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la lógica de aplicación se encargará de filtrar la información para que cada sucursal vea exclusivamente su propio inventario y sus ventas.",
+        "Se asume que las cinco sucursales se conectan a una infraestructura centralizada o distribuida accesible por red."
+      ],
+      "limitations": [
+        "La solución no incluye un módulo nativo de interfaz de usuario o panel de administración para las sucursales."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:18:07.140334Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "domicilios-push",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones móviles",
+          "evidence": "enviar una notificación al celular del cliente cuando su pedido salga del restaurante"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de tareas en segundo plano",
+          "evidence": "generar en segundo plano el recibo en PDF de cada pedido para no demorar la app"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "caronc/apprise",
+          0.403
+        ],
+        [
+          "novuhq/novu",
+          0.306
+        ],
+        [
+          "prometheus/alertmanager",
+          0.243
+        ],
+        [
+          "knadh/listmonk",
+          0.202
+        ]
+      ],
+      "messaging": [
+        [
+          "celery/celery",
+          0.326
+        ],
+        [
+          "apache/flink",
+          0.283
+        ],
+        [
+          "apache/beam",
+          0.255
+        ],
+        [
+          "Kludex/starlette",
+          0.244
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.239
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones y procesamiento de tareas en segundo plano",
+      "summary": "La propuesta implementa herramientas open source para el envío de notificaciones push a los clientes y el procesamiento de tareas distribuidas en segundo plano para la generación de recibos en PDF, asegurando el rendimiento de la aplicación de domicilios.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide el envío de notificaciones móviles y Apprise ofrece notificaciones push que funcionan con múltiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Envío de notificaciones móviles",
+          "rationale": "Apprise permite enviar notificaciones push que funcionan con casi todas las plataformas, resolviendo el requerimiento de notificar al celular del cliente cuando su pedido salga del restaurante."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide procesamiento de tareas en segundo plano y Celery ofrece una cola de tareas distribuida.",
+          "fit": "serves",
+          "full_name": "celery/celery",
+          "label": "Celery",
+          "role": "Cola de tareas en segundo plano",
+          "rationale": "Celery funciona como una cola de tareas distribuida que permite generar en segundo plano el recibo en PDF de cada pedido para no demorar la app. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la aplicación principal se comunica mediante una API para activar las tareas en segundo plano y las notificaciones."
+      ],
+      "other_limitations": [
+        "La solución no incluye la lógica de negocio específica para la creación de los archivos PDF ni la integración directa conpasarelas de pago."
+      ]
+    },
+    "response": {
+      "id": "e268eb4b000141ba862d569b804ae972",
+      "status": "ok",
+      "title": "Sistema de notificaciones y procesamiento de tareas en segundo plano",
+      "summary": "La propuesta implementa herramientas open source para el envío de notificaciones push a los clientes y el procesamiento de tareas distribuidas en segundo plano para la generación de recibos en PDF, asegurando el rendimiento de la aplicación de domicilios.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apprise",
+          "role": "Envío de notificaciones móviles",
+          "full_name": "caronc/apprise",
+          "rationale": "Apprise permite enviar notificaciones push que funcionan con casi todas las plataformas, resolviendo el requerimiento de notificar al celular del cliente cuando su pedido salga del restaurante."
+        },
+        {
+          "key": "c2",
+          "label": "Celery",
+          "role": "Cola de tareas en segundo plano",
+          "full_name": "celery/celery",
+          "rationale": "Celery funciona como una cola de tareas distribuida que permite generar en segundo plano el recibo en PDF de cada pedido para no demorar la app. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la aplicación principal se comunica mediante una API para activar las tareas en segundo plano y las notificaciones."
+      ],
+      "limitations": [
+        "La solución no incluye la lógica de negocio específica para la creación de los archivos PDF ni la integración directa conpasarelas de pago."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:18:18.565563Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.302
+        ],
+        [
+          "valkey-io/valkey",
+          0.295
+        ],
+        [
+          "rustfs/rustfs",
+          0.293
+        ],
+        [
+          "redis/redis",
+          0.288
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.284
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Almacenamiento clave-valor distribuido para red social de mascotas",
+      "summary": "La propuesta utiliza un almacenamiento clave-valor distribuido para manejar los datos del sistema de la red social de mascotas. No se encontraron bases de datos de grafos entre los candidatos de la necesidad consultada.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos de grafos para guardar conexiones, y el candidato más cercano ofrece un almacenamiento clave-valor distribuido y confiable.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Almacenamiento de datos",
+          "rationale": "El candidato seleccionado es un almacén de clave-valor distribuido, útil para datos críticos, pero no proporciona una base de datos de grafos para registrar quién conoce a quién como se solicitó."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red social comenzará con un volumen moderado de usuarios y relaciones.",
+        "El sistema requerirá lógica de aplicación adicional para simular relaciones de grafos sobre un motor clave-valor."
+      ],
+      "other_limitations": [
+        "No se dispone de ninguna base de datos de grafos entre los candidatos encontrados para cumplir estrictamente con el requerimiento de guardar conexiones tipo grafo."
+      ]
+    },
+    "response": {
+      "id": "92c961b927694ddd8dd40fba9e1ba87c",
+      "status": "no_evidence",
+      "title": "Almacenamiento clave-valor distribuido para red social de mascotas",
+      "summary": "La propuesta utiliza un almacenamiento clave-valor distribuido para manejar los datos del sistema de la red social de mascotas. No se encontraron bases de datos de grafos entre los candidatos de la necesidad consultada.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red social comenzará con un volumen moderado de usuarios y relaciones.",
+        "El sistema requerirá lógica de aplicación adicional para simular relaciones de grafos sobre un motor clave-valor."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. El candidato seleccionado es un almacén de clave-valor distribuido, útil para datos críticos, pero no proporciona una base de datos de grafos para registrar quién conoce a quién como se solicitó.",
+        "No se dispone de ninguna base de datos de grafos entre los candidatos encontrados para cumplir estrictamente con el requerimiento de guardar conexiones tipo grafo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:18:30.396487Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web basado en Vue",
+          "evidence": "un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenido no técnico",
+          "evidence": "su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vuejs/core",
+          0.649
+        ],
+        [
+          "nuxt/nuxt",
+          0.575
+        ],
+        [
+          "vitejs/vite",
+          0.464
+        ],
+        [
+          "vercel/next.js",
+          0.443
+        ],
+        [
+          "sveltejs/svelte",
+          0.44
+        ]
+      ],
+      "cms": [
+        [
+          "TryGhost/Ghost",
+          0.344
+        ],
+        [
+          "withastro/astro",
+          0.294
+        ],
+        [
+          "strapi/strapi",
+          0.269
+        ],
+        [
+          "pnpm/pnpm",
+          0.251
+        ],
+        [
+          "payloadcms/payload",
+          0.251
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web con Vue y gestión de contenidos",
+      "summary": "Esta propuesta incluye el framework full-stack basado en Vue para el desarrollo frontend y un sistema de gestión de contenidos headless para que el equipo no técnico pueda actualizar textos y banners sin depender de desarrolladores.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "Pide un framework web basado en Vue y Nuxt/nuxt ofrece un framework full-stack basado en Vue.",
+          "fit": "serves",
+          "full_name": "nuxt/nuxt",
+          "label": "Nuxt",
+          "role": "Framework frontend",
+          "rationale": "Es el framework full-stack basado en Vue ideal para construir la interfaz del sitio web con licencia MIT y mantenimiento activo."
+        },
+        {
+          "need": "cms",
+          "fit_check": "Pide un sistema para que un equipo no técnico cambie textos y banners sin programar, y TryGhost/Ghost ofrece tecnología para publicaciones modernas.",
+          "fit": "serves",
+          "full_name": "TryGhost/Ghost",
+          "label": "Ghost",
+          "role": "Gestor de contenidos",
+          "rationale": "Proporciona tecnología independiente para publicación moderna, permitiendo la gestión de contenidos con licencia MIT y actualización reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "frontend",
+          "to_need": "cms",
+          "protocol": "API REST",
+          "description": "El frontend solicita los contenidos y banners gestionados por el CMS para mostrarlos en el sitio web."
+        }
+      ],
+      "assumptions": [
+        "La agencia cuenta con desarrolladores capaces de integrar el frontend en Vue con el sistema de contenidos elegido."
+      ],
+      "other_limitations": [
+        "Ninguna de las opciones de CMS mencionadas explícitamente en los candidatos utiliza Vue como base principal, ya que Payload utiliza Next.js."
+      ]
+    },
+    "response": {
+      "id": "d28e7c60ef95483b97c914a57a4c4cb7",
+      "status": "ok",
+      "title": "Arquitectura web con Vue y gestión de contenidos",
+      "summary": "Esta propuesta incluye el framework full-stack basado en Vue para el desarrollo frontend y un sistema de gestión de contenidos headless para que el equipo no técnico pueda actualizar textos y banners sin depender de desarrolladores.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Nuxt",
+          "role": "Framework frontend",
+          "full_name": "nuxt/nuxt",
+          "rationale": "Es el framework full-stack basado en Vue ideal para construir la interfaz del sitio web con licencia MIT y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Ghost",
+          "role": "Gestor de contenidos",
+          "full_name": "TryGhost/Ghost",
+          "rationale": "Proporciona tecnología independiente para publicación moderna, permitiendo la gestión de contenidos con licencia MIT y actualización reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API REST",
+          "description": "El frontend solicita los contenidos y banners gestionados por el CMS para mostrarlos en el sitio web."
+        }
+      ],
+      "assumptions": [
+        "La agencia cuenta con desarrolladores capaces de integrar el frontend en Vue con el sistema de contenidos elegido."
+      ],
+      "limitations": [
+        "Ninguna de las opciones de CMS mencionadas explícitamente en los candidatos utiliza Vue como base principal, ya que Payload utiliza Next.js."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:18:41.800374Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "respaldo externo de archivos",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero de métricas operativas",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "hashicorp/vault",
+          0.26
+        ],
+        [
+          "rustfs/rustfs",
+          0.255
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.222
+        ],
+        [
+          "nginx/nginx",
+          0.201
+        ],
+        [
+          "postgres/postgres",
+          0.199
+        ]
+      ],
+      "analytics": [
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.337
+        ],
+        [
+          "grafana/grafana",
+          0.336
+        ],
+        [
+          "metabase/metabase",
+          0.315
+        ],
+        [
+          "prometheus/prometheus",
+          0.293
+        ],
+        [
+          "getlago/lago",
+          0.281
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de respaldo y analitica para laboratorio clinico",
+      "summary": "Esta solucion provee almacenamiento de objetos compatible con S3 para respaldar los resultados de examenes fuera del servidor principal y una plataforma de visualizacion y tableros para monitorear las muestras procesadas por cada sede.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide un respaldo externo de archivos y RustFS ofrece un sistema de almacenamiento de objetos de alto rendimiento.",
+          "fit": "serves",
+          "full_name": "rustfs/rustfs",
+          "label": "RustFS",
+          "role": "Almacenamiento externo para respaldos",
+          "rationale": "RustFS provee un sistema de almacenamiento de objetos compatible con S3 que permite guardar los resultados de examenes fuera del servidor principal de forma segura."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide un tablero de metricas operativas y Grafana ofrece una plataforma de visualizacion y tableros.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Tablero de muestras por sede",
+          "rationale": "Grafana provee una plataforma de visualizacion de datos y tableros para mostrar cuantas muestras procesa cada sede por dia."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "analytics",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "Consulta de datos metricos y operativas almacenadas para su visualizacion en el tablero."
+        }
+      ],
+      "assumptions": [
+        "El laboratorio cuenta con un mecanismo de programacion de tareas para activar el respaldo nocturno hacia el almacenamiento externo.",
+        "Las sedes envian sus datos de procesamiento de muestras a una fuente de datos accesible para el sistema de tableros."
+      ],
+      "other_limitations": [
+        "No se incluye la herramienta especifica para la gestion automatizada de tareas nocturnas en el servidor principal."
+      ]
+    },
+    "response": {
+      "id": "9c446e5cd702467680dc30f56dd1148c",
+      "status": "ok",
+      "title": "Arquitectura de respaldo y analitica para laboratorio clinico",
+      "summary": "Esta solucion provee almacenamiento de objetos compatible con S3 para respaldar los resultados de examenes fuera del servidor principal y una plataforma de visualizacion y tableros para monitorear las muestras procesadas por cada sede.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "RustFS",
+          "role": "Almacenamiento externo para respaldos",
+          "full_name": "rustfs/rustfs",
+          "rationale": "RustFS provee un sistema de almacenamiento de objetos compatible con S3 que permite guardar los resultados de examenes fuera del servidor principal de forma segura."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Tablero de muestras por sede",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana provee una plataforma de visualizacion de datos y tableros para mostrar cuantas muestras procesa cada sede por dia."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Consulta de datos metricos y operativas almacenadas para su visualizacion en el tablero."
+        }
+      ],
+      "assumptions": [
+        "El laboratorio cuenta con un mecanismo de programacion de tareas para activar el respaldo nocturno hacia el almacenamiento externo.",
+        "Las sedes envian sus datos de procesamiento de muestras a una fuente de datos accesible para el sistema de tableros."
+      ],
+      "limitations": [
+        "No se incluye la herramienta especifica para la gestion automatizada de tareas nocturnas en el servidor principal."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:18:53.498698Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de facturas electronicas",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "analitica del embudo de compra",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.24
+        ],
+        [
+          "getlago/lago",
+          0.203
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.253
+        ],
+        [
+          "getlago/lago",
+          0.253
+        ],
+        [
+          "PostHog/posthog",
+          0.242
+        ],
+        [
+          "duckdb/duckdb",
+          0.223
+        ],
+        [
+          "dbt-labs/dbt",
+          0.215
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de sistema de pagos y analítica",
+      "summary": "Esta propuesta incluye la gestión de cobros y facturación mediante una plataforma especializada de pagos, y el análisis del comportamiento de compra de los clientes con una herramienta de analítica web orientada a conversiones. Queda pendiente la emisión directa de facturas electrónicas específicas si los candidatos de pagos no la cubren de forma nativa.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir facturas electrónicas de cada venta, y Kill Bill ofrece una plataforma de facturación por suscripción y pagos.",
+          "fit": "serves",
+          "full_name": "killbill/killbill",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos y facturación",
+          "rationale": "Kill Bill resuelve el procesamiento de cobros y la gestión de facturación para las ventas de la tienda."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide saber en qué paso del proceso de compra abandonan los clientes, y Umami ofrece análisis de tráfico, comportamiento y conversiones.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Plataforma de analítica web",
+          "rationale": "Umami permite analizar el comportamiento y las conversiones de los usuarios para identificar los puntos de abandono en el proceso de compra."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda de cosméticos opera mediante un sitio web donde se pueden rastrear los pasos del proceso de compra."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos asegura la emisión de facturas electrónicas adaptadas a normativas fiscales locales específicas."
+      ]
+    },
+    "response": {
+      "id": "31593345f33841a88d1cb4ec64170bf2",
+      "status": "ok",
+      "title": "Propuesta de sistema de pagos y analítica",
+      "summary": "Esta propuesta incluye la gestión de cobros y facturación mediante una plataforma especializada de pagos, y el análisis del comportamiento de compra de los clientes con una herramienta de analítica web orientada a conversiones. Queda pendiente la emisión directa de facturas electrónicas específicas si los candidatos de pagos no la cubren de forma nativa.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos y facturación",
+          "full_name": "killbill/killbill",
+          "rationale": "Kill Bill resuelve el procesamiento de cobros y la gestión de facturación para las ventas de la tienda."
+        },
+        {
+          "key": "c2",
+          "label": "Umami",
+          "role": "Plataforma de analítica web",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami permite analizar el comportamiento y las conversiones de los usuarios para identificar los puntos de abandono en el proceso de compra."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda de cosméticos opera mediante un sitio web donde se pueden rastrear los pasos del proceso de compra."
+      ],
+      "limitations": [
+        "Ninguno de los candidatos asegura la emisión de facturas electrónicas adaptadas a normativas fiscales locales específicas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:19:05.006599Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de aplicación o sistema prefieren usar para este flujo de aprobaciones?",
+        "¿Necesitan integrar esta herramienta con algún software de recursos humanos o directorio de empleados existente?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "0867f457ebd949c197be65e893bc7e2c",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿Qué tipo de aplicación o sistema prefieren usar para este flujo de aprobaciones?",
+        "¿Necesitan integrar esta herramienta con algún software de recursos humanos o directorio de empleados existente?"
+      ],
+      "generated_at": "2026-11-10T05:19:14.310487Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "rastreo de solicitudes entre microservicios",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo en clúster de Kubernetes",
+          "evidence": "que cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "jaegertracing/jaeger",
+          0.469
+        ],
+        [
+          "traefik/traefik",
+          0.448
+        ],
+        [
+          "istio/istio",
+          0.374
+        ],
+        [
+          "envoyproxy/envoy",
+          0.315
+        ],
+        [
+          "grafana/grafana",
+          0.296
+        ]
+      ],
+      "infrastructure": [
+        [
+          "fluxcd/flux2",
+          0.56
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.551
+        ],
+        [
+          "argoproj/argo-cd",
+          0.496
+        ],
+        [
+          "containerd/containerd",
+          0.465
+        ],
+        [
+          "cilium/cilium",
+          0.428
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de observabilidad y despliegue continuo para microservicios",
+      "summary": "La propuesta implementa una plataforma de rastreo distribuido para identificar demoras entre servicios y una herramienta de GitOps para automatizar los despliegues en el clúster. Estas herramientas cubren los requerimientos principales de visibilidad y entrega continua expresados por la startup.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide rastreo de solicitudes entre servicios y Jaeger provee una plataforma de rastreo distribuido.",
+          "fit": "serves",
+          "full_name": "jaegertracing/jaeger",
+          "label": "Jaeger",
+          "role": "Rastreo distribuido de solicitudes",
+          "rationale": "Permite ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora, utilizando una plataforma de rastreo distribuido bajo licencia Apache-2.0 con actividad reciente."
+        },
+        {
+          "need": "infrastructure",
+          "fit_check": "La necesidad pide despliegue continuo en clúster y Flux ofrece una solución de entrega continua para Kubernetes.",
+          "fit": "serves",
+          "full_name": "fluxcd/flux2",
+          "label": "Flux2",
+          "role": "Despliegue continuo en Kubernetes",
+          "rationale": "Automatiza la entrega continua asegurando que los cambios aprobados en el repositorio se desplieguen en el clúster. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el repositorio de código ya cuenta con un flujo de aprobación previo para que la herramienta de despliegue continuo actúe sobre él."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una herramienta específica de visualización general de métricas o tableros avanzados como Grafana, la cual podría complementar la observabilidad."
+      ]
+    },
+    "response": {
+      "id": "68b4c243e95b4ef5b1bc6e5e5ff3b673",
+      "status": "ok",
+      "title": "Arquitectura de observabilidad y despliegue continuo para microservicios",
+      "summary": "La propuesta implementa una plataforma de rastreo distribuido para identificar demoras entre servicios y una herramienta de GitOps para automatizar los despliegues en el clúster. Estas herramientas cubren los requerimientos principales de visibilidad y entrega continua expresados por la startup.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Jaeger",
+          "role": "Rastreo distribuido de solicitudes",
+          "full_name": "jaegertracing/jaeger",
+          "rationale": "Permite ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora, utilizando una plataforma de rastreo distribuido bajo licencia Apache-2.0 con actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Flux2",
+          "role": "Despliegue continuo en Kubernetes",
+          "full_name": "fluxcd/flux2",
+          "rationale": "Automatiza la entrega continua asegurando que los cambios aprobados en el repositorio se desplieguen en el clúster. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el repositorio de código ya cuenta con un flujo de aprobación previo para que la herramienta de despliegue continuo actúe sobre él."
+      ],
+      "limitations": [
+        "La propuesta no incluye una herramienta específica de visualización general de métricas o tableros avanzados como Grafana, la cual podría complementar la observabilidad."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:19:25.946123Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real",
+          "evidence": "chat en tiempo real entre compradores y vendedores"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "ClickHouse/ClickHouse",
+          0.242
+        ],
+        [
+          "novuhq/novu",
+          0.235
+        ],
+        [
+          "redis/redis",
+          0.227
+        ],
+        [
+          "langchain-ai/langchain",
+          0.211
+        ],
+        [
+          "openai/openai-python",
+          0.203
+        ]
+      ],
+      "search": [
+        [
+          "typesense/typesense",
+          0.536
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.415
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.341
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.328
+        ],
+        [
+          "pgvector/pgvector",
+          0.319
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Solución de comunicación y búsqueda tolerante a errores",
+      "summary": "La propuesta cubre la comunicación en tiempo real entre compradores y vendedores mediante una infraestructura dedicada, y un buscador de productos rápido y tolerante a errores ortográficos para el marketplace.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un chat en tiempo real, y Novu ofrece infraestructura de comunicación de código abierto para agentes y productos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Novu proporciona la infraestructura de comunicación de código abierto para productos, con licencia no identificada por GitHub y actividad reciente, adecuada para gestionar los mensajes del marketplace."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador tolerante a errores, y Typesense ofrece un motor de búsqueda en memoria rápido y tolerante a errores ortográficos.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "rationale": "Typesense es un motor de búsqueda rápido y tolerante a errores ortográficos con licencia GPL-3.0 y actualización reciente, ideal para encontrar productos aunque se escriba con errores."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la plataforma del marketplace cuenta con una base de datos principal para el catálogo de productos que se sincronizará con el buscador.",
+        "Se asume que la infraestructura de comunicación seleccionada puede adaptarse para soportar el flujo específico de chat entre usuarios."
+      ],
+      "other_limitations": [
+        "La herramienta de comunicación seleccionada no incluye por defecto una interfaz de chat completa lista para usar sin integración de desarrollo."
+      ]
+    },
+    "response": {
+      "id": "fcf4524fe1d447b2b90213646eca1d72",
+      "status": "ok",
+      "title": "Solución de comunicación y búsqueda tolerante a errores",
+      "summary": "La propuesta cubre la comunicación en tiempo real entre compradores y vendedores mediante una infraestructura dedicada, y un buscador de productos rápido y tolerante a errores ortográficos para el marketplace.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "full_name": "novuhq/novu",
+          "rationale": "Novu proporciona la infraestructura de comunicación de código abierto para productos, con licencia no identificada por GitHub y actividad reciente, adecuada para gestionar los mensajes del marketplace."
+        },
+        {
+          "key": "c2",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "full_name": "typesense/typesense",
+          "rationale": "Typesense es un motor de búsqueda rápido y tolerante a errores ortográficos con licencia GPL-3.0 y actualización reciente, ideal para encontrar productos aunque se escriba con errores."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la plataforma del marketplace cuenta con una base de datos principal para el catálogo de productos que se sincronizará con el buscador.",
+        "Se asume que la infraestructura de comunicación seleccionada puede adaptarse para soportar el flujo específico de chat entre usuarios."
+      ],
+      "limitations": [
+        "La herramienta de comunicación seleccionada no incluye por defecto una interfaz de chat completa lista para usar sin integración de desarrollo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:19:38.103928Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "distribuidora-datos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "transformación de datos con sql versionado",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas"
+        },
+        {
+          "category": "database",
+          "query": "base de datos analitica rapida",
+          "evidence": "guardar el resultado en una base analítica rápida para consultar millones de filas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "data-processing": [
+        [
+          "dbt-labs/dbt",
+          0.351
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.331
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.327
+        ],
+        [
+          "hashicorp/terraform",
+          0.289
+        ],
+        [
+          "psycopg/psycopg",
+          0.28
+        ]
+      ],
+      "database": [
+        [
+          "duckdb/duckdb",
+          0.538
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.466
+        ],
+        [
+          "metabase/metabase",
+          0.424
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.393
+        ],
+        [
+          "dbt-labs/dbt",
+          0.391
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de datos para procesamiento analítico rápido",
+      "summary": "La propuesta utiliza herramientas robustas para transformar las ventas crudas mediante SQL versionado y almacenarlas en una base analítica optimizada para millones de filas. Se integra procesamiento y almacenamiento analítico eficiente para las necesidades de la distribuidora.",
+      "boxes": [
+        {
+          "need": "data-processing",
+          "fit_check": "Pide transformar datos con SQL versionado y dbt-labs/dbt permite a ingenieros y analistas transformar datos aplicando prácticas de desarrollo de software.",
+          "fit": "serves",
+          "full_name": "dbt-labs/dbt",
+          "label": "dbt",
+          "role": "Transformación de datos",
+          "rationale": "Permite transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas, aplicando prácticas de ingeniería de software."
+        },
+        {
+          "need": "database",
+          "fit_check": "Pide una base analítica rápida para consultar millones de filas y DuckDB provee un sistema de base de datos analítica de alto rendimiento.",
+          "fit": "serves",
+          "full_name": "duckdb/duckdb",
+          "label": "DuckDB",
+          "role": "Base de datos analítica",
+          "rationale": "Guarda el resultado en una base analítica rápida ideal para consultar millones de filas con alto rendimiento."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "SQL",
+          "description": "Envía los modelos y tablas transformadas para ser almacenados y consultados en la base analítica."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un entorno operativo donde se pueden ejecutar herramientas basadas en Python y SQL.",
+        "El volumen de datos actual y proyectado se adapta adecuadamente a una base de datos analítica embebida de alto rendimiento."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz de visualización o Business Intelligence para la consulta final de los usuarios de negocio."
+      ]
+    },
+    "response": {
+      "id": "60a6f35dfdf140a592fcbc0e6029ac34",
+      "status": "ok",
+      "title": "Arquitectura de datos para procesamiento analítico rápido",
+      "summary": "La propuesta utiliza herramientas robustas para transformar las ventas crudas mediante SQL versionado y almacenarlas en una base analítica optimizada para millones de filas. Se integra procesamiento y almacenamiento analítico eficiente para las necesidades de la distribuidora.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "dbt",
+          "role": "Transformación de datos",
+          "full_name": "dbt-labs/dbt",
+          "rationale": "Permite transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas, aplicando prácticas de ingeniería de software."
+        },
+        {
+          "key": "c2",
+          "label": "DuckDB",
+          "role": "Base de datos analítica",
+          "full_name": "duckdb/duckdb",
+          "rationale": "Guarda el resultado en una base analítica rápida ideal para consultar millones de filas con alto rendimiento."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL",
+          "description": "Envía los modelos y tablas transformadas para ser almacenados y consultados en la base analítica."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un entorno operativo donde se pueden ejecutar herramientas basadas en Python y SQL.",
+        "El volumen de datos actual y proyectado se adapta adecuadamente a una base de datos analítica embebida de alto rendimiento."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz de visualización o Business Intelligence para la consulta final de los usuarios de negocio."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:19:49.915214Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "revista-cdn",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución de archivos multimedia",
+          "evidence": "una revista digital con lectores en toda Latinoamérica quiere que sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.366
+        ],
+        [
+          "rustfs/rustfs",
+          0.32
+        ],
+        [
+          "etcd-io/etcd",
+          0.25
+        ],
+        [
+          "valkey-io/valkey",
+          0.235
+        ],
+        [
+          "redis/redis",
+          0.192
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de almacenamiento distribuido para revista digital en Latinoamérica",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para la revista digital, permitiendo gestionar y servir las fotos de forma eficiente. Queda fuera del alcance la infraestructura específica de entrega de contenido CDN geolocalizado en múltiples países de Latinoamérica.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento y distribución de archivos multimedia, y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos diseñado para manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotos",
+          "rationale": "Resuelve la necesidad de almacenar el contenido multimedia de la revista de forma distribuida para optimizar el acceso a los archivos. Cuenta con licencia Apache-2.0 y mantenimiento activo reciente, adaptándose bien a proyectos que manejan un gran volumen de imágenes y datos orientados a lectura rápida."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la revista cuenta con servidores o nodos en los diferentes países de Latinoamérica para desplegar el almacenamiento distribuido.",
+        "Se requiere una red de entrega de contenido o mecanismos de enrutamiento geográfico externos para garantizar que las fotos se sirvan desde servidores cercanos a cada lector."
+      ],
+      "other_limitations": [
+        "El candidato seleccionado no incluye por sí mismo una capa de CDN global o geolocalización automática de red sin configuración adicional.",
+        "No se evaluaron herramientas de caché en memoria para acelerar la entrega de metadatos, aunque podrían complementar el almacenamiento principal."
+      ]
+    },
+    "response": {
+      "id": "70874b6d50684843bc7f11d7749fb290",
+      "status": "ok",
+      "title": "Sistema de almacenamiento distribuido para revista digital en Latinoamérica",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para la revista digital, permitiendo gestionar y servir las fotos de forma eficiente. Queda fuera del alcance la infraestructura específica de entrega de contenido CDN geolocalizado en múltiples países de Latinoamérica.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la necesidad de almacenar el contenido multimedia de la revista de forma distribuida para optimizar el acceso a los archivos. Cuenta con licencia Apache-2.0 y mantenimiento activo reciente, adaptándose bien a proyectos que manejan un gran volumen de imágenes y datos orientados a lectura rápida."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la revista cuenta con servidores o nodos en los diferentes países de Latinoamérica para desplegar el almacenamiento distribuido.",
+        "Se requiere una red de entrega de contenido o mecanismos de enrutamiento geográfico externos para garantizar que las fotos se sirvan desde servidores cercanos a cada lector."
+      ],
+      "limitations": [
+        "El candidato seleccionado no incluye por sí mismo una capa de CDN global o geolocalización automática de red sin configuración adicional.",
+        "No se evaluaron herramientas de caché en memoria para acelerar la entrega de metadatos, aunque podrían complementar el almacenamiento principal."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:20:01.740000Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "instituto-videoclases",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "plataforma de videollamadas en vivo",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean despues"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "PostHog/posthog",
+          0.264
+        ],
+        [
+          "apache/kafka",
+          0.254
+        ],
+        [
+          "run-llama/llama_index",
+          0.251
+        ],
+        [
+          "zitadel/zitadel",
+          0.25
+        ],
+        [
+          "novuhq/novu",
+          0.247
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.315
+        ],
+        [
+          "rustfs/rustfs",
+          0.284
+        ],
+        [
+          "valkey-io/valkey",
+          0.203
+        ],
+        [
+          "etcd-io/etcd",
+          0.182
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para instituto de idiomas con videollamadas y almacenamiento",
+      "summary": "Esta propuesta integra una plataforma de comunicación para las clases y un sistema de almacenamiento de objetos distribuido para guardar las grabaciones de las sesiones. Ambas herramientas permiten cubrir los requerimientos principales del instituto.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide dar clases en vivo por videollamada desde el navegador, pero los candidatos encontrados ofrecen análisis, streaming de eventos, procesamiento de documentos, identidad o infraestructura de comunicación genérica.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Novu provee infraestructura de comunicación, pero no ofrece de forma directa una solución de videollamadas en vivo para navegadores."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar las grabaciones para que los estudiantes las vean después, y SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar archivos y almacenamiento de objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "rationale": "SeaweedFS resuelve la necesidad de almacenar archivos multimedia gracias a su sistema de almacenamiento distribuido para objetos y archivos. Cuenta con licencia Apache-2.0 y alta actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "communication",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "Envía los archivos de video de las clases grabadas para su posterior almacenamiento y visualización."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el instituto cuenta con una solución complementaria específica para la interfaz de videollamadas en el navegador, ya que los candidatos de comunicación encontrados no cubren esa función de manera nativa."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos en la categoría de comunicación corresponde a una plataforma de videoconferencias nativa para navegadores."
+      ]
+    },
+    "response": {
+      "id": "2f2323549a0a4575998611fc3f0f61df",
+      "status": "ok",
+      "title": "Sistema para instituto de idiomas con videollamadas y almacenamiento",
+      "summary": "Esta propuesta integra una plataforma de comunicación para las clases y un sistema de almacenamiento de objetos distribuido para guardar las grabaciones de las sesiones. Ambas herramientas permiten cubrir los requerimientos principales del instituto.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS resuelve la necesidad de almacenar archivos multimedia gracias a su sistema de almacenamiento distribuido para objetos y archivos. Cuenta con licencia Apache-2.0 y alta actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el instituto cuenta con una solución complementaria específica para la interfaz de videollamadas en el navegador, ya que los candidatos de comunicación encontrados no cubren esa función de manera nativa."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Novu provee infraestructura de comunicación, pero no ofrece de forma directa una solución de videollamadas en vivo para navegadores."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:20:14.157710Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de inventario y ventas",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "caché en memoria para consultas rápidas",
+          "evidence": "las consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.249
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.24
+        ],
+        [
+          "hashicorp/vault",
+          0.224
+        ],
+        [
+          "rustfs/rustfs",
+          0.217
+        ],
+        [
+          "etcd-io/etcd",
+          0.212
+        ]
+      ],
+      "cache": [
+        [
+          "redis/redis",
+          0.499
+        ],
+        [
+          "valkey-io/valkey",
+          0.412
+        ],
+        [
+          "vllm-project/vllm",
+          0.322
+        ],
+        [
+          "duckdb/duckdb",
+          0.292
+        ],
+        [
+          "typesense/typesense",
+          0.284
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Inventario y Ventas para Ferreterías",
+      "summary": "Esta propuesta implementa un sistema para gestionar el inventario y las ventas de cinco sucursales, utilizando una base de datos distribuida y una caché en memoria para acelerar las consultas al catálogo de productos.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenar inventario y ventas con aislamiento por sucursal, y el candidato ofrece almacenamiento clave-valor distribuido.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Almacén de datos para inventario y ventas",
+          "rationale": "Valkey es una base de datos clave-valor distribuida, flexible y optimizada para cargas de trabajo en tiempo real, adecuada para registrar y consultar el inventario y las ventas de las sucursales. Cuenta con la licencia BSD-3-Clause y actividad reciente."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide una caché en memoria para consultas rápidas de productos, y el candidato ofrece un servidor de caché y estructuras de datos en memoria.",
+          "fit": "serves",
+          "full_name": "redis/redis",
+          "label": "Redis",
+          "role": "Caché para el catálogo de productos",
+          "rationale": "Redis es una caché rápida y rica en funciones diseñada para aplicaciones en tiempo real, lo que permite que las consultas repetidas al catálogo de productos respondan con rapidez. La licencia no fue identificada por GitHub y presenta actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "cache",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "La aplicación consulta la caché del catálogo y recurre a la base de datos para datos de inventario y ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la lógica de negocio de la aplicación se encargará de restringir el acceso para que cada sucursal vea únicamente su propio inventario y sus ventas.",
+        "Se asume que el catálogo de productos es compartido y de solo lectura para las cinco sucursales."
+      ],
+      "other_limitations": [
+        "La solución no incluye control de acceso avanzado basado en roles ni autenticación nativa para la separación multi-sucursal, lo cual debe implementarse a nivel de aplicación."
+      ]
+    },
+    "response": {
+      "id": "21bc1ec5bf774c69923f20cfeadbffba",
+      "status": "ok",
+      "title": "Sistema de Inventario y Ventas para Ferreterías",
+      "summary": "Esta propuesta implementa un sistema para gestionar el inventario y las ventas de cinco sucursales, utilizando una base de datos distribuida y una caché en memoria para acelerar las consultas al catálogo de productos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Valkey",
+          "role": "Almacén de datos para inventario y ventas",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Valkey es una base de datos clave-valor distribuida, flexible y optimizada para cargas de trabajo en tiempo real, adecuada para registrar y consultar el inventario y las ventas de las sucursales. Cuenta con la licencia BSD-3-Clause y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Redis",
+          "role": "Caché para el catálogo de productos",
+          "full_name": "redis/redis",
+          "rationale": "Redis es una caché rápida y rica en funciones diseñada para aplicaciones en tiempo real, lo que permite que las consultas repetidas al catálogo de productos respondan con rapidez. La licencia no fue identificada por GitHub y presenta actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "La aplicación consulta la caché del catálogo y recurre a la base de datos para datos de inventario y ventas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la lógica de negocio de la aplicación se encargará de restringir el acceso para que cada sucursal vea únicamente su propio inventario y sus ventas.",
+        "Se asume que el catálogo de productos es compartido y de solo lectura para las cinco sucursales."
+      ],
+      "limitations": [
+        "La solución no incluye control de acceso avanzado basado en roles ni autenticación nativa para la separación multi-sucursal, lo cual debe implementarse a nivel de aplicación."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:20:26.050476Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "domicilios-push",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones al celular",
+          "evidence": "enviar una notificación al celular del cliente cuando su pedido salga del restaurante"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de tareas en segundo plano",
+          "evidence": "generar en segundo plano el recibo en PDF de cada pedido para no demorar la app"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "caronc/apprise",
+          0.383
+        ],
+        [
+          "novuhq/novu",
+          0.311
+        ],
+        [
+          "prometheus/alertmanager",
+          0.245
+        ]
+      ],
+      "messaging": [
+        [
+          "celery/celery",
+          0.326
+        ],
+        [
+          "apache/flink",
+          0.283
+        ],
+        [
+          "apache/beam",
+          0.255
+        ],
+        [
+          "Kludex/starlette",
+          0.244
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.239
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones y procesamiento de recibos",
+      "summary": "Esta propuesta incluye la infraestructura para enviar notificaciones a los clientes y una cola de tareas para procesar la generación de recibos en PDF en segundo plano, evitando demoras en la aplicación de domicilios.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar notificaciones al celular y el candidato Apprise provee notificaciones push que funcionan con múltiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Envío de notificaciones",
+          "rationale": "Permite enviar notificaciones push a los dispositivos móviles de los clientes utilizando una infraestructura con licencia BSD-2-Clause y actividad reciente."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide procesamiento de tareas en segundo plano y el candidato Celery provee una cola de tareas distribuida.",
+          "fit": "serves",
+          "full_name": "celery/celery",
+          "label": "Celery",
+          "role": "Procesamiento en segundo plano",
+          "rationale": "Gestiona la ejecución de tareas asíncronas para generar el recibo en PDF de cada pedido, evitando demorar la aplicación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "communication",
+          "protocol": "API interna",
+          "description": "Una vez generado el PDF del pedido en segundo plano, se puede activar la orden de envío de la notificación al celular."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cuenta con un backend capaz de integrar una cola de tareas y un servicio de notificaciones."
+      ],
+      "other_limitations": [
+        "Ninguna."
+      ]
+    },
+    "response": {
+      "id": "f901838557284252b88337e4bbaac4f5",
+      "status": "ok",
+      "title": "Sistema de notificaciones y procesamiento de recibos",
+      "summary": "Esta propuesta incluye la infraestructura para enviar notificaciones a los clientes y una cola de tareas para procesar la generación de recibos en PDF en segundo plano, evitando demoras en la aplicación de domicilios.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apprise",
+          "role": "Envío de notificaciones",
+          "full_name": "caronc/apprise",
+          "rationale": "Permite enviar notificaciones push a los dispositivos móviles de los clientes utilizando una infraestructura con licencia BSD-2-Clause y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Celery",
+          "role": "Procesamiento en segundo plano",
+          "full_name": "celery/celery",
+          "rationale": "Gestiona la ejecución de tareas asíncronas para generar el recibo en PDF de cada pedido, evitando demorar la aplicación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API interna",
+          "description": "Una vez generado el PDF del pedido en segundo plano, se puede activar la orden de envío de la notificación al celular."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cuenta con un backend capaz de integrar una cola de tareas y un servicio de notificaciones."
+      ],
+      "limitations": [
+        "Ninguna."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:20:37.413243Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.302
+        ],
+        [
+          "valkey-io/valkey",
+          0.295
+        ],
+        [
+          "rustfs/rustfs",
+          0.293
+        ],
+        [
+          "redis/redis",
+          0.288
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.284
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de almacenamiento para red social de mascotas",
+      "summary": "La propuesta cubre la necesidad de almacenamiento utilizando candidatos orientados a clave-valor y objetos, aunque no se encontraron herramientas nativas de grafos en el catálogo. Se asume que la aplicación se complementará con lógica de grafos en la capa de software.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar relaciones de grafos y etcd-io/etcd ofrece un almacén clave-valor distribuido.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Almacenamiento de datos",
+          "rationale": "Ninguno de los candidatos encontrados es una base de datos de grafos, ya que son sistemas clave-valor, de objetos o de archivos."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la lógica para sugerir amigos de amigos se implementará en la capa de aplicación utilizando estructuras en memoria o consultas sobre los datos clave-valor disponibles."
+      ],
+      "other_limitations": [
+        "No hay herramientas nativas de bases de datos de grafos entre los candidatos encontrados para resolver la necesidad específica de guardar quién conoce a quién mediante grafos."
+      ]
+    },
+    "response": {
+      "id": "e388577e1e84440585aa73a89275cee3",
+      "status": "no_evidence",
+      "title": "Arquitectura de almacenamiento para red social de mascotas",
+      "summary": "La propuesta cubre la necesidad de almacenamiento utilizando candidatos orientados a clave-valor y objetos, aunque no se encontraron herramientas nativas de grafos en el catálogo. Se asume que la aplicación se complementará con lógica de grafos en la capa de software.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la lógica para sugerir amigos de amigos se implementará en la capa de aplicación utilizando estructuras en memoria o consultas sobre los datos clave-valor disponibles."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Ninguno de los candidatos encontrados es una base de datos de grafos, ya que son sistemas clave-valor, de objetos o de archivos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:20:48.145441Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework basado en Vue para interfaz",
+          "evidence": "un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenido para no programadores",
+          "evidence": "su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vuejs/core",
+          0.656
+        ],
+        [
+          "nuxt/nuxt",
+          0.531
+        ],
+        [
+          "react/react",
+          0.456
+        ],
+        [
+          "storybookjs/storybook",
+          0.443
+        ],
+        [
+          "vitejs/vite",
+          0.44
+        ]
+      ],
+      "cms": [
+        [
+          "strapi/strapi",
+          0.39
+        ],
+        [
+          "withastro/astro",
+          0.363
+        ],
+        [
+          "payloadcms/payload",
+          0.362
+        ],
+        [
+          "knadh/listmonk",
+          0.347
+        ],
+        [
+          "TryGhost/Ghost",
+          0.345
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web con Vue y gestor de contenido",
+      "summary": "Esta propuesta incluye un framework full-stack basado en Vue para la interfaz y un CMS sin cabeza para que el equipo sin conocimientos de programación pueda actualizar textos y banners de forma autónoma.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "Pide un framework basado en Vue y Nuxt/Nuxt ofrece un framework full-stack basado en Vue.",
+          "fit": "serves",
+          "full_name": "nuxt/nuxt",
+          "label": "Nuxt",
+          "role": "Framework full-stack para construir la interfaz de usuario.",
+          "rationale": "Nuxt es un framework full-stack basado en Vue con licencia MIT y actividad reciente, ideal para desarrollar el sitio web de la agencia."
+        },
+        {
+          "need": "cms",
+          "fit_check": "Pide gestión de contenido para no programadores y Strapi/Strapi ofrece un sistema de gestión de contenido de código abierto altamente personalizable.",
+          "fit": "serves",
+          "full_name": "strapi/strapi",
+          "label": "Strapi",
+          "role": "Gestor de contenido headless para administración de textos y banners.",
+          "rationale": "Strapi permite gestionar contenidos sin programar mediante su panel de administración. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "frontend",
+          "to_need": "cms",
+          "protocol": "API REST / GraphQL",
+          "description": "El frontend solicita los textos y banners administrados en el CMS."
+        }
+      ],
+      "assumptions": [
+        "La agencia cuenta con infraestructura propia para alojar las aplicaciones de Node.js y el CMS.",
+        "El equipo no técnico utilizará el panel de administración del CMS para realizar los cambios diarios."
+      ],
+      "other_limitations": [
+        "No se incluyó una herramienta específica para control de versiones del código fuente, lo cual requerirá herramientas externas."
+      ]
+    },
+    "response": {
+      "id": "f80e1e547d4d49219bffcabc878f9c17",
+      "status": "ok",
+      "title": "Arquitectura web con Vue y gestor de contenido",
+      "summary": "Esta propuesta incluye un framework full-stack basado en Vue para la interfaz y un CMS sin cabeza para que el equipo sin conocimientos de programación pueda actualizar textos y banners de forma autónoma.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Nuxt",
+          "role": "Framework full-stack para construir la interfaz de usuario.",
+          "full_name": "nuxt/nuxt",
+          "rationale": "Nuxt es un framework full-stack basado en Vue con licencia MIT y actividad reciente, ideal para desarrollar el sitio web de la agencia."
+        },
+        {
+          "key": "c2",
+          "label": "Strapi",
+          "role": "Gestor de contenido headless para administración de textos y banners.",
+          "full_name": "strapi/strapi",
+          "rationale": "Strapi permite gestionar contenidos sin programar mediante su panel de administración. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API REST / GraphQL",
+          "description": "El frontend solicita los textos y banners administrados en el CMS."
+        }
+      ],
+      "assumptions": [
+        "La agencia cuenta con infraestructura propia para alojar las aplicaciones de Node.js y el CMS.",
+        "El equipo no técnico utilizará el panel de administración del CMS para realizar los cambios diarios."
+      ],
+      "limitations": [
+        "No se incluyó una herramienta específica para control de versiones del código fuente, lo cual requerirá herramientas externas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:00.351287Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "respaldo externo de archivos y copias",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero de métricas y visualización",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "hashicorp/vault",
+          0.254
+        ],
+        [
+          "rustfs/rustfs",
+          0.245
+        ],
+        [
+          "postgres/postgres",
+          0.211
+        ],
+        [
+          "nginx/nginx",
+          0.21
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.209
+        ]
+      ],
+      "analytics": [
+        [
+          "grafana/grafana",
+          0.445
+        ],
+        [
+          "metabase/metabase",
+          0.372
+        ],
+        [
+          "prometheus/prometheus",
+          0.312
+        ],
+        [
+          "getlago/lago",
+          0.282
+        ],
+        [
+          "plausible/analytics",
+          0.279
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de respaldos y métricas para laboratorio clínico",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido compatible con S3 para las copias de seguridad nocturnas y una plataforma de visualización y tableros para monitorear las muestras procesadas por cada sede.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide respaldo externo de archivos y copias, y el candidato ofrece almacenamiento de objetos distribuido compatible con S3.",
+          "fit": "serves",
+          "full_name": "rustfs/rustfs",
+          "label": "RustFS",
+          "role": "Almacenamiento externo para las copias de seguridad",
+          "rationale": "RustFS proporciona un sistema de almacenamiento de objetos de alto rendimiento compatible con S3 bajo licencia Apache-2.0, ideal para guardar las copias de seguridad automáticas fuera del servidor principal."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide un tablero de métricas y visualización, y el candidato ofrece una plataforma de visualización de datos y tableros.",
+          "fit": "serves",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Tablero de visualización de muestras por sede",
+          "rationale": "Grafana es una plataforma de visualización de datos y tableros bajo licencia AGPL-3.0 que permite mostrar métricas y gráficos sobre la cantidad de muestras que procesa cada sede por día."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que existe un proceso o script automatizado externo que envía las copias de seguridad nocturnas hacia el almacenamiento S3.",
+        "Se asume que las bases de datos o sistemas de cada sede alimentan una fuente de datos compatible con la herramienta de visualización."
+      ],
+      "other_limitations": [
+        "No se incluye una herramienta específica para la automatización o programación de las tareas de copia de seguridad nocturna."
+      ]
+    },
+    "response": {
+      "id": "b3c8004b838f4eb9ae65de8b41d08321",
+      "status": "ok",
+      "title": "Sistema de respaldos y métricas para laboratorio clínico",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido compatible con S3 para las copias de seguridad nocturnas y una plataforma de visualización y tableros para monitorear las muestras procesadas por cada sede.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "RustFS",
+          "role": "Almacenamiento externo para las copias de seguridad",
+          "full_name": "rustfs/rustfs",
+          "rationale": "RustFS proporciona un sistema de almacenamiento de objetos de alto rendimiento compatible con S3 bajo licencia Apache-2.0, ideal para guardar las copias de seguridad automáticas fuera del servidor principal."
+        },
+        {
+          "key": "c2",
+          "label": "Grafana",
+          "role": "Tablero de visualización de muestras por sede",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana es una plataforma de visualización de datos y tableros bajo licencia AGPL-3.0 que permite mostrar métricas y gráficos sobre la cantidad de muestras que procesa cada sede por día."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que existe un proceso o script automatizado externo que envía las copias de seguridad nocturnas hacia el almacenamiento S3.",
+        "Se asume que las bases de datos o sistemas de cada sede alimentan una fuente de datos compatible con la herramienta de visualización."
+      ],
+      "limitations": [
+        "No se incluye una herramienta específica para la automatización o programación de las tareas de copia de seguridad nocturna."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:12.144971Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisión de facturas electrónicas",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "medición del proceso de compra",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.256
+        ],
+        [
+          "getlago/lago",
+          0.213
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.208
+        ],
+        [
+          "getlago/lago",
+          0.197
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de Sistema para Tienda de Cosméticos",
+      "summary": "La propuesta cubre la analítica del proceso de compra para detectar abandonos mediante una plataforma orientada a la privacidad y segmentación. No se encontraron herramientas que emitan directamente facturas electrónicas, por lo que esa necesidad queda pendiente de integración externa.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir facturas electrónicas y killbill ofrece facturación por suscripción y pagos.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Pagos",
+          "role": "Gestión de cobros",
+          "rationale": "Killbill gestiona pagos y suscripciones, pero no incluye explícitamente la emisión de facturas electrónicas requeridas para la tienda de cosméticos."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide saber el abandono en el proceso de compra y umami ofrece analítica web y de producto para comportamiento y conversiones.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Analítica web",
+          "rationale": "Umami permite medir el tráfico, el comportamiento y las conversiones de los clientes en la tienda sin utilizar cookies, ayudando a identificar en qué paso abandonan el proceso de compra."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda opera bajo un modelo de venta directa y requiere integrarse con un proveedor fiscal externo para la facturación electrónica.",
+        "Se asume que el sitio web de la tienda de cosméticos puede incrustar el script de seguimiento de analíticas."
+      ],
+      "other_limitations": [
+        "No se dispone de ninguna herramienta en el catálogo que resuelva de forma nativa la emisión de facturas electrónicas."
+      ]
+    },
+    "response": {
+      "id": "751a647b6ce64a14a1497a14f5d2fb75",
+      "status": "ok",
+      "title": "Propuesta de Sistema para Tienda de Cosméticos",
+      "summary": "La propuesta cubre la analítica del proceso de compra para detectar abandonos mediante una plataforma orientada a la privacidad y segmentación. No se encontraron herramientas que emitan directamente facturas electrónicas, por lo que esa necesidad queda pendiente de integración externa.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Umami",
+          "role": "Analítica web",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami permite medir el tráfico, el comportamiento y las conversiones de los clientes en la tienda sin utilizar cookies, ayudando a identificar en qué paso abandonan el proceso de compra."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda opera bajo un modelo de venta directa y requiere integrarse con un proveedor fiscal externo para la facturación electrónica.",
+        "Se asume que el sitio web de la tienda de cosméticos puede incrustar el script de seguimiento de analíticas."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Killbill gestiona pagos y suscripciones, pero no incluye explícitamente la emisión de facturas electrónicas requeridas para la tienda de cosméticos.",
+        "No se dispone de ninguna herramienta en el catálogo que resuelva de forma nativa la emisión de facturas electrónicas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:23.630250Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "automation",
+          "query": "flujo de aprobacion de solicitudes",
+          "evidence": "las solicitudes de vacaciones sigan un flujo de aprobación: el empleado la pide, su jefe la aprueba y recursos humanos la registra"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "automation": [
+        [
+          "apache/flink",
+          0.288
+        ],
+        [
+          "fluxcd/flux2",
+          0.286
+        ],
+        [
+          "apache/airflow",
+          0.285
+        ],
+        [
+          "keycloak/keycloak",
+          0.276
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.25
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura para Flujo de Solicitudes de Vacaciones",
+      "summary": "La propuesta establece una solución para gestionar las solicitudes de vacaciones mediante automatización de flujos de trabajo. No se identificaron herramientas del catálogo que resuelvan de forma directa la interfaz de usuario para que el empleado solicite y el jefe apruebe, por lo que se adaptan herramientas de orquestación de datos.",
+      "boxes": [
+        {
+          "need": "automation",
+          "fit_check": "La necesidad pide un flujo de aprobación para solicitudes de vacaciones y el candidato Apache Airflow ofrece una plataforma para programar, ejecutar y monitorizar flujos de trabajo.",
+          "fit": "serves",
+          "full_name": "apache/airflow",
+          "label": "Apache Airflow",
+          "role": "Orquestador del flujo de aprobación",
+          "rationale": "Permite programar y monitorizar workflows para estructurar las tareas del proceso de vacaciones de manera automatizada. Cuenta con licencia Apache-2.0 y actividad reciente en su desarrollo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la empresa de 200 empleados cuenta con personal técnico capaz de configurar herramientas de orquestación de datos para procesos de negocio no tradicionales.",
+        "El registro final por parte de recursos humanos se integrará mediante scripts personalizados o APIs conectadas al motor de flujos."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos encontrados ofrece un portal nativo para empleados y jefes enfocado en gestión de recursos humanos, requiriendo desarrollo adicional."
+      ]
+    },
+    "response": {
+      "id": "fb4ffdb93abf4e3f921f8b17fecb94de",
+      "status": "ok",
+      "title": "Arquitectura para Flujo de Solicitudes de Vacaciones",
+      "summary": "La propuesta establece una solución para gestionar las solicitudes de vacaciones mediante automatización de flujos de trabajo. No se identificaron herramientas del catálogo que resuelvan de forma directa la interfaz de usuario para que el empleado solicite y el jefe apruebe, por lo que se adaptan herramientas de orquestación de datos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apache Airflow",
+          "role": "Orquestador del flujo de aprobación",
+          "full_name": "apache/airflow",
+          "rationale": "Permite programar y monitorizar workflows para estructurar las tareas del proceso de vacaciones de manera automatizada. Cuenta con licencia Apache-2.0 y actividad reciente en su desarrollo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la empresa de 200 empleados cuenta con personal técnico capaz de configurar herramientas de orquestación de datos para procesos de negocio no tradicionales.",
+        "El registro final por parte de recursos humanos se integrará mediante scripts personalizados o APIs conectadas al motor de flujos."
+      ],
+      "limitations": [
+        "Ninguno de los candidatos encontrados ofrece un portal nativo para empleados y jefes enfocado en gestión de recursos humanos, requiriendo desarrollo adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:35.058075Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "trazas distribuidas entre microservicios",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo automatizado",
+          "evidence": "que cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "traefik/traefik",
+          0.456
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.45
+        ],
+        [
+          "istio/istio",
+          0.379
+        ],
+        [
+          "envoyproxy/envoy",
+          0.288
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.288
+        ]
+      ],
+      "infrastructure": [
+        [
+          "argoproj/argo-cd",
+          0.422
+        ],
+        [
+          "fluxcd/flux2",
+          0.412
+        ],
+        [
+          "ansible/ansible",
+          0.391
+        ],
+        [
+          "microsoft/playwright",
+          0.346
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.333
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Plataforma de observabilidad y despliegue continuo para microservicios",
+      "summary": "Se propone una arquitectura basada en contenedores para resolver la trazabilidad de solicitudes entre microservicios y automatizar el despliegue de código aprobado mediante GitOps en el clúster. La solución cubre las necesidades del negocio de manera eficiente utilizando herramientas nativas de la nube.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora, y Jaeger es una plataforma de traza distribuida orientada a observabilidad.",
+          "fit": "serves",
+          "full_name": "jaegertracing/jaeger",
+          "label": "Jaeger",
+          "role": "Plataforma de traza distribuida",
+          "rationale": "Permite realizar un seguimiento de las solicitudes a través de los microservicios para identificar demoras. Cuenta con la licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "infrastructure",
+          "fit_check": "La necesidad pide que cada cambio aprobado en el repositorio se despliegue solo en su clúster, y Argo CD provee despliegue continuo declarativo para Kubernetes.",
+          "fit": "serves",
+          "full_name": "argoproj/argo-cd",
+          "label": "Argo CD",
+          "role": "Herramienta de despliegue continuo",
+          "rationale": "Automatiza la entrega continua basada en Git para asegurar que los cambios aprobados en el repositorio se apliquen en el clúster. Posee licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los microservicios en Python ya están instrumentados para exportar trazas compatibles con la plataforma elegida."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la gestión de almacenamiento ni el aprovisionamiento inicial de la infraestructura del clúster."
+      ]
+    },
+    "response": {
+      "id": "40168fd2c5044b02986586bc575708b4",
+      "status": "ok",
+      "title": "Plataforma de observabilidad y despliegue continuo para microservicios",
+      "summary": "Se propone una arquitectura basada en contenedores para resolver la trazabilidad de solicitudes entre microservicios y automatizar el despliegue de código aprobado mediante GitOps en el clúster. La solución cubre las necesidades del negocio de manera eficiente utilizando herramientas nativas de la nube.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Jaeger",
+          "role": "Plataforma de traza distribuida",
+          "full_name": "jaegertracing/jaeger",
+          "rationale": "Permite realizar un seguimiento de las solicitudes a través de los microservicios para identificar demoras. Cuenta con la licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Argo CD",
+          "role": "Herramienta de despliegue continuo",
+          "full_name": "argoproj/argo-cd",
+          "rationale": "Automatiza la entrega continua basada en Git para asegurar que los cambios aprobados en el repositorio se apliquen en el clúster. Posee licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los microservicios en Python ya están instrumentados para exportar trazas compatibles con la plataforma elegida."
+      ],
+      "limitations": [
+        "La propuesta no incluye la gestión de almacenamiento ni el aprovisionamiento inicial de la infraestructura del clúster."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:46.345566Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real",
+          "evidence": "un chat en tiempo real entre compradores y vendedores dentro de la página"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores",
+          "evidence": "un buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "ClickHouse/ClickHouse",
+          0.242
+        ],
+        [
+          "novuhq/novu",
+          0.235
+        ],
+        [
+          "redis/redis",
+          0.227
+        ],
+        [
+          "langchain-ai/langchain",
+          0.211
+        ],
+        [
+          "openai/openai-python",
+          0.203
+        ]
+      ],
+      "search": [
+        [
+          "typesense/typesense",
+          0.468
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.325
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.313
+        ],
+        [
+          "pgvector/pgvector",
+          0.285
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.272
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de Comunicación y Búsqueda para Marketplace",
+      "summary": "Esta propuesta integra una infraestructura de comunicación para la interacción entre usuarios y un motor de búsqueda tolerante a errores para el catálogo de artesanías. Ambas herramientas seleccionadas permiten cubrir de manera eficiente los requerimientos del marketplace.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un chat en tiempo real entre compradores y vendedores, y el candidato más cercano ofrece infraestructura de comunicación para agentes y productos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Proporciona la infraestructura de comunicación de código abierto para productos. Su licencia no fue identificada por GitHub. Es una opción activa con actualizaciones recientes para gestionar la interacción en la plataforma."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador de productos tolerante a errores de escritura, y el candidato ofrece un motor de búsqueda rápido y tolerante a errores tipográficos.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "rationale": "Funciona como un motor de búsqueda en memoria con tolerancia a errores tipográficos (fuzzy search) ideal para ofrecer experiencias de búsqueda rápidas. Utiliza licencia GPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la plataforma web del marketplace cuenta con una interfaz de usuario capaz de integrarse mediante API con las herramientas seleccionadas."
+      ],
+      "other_limitations": [
+        "La infraestructura de comunicación elegida está orientada a notificaciones e infraestructura de agentes y productos, por lo que requerirá desarrollo adicional para soportar un chat interactivo en tiempo real entre usuarios."
+      ]
+    },
+    "response": {
+      "id": "4d6a8d296eab4dae8735dc809e285d84",
+      "status": "ok",
+      "title": "Arquitectura de Comunicación y Búsqueda para Marketplace",
+      "summary": "Esta propuesta integra una infraestructura de comunicación para la interacción entre usuarios y un motor de búsqueda tolerante a errores para el catálogo de artesanías. Ambas herramientas seleccionadas permiten cubrir de manera eficiente los requerimientos del marketplace.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "full_name": "novuhq/novu",
+          "rationale": "Proporciona la infraestructura de comunicación de código abierto para productos. Su licencia no fue identificada por GitHub. Es una opción activa con actualizaciones recientes para gestionar la interacción en la plataforma."
+        },
+        {
+          "key": "c2",
+          "label": "Typesense",
+          "role": "Motor de búsqueda",
+          "full_name": "typesense/typesense",
+          "rationale": "Funciona como un motor de búsqueda en memoria con tolerancia a errores tipográficos (fuzzy search) ideal para ofrecer experiencias de búsqueda rápidas. Utiliza licencia GPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la plataforma web del marketplace cuenta con una interfaz de usuario capaz de integrarse mediante API con las herramientas seleccionadas."
+      ],
+      "limitations": [
+        "La infraestructura de comunicación elegida está orientada a notificaciones e infraestructura de agentes y productos, por lo que requerirá desarrollo adicional para soportar un chat interactivo en tiempo real entre usuarios."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:21:57.494673Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "distribuidora-datos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "transformacion de datos con sql y pruebas",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas"
+        },
+        {
+          "category": "database",
+          "query": "base de datos analitica de alto rendimiento",
+          "evidence": "guardar el resultado en una base analitica rapida para consultar millones de filas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "data-processing": [
+        [
+          "dbt-labs/dbt",
+          0.43
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.381
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.369
+        ],
+        [
+          "apache/spark",
+          0.336
+        ],
+        [
+          "metabase/metabase",
+          0.327
+        ]
+      ],
+      "database": [
+        [
+          "duckdb/duckdb",
+          0.579
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.472
+        ],
+        [
+          "qdrant/qdrant",
+          0.417
+        ],
+        [
+          "metabase/metabase",
+          0.403
+        ],
+        [
+          "valkey-io/valkey",
+          0.397
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura analitica para transformacion de ventas y consultas rapidas",
+      "summary": "Esta solucion propone el uso de dbt para transformar los datos de ventas utilizando practicas de ingenieria de software y DuckDB como base analitica de alto rendimiento para consultar millones de filas.",
+      "boxes": [
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide transformar ventas con SQL versionado y con pruebas, y dbt permite a analistas e ingenieros transformar datos usando practicas de ingenieria de software.",
+          "fit": "serves",
+          "full_name": "dbt-labs/dbt",
+          "label": "dbt",
+          "role": "Herramienta de transformacion y modelado de datos",
+          "rationale": "Permite transformar las ventas crudas utilizando practicas avanzadas de ingenieria y modelado de datos. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar el resultado en una base analitica rapida para consultar millones de filas, y DuckDB es un sistema de base de datos analitica de alto rendimiento.",
+          "fit": "serves",
+          "full_name": "duckdb/duckdb",
+          "label": "DuckDB",
+          "role": "Base de datos analitica embebida",
+          "rationale": "Proporciona un sistema de base de datos analitico de alto rendimiento ideal para consultas rapidas. Utiliza licencia MIT y mantiene actualizaciones recientes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "SQL",
+          "description": "dbt ejecuta las transformaciones y escribe los resultados limpios en la base de datos analitica DuckDB."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el volumen de datos actual es apto para una base de datos analitica embebida de alto rendimiento sin requerir un cluster distribuido complejo."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la ingestion inicial de las ventas crudas desde las fuentes originales."
+      ]
+    },
+    "response": {
+      "id": "6ac85c244c2446809d247382eb0d8907",
+      "status": "ok",
+      "title": "Arquitectura analitica para transformacion de ventas y consultas rapidas",
+      "summary": "Esta solucion propone el uso de dbt para transformar los datos de ventas utilizando practicas de ingenieria de software y DuckDB como base analitica de alto rendimiento para consultar millones de filas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "dbt",
+          "role": "Herramienta de transformacion y modelado de datos",
+          "full_name": "dbt-labs/dbt",
+          "rationale": "Permite transformar las ventas crudas utilizando practicas avanzadas de ingenieria y modelado de datos. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "DuckDB",
+          "role": "Base de datos analitica embebida",
+          "full_name": "duckdb/duckdb",
+          "rationale": "Proporciona un sistema de base de datos analitico de alto rendimiento ideal para consultas rapidas. Utiliza licencia MIT y mantiene actualizaciones recientes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL",
+          "description": "dbt ejecuta las transformaciones y escribe los resultados limpios en la base de datos analitica DuckDB."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el volumen de datos actual es apto para una base de datos analitica embebida de alto rendimiento sin requerir un cluster distribuido complejo."
+      ],
+      "limitations": [
+        "La propuesta no incluye la ingestion inicial de las ventas crudas desde las fuentes originales."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:22:08.848335Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "revista-cdn",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos distribuidos",
+          "evidence": "sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.486
+        ],
+        [
+          "rustfs/rustfs",
+          0.441
+        ],
+        [
+          "etcd-io/etcd",
+          0.399
+        ],
+        [
+          "valkey-io/valkey",
+          0.321
+        ],
+        [
+          "celery/celery",
+          0.291
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura de almacenamiento distribuido para revista digital",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido para asegurar que las fotos de la revista digital se sirvan de manera eficiente y escalable a lectores en toda Latinoamérica.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y objetos distribuidos, y seaweedfs/seaweedfs ofrece un sistema de almacenamiento distribuido para objetos y sistemas de archivos con acceso a disco optimizado.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución de fotos",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso eficiente. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la revista digital cuenta con la infraestructura de red necesaria para desplegar nodos en múltiples regiones de Latinoamérica."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución específica de red de entrega de contenido (CDN) para la proximidad exacta al lector, aunque el almacenamiento distribuido mitiga los problemas de acceso."
+      ]
+    },
+    "response": {
+      "id": "e0aca8975d634cea84ed8bb1fbcc503e",
+      "status": "ok",
+      "title": "Infraestructura de almacenamiento distribuido para revista digital",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido para asegurar que las fotos de la revista digital se sirvan de manera eficiente y escalable a lectores en toda Latinoamérica.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución de fotos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso eficiente. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la revista digital cuenta con la infraestructura de red necesaria para desplegar nodos en múltiples regiones de Latinoamérica."
+      ],
+      "limitations": [
+        "La propuesta no incluye una solución específica de red de entrega de contenido (CDN) para la proximidad exacta al lector, aunque el almacenamiento distribuido mitiga los problemas de acceso."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:22:20.006276Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "instituto-videoclases",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "clases en vivo por videollamada",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de grabaciones de video",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean después"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.248
+        ],
+        [
+          "etcd-io/etcd",
+          0.203
+        ],
+        [
+          "valkey-io/valkey",
+          0.202
+        ],
+        [
+          "rustfs/rustfs",
+          0.195
+        ],
+        [
+          "hashicorp/vault",
+          0.186
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de almacenamiento de grabaciones para instituto",
+      "summary": "Esta propuesta integra almacenamiento distribuido para guardar las grabaciones de las clases del instituto. Queda pendiente la infraestructura para las videollamadas en vivo desde el navegador.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar grabaciones de video y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos S3 y sistemas de archivos con acceso rápido.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "rationale": "Resuelve la necesidad de guardar las grabaciones de video mediante un sistema de almacenamiento distribuido compatible con S3 y preparado para manejar miles de archivos. Su licencia es Apache-2.0 y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "El instituto cuenta con una plataforma externa o servicio adicional para realizar las videollamadas en vivo, ya que esa necesidad no tiene herramientas en los candidatos.",
+        "Los estudiantes accederán a las grabaciones mediante una interfaz web conectada al almacenamiento."
+      ],
+      "other_limitations": [
+        "No se dispone de herramientas en los candidatos para gestionar la comunicación en tiempo real o las videollamadas."
+      ]
+    },
+    "response": {
+      "id": "1df9a9101f2e4269a2a2087768fe4e2c",
+      "status": "ok",
+      "title": "Sistema de almacenamiento de grabaciones para instituto",
+      "summary": "Esta propuesta integra almacenamiento distribuido para guardar las grabaciones de las clases del instituto. Queda pendiente la infraestructura para las videollamadas en vivo desde el navegador.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la necesidad de guardar las grabaciones de video mediante un sistema de almacenamiento distribuido compatible con S3 y preparado para manejar miles de archivos. Su licencia es Apache-2.0 y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "El instituto cuenta con una plataforma externa o servicio adicional para realizar las videollamadas en vivo, ya que esa necesidad no tiene herramientas en los candidatos.",
+        "Los estudiantes accederán a las grabaciones mediante una interfaz web conectada al almacenamiento."
+      ],
+      "limitations": [
+        "Comunicación: no se encontraron herramientas del catálogo para «dar clases en vivo por videollamada desde el navegador»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:22:32.330427Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de inventario y ventas",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "caché en memoria para catálogo",
+          "evidence": "consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "valkey-io/valkey",
+          0.249
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.24
+        ],
+        [
+          "hashicorp/vault",
+          0.224
+        ],
+        [
+          "rustfs/rustfs",
+          0.217
+        ],
+        [
+          "etcd-io/etcd",
+          0.212
+        ]
+      ],
+      "cache": [
+        [
+          "redis/redis",
+          0.378
+        ],
+        [
+          "valkey-io/valkey",
+          0.354
+        ],
+        [
+          "vllm-project/vllm",
+          0.285
+        ],
+        [
+          "nginx/nginx",
+          0.275
+        ],
+        [
+          "caddyserver/caddy",
+          0.268
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de inventario y caché para ferreterías",
+      "summary": "La propuesta implementa una base de datos distribuida para gestionar el almacenamiento y un sistema de caché en memoria para acelerar las consultas repetidas al catálogo de productos de las cinco sucursales.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de inventario y ventas con aislamiento por sucursal, y etcd-io/etcd ofrece un almacén clave-valor distribuido y confiable para datos críticos de sistemas.",
+          "fit": "serves",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "Almacén de datos crítico",
+          "rationale": "Proporciona un almacenamiento distribuido y confiable para los datos del sistema, asegurando la consistencia de la información para las sucursales."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide caché en memoria para el catálogo y valkey-io/valkey ofrece una base de datos clave-valor optimizada para caché y cargas de trabajo en tiempo real.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Caché de productos",
+          "rationale": "Optimiza las cargas de trabajo en tiempo real para permitir que las consultas repetidas al catálogo de productos respondan con rapidez."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "cache",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Consulta el catálogo persistido cuando hay un fallo en caché."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cliente se encargará de filtrar la lógica de negocio para que cada sucursal vea únicamente su propio inventario y sus ventas."
+      ],
+      "other_limitations": [
+        "La solución no incluye control de acceso por roles específico para aislar las sucursales de forma nativa a nivel de base de datos."
+      ]
+    },
+    "response": {
+      "id": "c0ea9e3cb3374fa9b7e138d35cd62b96",
+      "status": "ok",
+      "title": "Sistema de inventario y caché para ferreterías",
+      "summary": "La propuesta implementa una base de datos distribuida para gestionar el almacenamiento y un sistema de caché en memoria para acelerar las consultas repetidas al catálogo de productos de las cinco sucursales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "etcd",
+          "role": "Almacén de datos crítico",
+          "full_name": "etcd-io/etcd",
+          "rationale": "Proporciona un almacenamiento distribuido y confiable para los datos del sistema, asegurando la consistencia de la información para las sucursales."
+        },
+        {
+          "key": "c2",
+          "label": "Valkey",
+          "role": "Caché de productos",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Optimiza las cargas de trabajo en tiempo real para permitir que las consultas repetidas al catálogo de productos respondan con rapidez."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "TCP",
+          "description": "Consulta el catálogo persistido cuando hay un fallo en caché."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cliente se encargará de filtrar la lógica de negocio para que cada sucursal vea únicamente su propio inventario y sus ventas."
+      ],
+      "limitations": [
+        "La solución no incluye control de acceso por roles específico para aislar las sucursales de forma nativa a nivel de base de datos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:22:43.691147Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "domicilios-push",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones push al celular",
+          "evidence": "enviar una notificación al celular del cliente cuando su pedido salga del restaurante"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de tareas en segundo plano",
+          "evidence": "generar en segundo plano el recibo en PDF de cada pedido para no demorar la app"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "caronc/apprise",
+          0.483
+        ],
+        [
+          "novuhq/novu",
+          0.328
+        ],
+        [
+          "prometheus/alertmanager",
+          0.251
+        ],
+        [
+          "TryGhost/Ghost",
+          0.189
+        ]
+      ],
+      "messaging": [
+        [
+          "celery/celery",
+          0.326
+        ],
+        [
+          "apache/flink",
+          0.283
+        ],
+        [
+          "apache/beam",
+          0.255
+        ],
+        [
+          "Kludex/starlette",
+          0.244
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.239
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de Notificaciones y Procesamiento en Segundo Plano para Domicilios",
+      "summary": "Esta propuesta incluye infraestructura para notificar a los clientes y una cola de tareas distribuidas para procesar los recibos en PDF de forma asíncrona, mejorando el rendimiento de la aplicación de domicilios.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar notificaciones push al celular y Apprise ofrece notificaciones push que funcionan con casi todas las plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Envío de notificaciones push",
+          "rationale": "Permite enviar notificaciones push a los dispositivos móviles de los clientes utilizando una amplia variedad de plataformas con licencia BSD-2-Clause y mantenimiento activo."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide procesamiento de tareas en segundo plano y Celery ofrece una cola de tareas distribuidas.",
+          "fit": "serves",
+          "full_name": "celery/celery",
+          "label": "Celery",
+          "role": "Procesamiento en segundo plano",
+          "rationale": "Resuelve la generación de recibos en PDF en segundo plano mediante una cola de tareas distribuidas para evitar demoras en la aplicación principal. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "communication",
+          "protocol": "API interna",
+          "description": "Una vez generado el recibo en segundo plano, se puede activar la notificación para el cliente."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cuenta con un backend principal en Python o un entorno compatible para integrar las herramientas seleccionadas.",
+        "Se asume que la plataforma de notificaciones elegida soporta canales directos hacia los dispositivos móviles de los usuarios."
+      ],
+      "other_limitations": [
+        "La herramienta de mensajería seleccionada tiene su licencia no identificada por GitHub, lo que requiere verificación adicional."
+      ]
+    },
+    "response": {
+      "id": "8128f496aa3047278eb06f937e272ffd",
+      "status": "ok",
+      "title": "Arquitectura de Notificaciones y Procesamiento en Segundo Plano para Domicilios",
+      "summary": "Esta propuesta incluye infraestructura para notificar a los clientes y una cola de tareas distribuidas para procesar los recibos en PDF de forma asíncrona, mejorando el rendimiento de la aplicación de domicilios.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apprise",
+          "role": "Envío de notificaciones push",
+          "full_name": "caronc/apprise",
+          "rationale": "Permite enviar notificaciones push a los dispositivos móviles de los clientes utilizando una amplia variedad de plataformas con licencia BSD-2-Clause y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Celery",
+          "role": "Procesamiento en segundo plano",
+          "full_name": "celery/celery",
+          "rationale": "Resuelve la generación de recibos en PDF en segundo plano mediante una cola de tareas distribuidas para evitar demoras en la aplicación principal. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API interna",
+          "description": "Una vez generado el recibo en segundo plano, se puede activar la notificación para el cliente."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la aplicación cuenta con un backend principal en Python o un entorno compatible para integrar las herramientas seleccionadas.",
+        "Se asume que la plataforma de notificaciones elegida soporta canales directos hacia los dispositivos móviles de los usuarios."
+      ],
+      "limitations": [
+        "La herramienta de mensajería seleccionada tiene su licencia no identificada por GitHub, lo que requiere verificación adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:22:55.381338Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de bases de datos de grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.395
+        ],
+        [
+          "valkey-io/valkey",
+          0.359
+        ],
+        [
+          "redis/redis",
+          0.358
+        ],
+        [
+          "supabase/supabase",
+          0.331
+        ],
+        [
+          "pgvector/pgvector",
+          0.306
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura de base de datos para red social de mascotas",
+      "summary": "Se propone una plataforma de base de datos basada en PostgreSQL para gestionar la información de la red social. Queda pendiente el uso específico de una base de datos de grafos nativa, ya que los candidatos encontrados no cubren esa necesidad exacta.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos de grafos para guardar conexiones, y el candidato ofrece una plataforma de desarrollo basada en Postgres.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Almacenamiento general de datos",
+          "rationale": "Los candidatos encontrados no incluyen una base de datos de grafos nativa para guardar quién conoce a quién, por lo que se requiere una solución alternativa no presente en el catálogo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el negocio requerirá funcionalidades de autenticación y gestión de usuarios además de las relaciones de amistad.",
+        "Se asume que se aceptará modelar los grafos mediante tablas relacionales o extensiones en lugar de una base de datos de grafos dedicada."
+      ],
+      "other_limitations": [
+        "El usuario solicitó una base de datos de grafos, pero ninguno de los candidatos de la categoría ofrece esa tecnología de forma nativa."
+      ]
+    },
+    "response": {
+      "id": "7cc4a5c6ffda4a31bb145caa9a4f7edb",
+      "status": "no_evidence",
+      "title": "Infraestructura de base de datos para red social de mascotas",
+      "summary": "Se propone una plataforma de base de datos basada en PostgreSQL para gestionar la información de la red social. Queda pendiente el uso específico de una base de datos de grafos nativa, ya que los candidatos encontrados no cubren esa necesidad exacta.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el negocio requerirá funcionalidades de autenticación y gestión de usuarios además de las relaciones de amistad.",
+        "Se asume que se aceptará modelar los grafos mediante tablas relacionales o extensiones en lugar de una base de datos de grafos dedicada."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Los candidatos encontrados no incluyen una base de datos de grafos nativa para guardar quién conoce a quién, por lo que se requiere una solución alternativa no presente en el catálogo.",
+        "El usuario solicitó una base de datos de grafos, pero ninguno de los candidatos de la categoría ofrece esa tecnología de forma nativa."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:23:06.471600Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web basado en Vue",
+          "evidence": "un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido para no programadores",
+          "evidence": "su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "vuejs/core",
+          0.649
+        ],
+        [
+          "nuxt/nuxt",
+          0.575
+        ],
+        [
+          "vitejs/vite",
+          0.464
+        ],
+        [
+          "vercel/next.js",
+          0.443
+        ],
+        [
+          "sveltejs/svelte",
+          0.44
+        ]
+      ],
+      "cms": [
+        [
+          "strapi/strapi",
+          0.395
+        ],
+        [
+          "withastro/astro",
+          0.37
+        ],
+        [
+          "payloadcms/payload",
+          0.368
+        ],
+        [
+          "knadh/listmonk",
+          0.345
+        ],
+        [
+          "TryGhost/Ghost",
+          0.343
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de sistema web con Vue y gestión de contenidos",
+      "summary": "La propuesta implementa un framework full-stack basado en Vue para el desarrollo del sitio y un sistema de gestión de contenidos headless para que el equipo sin conocimientos técnicos pueda actualizar textos y banners sin la intervención de desarrolladores.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "fit_check": "La necesidad pide un framework basado en Vue, y el candidato Nuxt.js es un framework full-stack basado en Vue.",
+          "fit": "serves",
+          "full_name": "nuxt/nuxt",
+          "label": "Nuxt",
+          "role": "Framework web full-stack basado en Vue para construir la interfaz.",
+          "rationale": "Resuelve la solicitud de utilizar un framework basado en Vue al ofrecer una solución full-stack moderna y flexible bajo licencia MIT."
+        },
+        {
+          "need": "cms",
+          "fit_check": "La necesidad pide un sistema de gestión de contenido para no programadores, y Payload ofrece un panel de administración instantáneo con un CMS headless.",
+          "fit": "serves",
+          "full_name": "payloadcms/payload",
+          "label": "Payload",
+          "role": "CMS headless con panel de administración para gestión de contenidos.",
+          "rationale": "Permite que el equipo sin conocimientos de programación cambie textos y banners de forma sencilla a través de su panel de administración integrado. Utiliza licencia MIT."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "frontend",
+          "to_need": "cms",
+          "protocol": "API REST / GraphQL",
+          "description": "El frontend solicita los contenidos y banners administrados en el CMS para renderizarlos en el sitio web."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con desarrolladores capaces de integrar el framework de Vue con la API del CMS seleccionado."
+      ],
+      "other_limitations": [
+        "La licencia de algunos candidatos evaluados no fue identificada automáticamente por GitHub."
+      ]
+    },
+    "response": {
+      "id": "24693e9525d14d78b24746c87a09de86",
+      "status": "ok",
+      "title": "Propuesta de sistema web con Vue y gestión de contenidos",
+      "summary": "La propuesta implementa un framework full-stack basado en Vue para el desarrollo del sitio y un sistema de gestión de contenidos headless para que el equipo sin conocimientos técnicos pueda actualizar textos y banners sin la intervención de desarrolladores.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Nuxt",
+          "role": "Framework web full-stack basado en Vue para construir la interfaz.",
+          "full_name": "nuxt/nuxt",
+          "rationale": "Resuelve la solicitud de utilizar un framework basado en Vue al ofrecer una solución full-stack moderna y flexible bajo licencia MIT."
+        },
+        {
+          "key": "c2",
+          "label": "Payload",
+          "role": "CMS headless con panel de administración para gestión de contenidos.",
+          "full_name": "payloadcms/payload",
+          "rationale": "Permite que el equipo sin conocimientos de programación cambie textos y banners de forma sencilla a través de su panel de administración integrado. Utiliza licencia MIT."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API REST / GraphQL",
+          "description": "El frontend solicita los contenidos y banners administrados en el CMS para renderizarlos en el sitio web."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con desarrolladores capaces de integrar el framework de Vue con la API del CMS seleccionado."
+      ],
+      "limitations": [
+        "La licencia de algunos candidatos evaluados no fue identificada automáticamente por GitHub."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:23:18.400964Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de respaldos y archivos",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero de métricas y analítica",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.329
+        ],
+        [
+          "rustfs/rustfs",
+          0.319
+        ],
+        [
+          "hashicorp/vault",
+          0.289
+        ],
+        [
+          "etcd-io/etcd",
+          0.255
+        ],
+        [
+          "valkey-io/valkey",
+          0.239
+        ]
+      ],
+      "analytics": [
+        [
+          "metabase/metabase",
+          0.393
+        ],
+        [
+          "plausible/analytics",
+          0.38
+        ],
+        [
+          "grafana/grafana",
+          0.356
+        ],
+        [
+          "umami-software/umami",
+          0.324
+        ],
+        [
+          "prometheus/prometheus",
+          0.296
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de respaldos y analítica para laboratorio clínico",
+      "summary": "Se propone un sistema compuesto por almacenamiento de objetos distribuido para las copias de seguridad nocturnas y una herramienta de inteligencia de negocios para visualizar el procesamiento de muestras por sede.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de respaldos y archivos, y el candidato seaweedfs/seaweedfs ofrece un sistema de almacenamiento distribuido para almacenamiento de objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "rationale": "Permite guardar las copias de seguridad automáticas de los resultados de los exámenes fuera del servidor principal mediante un sistema de almacenamiento distribuido y de objetos."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide un tablero de métricas y analítica, y el candidato metabase/metabase ofrece una herramienta de inteligencia de negocios y analítica integrada.",
+          "fit": "serves",
+          "full_name": "metabase/metabase",
+          "label": "Metabase",
+          "role": "Tablero de analítica",
+          "rationale": "Proporciona un tablero fácil de usar para mostrar cuántas muestras procesa cada sede por día utilizando capacidades de inteligencia de negocios. La licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el laboratorio cuenta con una base de datos operativa conectada al tablero para consultar el procesamiento diario de muestras.",
+        "Se asume conectividad segura de red entre las sedes del laboratorio para centralizar la información."
+      ],
+      "other_limitations": [
+        "La programación automática exacta de las tareas de copia de seguridad nocturna requerirá scripts externos o herramientas adicionales del sistema operativo."
+      ]
+    },
+    "response": {
+      "id": "7fa344c60e2b40769511d5c7a0d557fd",
+      "status": "ok",
+      "title": "Sistema de respaldos y analítica para laboratorio clínico",
+      "summary": "Se propone un sistema compuesto por almacenamiento de objetos distribuido para las copias de seguridad nocturnas y una herramienta de inteligencia de negocios para visualizar el procesamiento de muestras por sede.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite guardar las copias de seguridad automáticas de los resultados de los exámenes fuera del servidor principal mediante un sistema de almacenamiento distribuido y de objetos."
+        },
+        {
+          "key": "c2",
+          "label": "Metabase",
+          "role": "Tablero de analítica",
+          "full_name": "metabase/metabase",
+          "rationale": "Proporciona un tablero fácil de usar para mostrar cuántas muestras procesa cada sede por día utilizando capacidades de inteligencia de negocios. La licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el laboratorio cuenta con una base de datos operativa conectada al tablero para consultar el procesamiento diario de muestras.",
+        "Se asume conectividad segura de red entre las sedes del laboratorio para centralizar la información."
+      ],
+      "limitations": [
+        "La programación automática exacta de las tareas de copia de seguridad nocturna requerirá scripts externos o herramientas adicionales del sistema operativo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:23:29.961642Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de factura electronica",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de embudo de conversion",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.236
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ]
+      ],
+      "analytics": [
+        [
+          "dbt-labs/dbt",
+          0.29
+        ],
+        [
+          "umami-software/umami",
+          0.224
+        ],
+        [
+          "duckdb/duckdb",
+          0.216
+        ],
+        [
+          "traefik/traefik",
+          0.21
+        ],
+        [
+          "ansible/ansible",
+          0.207
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de pagos y analítica web",
+      "summary": "Esta propuesta integra una plataforma para la gestión de cobros y facturación junto con una solución de analítica web orientada a la privacidad para medir el comportamiento de los usuarios en la tienda de cosméticos.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir la factura electrónica de cada venta, y el candidato gestiona pagos, suscripciones y facturación abierta.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Kill Bill",
+          "role": "Plataforma de pagos y facturación",
+          "rationale": "Kill Bill se enfoca en la facturación por suscripción y pagos, pero no garantiza de forma nativa la emisión de factura electrónica fiscal según la normativa local de ventas."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide saber en qué paso del proceso de compra abandonan los clientes, y el candidato ofrece analítica de producto, conversiones y comportamiento web.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Analítica web de conversiones",
+          "rationale": "Umami permite rastrear el tráfico, comportamiento y conversiones en un solo lugar para identificar las interacciones de los usuarios sin uso de cookies."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda de cosméticos requiere integrarse con un proveedor externo o módulo adicional para cumplir con la emisión de facturas electrónicas fiscales exigidas por la ley."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas evaluadas incluye de forma nativa la emisión de facturación electrónica fiscal para comercios minoristas."
+      ]
+    },
+    "response": {
+      "id": "480536b66c164204b920c7484a5c2fdd",
+      "status": "ok",
+      "title": "Sistema de gestión de pagos y analítica web",
+      "summary": "Esta propuesta integra una plataforma para la gestión de cobros y facturación junto con una solución de analítica web orientada a la privacidad para medir el comportamiento de los usuarios en la tienda de cosméticos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Umami",
+          "role": "Analítica web de conversiones",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami permite rastrear el tráfico, comportamiento y conversiones en un solo lugar para identificar las interacciones de los usuarios sin uso de cookies."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda de cosméticos requiere integrarse con un proveedor externo o módulo adicional para cumplir con la emisión de facturas electrónicas fiscales exigidas por la ley."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Kill Bill se enfoca en la facturación por suscripción y pagos, pero no garantiza de forma nativa la emisión de factura electrónica fiscal según la normativa local de ventas.",
+        "Ninguna de las herramientas evaluadas incluye de forma nativa la emisión de facturación electrónica fiscal para comercios minoristas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:23:41.137716Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tecnología o plataforma usan actualmente para la gestión interna o de recursos humanos?",
+        "¿Cómo prefieren que los empleados y jefes reciban las notificaciones sobre el estado de sus solicitudes?",
+        "¿Necesitan una interfaz web nueva desde cero o planean integrar esto en un sistema existente?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "b6590ec4c1ed44da834df2995d70d42a",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿Qué tecnología o plataforma usan actualmente para la gestión interna o de recursos humanos?",
+        "¿Cómo prefieren que los empleados y jefes reciban las notificaciones sobre el estado de sus solicitudes?",
+        "¿Necesitan una interfaz web nueva desde cero o planean integrar esto en un sistema existente?"
+      ],
+      "generated_at": "2026-11-10T05:23:50.344176Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "trazas distribuidas entre microservicios",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo en clústeres",
+          "evidence": "cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "traefik/traefik",
+          0.456
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.45
+        ],
+        [
+          "istio/istio",
+          0.379
+        ],
+        [
+          "envoyproxy/envoy",
+          0.288
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.288
+        ]
+      ],
+      "infrastructure": [
+        [
+          "fluxcd/flux2",
+          0.446
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.377
+        ],
+        [
+          "argoproj/argo-cd",
+          0.369
+        ],
+        [
+          "containerd/containerd",
+          0.362
+        ],
+        [
+          "cilium/cilium",
+          0.326
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de Observabilidad y GitOps para Microservicios",
+      "summary": "Esta propuesta implementa una plataforma de trazabilidad distribuida para analizar cuellos de botella entre microservicios y una solución de entrega continua para automatizar los despliegues en Kubernetes. No se cubren aspectos de gestión interna del código ni pruebas automatizadas previas al repositorio.",
+      "boxes": [
+        {
+          "need": "observability",
+          "fit_check": "La necesidad pide una plataforma de trazabilidad distribuida para ver por dónde pasa cada solicitud y hallar demoras, y jaegertracing/jaeger es una plataforma de rastreo distribuido.",
+          "fit": "serves",
+          "full_name": "jaegertracing/jaeger",
+          "label": "Jaeger",
+          "role": "Plataforma de trazabilidad distribuida",
+          "rationale": "Permite monitorear y diagnosticar transacciones entre los diez microservicios para identificar en qué punto se generan las demoras solicitadas por el usuario, bajo licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "infrastructure",
+          "fit_check": "La necesidad pide despliegue continuo en clústeres para que los cambios aprobados se desplieguen solos, y argoproj/argo-cd ofrece despliegue continuo declarativo para Kubernetes.",
+          "fit": "serves",
+          "full_name": "argoproj/argo-cd",
+          "label": "Argo CD",
+          "role": "Herramienta de entrega continua",
+          "rationale": "Automatiza el despliegue de las aplicaciones en el clúster asegurando que cada cambio aprobado en el repositorio se sincronice de manera autónoma, utilizando licencia Apache-2.0."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los microservicios en Python están instrumentados para enviar trazas al colector.",
+        "Se asume que los cambios aprobados se integran en un repositorio Git accesible por la herramienta de despliegue continuo."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la gestión del repositorio de código fuente ni la integración continua previa."
+      ]
+    },
+    "response": {
+      "id": "c688d4743426442c80d2ce82dd8955c0",
+      "status": "ok",
+      "title": "Arquitectura de Observabilidad y GitOps para Microservicios",
+      "summary": "Esta propuesta implementa una plataforma de trazabilidad distribuida para analizar cuellos de botella entre microservicios y una solución de entrega continua para automatizar los despliegues en Kubernetes. No se cubren aspectos de gestión interna del código ni pruebas automatizadas previas al repositorio.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Jaeger",
+          "role": "Plataforma de trazabilidad distribuida",
+          "full_name": "jaegertracing/jaeger",
+          "rationale": "Permite monitorear y diagnosticar transacciones entre los diez microservicios para identificar en qué punto se generan las demoras solicitadas por el usuario, bajo licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Argo CD",
+          "role": "Herramienta de entrega continua",
+          "full_name": "argoproj/argo-cd",
+          "rationale": "Automatiza el despliegue de las aplicaciones en el clúster asegurando que cada cambio aprobado en el repositorio se sincronice de manera autónoma, utilizando licencia Apache-2.0."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los microservicios en Python están instrumentados para enviar trazas al colector.",
+        "Se asume que los cambios aprobados se integran en un repositorio Git accesible por la herramienta de despliegue continuo."
+      ],
+      "limitations": [
+        "La propuesta no incluye la gestión del repositorio de código fuente ni la integración continua previa."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:24:03.183255Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real entre usuarios",
+          "evidence": "chat en tiempo real entre compradores y vendedores dentro de la página"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "novuhq/novu",
+          0.27
+        ],
+        [
+          "redis/redis",
+          0.246
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.243
+        ],
+        [
+          "langchain-ai/langchain",
+          0.229
+        ],
+        [
+          "openai/openai-python",
+          0.208
+        ]
+      ],
+      "search": [
+        [
+          "typesense/typesense",
+          0.536
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.415
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.341
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.328
+        ],
+        [
+          "pgvector/pgvector",
+          0.319
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura open source para marketplace de artesanias",
+      "summary": "La propuesta cubre el motor de busqueda tolerante a errores ortograficos con Typesense. La necesidad de chat en tiempo real no encontro un candidato directo que ofrezca mensajeria instantanea usuario a usuario, por lo que se asume que se resolvera externamente o mediante desarrollo propio.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un chat en tiempo real entre compradores y vendedores, y los candidatos encontrados ofrecen infraestructura de comunicacion por agentes o llamadas a APIs pero no un chat entre usuarios.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Comunicacion",
+          "role": "Infraestructura de agentes y comunicacion",
+          "rationale": "Ninguno de los candidatos encontrados resuelve directamente un chat en tiempo real entre usuarios dentro de la pagina."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador de productos tolerante a errores, y Typesense ofrece un motor de busqueda rapido con tolerancia a errores ortograficos.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "rationale": "Funciona como un motor de busqueda tolerante a errores ortograficos para construir experiencias de busqueda rapidas. Posee licencia GPL-3.0 y se mantiene activamente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el marketplace cuenta con un equipo de desarrollo para integrar la logica de mensajeria instantanea de forma independiente.",
+        "Se asume que los datos de los productos se sincronizan regularmente con el motor de busqueda."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solucion directa para el chat en tiempo real entre compradores y vendedores dentro de la pagina."
+      ]
+    },
+    "response": {
+      "id": "4e10ceb1b88f453da0311d5ede4a6150",
+      "status": "ok",
+      "title": "Infraestructura open source para marketplace de artesanias",
+      "summary": "La propuesta cubre el motor de busqueda tolerante a errores ortograficos con Typesense. La necesidad de chat en tiempo real no encontro un candidato directo que ofrezca mensajeria instantanea usuario a usuario, por lo que se asume que se resolvera externamente o mediante desarrollo propio.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Buscador de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Funciona como un motor de busqueda tolerante a errores ortograficos para construir experiencias de busqueda rapidas. Posee licencia GPL-3.0 y se mantiene activamente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el marketplace cuenta con un equipo de desarrollo para integrar la logica de mensajeria instantanea de forma independiente.",
+        "Se asume que los datos de los productos se sincronizan regularmente con el motor de busqueda."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Ninguno de los candidatos encontrados resuelve directamente un chat en tiempo real entre usuarios dentro de la pagina.",
+        "La propuesta no incluye una solucion directa para el chat en tiempo real entre compradores y vendedores dentro de la pagina."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:24:15.236566Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "distribuidora-datos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "transformacion de datos con sql y pruebas",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas"
+        },
+        {
+          "category": "database",
+          "query": "base de datos analitica rapida",
+          "evidence": "guardar el resultado en una base analítica rápida para consultar millones de filas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "data-processing": [
+        [
+          "dbt-labs/dbt",
+          0.43
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.381
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.369
+        ],
+        [
+          "apache/spark",
+          0.336
+        ],
+        [
+          "metabase/metabase",
+          0.327
+        ]
+      ],
+      "database": [
+        [
+          "duckdb/duckdb",
+          0.538
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.466
+        ],
+        [
+          "metabase/metabase",
+          0.424
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.393
+        ],
+        [
+          "dbt-labs/dbt",
+          0.391
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura analítica para transformación y consulta de ventas",
+      "summary": "La propuesta utiliza herramientas open source especializadas para transformar los datos de ventas con prácticas de ingeniería y almacenarlos en una base analítica rápida para consultas masivas. Ambas soluciones cuentan con actividad reciente y licencias abiertas para garantizar la estabilidad del sistema.",
+      "boxes": [
+        {
+          "need": "data-processing",
+          "fit_check": "La necesidad pide transformar ventas con SQL versionado y pruebas; el candidato dbt permite modelar y transformar datos usando prácticas de ingeniería de software.",
+          "fit": "serves",
+          "full_name": "dbt-labs/dbt",
+          "label": "dbt",
+          "role": "Transformación de datos",
+          "rationale": "Permite a los ingenieros y analistas transformar sus datos utilizando las mismas prácticas que los desarrolladores emplean para construir aplicaciones. Cuenta con licencia Apache-2.0 y mantenimiento reciente."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar el resultado en una base analítica rápida para millones de filas; el candidato ClickHouse ofrece un sistema de gestión de bases de datos de análisis en tiempo real.",
+          "fit": "serves",
+          "full_name": "ClickHouse/ClickHouse",
+          "label": "ClickHouse",
+          "role": "Base de datos analítica",
+          "rationale": "Funciona como una base de datos para análisis en tiempo real orientada a manejar grandes volúmenes de datos. Posee licencia Apache-2.0 y alta actividad en su desarrollo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "SQL / Conector nativo",
+          "description": "dbt ejecuta las consultas de transformación y escribe las tablas limpias directamente en la base analítica."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un entorno compatible con Python y los conectores necesarios para integrar las herramientas seleccionadas.",
+        "Se asume que la infraestructura elegida soporta la carga operativa esperada para el volumen de ventas crudas."
+      ],
+      "other_limitations": [
+        "No se incluyen herramientas de orquestación para automatizar la ejecución periódica de las transformaciones.",
+        "No se contemplan soluciones de visualización de datos o generación de tableros de control finales para el negocio."
+      ]
+    },
+    "response": {
+      "id": "9aaf41fb52ba4d5c86c2649e8801a82c",
+      "status": "ok",
+      "title": "Arquitectura analítica para transformación y consulta de ventas",
+      "summary": "La propuesta utiliza herramientas open source especializadas para transformar los datos de ventas con prácticas de ingeniería y almacenarlos en una base analítica rápida para consultas masivas. Ambas soluciones cuentan con actividad reciente y licencias abiertas para garantizar la estabilidad del sistema.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "dbt",
+          "role": "Transformación de datos",
+          "full_name": "dbt-labs/dbt",
+          "rationale": "Permite a los ingenieros y analistas transformar sus datos utilizando las mismas prácticas que los desarrolladores emplean para construir aplicaciones. Cuenta con licencia Apache-2.0 y mantenimiento reciente."
+        },
+        {
+          "key": "c2",
+          "label": "ClickHouse",
+          "role": "Base de datos analítica",
+          "full_name": "ClickHouse/ClickHouse",
+          "rationale": "Funciona como una base de datos para análisis en tiempo real orientada a manejar grandes volúmenes de datos. Posee licencia Apache-2.0 y alta actividad en su desarrollo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL / Conector nativo",
+          "description": "dbt ejecuta las consultas de transformación y escribe las tablas limpias directamente en la base analítica."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un entorno compatible con Python y los conectores necesarios para integrar las herramientas seleccionadas.",
+        "Se asume que la infraestructura elegida soporta la carga operativa esperada para el volumen de ventas crudas."
+      ],
+      "limitations": [
+        "No se incluyen herramientas de orquestación para automatizar la ejecución periódica de las transformaciones.",
+        "No se contemplan soluciones de visualización de datos o generación de tableros de control finales para el negocio."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:24:27.356409Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "revista-cdn",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución de archivos multimedia",
+          "evidence": "sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.366
+        ],
+        [
+          "rustfs/rustfs",
+          0.32
+        ],
+        [
+          "etcd-io/etcd",
+          0.25
+        ],
+        [
+          "valkey-io/valkey",
+          0.235
+        ],
+        [
+          "redis/redis",
+          0.192
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura de almacenamiento distribuido para revista digital",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido de alto rendimiento para gestionar y servir las fotos de la revista digital de manera eficiente. No se cubren herramientas específicas de red de entrega de contenido (CDN) para la distribución geográfica final.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento y distribución de archivos multimedia y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y sistemas de archivos con acceso rápido.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento distribuido",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso a disco en tiempo constante, bajo licencia Apache-2.0 y mantenimiento reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la revista digital cuenta con infraestructura propia o servidores regionales donde desplegar nodos de almacenamiento.",
+        "El usuario requerirá mecanismos adicionales de red de distribución de contenidos para acercar físicamente los archivos a cada país en Latinoamérica."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución nativa de CDN para la distribución geográfica automática en servidores cercanos a cada lector."
+      ]
+    },
+    "response": {
+      "id": "0c3cc02375ea430eaca82421f855daa7",
+      "status": "ok",
+      "title": "Infraestructura de almacenamiento distribuido para revista digital",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido de alto rendimiento para gestionar y servir las fotos de la revista digital de manera eficiente. No se cubren herramientas específicas de red de entrega de contenido (CDN) para la distribución geográfica final.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento distribuido",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso a disco en tiempo constante, bajo licencia Apache-2.0 y mantenimiento reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la revista digital cuenta con infraestructura propia o servidores regionales donde desplegar nodos de almacenamiento.",
+        "El usuario requerirá mecanismos adicionales de red de distribución de contenidos para acercar físicamente los archivos a cada país en Latinoamérica."
+      ],
+      "limitations": [
+        "La propuesta no incluye una solución nativa de CDN para la distribución geográfica automática en servidores cercanos a cada lector."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:24:38.217988Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "instituto-videoclases",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "videollamadas en navegador web",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos de video",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean después"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "microsoft/playwright",
+          0.316
+        ],
+        [
+          "cypress-io/cypress",
+          0.292
+        ],
+        [
+          "vuejs/core",
+          0.273
+        ],
+        [
+          "vercel/next.js",
+          0.231
+        ],
+        [
+          "pallets/flask",
+          0.229
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.297
+        ],
+        [
+          "rustfs/rustfs",
+          0.239
+        ],
+        [
+          "valkey-io/valkey",
+          0.211
+        ],
+        [
+          "etcd-io/etcd",
+          0.209
+        ],
+        [
+          "pgvector/pgvector",
+          0.208
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para instituto de idiomas con clases y almacenamiento",
+      "summary": "Esta propuesta permite gestionar el almacenamiento de las grabaciones de las clases mediante un sistema de archivos distribuidos. Sin embargo, no se encontraron herramientas idóneas para cubrir la necesidad de comunicación por videollamada en el navegador entre los candidatos provistos.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide dar clases en vivo por videollamada y los candidatos encontrados son marcos de pruebas o de desarrollo web como Playwright, Cypress, Vue.js, Next.js y Flask.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Comunicación",
+          "role": "Gestión de interfaz y pruebas web",
+          "rationale": "Los candidatos disponibles están orientados a pruebas de extremo a extremo o al desarrollo de aplicaciones web, pero ninguno ofrece funcionalidad nativa de videollamadas en vivo."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar las grabaciones para que los estudiantes las vean después y SeaweedFS ofrece un sistema de almacenamiento distribuido para almacenamiento de objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar archivos de gran tamaño con acceso rápido a disco, ideal para guardar las grabaciones de video. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el instituto cuenta con una infraestructura de red adecuada para soportar tráfico de video.",
+        "El flujo de subida de las grabaciones hacia el almacenamiento requerirá un desarrollo adicional o una integración externa debido a la ausencia de herramientas específicas de comunicación."
+      ],
+      "other_limitations": [
+        "No se dispone de una herramienta para realizar videollamadas en vivo directamente desde el navegador en el catálogo analizado."
+      ]
+    },
+    "response": {
+      "id": "e4b4fb5da94e42ee9ac46f0c50a59515",
+      "status": "ok",
+      "title": "Sistema para instituto de idiomas con clases y almacenamiento",
+      "summary": "Esta propuesta permite gestionar el almacenamiento de las grabaciones de las clases mediante un sistema de archivos distribuidos. Sin embargo, no se encontraron herramientas idóneas para cubrir la necesidad de comunicación por videollamada en el navegador entre los candidatos provistos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de grabaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar archivos de gran tamaño con acceso rápido a disco, ideal para guardar las grabaciones de video. Cuenta con licencia Apache-2.0 y actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el instituto cuenta con una infraestructura de red adecuada para soportar tráfico de video.",
+        "El flujo de subida de las grabaciones hacia el almacenamiento requerirá un desarrollo adicional o una integración externa debido a la ausencia de herramientas específicas de comunicación."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Los candidatos disponibles están orientados a pruebas de extremo a extremo o al desarrollo de aplicaciones web, pero ninguno ofrece funcionalidad nativa de videollamadas en vivo.",
+        "No se dispone de una herramienta para realizar videollamadas en vivo directamente desde el navegador en el catálogo analizado."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:24:50.447934Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]

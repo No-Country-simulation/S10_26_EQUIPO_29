@@ -11,9 +11,10 @@ la API sólo documenta cómo los rellena.
 Un repositorio que cumple `Repo` cumple `CatalogRepo`; el frontend ignora los
 campos extra.
 
-`is_maintained` no se persiste: se calcula en la API (no archivado y
-`pushed_at` dentro de los 180 días). `health_score` viaja siempre en NULL: no
-hay fórmula acordada y no se inventan valores.
+`is_maintained` no se persiste: se calcula en la API en lectura según actividad
+de los últimos 180 días. `health_score` lo calcula el motor v1 sólo con
+`HEALTH_SCORE_ENABLED=true`; no se inventan valores cuando el motor está apagado
+o faltan datos.
 
 La paginación no viaja en el cuerpo: va en las cabeceras `X-Total-Count`,
 `X-Total-Pages`, `X-Page` y `X-Page-Size`, porque el cuerpo es el array.
@@ -50,13 +51,17 @@ class CatalogRepo(Repo):
     )
     is_maintained: bool | None = Field(
         default=None,
-        description="Calculado según contrato: no archivado y push en los últimos 180 días. NULL = sin dato.",
+        description="Calculado en lectura: no archivado y último push dentro de 180 días. NULL = fecha desconocida o futura.",
     )
     health_score: float | None = Field(
         default=None,
         ge=0,
         le=100,
-        description="Pendiente: no hay fórmula acordada (siempre NULL).",
+        description=(
+            "Pendiente de aprobación del equipo: el motor v1 sólo publica un "
+            "valor con HEALTH_SCORE_ENABLED=true; apagado, o sin datos "
+            "suficientes, viaja en null."
+        ),
     )
 
 

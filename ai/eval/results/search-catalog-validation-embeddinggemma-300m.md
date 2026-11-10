@@ -1,63 +1,63 @@
 # Evaluación de la búsqueda · google/embeddinggemma-300m
 
-Generado con `python -m ai.eval.run_search_eval --golden catalog-validation` el 2026-11-06. Golden set `catalog-validation` v1 · catálogo `snapshot` del 2026-10-29 · 100 repos · k = 3 · CPU · datos de la IA en el texto: summary, use_cases.
+Generado con `python -m ai.eval.run_search_eval --golden catalog-validation` el 2026-11-08. Golden set `catalog-validation` v2 (etiquetas del catálogo del 2026-11-08) · catálogo `snapshot` del 2026-11-08 · 127 repos · k = 3 · CPU · datos de la IA en el texto: summary, use_cases.
 
 ## Resumen
 
 | Métrica | Valor |
 |---|---|
-| hit@3 | 19/20 (95%) |
-| MRR@3 | 0.90 |
-| recall@3 | 84% |
-| hit@5 (con 5 candidatos por necesidad) | 20/20 (100%) |
-| Carga del modelo + primera consulta | 6.5 s |
-| Vectores del catálogo (100 repos) | 18.1 s |
+| hit@3 | 26/26 (100%) |
+| MRR@3 | 0.96 |
+| recall@3 | 92% |
+| hit@5 (con 5 candidatos por necesidad) | 26/26 (100%) |
+| Carga del modelo + primera consulta | 16.7 s |
+| Vectores del catálogo (127 repos) | 21.1 s |
 | Consulta (promedio) | 0.06 s |
 
 ## Consultas con respuesta
 
 | Consulta | Acierto | Posición de cada esperado | Top-3 (puntaje) |
 |---|---|---|---|
-| `cola-tareas` | ✅ | celery 1 | celery 0.478 · airflow 0.242 · prefect 0.239 |
-| `transformacion-sql` | ✅ | dbt 2 | sqlmodel 0.340 · dbt 0.337 · sqlalchemy 0.336 |
-| `db-embebida` | ✅ | duckdb 1 | duckdb 0.528 · ClickHouse 0.436 · dbt 0.419 |
-| `clave-valor` | ✅ | etcd 1 | etcd 0.486 · redis 0.294 · celery 0.292 |
-| `https-automatico` | ✅ | caddy 1 · traefik 4 | caddy 0.554 · cert-manager 0.423 · nginx 0.411 |
-| `certificados-k8s` | ✅ | cert-manager 1 | cert-manager 0.676 · helm 0.449 · kubernetes 0.446 |
-| `paquetes-k8s` | ✅ | helm 1 | helm 0.587 · kubernetes 0.554 · argo-cd 0.448 |
-| `malla-servicios` | ✅ | istio 1 · envoy 4 | istio 0.424 · traefik 0.374 · jaeger 0.309 |
-| `red-contenedores` | ✅ | cilium 2 · istio 5 | containerd 0.386 · cilium 0.370 · kubernetes 0.315 |
-| `datos-tabulares` | ✅ | pandas 1 | pandas 0.479 · numpy 0.381 · sqlalchemy 0.370 |
-| `redes-neuronales` | ✅ | pytorch 1 · tensorflow 2 | pytorch 0.467 · tensorflow 0.438 · transformers 0.326 |
-| `ml-clasico` | ❌ | scikit-learn 4 | transformers 0.356 · tensorflow 0.344 · ollama 0.298 |
-| `api-llm` | ✅ | anthropic-sdk-python 2 · openai-python 3 · langchain 1 | langchain 0.437 · anthropic-sdk-python 0.435 · openai-python 0.420 |
-| `componentes-ui` | ✅ | react 1 · core 2 · svelte 5 | react 0.480 · core 0.453 · tailwindcss 0.430 |
-| `estilos-ui` | ✅ | tailwindcss 1 | tailwindcss 0.490 · storybook 0.356 · react 0.330 |
-| `multi-contenedor` | ✅ | compose 1 | compose 0.463 · containerd 0.435 · kubernetes 0.413 |
-| `balanceo-carga` | ✅ | nginx 2 · traefik 1 · envoy 9 | traefik 0.406 · nginx 0.352 · cilium 0.251 |
-| `metricas-servidores` | ✅ | prometheus 1 · opentelemetry-collector 2 | prometheus 0.423 · opentelemetry-collector 0.422 · jaeger 0.335 |
-| `validacion-datos` | ✅ | pydantic 1 | pydantic 0.480 · TypeScript 0.296 · sqlmodel 0.258 |
-| `pruebas-js` | ✅ | jest 1 · vitest 2 | jest 0.515 · vitest 0.435 · react-testing-library 0.427 |
+| `cola-tareas` | ✅ | celery 1 | celery 0.408 · starlette 0.236 · airflow 0.236 |
+| `transformacion-sql` | ✅ | dbt 1 | dbt 0.350 · sqlmodel 0.332 · sqlalchemy 0.324 |
+| `db-embebida` | ✅ | duckdb 1 | duckdb 0.540 · metabase 0.482 · ClickHouse 0.452 |
+| `clave-valor` | ✅ | etcd 1 | etcd 0.488 · valkey 0.443 · seaweedfs 0.314 |
+| `https-automatico` | ✅ | caddy 1 · traefik 5 | caddy 0.535 · cert-manager 0.445 · nginx 0.379 |
+| `certificados-k8s` | ✅ | cert-manager 1 | cert-manager 0.679 · helm 0.451 · kubernetes 0.451 |
+| `paquetes-k8s` | ✅ | helm 1 | helm 0.598 · kubernetes 0.542 · argo-cd 0.461 |
+| `malla-servicios` | ✅ | istio 1 · envoy 3 | istio 0.460 · traefik 0.410 · envoy 0.313 |
+| `red-contenedores` | ✅ | cilium 1 · istio 3 | cilium 0.371 · containerd 0.365 · istio 0.321 |
+| `datos-tabulares` | ✅ | pandas 1 | pandas 0.483 · numpy 0.388 · sqlalchemy 0.362 |
+| `redes-neuronales` | ✅ | pytorch 1 · tensorflow 2 | pytorch 0.448 · tensorflow 0.424 · transformers 0.336 |
+| `ml-clasico` | ✅ | scikit-learn 2 | transformers 0.361 · scikit-learn 0.339 · tensorflow 0.317 |
+| `api-llm` | ✅ | anthropic-sdk-python 3 · openai-python 2 · langchain 1 | langchain 0.443 · openai-python 0.434 · anthropic-sdk-python 0.414 |
+| `componentes-ui` | ✅ | react 1 · core 2 · svelte 3 | react 0.477 · core 0.449 · svelte 0.438 |
+| `estilos-ui` | ✅ | tailwindcss 1 | tailwindcss 0.461 · storybook 0.355 · react 0.330 |
+| `multi-contenedor` | ✅ | compose 1 | compose 0.473 · kubernetes 0.406 · containerd 0.405 |
+| `balanceo-carga` | ✅ | nginx 1 · traefik 2 · envoy 15 | nginx 0.399 · traefik 0.358 · analytics 0.274 |
+| `metricas-servidores` | ✅ | prometheus 2 · opentelemetry-collector 1 | opentelemetry-collector 0.423 · prometheus 0.422 · jaeger 0.357 |
+| `validacion-datos` | ✅ | pydantic 1 | pydantic 0.489 · TypeScript 0.299 · dbt 0.239 |
+| `pruebas-js` | ✅ | jest 1 · vitest 5 | jest 0.526 · react-testing-library 0.423 · playwright 0.415 |
+| `none-objetos` | ✅ | seaweedfs 2 · rustfs 1 | rustfs 0.539 · seaweedfs 0.506 · valkey 0.315 |
+| `none-push` | ✅ | novu 2 · apprise 1 | apprise 0.486 · novu 0.316 · alertmanager 0.254 |
+| `none-sms` | ✅ | novu 2 · apprise 3 | listmonk 0.188 · novu 0.185 · apprise 0.162 |
+| `none-embudos` | ✅ | posthog 4 · umami 1 | umami 0.302 · envoy 0.259 · dbt 0.256 |
+| `none-sso` | ✅ | keycloak 3 · zitadel 4 · kratos 2 · supertokens-core 1 | supertokens-core 0.459 · kratos 0.374 · keycloak 0.364 |
+| `none-facturacion-uso` | ✅ | lago 1 | lago 0.384 · killbill 0.336 · Ghost 0.183 |
 
 ## Consultas sin respuesta (el puntaje del 1.º sirve para el umbral)
 
 | Consulta | Top-3 (puntaje) |
 |---|---|
-| `none-grafos` | etcd 0.351 · grafana 0.349 · ClickHouse 0.331 |
-| `none-cdn` | etcd 0.334 · git 0.275 · astro 0.274 |
-| `none-respaldos` | vault 0.267 · caddy 0.241 · terraform 0.209 |
-| `none-objetos` | vault 0.299 · etcd 0.294 · nginx 0.260 |
-| `none-push` | alertmanager 0.233 · prometheus 0.162 · celery 0.136 |
-| `none-chat` | redis 0.248 · ClickHouse 0.237 · langchain 0.230 |
-| `none-sms` | alertmanager 0.137 · jest 0.133 · envoy 0.122 |
-| `none-aprobaciones` | flink 0.255 · flux2 0.249 · airflow 0.248 |
-| `none-embudos` | dbt 0.255 · envoy 0.255 · svelte 0.231 |
-| `none-sso` | traefik 0.261 · duckdb 0.248 · anthropic-sdk-python 0.246 |
-| `none-facturacion-uso` | opentelemetry-collector 0.182 · traefik 0.177 · httpx 0.169 |
-| `none-editor-paginas` | vscode 0.429 · neovim 0.382 · prettier 0.335 |
-| `none-crm` | alertmanager 0.297 · cert-manager 0.231 · ClickHouse 0.222 |
-| `none-agenda` | dagster 0.199 · jest 0.185 · biome 0.184 |
-| `none-firma` | cert-manager 0.201 · ecma262 0.181 · etcd 0.164 |
+| `none-grafos` | supabase 0.357 · grafana 0.351 · qdrant 0.349 |
+| `none-cdn` | etcd 0.334 · nginx 0.277 · astro 0.274 |
+| `none-respaldos` | rustfs 0.264 · vault 0.257 · caddy 0.242 |
+| `none-chat` | novu 0.270 · redis 0.246 · ClickHouse 0.243 |
+| `none-aprobaciones` | airflow 0.254 · flink 0.248 · flux2 0.247 |
+| `none-editor-paginas` | vscode 0.423 · neovim 0.392 · biome 0.325 |
+| `none-crm` | alertmanager 0.290 · cert-manager 0.235 · ClickHouse 0.227 |
+| `none-agenda` | apprise 0.213 · dagster 0.200 · qdrant 0.186 |
+| `none-firma` | zitadel 0.189 · cert-manager 0.189 · ecma262 0.181 |
 
 ## Umbral de `no_evidence`
 
@@ -65,14 +65,12 @@ Si el 1.er resultado de una necesidad puntúa menos que el umbral, se responde c
 
 | | Valor |
 |---|---|
-| 1.er resultado, con respuesta resueltas (19) | 0.340 – 0.676 |
-| 1.er resultado, con respuesta no resueltas (1) | 0.356 – 0.356 |
-| 1.er resultado, sin respuesta (15) | 0.137 – 0.429 |
-| Umbral actual del modelo | 0.23 |
-| Umbral que sugiere la regla | **0.33** |
-| Umbral actual: resueltas bloqueadas (error grave) | 0/19: — |
-| Umbral actual: sin respuesta que pasan | 11/15: `none-grafos`, `none-cdn`, `none-respaldos`, `none-objetos`, `none-push`, `none-chat`, `none-aprobaciones`, `none-embudos`, `none-sso`, `none-editor-paginas`, `none-crm` |
-| Umbral sugerido: resueltas bloqueadas (error grave) | 0/19: — |
-| Umbral sugerido: sin respuesta que pasan | 3/15: `none-grafos`, `none-cdn`, `none-editor-paginas` |
+| 1.er resultado, con respuesta resueltas (26) | 0.188 – 0.679 |
+| 1.er resultado, con respuesta no resueltas (0) | — |
+| 1.er resultado, sin respuesta (9) | 0.189 – 0.423 |
+| Umbral actual del modelo | 0.18 |
+| Umbral que sugiere la regla | **0.18** |
+| Umbral actual: resueltas bloqueadas (error grave) | 0/26: — |
+| Umbral actual: sin respuesta que pasan | 9/9: `none-grafos`, `none-cdn`, `none-respaldos`, `none-chat`, `none-aprobaciones`, `none-editor-paginas`, `none-crm`, `none-agenda`, `none-firma` |
 
-Fallos de búsqueda (no cuentan para el umbral): `ml-clasico`
+Fallos de búsqueda (no cuentan para el umbral): —

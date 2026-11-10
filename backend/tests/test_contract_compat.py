@@ -73,7 +73,7 @@ def test_disabled_comes_from_the_row_and_is_maintained_evaluates_contract():
     assert item["is_maintained"] is True
 
     with build_client(
-        FakeRepository([list_row(disabled=None, is_maintained=None)])
+        FakeRepository([list_row(disabled=None, is_maintained=None, pushed_at=None)])
     ) as client:
         item = client.get("/repos").json()[0]
 

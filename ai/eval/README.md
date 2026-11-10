@@ -16,14 +16,14 @@ eligieron el modelo de embeddings y el umbral, con su evidencia:
 |---|---|
 | Modelo de embeddings | EmbeddingGemma-300m |
 | Texto de cada repo | nombre, resumen de la IA, descripción, topics y casos de uso de la IA (sin categorías) |
-| Umbral de "sin evidencia" (`min_score`) | 0,23 |
-| Acierto en el catálogo real (hit@3) | 52 de 60 consultas (87 %); con 5 candidatos, 54 (90 %) |
-| Golden set | `catalog` v2: 100 consultas, snapshot del 2026-10-29 |
+| Umbral de "sin evidencia" (`min_score`) | 0,18 (catálogo de 127 repos, 8-nov) |
+| Candidatos del asistente por necesidad | primero los de la categoría principal de la necesidad que pasan el umbral; completa con la búsqueda abierta (10-nov); detalle en [`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md) |
+| Acierto de la búsqueda (hit@3), prueba final | 41 de 56 consultas (73 %), catálogo de 127 repos; detalle en [`BASELINE_DECISION.md`](BASELINE_DECISION.md) |
+| Golden set | `catalog` v3: 100 consultas (95 con respuesta, 5 sin respuesta), catálogo de 127 repos (snapshot del 2026-11-08) |
 
-El umbral frena la mitad de los pedidos sin respuesta (20 de 40 pasan). Los que
-*suenan* parecido a un repo que no los resuelve (por ejemplo, "comunicación con
-clientes" → alertmanager, "inicio de sesión" → vault) pasan, y el freno tiene que
-venir del paso que elige entre los candidatos.
+Con 127 repos el umbral no frena las consultas sin respuesta (las 14 de desarrollo
+pasan): solo evita consultas vacías. El freno real es el juicio del asistente sobre
+cada candidato. Cifras del asistente y de la prueba final: [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
 
 Para comparar variantes del texto: `python -m ai.eval.run_search_eval --texto <variante>`
 (variantes en `TEXT_VARIANTS`, `ai/search.py`).
@@ -49,8 +49,9 @@ evaluación construye el índice con ese mismo catálogo.
 
 | Nombre | Archivo | Catálogo | Para qué |
 |---|---|---|---|
-| `catalog` (por defecto) | `search_queries_catalog.json` | Snapshot del catálogo real (`ai/data/catalog/`, 100 repos) | Medir la búsqueda que usa el asistente y calibrar el umbral |
+| `catalog` (por defecto) | `search_queries_catalog.json` | Snapshot del catálogo real (`ai/data/catalog/`, 127 repos) | Medir la búsqueda que usa el asistente y calibrar el umbral |
 | `catalog-validation` | `search_queries_catalog_validation.json` | Snapshot del catálogo real | Validar con consultas nuevas el texto de búsqueda elegido con `catalog`; no se usa para ajustar |
+| `catalog-test` | `search_queries_catalog_test.json` | Snapshot del catálogo real | Prueba final: consultas de pedidos escritos sin ver el catálogo; se mide una sola vez |
 | `sample` | `search_queries.json` | 20 repos de ejemplo (`ai/data/`) | Repetir la elección del modelo de embeddings |
 
 - Cada consulta tiene sus repos aceptables (`expected`). Una lista vacía
@@ -58,6 +59,10 @@ evaluación construye el índice con ese mismo catálogo.
 - Las respuestas se escriben **antes** de mirar lo que devuelve la búsqueda. Un
   repo es aceptable solo si su descripción, sus topics o su README muestran lo
   que pide la consulta como propósito principal; cada consulta lo justifica en `note`.
+  Hasta 5 por consulta. Con licencia `NOASSERTION`, además, el README o el archivo
+  de licencia del repo tiene que mostrar una licencia abierta.
+- El `id` no cambia aunque cambie la respuesta (`none-login` hoy tiene respuesta):
+  así los reportes de distintas versiones se comparan consulta por consulta.
 - Las consultas de `catalog` son cortas y en español, como las que escribe el
   asistente. `note` dice su origen: escrita por el paso de entender (las
   variantes terminan en `-v2`), escrita a mano o de la versión 1.
@@ -65,6 +70,31 @@ evaluación construye el índice con ese mismo catálogo.
   versiones distintas no se comparan.
 - `catalog` guarda la fecha del snapshot (`catalog_taken_at`). Si el snapshot se
   renueva, un test falla a propósito hasta revisar las consultas.
+
+## Conjuntos y su historia
+
+Un conjunto que se usó para decidir algo ya no sirve para comprobar esa decisión:
+sus cifras salen optimistas. Por eso cada conjunto dice quién lo escribió, qué había
+leído antes y para qué se usó. Las etiquetas para el catálogo de 127 repos (8-nov) las
+propuso un asistente de IA con evidencia de GitHub (descripción, topics, README o
+archivo de licencia, nunca el resumen de la IA) y las revisó una persona.
+
+| Conjunto | Quién lo escribió y qué había leído | Usado para decidir | Papel |
+|---|---|---|---|
+| Búsqueda `catalog` | 69 consultas del paso de entender (Gemini, 3-nov); 31 redactadas con ayuda de IA después de leer el catálogo y revisadas | umbral (3 y 6-nov), texto de los repos (6-nov) | desarrollo |
+| Búsqueda `catalog-validation` | Asistente de IA, después de leer los resúmenes del catálogo (7-nov) | texto de los repos (7-nov) | desarrollo |
+| Búsqueda `sample` | A mano, para 20 repos de ejemplo (26-oct) | modelo de embeddings (26-oct) | repetir esa elección |
+| Asistente `base` | Pedidos redactados con ayuda de IA y revisados (31-oct); `una-factura-electronica` conociendo el catálogo de 127 (8-nov) | prompts y modelo de lenguaje (3-nov) | desarrollo |
+| Asistente `validation` | Asistente de IA con el catálogo leído, antes de cambiar el prompt (3 y 4-nov) | tres decisiones (4, 6 y 7-nov) | desarrollo |
+| Asistente `holdout` | Asistente de IA, después de leer el catálogo (7-nov) | abstención (7-nov) | desarrollo |
+| Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
+| Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
+| Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
+| Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
+| Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
+
+Las cifras que se publican salen de un conjunto de prueba final que no se usa para
+decidir nada y se corre una sola vez.
 
 ## Cómo leer el reporte
 
@@ -97,9 +127,19 @@ Si cambia el golden set o el snapshot, los números dejan de ser comparables.
 ## Cuando cambie el catálogo
 
 1. Volver a exportar el snapshot (`python -m ai.scripts.export_catalog_snapshot`).
-   El test de la fecha falla hasta revisar el golden set `catalog`.
-2. Revisar que las consultas sin respuesta sigan sin respuesta y si hay
-   herramientas nuevas válidas para las otras: agregarlas **solo con evidencia**,
-   con su `note`, y subir `version`.
-3. Actualizar `catalog_taken_at` y correr la evaluación. Si el umbral sugerido
-   cambia, actualizar `min_score` en `ai/embeddings.py` y `SEARCH_DECISION.md`.
+   Los tests de fecha fallan hasta revisar los conjuntos.
+2. Listar los pares por juzgar, con el `repos.json` del catálogo anterior:
+
+   ```bash
+   git show <commit anterior>:ai/data/catalog/repos.json > anterior.json
+   python -m ai.eval.pool --anterior anterior.json --salida pares.md
+   ```
+
+   Para cada consulta, los repos nuevos que aparecen en el top-10 de alguna de las
+   dos variantes de texto (top-20 en las consultas sin respuesta); para cada
+   necesidad de los casos del asistente, los repos nuevos de su categoría. La lista
+   no muestra el puesto: el juicio sale de la evidencia del repo, no de la búsqueda.
+3. Juzgar cada par con la evidencia de GitHub y agregar solo lo que cumpla la regla,
+   con su `note`. Actualizar `catalog_taken_at` y subir `version` en cada conjunto.
+4. Correr la evaluación. Si el umbral sugerido cambia, actualizar `min_score` en
+   `ai/embeddings.py` y `SEARCH_DECISION.md`.

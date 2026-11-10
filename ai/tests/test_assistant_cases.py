@@ -107,7 +107,7 @@ def test_caso_valido():
     {"expected_status": "error"},                             # no es un status del contrato
     {"needs": [{"category": "search", "acceptable": [], "note": "n"}] * 2},  # necesidad repetida
     {"needs": [{"category": "search", "acceptable": ["a/b", "a/b"], "note": "n"}]},
-    {"needs": [{"category": "search", "acceptable": ["a/1", "a/2", "a/3", "a/4"], "note": "n"}]},
+    {"needs": [{"category": "search", "acceptable": ["a/1", "a/2", "a/3", "a/4", "a/5", "a/6"], "note": "n"}]},
     {"note": ""},
     {"extra": 1},                                             # campo desconocido
 ])

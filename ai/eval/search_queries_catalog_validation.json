@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "source": "snapshot",
-  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
   "queries": [
     {
       "id": "cola-tareas",
@@ -200,49 +200,58 @@
       "query": "base de datos de grafos",
       "expected": [],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: hay bases de datos, ninguna de grafos."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: hay bases de datos relacionales y analíticas, ninguna de grafos."
     },
     {
       "id": "none-cdn",
       "query": "red de distribución de contenido global",
       "expected": [],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: nginx y caddy cachean desde un servidor propio."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: nginx y caddy cachean desde un servidor propio. Catálogo de 127 (8-nov): seaweedfs y rustfs guardan archivos; ninguno distribuye contenido desde servidores cercanos."
     },
     {
       "id": "none-respaldos",
       "query": "copias de seguridad automáticas de archivos",
       "expected": [],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Sin almacenamiento ni respaldos."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): seaweedfs y rustfs guardan archivos, pero no hacen copias de seguridad automáticas."
     },
     {
       "id": "none-objetos",
       "query": "almacenamiento de objetos compatible con S3",
-      "expected": [],
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Sin almacenamiento de objetos."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
     },
     {
       "id": "none-push",
       "query": "notificaciones push a dispositivos móviles",
-      "expected": [],
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: alertmanager enruta alertas de monitoreo."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
     },
     {
       "id": "none-chat",
       "query": "chat en tiempo real entre usuarios",
       "expected": [],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: kafka y celery comunican servicios, no personas."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: kafka y celery comunican servicios, no personas. Catálogo de 127 (8-nov): novu envía notificaciones, no chat entre personas."
     },
     {
       "id": "none-sms",
       "query": "envío de mensajes de texto SMS",
-      "expected": [],
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
     },
     {
       "id": "none-aprobaciones",
@@ -254,30 +263,40 @@
     {
       "id": "none-embudos",
       "query": "embudos de conversión de usuarios",
-      "expected": [],
+      "expected": [
+        "PostHog/posthog",
+        "umami-software/umami"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: grafana visualiza datos; no registra eventos de usuarios."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee); umami: \"web and product analytics … conversions\"."
     },
     {
       "id": "none-sso",
       "query": "inicio de sesión único con proveedores externos",
-      "expected": [],
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: vault controla acceso a secretos, no a usuarios."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
     },
     {
       "id": "none-facturacion-uso",
       "query": "facturación por consumo de clientes",
-      "expected": [],
+      "expected": [
+        "getlago/lago"
+      ],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Catálogo de 127 (8-nov): lago: \"Usage Based Billing\", topics subscriptions, billing."
     },
     {
       "id": "none-editor-paginas",
       "query": "editor visual de páginas para no programadores",
       "expected": [],
       "pair": null,
-      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: astro y storybook son para desarrolladores."
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: astro y storybook son para desarrolladores. Catálogo de 127 (8-nov): strapi y payload gestionan contenido (headless); su evidencia no muestra un editor visual de páginas."
     },
     {
       "id": "none-crm",

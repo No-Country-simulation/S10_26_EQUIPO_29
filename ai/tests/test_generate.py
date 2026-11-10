@@ -61,7 +61,9 @@ def test_candidato_sin_licencia_identificada_y_sin_puntaje():
 
 def test_descripcion_larga_se_recorta():
     repo = REPOS["redis/redis"].model_copy(update={"description": "palabra " * 60})
-    description = assistant.candidate_line(result(repo), NOW).split(" · ")[1]
+    field = assistant.candidate_line(result(repo), NOW).split(" · ")[1]
+    description = field.removeprefix("<descripcion>").removesuffix("</descripcion>")
+    assert field != description                   # la descripción va marcada como dato
     assert description.endswith("…")
     assert len(description) <= assistant.DESCRIPTION_CHARS + 1
 
@@ -276,3 +278,39 @@ def test_formato_rechazado_reintenta_con_los_valores_validos(monkeypatch):
     assert "o null" in retry
     assert result_.attempts == 2
     assert response is not None and response.status == "ok"
+
+
+def test_una_imagen_escrita_con_entidades_la_frena_la_revision(monkeypatch):
+    # Se decodifica antes de revisar: "&lt;img&gt;" sería una imagen al mostrarse.
+    hidden = {**box(), "rationale": "Mira &lt;img src=x&gt; aquí."}
+    replies = [draft([hidden, box("redis/redis", need="cache")]), draft(VALID)]
+    calls = []
+
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
+        calls.append(messages)
+        reply = replies[len(calls) - 1]
+        return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
+                          seconds=0.1, input_tokens=100, output_tokens=10, data=reply)
+
+    monkeypatch.setattr(llm, "generar", fake_generar)
+    response, result_ = assistant.generar_mapa(REQUEST, needs("ai", "cache"), CANDIDATES)
+
+    assert result_.attempts == 2
+    assert any("imagen" in p for p in result_.problems_first)
+    assert response is not None and "<img" not in response.model_dump_json()
+
+
+def test_el_mapa_se_entrega_decodificado(monkeypatch):
+    encoded = {**box(), "rationale": "Gesti&oacute;n de documentos."}
+    reply = draft([encoded, box("redis/redis", need="cache")], title="Mapa anal&iacute;tico")
+
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
+        return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
+                          seconds=0.1, input_tokens=100, output_tokens=10, data=reply)
+
+    monkeypatch.setattr(llm, "generar", fake_generar)
+    response, result_ = assistant.generar_mapa(REQUEST, needs("ai", "cache"), CANDIDATES)
+
+    assert result_.attempts == 1
+    assert response.title == "Mapa analítico"
+    assert response.components[0].rationale == "Gestión de documentos."

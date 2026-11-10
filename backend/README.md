@@ -68,6 +68,7 @@ C:\Users\...\.venv\Scripts\python.exe -m pytest backend/tests -q
 | `CATALOG_MAX_PAGE_SIZE` | Tamaño máximo aceptado por petición. | `100` |
 | `DB_CONNECT_TIMEOUT` | Timeout de conexión (segundos). | `5` |
 | `DB_STATEMENT_TIMEOUT_MS` | Timeout de sentencia (ms). | `8000` |
+| `HEALTH_SCORE_ENABLED` | Publica `health_score` con el motor v1; apagado mantiene `null` hasta que el equipo apruebe la fórmula. | `false` |
 
 Nunca se usan credenciales de administrador en la API. El estado del acceso de
 lectura y los permisos que faltan están en
@@ -93,10 +94,16 @@ lectura y los permisos que faltan están en
   omiten y se registran.
 - `archived` es obligatorio en el contrato: si la base lo trae NULL, la API
   responde 503 `catalog_unavailable` en vez de inventar `false`.
-- `is_maintained` se calcula en la API (no archivado y `pushed_at` dentro de los
-  180 días); no existe columna y la sincronización no la requiere.
-- `health_score` viaja siempre en `null`: no hay fórmula acordada y no se
-  inventan valores.
+- `is_maintained` se calcula en la API en lectura (no archivado y `pushed_at`
+  dentro de los 180 días); no existe columna física y la sincronización no la
+  requiere.
+- `health_score` lo calcula el motor v1 (`app/services/health.py`) sólo con
+  `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en `null` y el frontend
+  muestra «Sin evaluar». El motor nunca convierte un dato faltante en 0; ver
+  [`docs/health-score-implementation.md`](docs/health-score-implementation.md).
+- El contrato HTTP exacto que consume el frontend (URLs, endpoints, ubicación de
+  `health_score`, manejo de `null` y de errores) está en
+  [`docs/frontend-health-score-integration.md`](docs/frontend-health-score-integration.md).
 - `maintenance=active|inactive` es la aproximación local acordada con Frontend
   (`active` = ni archivado ni deshabilitado).
 - Orden del listado: `full_name ASC`, elegido para que la paginación sea
@@ -223,7 +230,7 @@ Los 10 ids de categoría que hay en la base existen en
 cumplen `Repo` en cuanto los NULL de `categories`/`use_cases` se normalizan a
 `[]`.
 
-Pruebas: `78 passed` en `backend/tests`, sin base de datos y sin red (repositorio
+Pruebas: `119 passed` en `backend/tests`, sin base de datos y sin red (repositorio
 falso); ver [Pruebas](#pruebas). Encima de eso hay una pasada manual contra
 Supabase que cubre 200/404/422/503, cabeceras de paginación, escape de
 comodines, filtros, ficha con ideas, CORS y asistente. El rol de solo lectura
@@ -232,7 +239,7 @@ sigue bloqueado; ver [`docs/acceso-base-datos.md`](docs/acceso-base-datos.md).
 ## Pruebas
 
 ```bash
-python -m pytest backend/tests -q     # 78 pruebas, sin base de datos ni red
+python -m pytest backend/tests -q     # 119 pruebas, sin base de datos ni red
 python -m pytest backend/tests -v     # nombre y caso de cada prueba
 ```
 
@@ -246,6 +253,8 @@ python -m pytest backend/tests -v     # nombre y caso de cada prueba
 | `test_contract_compat.py` | alineación con `shared.contracts` y superficie HTTP publicada |
 | `test_contract_conformance.py` | forma publicada frente a los contratos; `archived`/`pushed_at` NULL ⇒ 503; `homepage` fuera de contrato ⇒ 503 |
 | `test_frontend_contract.py` | reglas del validador de `frontend/src/data/catalogHttp.mjs` |
+| `test_health_score.py` | motor `health_score` v1: pesos, reglas por factor, renormalización, vectores y snapshot de 100 repos |
+| `test_health_score_api.py` | flag apagado ⇒ `null`; encendido ⇒ número 0..100 en listado y ficha, techo de archivados |
 
 Las pruebas no escriben en Supabase, no abren conexiones y no simulan respuestas
 de IA: el repositorio falso de `tests/conftest.py` devuelve filas fijas.

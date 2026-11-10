@@ -234,7 +234,12 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--cases", choices=CASE_FILES, default="base",
                         help="base: los casos rápidos (por defecto); validation: los casos de "
-                             "validación; holdout: los reservados (solo línea base y versión final)")
+                             "validación; holdout: los reservados (solo línea base y versión final); "
+                             "business: pedidos de negocios escritos sin ver el catálogo; "
+                             "abstention: necesidades parecidas a algo del catálogo pero no cubiertas; "
+                             "records: pedidos de negocios con registros y reportes, escritos sin ver el catálogo; "
+                             "detection: pedidos con y sin necesidad de guardar datos, escritos sin ver el catálogo; "
+                             "test: la prueba final (una sola corrida, con la versión elegida)")
     parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
                         help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
     args = parser.parse_args()
@@ -248,8 +253,8 @@ def main() -> None:
     index = SearchIndex.build()
     min_score = embeddings.model_spec().min_score
 
-    def buscar(query, k):
-        return index.search(query, k)
+    def buscar(query, k, **filters):
+        return index.search(query, k, **filters)
 
     case_set = load_assistant_cases(CASE_FILES[args.cases])
     # De la base se usan solo los rápidos; los de validación son pocos y se usan todos.

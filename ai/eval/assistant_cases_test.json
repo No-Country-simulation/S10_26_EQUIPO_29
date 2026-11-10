@@ -1,0 +1,635 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
+  "cases": [
+    {
+      "id": "taller-reparacion-electrodomesticos",
+      "query": "Soy dueño de un negocio que repara neveras, lavadoras y otros electrodomésticos. Quiero conservar una ficha de cada cliente y equipo, con el historial de reparaciones y los repuestos utilizados. También necesito que cada técnico entre con su propia cuenta y vea solo las órdenes que tiene asignadas, y que podamos adjuntar fotos del estado en que recibimos cada aparato.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"conservar una ficha de cada cliente y equipo, con el historial de reparaciones y los repuestos utilizados\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada técnico entre con su propia cuenta y vea solo las órdenes que tiene asignadas\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"adjuntar fotos del estado en que recibimos cada aparato\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "finca-cafetera",
+      "query": "Administro una finca cafetera familiar en el Eje Cafetero. Quiero reunir las mediciones de lluvia, humedad y cosecha de varias parcelas y convertirlas en un informe semanal. También necesito comparar el rendimiento por parcela y que el informe se prepare automáticamente y se envíe a mi correo cada lunes.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"reunir las mediciones de lluvia, humedad y cosecha de varias parcelas y convertirlas en un informe semanal\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar el rendimiento por parcela\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "automation",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"que el informe se prepare automáticamente\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal",
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"se envíe a mi correo cada lunes\". postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "estudio-arquitectura",
+      "query": "Dirijo un pequeño estudio de arquitectura. Necesito guardar planos, contratos y fotografías de cada proyecto en un mismo lugar, y encontrar un documento buscando palabras que aparezcan dentro de su contenido. Además, quiero que mi equipo pueda actualizar los textos y las imágenes de los proyectos publicados sin depender de quien mantiene la página, y que cada integrante tenga acceso solo a los proyectos que le corresponden.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar planos, contratos y fotografías de cada proyecto en un mismo lugar\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"encontrar un documento buscando palabras que aparezcan dentro de su contenido\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"actualizar los textos y las imágenes de los proyectos publicados sin depender de quien mantiene la página\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada integrante tenga acceso solo a los proyectos que le corresponden\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "vivero-plantas",
+      "query": "Soy dueño de un vivero donde vendemos plantas, semillas, tierra y macetas. Quiero mantener actualizado el catálogo de la página sin depender de un programador, y permitir que los clientes encuentren plantas por nombre, tipo de luz o necesidad de riego. También necesito guardar fotos y fichas de cuidado, y recibir pagos por las compras desde la página.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"mantener actualizado el catálogo de la página sin depender de un programador\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"permitir que los clientes encuentren plantas por nombre, tipo de luz o necesidad de riego\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar fotos y fichas de cuidado\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir pagos por las compras desde la página\". hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "club-futbol-aficionado",
+      "query": "Administro un club de fútbol aficionado que tiene equipos de distintas edades y cobra una mensualidad a sus jugadores. Quiero que jugadores y familiares ingresen con su propia cuenta y consulten solo sus datos y pagos. Necesito cobrar las mensualidades por internet, enviar avisos sobre entrenamientos y partidos, y consultar cuántos socios están al día con sus pagos.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"que jugadores y familiares ingresen con su propia cuenta y consulten solo sus datos y pagos\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"cobrar las mensualidades por internet\". killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar avisos sobre entrenamientos y partidos\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"consultar cuántos socios están al día con sus pagos\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "centro-cuidado-infantil",
+      "query": "Soy responsable de un centro de cuidado infantil en mi ciudad. Quiero mantener la ficha de cada niño, sus contactos autorizados y el registro de asistencia. Las familias deben ingresar con su propia cuenta y consultar únicamente la información de sus hijos. También necesito enviar avisos a las familias y guardar las autorizaciones y documentos que nos entregan.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"mantener la ficha de cada niño, sus contactos autorizados y el registro de asistencia\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"Las familias deben ingresar con su propia cuenta y consultar únicamente la información de sus hijos\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar avisos a las familias\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar las autorizaciones y documentos que nos entregan\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "mantenimiento-piscinas",
+      "query": "Tengo una pequeña empresa que hace limpieza y mantenimiento de piscinas en casas y conjuntos residenciales. Quiero registrar los datos de cada cliente y las características de su piscina. Necesito programar automáticamente las visitas periódicas, enviar recordatorios antes de cada visita y permitir que los clientes paguen el servicio por internet.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar los datos de cada cliente y las características de su piscina\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"programar automáticamente las visitas periódicas\". Sin herramienta: programar visitas a domicilio: agenda del negocio; airflow, prefect y dagster programan tareas de datos, ansible configura servidores."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar recordatorios antes de cada visita\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"permitir que los clientes paguen el servicio por internet\". hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "empresa-reciclaje",
+      "query": "Somos una empresa familiar que recoge y separa material reciclable de comercios y conjuntos residenciales. Quiero combinar los registros que recibimos de distintos puntos y convertirlos en reportes mensuales por tipo de material. Necesito medir cuánto material recuperamos por zona y comparar los resultados de cada mes. También quiero que los reportes se generen automáticamente al cierre de cada mes.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"combinar los registros que recibimos de distintos puntos y convertirlos en reportes mensuales por tipo de material\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"medir cuánto material recuperamos por zona y comparar los resultados de cada mes\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "automation",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"que los reportes se generen automáticamente al cierre de cada mes\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "parqueadero-multinivel",
+      "query": "Administro un parqueadero privado de varios pisos en el centro de la ciudad. Necesito registrar las entradas y salidas y mantener actualizado cuántos espacios están libres. Quiero que las consultas repetidas de disponibilidad respondan de inmediato sin tener que revisar todos los movimientos cada vez. También necesito recibir pagos digitales y que el sistema me avise cuando ocurran errores, permita revisar los registros de fallos y muestre cuánto tarda en responder.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar las entradas y salidas y mantener actualizado cuántos espacios están libres\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "cache",
+          "acceptable": [
+            "valkey-io/valkey",
+            "redis/redis"
+          ],
+          "note": "\"que las consultas repetidas de disponibilidad respondan de inmediato sin tener que revisar todos los movimientos cada vez\". valkey: \"key-value database optimized for caching\"; redis: topics cache, caching (licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir pagos digitales\". hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "observability",
+          "acceptable": [
+            "prometheus/prometheus",
+            "grafana/grafana",
+            "open-telemetry/opentelemetry-collector"
+          ],
+          "note": "\"que el sistema me avise cuando ocurran errores, permita revisar los registros de fallos y muestre cuánto tarda en responder\". prometheus: \"monitoring system and time series database\"; grafana: topics business-intelligence, dashboard; opentelemetry-collector: topics metrics, monitoring, observability."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "taller-carpinteria",
+      "query": "Soy dueño de un taller de carpintería que fabrica muebles a medida. Quiero registrar cada pedido con sus medidas, materiales, costos y fecha de entrega. Necesito calcular automáticamente cuánta madera y cuánto material se requiere para cada diseño, comparar la ganancia de los pedidos y guardar los planos y fotos de referencia de cada cliente.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar cada pedido con sus medidas, materiales, costos y fecha de entrega\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [],
+          "note": "\"calcular automáticamente cuánta madera y cuánto material se requiere para cada diseño\". Sin herramienta: calcular la madera de cada diseño: lógica de la propia aplicación (fórmulas por diseño), no procesamiento de datos por lotes o en tiempo real."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar la ganancia de los pedidos\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar los planos y fotos de referencia de cada cliente\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "oficina-juridica",
+      "query": "Dirijo una oficina de asesoría jurídica pequeña que atiende a personas y negocios. Necesito guardar los contratos y expedientes de cada cliente en un lugar seguro, y buscar dentro de esos documentos por nombres, fechas y palabras específicas. También quiero que cada abogado pueda entrar con su cuenta y consultar solo los expedientes asignados, y enviar correos a los clientes cuando haya novedades en sus casos.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar los contratos y expedientes de cada cliente en un lugar seguro\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"buscar dentro de esos documentos por nombres, fechas y palabras específicas\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada abogado pueda entrar con su cuenta y consultar solo los expedientes asignados\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal",
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar correos a los clientes cuando haya novedades en sus casos\". postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "fabrica-quesos",
+      "query": "Tenemos una pequeña planta que produce quesos para tiendas y mercados de la región. Quiero reunir y procesar en tiempo real las mediciones de temperatura y producción de cada lote. También necesito comparar los datos de cada lote para revisar el comportamiento de la producción. Cuando se pierda la conexión, quiero que las mediciones queden en una lista y se procesen al restablecerse, sin perder información. Necesito que me avise si el sistema deja de recibir mediciones o presenta errores, y poder revisar un historial de fallos y tiempos de respuesta.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/flink",
+            "apache/beam"
+          ],
+          "note": "\"reunir y procesar en tiempo real las mediciones de temperatura y producción de cada lote\". flink: \"stream processing framework\" (README); beam: \"Batch and Streaming data processing\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar los datos de cada lote para revisar el comportamiento de la producción\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "messaging",
+          "acceptable": [
+            "apache/kafka"
+          ],
+          "note": "\"que las mediciones queden en una lista y se procesen al restablecerse, sin perder información\". kafka: \"distributed event streaming platform\"."
+        },
+        {
+          "category": "observability",
+          "acceptable": [
+            "prometheus/prometheus",
+            "grafana/grafana",
+            "open-telemetry/opentelemetry-collector"
+          ],
+          "note": "\"me avise si el sistema deja de recibir mediciones o presenta errores, y poder revisar un historial de fallos y tiempos de respuesta\". prometheus: \"monitoring system and time series database\"; grafana: topics business-intelligence, dashboard; opentelemetry-collector: topics metrics, monitoring, observability."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "estudio-fotografico",
+      "query": "Soy fotógrafa y tengo un estudio familiar donde realizo retratos y sesiones para eventos. Quiero que cada cliente pueda entrar con una clave y ver solo su galería privada. Necesito guardar y entregar archivos fotográficos de alta resolución sin que pierdan calidad, permitir que el cliente seleccione el paquete y pague la reserva en línea, y enviarle un mensaje cuando sus fotos estén listas.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel",
+            "ory/kratos",
+            "supertokens/supertokens-core"
+          ],
+          "note": "\"que cada cliente pueda entrar con una clave y ver solo su galería privada\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar y entregar archivos fotográficos de alta resolución sin que pierdan calidad\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"que el cliente seleccione el paquete y pague la reserva en línea\". hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviarle un mensaje cuando sus fotos estén listas\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "libreria-independiente",
+      "query": "Soy dueño de una librería independiente que vende libros nuevos y usados. Necesito conservar el inventario y el historial de ventas, y que los lectores encuentren títulos por nombre, autor o tema. Quiero aceptar pagos por internet para los pedidos que se hagan desde nuestra página. También necesito consultar qué categorías se venden más y cuáles tienen menor movimiento.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"conservar el inventario y el historial de ventas\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "opensearch-project/OpenSearch",
+            "meilisearch/meilisearch",
+            "typesense/typesense"
+          ],
+          "note": "\"que los lectores encuentren títulos por nombre, autor o tema\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"aceptar pagos por internet para los pedidos que se hagan desde nuestra página\". hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"consultar qué categorías se venden más y cuáles tienen menor movimiento\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "editorial-libros",
+      "query": "Dirijo una editorial pequeña que publica libros de autores regionales. Necesito que el equipo pueda actualizar descripciones, portadas y novedades del catálogo publicado sin pedir cada cambio a un desarrollador. También quiero guardar los originales, portadas y contratos de publicación en un archivo central, y avisar por correo a las librerías cuando salga un nuevo título.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"actualizar descripciones, portadas y novedades del catálogo publicado sin pedir cada cambio a un desarrollador\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar los originales, portadas y contratos de publicación en un archivo central\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "knadh/listmonk",
+            "postalserver/postal"
+          ],
+          "note": "\"avisar por correo a las librerías cuando salga un nuevo título\". listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    },
+    {
+      "id": "tostadora-cafe",
+      "query": "Tenemos un pequeño negocio que tuesta y vende café a tiendas y clientes particulares. Quiero reunir el historial de ventas, temporadas y pedidos de cada variedad, y usar esos datos para que el sistema estime cuánta demanda tendremos las próximas semanas. También necesito comparar esas estimaciones con las ventas reales y ver qué tan acertadas fueron por variedad. Quiero guardar cada predicción junto con los datos que se usaron para generarla.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"reunir el historial de ventas, temporadas y pedidos de cada variedad\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "ai",
+          "acceptable": [
+            "scikit-learn/scikit-learn"
+          ],
+          "note": "\"usar esos datos para que el sistema estime cuánta demanda tendremos las próximas semanas\". scikit-learn: \"machine learning in Python\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar esas estimaciones con las ventas reales y ver qué tan acertadas fueron por variedad\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"guardar cada predicción junto con los datos que se usaron para generarla\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        }
+      ],
+      "note": "Escrito por otro modelo de lenguaje (GPT-6) sin ver el catálogo (8-nov), filtrado con reglas fijas y sin editar. Prueba final: se corre una sola vez."
+    }
+  ]
+}

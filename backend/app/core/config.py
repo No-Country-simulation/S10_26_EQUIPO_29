@@ -8,6 +8,19 @@ DEFAULT_CONNECT_TIMEOUT_SECONDS = 5
 DEFAULT_STATEMENT_TIMEOUT_MS = 8000
 
 
+def _bool_env(name: str, default: bool) -> bool:
+    """Lee un booleano del entorno; un valor ambiguo falla en vez de adivinar."""
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    value = raw.strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    if value in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"{name} debe ser true o false.")
+
+
 def _int_env(name: str, default: int, *, minimum: int = 1) -> int:
     """Lee un entero positivo del entorno y falla explícitamente si no sirve."""
     raw = os.getenv(name)
@@ -32,6 +45,9 @@ class Settings:
     max_page_size: int = DEFAULT_MAX_PAGE_SIZE
     db_connect_timeout: int = DEFAULT_CONNECT_TIMEOUT_SECONDS
     db_statement_timeout_ms: int = DEFAULT_STATEMENT_TIMEOUT_MS
+    health_score_enabled: bool = False
+    """Publica `health_score` con el motor v1. Apagado hasta que el equipo
+    apruebe la fórmula y los pesos (ver `docs/health-score-implementation.md`)."""
 
     def __post_init__(self) -> None:
         if self.default_page_size < 1:
@@ -60,4 +76,5 @@ class Settings:
             db_statement_timeout_ms=_int_env(
                 "DB_STATEMENT_TIMEOUT_MS", DEFAULT_STATEMENT_TIMEOUT_MS
             ),
+            health_score_enabled=_bool_env("HEALTH_SCORE_ENABLED", False),
         )

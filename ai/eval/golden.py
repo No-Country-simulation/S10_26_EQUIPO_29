@@ -16,18 +16,21 @@ from ai.catalog import Source
 
 EVAL_DIR = Path(__file__).resolve().parent
 
-GoldenName = Literal["catalog", "catalog-validation", "sample"]
+GoldenName = Literal["catalog", "catalog-validation", "catalog-test", "sample"]
 DEFAULT_GOLDEN: GoldenName = "catalog"
 GOLDEN_FILES: dict[str, Path] = {
     "catalog": EVAL_DIR / "search_queries_catalog.json",
     # Consultas nuevas para validar el texto de búsqueda elegido con "catalog"; no se usan para ajustarlo.
     "catalog-validation": EVAL_DIR / "search_queries_catalog_validation.json",
+    # Prueba final: consultas de pedidos escritos sin ver el catálogo. Se mide una sola vez.
+    "catalog-test": EVAL_DIR / "search_queries_catalog_test.json",
     "sample": EVAL_DIR / "search_queries.json",
 }
 # Nombre del reporte de cada golden set. El de los datos de ejemplo conserva su
 # nombre original para regenerarse en el mismo archivo.
 REPORT_PREFIX: dict[str, str] = {"catalog": "search-catalog",
                                  "catalog-validation": "search-catalog-validation",
+                                 "catalog-test": "search-catalog-test",
                                  "sample": "search"}
 
 
@@ -66,3 +69,22 @@ def load_search_queries(name: GoldenName = DEFAULT_GOLDEN) -> SearchGoldenSet:
     if name not in GOLDEN_FILES:
         raise ValueError(f"El golden set {name!r} no existe; opciones: {', '.join(GOLDEN_FILES)}")
     return SearchGoldenSet.model_validate_json(GOLDEN_FILES[name].read_bytes())
+
+
+def load_goldens(names: list[str]) -> list[tuple[str, SearchGoldenSet]]:
+    """Carga uno o varios golden sets para medirlos como uno solo.
+
+    Lanza `ValueError` si son de catálogos distintos o si repiten ids de consulta.
+    """
+    goldens = [(name, load_search_queries(name)) for name in dict.fromkeys(names)]
+    if len({golden.source for _, golden in goldens}) > 1:
+        raise ValueError("solo se miden juntos golden sets del mismo catálogo")
+    ids = [q.id for _, golden in goldens for q in golden.queries]
+    if len(ids) != len(set(ids)):
+        raise ValueError("los golden sets repiten ids de consulta")
+    return goldens
+
+
+def report_name(names: list[str]) -> str:
+    """Prefijo del reporte: el del golden set, o los nombres unidos con '+' si son varios."""
+    return REPORT_PREFIX[names[0]] if len(names) == 1 else "search-" + "+".join(names)

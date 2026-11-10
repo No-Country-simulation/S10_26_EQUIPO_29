@@ -1,0 +1,540 @@
+{
+  "version": 1,
+  "source": "snapshot",
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
+  "queries": [
+    {
+      "id": "taller-reparacion-electrodomesticos-database",
+      "query": "almacenamiento y consulta de fichas",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-reparacion-electrodomesticos. \"conservar una ficha de cada cliente y equipo, con el historial de reparaciones y los repuestos utilizados\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    },
+    {
+      "id": "taller-reparacion-electrodomesticos-auth",
+      "query": "autenticación de usuarios con roles",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-reparacion-electrodomesticos. \"que cada técnico entre con su propia cuenta y vea solo las órdenes que tiene asignadas\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+    },
+    {
+      "id": "taller-reparacion-electrodomesticos-storage",
+      "query": "almacenamiento de archivos multimedia",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-reparacion-electrodomesticos. \"adjuntar fotos del estado en que recibimos cada aparato\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "finca-cafetera-data-processing",
+      "query": "procesamiento y transformación de datos",
+      "expected": [
+        "apache/airflow",
+        "PrefectHQ/prefect",
+        "dagster-io/dagster"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego finca-cafetera. \"reunir las mediciones de lluvia, humedad y cosecha de varias parcelas y convertirlas en un informe semanal\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+    },
+    {
+      "id": "finca-cafetera-automation",
+      "query": "automatización de tareas periódicas",
+      "expected": [
+        "apache/airflow",
+        "PrefectHQ/prefect",
+        "dagster-io/dagster"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego finca-cafetera. \"que el informe se prepare automáticamente\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+    },
+    {
+      "id": "finca-cafetera-communication",
+      "query": "envío automatizado de correos",
+      "expected": [
+        "postalserver/postal",
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego finca-cafetera. \"se envíe a mi correo cada lunes\". postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "estudio-arquitectura-storage",
+      "query": "almacenamiento de archivos y documentos",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-arquitectura. \"guardar planos, contratos y fotografías de cada proyecto en un mismo lugar\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "estudio-arquitectura-search",
+      "query": "búsqueda de texto dentro de documentos",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-arquitectura. \"encontrar un documento buscando palabras que aparezcan dentro de su contenido\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+    },
+    {
+      "id": "estudio-arquitectura-cms",
+      "query": "gestión y edición de contenidos web",
+      "expected": [
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-arquitectura. \"actualizar los textos y las imágenes de los proyectos publicados sin depender de quien mantiene la página\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+    },
+    {
+      "id": "estudio-arquitectura-auth",
+      "query": "control de acceso basado en roles",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-arquitectura. \"que cada integrante tenga acceso solo a los proyectos que le corresponden\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+    },
+    {
+      "id": "vivero-plantas-cms",
+      "query": "gestion de contenido web para catalogos",
+      "expected": [
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego vivero-plantas. \"mantener actualizado el catálogo de la página sin depender de un programador\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+    },
+    {
+      "id": "vivero-plantas-search",
+      "query": "busqueda de texto y filtros avanzados",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego vivero-plantas. \"permitir que los clientes encuentren plantas por nombre, tipo de luz o necesidad de riego\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+    },
+    {
+      "id": "vivero-plantas-storage",
+      "query": "almacenamiento de archivos multimedia",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego vivero-plantas. \"guardar fotos y fichas de cuidado\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "vivero-plantas-payments",
+      "query": "procesamiento de pagos en linea",
+      "expected": [
+        "juspay/hyperswitch"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego vivero-plantas. \"recibir pagos por las compras desde la página\". hyperswitch: \"composable payments platform\"."
+    },
+    {
+      "id": "club-futbol-aficionado-auth",
+      "query": "autenticacion y gestion de cuentas de usuarios",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego club-futbol-aficionado. \"que jugadores y familiares ingresen con su propia cuenta y consulten solo sus datos y pagos\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+    },
+    {
+      "id": "club-futbol-aficionado-payments",
+      "query": "cobros en linea y pasarela de pagos",
+      "expected": [
+        "killbill/killbill",
+        "getlago/lago"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego club-futbol-aficionado. \"cobrar las mensualidades por internet\". killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+    },
+    {
+      "id": "club-futbol-aficionado-communication",
+      "query": "envio de notificaciones y avisos a usuarios",
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego club-futbol-aficionado. \"enviar avisos sobre entrenamientos y partidos\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "club-futbol-aficionado-analytics",
+      "query": "consultas y reportes de estado de pagos",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego club-futbol-aficionado. \"consultar cuántos socios están al día con sus pagos\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "centro-cuidado-infantil-auth",
+      "query": "inicio de sesión y permisos por roles",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego centro-cuidado-infantil. \"Las familias deben ingresar con su propia cuenta y consultar únicamente la información de sus hijos\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+    },
+    {
+      "id": "centro-cuidado-infantil-communication",
+      "query": "envío de avisos y notificaciones",
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego centro-cuidado-infantil. \"enviar avisos a las familias\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "centro-cuidado-infantil-storage",
+      "query": "almacenamiento de archivos y documentos",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego centro-cuidado-infantil. \"guardar las autorizaciones y documentos que nos entregan\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "mantenimiento-piscinas-database",
+      "query": "almacenamiento y gestión de registros estructurados",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego mantenimiento-piscinas. \"registrar los datos de cada cliente y las características de su piscina\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    },
+    {
+      "id": "mantenimiento-piscinas-automation",
+      "query": "automatización de tareas y procesos periódicos",
+      "expected": [],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego mantenimiento-piscinas. \"programar automáticamente las visitas periódicas\". Sin herramienta: programar visitas a domicilio: agenda del negocio; airflow, prefect y dagster programan tareas de datos, ansible configura servidores."
+    },
+    {
+      "id": "mantenimiento-piscinas-communication",
+      "query": "envío de recordatorios y notificaciones",
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego mantenimiento-piscinas. \"enviar recordatorios antes de cada visita\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "mantenimiento-piscinas-payments",
+      "query": "procesamiento de cobros y pagos en línea",
+      "expected": [
+        "juspay/hyperswitch"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego mantenimiento-piscinas. \"permitir que los clientes paguen el servicio por internet\". hyperswitch: \"composable payments platform\"."
+    },
+    {
+      "id": "empresa-reciclaje-data-processing",
+      "query": "transformación y consolidación de registros por lotes",
+      "expected": [
+        "apache/airflow",
+        "PrefectHQ/prefect",
+        "dagster-io/dagster"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego empresa-reciclaje. \"combinar los registros que recibimos de distintos puntos y convertirlos en reportes mensuales por tipo de material\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+    },
+    {
+      "id": "empresa-reciclaje-analytics",
+      "query": "analítica de datos y reportes mensuales",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego empresa-reciclaje. \"medir cuánto material recuperamos por zona y comparar los resultados de cada mes\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "empresa-reciclaje-automation",
+      "query": "automatización de tareas programadas",
+      "expected": [
+        "apache/airflow",
+        "PrefectHQ/prefect",
+        "dagster-io/dagster"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego empresa-reciclaje. \"que los reportes se generen automáticamente al cierre de cada mes\". airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+    },
+    {
+      "id": "parqueadero-multinivel-database",
+      "query": "almacenamiento y consulta de registros",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego parqueadero-multinivel. \"registrar las entradas y salidas y mantener actualizado cuántos espacios están libres\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    },
+    {
+      "id": "parqueadero-multinivel-cache",
+      "query": "almacenamiento en memoria para respuestas rápidas",
+      "expected": [
+        "valkey-io/valkey",
+        "redis/redis"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego parqueadero-multinivel. \"que las consultas repetidas de disponibilidad respondan de inmediato sin tener que revisar todos los movimientos cada vez\". valkey: \"key-value database optimized for caching\"; redis: topics cache, caching (licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3)."
+    },
+    {
+      "id": "parqueadero-multinivel-payments",
+      "query": "procesamiento de transacciones y cobros",
+      "expected": [
+        "juspay/hyperswitch"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego parqueadero-multinivel. \"recibir pagos digitales\". hyperswitch: \"composable payments platform\"."
+    },
+    {
+      "id": "parqueadero-multinivel-observability",
+      "query": "monitoreo de errores y rendimiento del sistema",
+      "expected": [
+        "prometheus/prometheus",
+        "grafana/grafana",
+        "open-telemetry/opentelemetry-collector"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego parqueadero-multinivel. \"que el sistema me avise cuando ocurran errores, permita revisar los registros de fallos y muestre cuánto tarda en responder\". prometheus: \"monitoring system and time series database\"; grafana: topics business-intelligence, dashboard; opentelemetry-collector: topics metrics, monitoring, observability."
+    },
+    {
+      "id": "taller-carpinteria-database",
+      "query": "almacenamiento y consulta de pedidos y materiales",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-carpinteria. \"registrar cada pedido con sus medidas, materiales, costos y fecha de entrega\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    },
+    {
+      "id": "taller-carpinteria-data-processing",
+      "query": "calculo automatico de materiales para fabricacion",
+      "expected": [],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-carpinteria. \"calcular automáticamente cuánta madera y cuánto material se requiere para cada diseño\". Sin herramienta: calcular la madera de cada diseño: lógica de la propia aplicación (fórmulas por diseño), no procesamiento de datos por lotes o en tiempo real."
+    },
+    {
+      "id": "taller-carpinteria-analytics",
+      "query": "analisis de rentabilidad y ganancias de pedidos",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-carpinteria. \"comparar la ganancia de los pedidos\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "taller-carpinteria-storage",
+      "query": "guardado de archivos de planos y fotos",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego taller-carpinteria. \"guardar los planos y fotos de referencia de cada cliente\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "oficina-juridica-storage",
+      "query": "almacenamiento seguro de archivos y documentos",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego oficina-juridica. \"guardar los contratos y expedientes de cada cliente en un lugar seguro\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "oficina-juridica-search",
+      "query": "búsqueda de texto completo en documentos",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego oficina-juridica. \"buscar dentro de esos documentos por nombres, fechas y palabras específicas\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+    },
+    {
+      "id": "oficina-juridica-auth",
+      "query": "autenticación de usuarios y control de accesos",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego oficina-juridica. \"que cada abogado pueda entrar con su cuenta y consultar solo los expedientes asignados\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso."
+    },
+    {
+      "id": "oficina-juridica-communication",
+      "query": "envío de correos electrónicos transaccionales",
+      "expected": [
+        "postalserver/postal",
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego oficina-juridica. \"enviar correos a los clientes cuando haya novedades en sus casos\". postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "fabrica-quesos-data-processing",
+      "query": "procesamiento de datos en tiempo real",
+      "expected": [
+        "apache/flink",
+        "apache/beam"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego fabrica-quesos. \"reunir y procesar en tiempo real las mediciones de temperatura y producción de cada lote\". flink: \"stream processing framework\" (README); beam: \"Batch and Streaming data processing\"."
+    },
+    {
+      "id": "fabrica-quesos-analytics",
+      "query": "comparación y análisis de métricas de producción",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego fabrica-quesos. \"comparar los datos de cada lote para revisar el comportamiento de la producción\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "fabrica-quesos-messaging",
+      "query": "cola de mensajes para procesamiento diferido",
+      "expected": [
+        "apache/kafka"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego fabrica-quesos. \"que las mediciones queden en una lista y se procesen al restablecerse, sin perder información\". kafka: \"distributed event streaming platform\"."
+    },
+    {
+      "id": "fabrica-quesos-observability",
+      "query": "monitoreo de fallos y rendimiento del sistema",
+      "expected": [
+        "prometheus/prometheus",
+        "grafana/grafana",
+        "open-telemetry/opentelemetry-collector"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego fabrica-quesos. \"me avise si el sistema deja de recibir mediciones o presenta errores, y poder revisar un historial de fallos y tiempos de respuesta\". prometheus: \"monitoring system and time series database\"; grafana: topics business-intelligence, dashboard; opentelemetry-collector: topics metrics, monitoring, observability."
+    },
+    {
+      "id": "estudio-fotografico-auth",
+      "query": "autenticacion de clientes con clave",
+      "expected": [
+        "keycloak/keycloak",
+        "zitadel/zitadel",
+        "ory/kratos",
+        "supertokens/supertokens-core"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-fotografico. \"que cada cliente pueda entrar con una clave y ver solo su galería privada\". keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization, sso; kratos: \"authentication and identity management\", topic login; supertokens-core: topics login, social-login (licencia: el README indica Apache 2.0)."
+    },
+    {
+      "id": "estudio-fotografico-storage",
+      "query": "almacenamiento de archivos de alta resolucion",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-fotografico. \"guardar y entregar archivos fotográficos de alta resolución sin que pierdan calidad\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "estudio-fotografico-payments",
+      "query": "cobros de reservas en linea",
+      "expected": [
+        "juspay/hyperswitch"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-fotografico. \"que el cliente seleccione el paquete y pague la reserva en línea\". hyperswitch: \"composable payments platform\"."
+    },
+    {
+      "id": "estudio-fotografico-communication",
+      "query": "envio de mensajes de notificacion",
+      "expected": [
+        "novuhq/novu",
+        "caronc/apprise"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego estudio-fotografico. \"enviarle un mensaje cuando sus fotos estén listas\". novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+    },
+    {
+      "id": "libreria-independiente-database",
+      "query": "almacenamiento persistente de inventario y ventas",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego libreria-independiente. \"conservar el inventario y el historial de ventas\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    },
+    {
+      "id": "libreria-independiente-search",
+      "query": "busqueda de texto en catalogo",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "meilisearch/meilisearch",
+        "typesense/typesense"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego libreria-independiente. \"que los lectores encuentren títulos por nombre, autor o tema\". OpenSearch: \"search engine\"; meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+    },
+    {
+      "id": "libreria-independiente-payments",
+      "query": "pasarela de pagos en linea",
+      "expected": [
+        "juspay/hyperswitch"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego libreria-independiente. \"aceptar pagos por internet para los pedidos que se hagan desde nuestra página\". hyperswitch: \"composable payments platform\"."
+    },
+    {
+      "id": "libreria-independiente-analytics",
+      "query": "analisis de ventas por categoria",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego libreria-independiente. \"consultar qué categorías se venden más y cuáles tienen menor movimiento\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "editorial-libros-cms",
+      "query": "gestion de contenido editorial",
+      "expected": [
+        "strapi/strapi",
+        "payloadcms/payload"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego editorial-libros. \"actualizar descripciones, portadas y novedades del catálogo publicado sin pedir cada cambio a un desarrollador\". strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms."
+    },
+    {
+      "id": "editorial-libros-storage",
+      "query": "almacenamiento centralizado de archivos",
+      "expected": [
+        "seaweedfs/seaweedfs",
+        "rustfs/rustfs"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego editorial-libros. \"guardar los originales, portadas y contratos de publicación en un archivo central\". seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+    },
+    {
+      "id": "editorial-libros-communication",
+      "query": "envio masivo de correos",
+      "expected": [
+        "knadh/listmonk",
+        "postalserver/postal"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego editorial-libros. \"avisar por correo a las librerías cuando salga un nuevo título\". listmonk: \"newsletter and mailing list manager\"; postal: \"mail delivery platform\"."
+    },
+    {
+      "id": "tostadora-cafe-ai",
+      "query": "modelos de estimación de demanda",
+      "expected": [
+        "scikit-learn/scikit-learn"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego tostadora-cafe. \"usar esos datos para que el sistema estime cuánta demanda tendremos las próximas semanas\". scikit-learn: \"machine learning in Python\"."
+    },
+    {
+      "id": "tostadora-cafe-analytics",
+      "query": "comparación de estimaciones con ventas reales",
+      "expected": [
+        "grafana/grafana",
+        "metabase/metabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego tostadora-cafe. \"comparar esas estimaciones con las ventas reales y ver qué tan acertadas fueron por variedad\". grafana: topics business-intelligence, dashboard; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+    },
+    {
+      "id": "tostadora-cafe-database",
+      "query": "almacenamiento de historiales y predicciones",
+      "expected": [
+        "postgres/postgres",
+        "MariaDB/server",
+        "supabase/supabase"
+      ],
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 8-nov, una corrida) para el caso ciego tostadora-cafe. \"guardar cada predicción junto con los datos que se usaron para generarla\". postgres: repositorio oficial de PostgreSQL (licencia: el README remite a COPYRIGHT, que permite usar, copiar, modificar y distribuir sin costo); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+    }
+  ]
+}

@@ -1,141 +1,141 @@
 # Evaluación de la búsqueda · google/embeddinggemma-300m
 
-Generado con `python -m ai.eval.run_search_eval --golden catalog` el 2026-11-06. Golden set `catalog` v2 · catálogo `snapshot` del 2026-10-29 · 100 repos · k = 3 · CPU · datos de la IA en el texto: summary, use_cases.
+Generado con `python -m ai.eval.run_search_eval --golden catalog` el 2026-11-08. Golden set `catalog` v3 (etiquetas del catálogo del 2026-11-08) · catálogo `snapshot` del 2026-11-08 · 127 repos · k = 3 · CPU · datos de la IA en el texto: summary, use_cases.
 
 ## Resumen
 
 | Métrica | Valor |
 |---|---|
-| hit@3 | 52/60 (87%) |
-| MRR@3 | 0.78 |
-| recall@3 | 71% |
-| hit@5 (con 5 candidatos por necesidad) | 54/60 (90%) |
-| Carga del modelo + primera consulta | 5.0 s |
-| Vectores del catálogo (100 repos) | 16.2 s |
-| Consulta (promedio) | 0.05 s |
+| hit@3 | 85/95 (89%) |
+| MRR@3 | 0.82 |
+| recall@3 | 70% |
+| hit@5 (con 5 candidatos por necesidad) | 90/95 (95%) |
+| Carga del modelo + primera consulta | 18.8 s |
+| Vectores del catálogo (127 repos) | 20.7 s |
+| Consulta (promedio) | 0.06 s |
 
 ## Consultas con respuesta
 
 | Consulta | Acierto | Posición de cada esperado | Top-3 (puntaje) |
 |---|---|---|---|
-| `msg-eventos` | ✅ | kafka 2 | flux2 0.357 · kafka 0.344 · flink 0.339 |
-| `proc-tiempo-real` | ✅ | flink 1 · beam 6 | flink 0.334 · redis 0.317 · kafka 0.314 |
-| `db-analitica` | ✅ | ClickHouse 2 · duckdb 3 | kafka 0.297 · ClickHouse 0.293 · duckdb 0.288 |
-| `an-tableros` | ❌ | grafana 6 | jaeger 0.187 · celery 0.171 · etcd 0.167 |
-| `ai-rag` | ✅ | llama_index 1 · langchain 18 | llama_index 0.270 · envoy 0.227 · anthropic-sdk-python 0.222 |
-| `obs-stack` | ✅ | opentelemetry-collector 5 · prometheus 4 · grafana 1 | grafana 0.452 · jaeger 0.427 · traefik 0.421 |
-| `tienda-search` | ✅ | OpenSearch 2 | ripgrep 0.334 · OpenSearch 0.328 · pgvector 0.303 |
-| `tienda-search-v2` | ✅ | OpenSearch 2 | ripgrep 0.355 · OpenSearch 0.355 · pgvector 0.321 |
-| `tienda-analytics` | ❌ | grafana 6 | duckdb 0.266 · ClickHouse 0.251 · dbt 0.232 |
-| `tienda-analytics-v2` | ❌ | grafana 6 | duckdb 0.265 · ClickHouse 0.246 · dbt 0.227 |
-| `academia-ai` | ✅ | langchain 1 · llama_index 3 | langchain 0.334 · ollama 0.294 · llama_index 0.289 |
-| `academia-ai-v2` | ✅ | langchain 1 · llama_index 5 | langchain 0.358 · transformers 0.358 · ollama 0.353 |
-| `logistica-messaging` | ✅ | kafka 2 · flink 1 · beam 3 | flink 0.459 · kafka 0.390 · beam 0.382 |
-| `logistica-messaging-v2` | ✅ | kafka 2 · flink 1 · beam 3 | flink 0.479 · kafka 0.392 · beam 0.366 |
-| `logistica-database` | ❌ | ClickHouse 19 | etcd 0.294 · redis 0.263 · pgvector 0.238 |
-| `logistica-database-v2` | ❌ | ClickHouse 22 | etcd 0.292 · redis 0.287 · pgvector 0.239 |
-| `logistica-analytics` | ✅ | grafana 1 | grafana 0.345 · dbt 0.278 · storybook 0.242 |
-| `logistica-analytics-v2` | ✅ | grafana 1 | grafana 0.365 · dbt 0.248 · opentelemetry-collector 0.231 |
-| `soporte-ai` | ✅ | ollama 1 · vllm 2 | ollama 0.528 · vllm 0.493 · langchain 0.423 |
-| `soporte-ai-v2` | ✅ | ollama 1 · vllm 3 | ollama 0.427 · langchain 0.349 · vllm 0.344 |
-| `soporte-search` | ✅ | OpenSearch 2 | ripgrep 0.344 · OpenSearch 0.334 · llama_index 0.319 |
-| `soporte-search-v2` | ✅ | OpenSearch 1 | OpenSearch 0.303 · ripgrep 0.273 · datasets 0.242 |
-| `soporte-observability` | ✅ | grafana 3 · opentelemetry-collector 4 · prometheus 1 | prometheus 0.394 · jaeger 0.358 · grafana 0.349 |
-| `soporte-observability-v2` | ✅ | grafana 3 · opentelemetry-collector 4 · prometheus 1 | prometheus 0.379 · jaeger 0.374 · grafana 0.358 |
-| `periodico-frontend` | ✅ | nuxt 16 · next.js 6 · astro 2 | vite 0.413 · astro 0.383 · django 0.365 |
-| `periodico-frontend-v2` | ❌ | nuxt 15 · next.js 8 · astro 12 | tailwindcss 0.493 · core 0.465 · vite 0.465 |
-| `rag-largo-ai` | ✅ | ollama 1 · vllm 4 | ollama 0.420 · transformers 0.353 · langchain 0.344 |
-| `rag-largo-ai-v2` | ✅ | ollama 1 · vllm 3 | ollama 0.374 · transformers 0.352 · vllm 0.332 |
-| `rag-largo-search` | ✅ | OpenSearch 2 · pgvector 1 | pgvector 0.397 · OpenSearch 0.309 · ripgrep 0.307 |
-| `rag-largo-search-v2` | ✅ | OpenSearch 2 · pgvector 1 | pgvector 0.444 · OpenSearch 0.333 · ripgrep 0.325 |
-| `api-largo-cache` | ✅ | redis 1 | redis 0.444 · etcd 0.353 · celery 0.272 |
-| `api-largo-cache-v2` | ✅ | redis 1 | redis 0.464 · etcd 0.405 · celery 0.275 |
-| `api-largo-infrastructure` | ❌ | kubernetes 4 · nginx 13 · traefik 12 | kafka 0.317 · redis 0.303 · etcd 0.288 |
-| `api-largo-infrastructure-v2` | ✅ | kubernetes 1 | kubernetes 0.399 · containerd 0.371 · compose 0.338 |
-| `rag-corto-ai` | ✅ | langchain 5 · llama_index 1 | llama_index 0.286 · transformers 0.275 · vllm 0.268 |
-| `rag-corto-ai-v2` | ✅ | langchain 11 · llama_index 2 | transformers 0.234 · llama_index 0.225 · vllm 0.224 |
-| `api-corto-cache` | ✅ | redis 1 | redis 0.285 · etcd 0.236 · vllm 0.220 |
-| `api-corto-cache-v2` | ✅ | redis 1 | redis 0.399 · nginx 0.282 · etcd 0.258 |
-| `api-corto-infrastructure` | ✅ | kubernetes 1 | kubernetes 0.334 · containerd 0.326 · runc 0.268 |
-| `api-corto-infrastructure-v2` | ❌ | kubernetes 6 · nginx 21 · traefik 4 | terraform 0.349 · prefect 0.225 · ansible 0.222 |
-| `eventos-messaging` | ✅ | kafka 4 · celery 2 | beam 0.295 · celery 0.293 · flink 0.290 |
-| `eventos-messaging-v2` | ✅ | kafka 8 · celery 1 | celery 0.439 · beam 0.329 · starlette 0.302 |
-| `observabilidad-observability` | ✅ | opentelemetry-collector 2 · prometheus 3 · grafana 1 | grafana 0.546 · opentelemetry-collector 0.448 · prometheus 0.422 |
-| `observabilidad-observability-v2` | ✅ | jaeger 4 · opentelemetry-collector 2 · prometheus 3 | grafana 0.468 · opentelemetry-collector 0.442 · prometheus 0.425 |
-| `una-busqueda-search` | ✅ | OpenSearch 1 | OpenSearch 0.350 · ripgrep 0.338 · ruff 0.319 |
-| `back-api` | ✅ | fastapi 1 · django 7 · flask 3 | fastapi 0.536 · openai-python 0.469 · flask 0.458 |
-| `back-asgi` | ✅ | starlette 1 · fastapi 7 | starlette 0.534 · caddy 0.403 · flask 0.390 |
-| `dev-lint-python` | ✅ | ruff 2 · black 1 | black 0.488 · ruff 0.466 · cpython 0.462 |
-| `dev-lint-javascript` | ✅ | eslint 1 · biome 10 | eslint 0.531 · jest 0.384 · TypeScript 0.372 |
-| `dev-test-navegador` | ✅ | playwright 1 · cypress 2 | playwright 0.565 · cypress 0.448 · vitest 0.405 |
-| `dev-test-unitarias` | ✅ | pytest 1 | pytest 0.559 · cpython 0.384 · vitest 0.383 |
-| `dev-dependencias` | ✅ | uv 1 | uv 0.486 · pnpm 0.420 · prefect 0.385 |
-| `infra-despliegue-continuo` | ✅ | argo-cd 5 · flux2 3 | containerd 0.518 · kubernetes 0.506 · flux2 0.452 |
-| `infra-como-codigo` | ✅ | terraform 1 | terraform 0.546 · ansible 0.360 · istio 0.347 |
-| `auto-servidores` | ✅ | ansible 1 | ansible 0.450 · caddy 0.365 · terraform 0.348 |
-| `obs-trazas` | ✅ | jaeger 1 · opentelemetry-collector 8 | jaeger 0.474 · istio 0.325 · traefik 0.323 |
-| `seguridad-secretos` | ✅ | vault 1 | vault 0.493 · cert-manager 0.359 · alertmanager 0.309 |
-| `datos-lotes` | ✅ | spark 3 · beam 1 | beam 0.435 · flink 0.399 · spark 0.353 |
-| `datos-orquestacion` | ✅ | airflow 1 · prefect 2 · dagster 3 | airflow 0.442 · prefect 0.430 · dagster 0.404 |
-| `busqueda-vectorial` | ✅ | pgvector 1 · OpenSearch 4 | pgvector 0.542 · ripgrep 0.275 · redis 0.260 |
+| `msg-eventos` | ✅ | kafka 3 | flux2 0.367 · flink 0.349 · kafka 0.329 |
+| `proc-tiempo-real` | ✅ | flink 3 · beam 1 | beam 0.321 · kafka 0.319 · flink 0.318 |
+| `db-analitica` | ✅ | ClickHouse 3 · duckdb 21 | analytics 0.329 · seaweedfs 0.302 · ClickHouse 0.297 |
+| `an-tableros` | ❌ | grafana 6 | postal 0.204 · jaeger 0.192 · celery 0.174 |
+| `ai-rag` | ✅ | llama_index 1 · langchain 31 | llama_index 0.276 · listmonk 0.236 · anthropic-sdk-python 0.234 |
+| `obs-stack` | ✅ | opentelemetry-collector 7 · prometheus 5 · grafana 1 | grafana 0.454 · traefik 0.448 · jaeger 0.426 |
+| `none-pagos` | ✅ | killbill 1 · lago 2 | killbill 0.386 · lago 0.327 · Ghost 0.273 |
+| `none-login` | ✅ | keycloak 2 · zitadel 4 · kratos 3 · supertokens-core 1 | supertokens-core 0.397 · keycloak 0.314 · kratos 0.312 |
+| `none-recordatorios` | ✅ | novu 3 · apprise 1 · postal 5 | apprise 0.275 · alertmanager 0.228 · novu 0.209 |
+| `none-videos` | ✅ | seaweedfs 1 · rustfs 7 | seaweedfs 0.193 · valkey 0.170 · vllm 0.168 |
+| `none-cms` | ✅ | Ghost 1 · strapi 11 · payload 8 | Ghost 0.320 · vscode 0.299 · prettier 0.254 |
+| `none-analitica-web` | ✅ | analytics 1 · umami 2 · posthog 9 | analytics 0.329 · umami 0.320 · grafana 0.230 |
+| `clinica-auth` | ✅ | keycloak 2 · zitadel 3 · kratos 1 · supertokens-core 4 | kratos 0.487 · keycloak 0.473 · zitadel 0.453 |
+| `clinica-auth-v2` | ✅ | keycloak 2 · zitadel 4 · kratos 1 · supertokens-core 3 | kratos 0.367 · keycloak 0.353 · supertokens-core 0.353 |
+| `clinica-communication` | ✅ | novu 2 · apprise 1 | apprise 0.357 · novu 0.352 · alertmanager 0.232 |
+| `clinica-communication-v2` | ✅ | novu 1 · apprise 2 | novu 0.284 · apprise 0.259 · postal 0.250 |
+| `clinica-payments` | ✅ | hyperswitch 1 | hyperswitch 0.371 · killbill 0.316 · lago 0.277 |
+| `clinica-payments-v2` | ✅ | hyperswitch 1 | hyperswitch 0.338 · opentelemetry-collector 0.286 · killbill 0.275 |
+| `tienda-search` | ✅ | OpenSearch 4 · meilisearch 2 · typesense 1 | typesense 0.536 · meilisearch 0.415 · ripgrep 0.341 |
+| `tienda-search-v2` | ✅ | OpenSearch 4 · meilisearch 2 · typesense 1 | typesense 0.547 · meilisearch 0.453 · ripgrep 0.370 |
+| `tienda-payments` | ✅ | hyperswitch 1 | hyperswitch 0.340 · killbill 0.272 · lago 0.195 |
+| `tienda-payments-v2` | ✅ | hyperswitch 1 | hyperswitch 0.359 · killbill 0.241 · beam 0.173 |
+| `tienda-analytics` | ❌ | grafana 10 · metabase 5 | umami 0.362 · posthog 0.333 · analytics 0.328 |
+| `tienda-analytics-v2` | ❌ | grafana 11 · metabase 5 | umami 0.352 · analytics 0.332 · posthog 0.297 |
+| `academia-auth` | ✅ | keycloak 2 · zitadel 4 · kratos 3 · supertokens-core 1 | supertokens-core 0.424 · keycloak 0.343 · kratos 0.341 |
+| `academia-storage` | ✅ | seaweedfs 1 · rustfs 2 | seaweedfs 0.297 · rustfs 0.239 · valkey 0.211 |
+| `academia-storage-v2` | ✅ | seaweedfs 1 · rustfs 2 | seaweedfs 0.315 · rustfs 0.284 · valkey 0.203 |
+| `academia-payments` | ✅ | killbill 1 · lago 2 | killbill 0.354 · lago 0.314 · Ghost 0.271 |
+| `academia-payments-v2` | ✅ | killbill 1 · lago 2 | killbill 0.371 · lago 0.340 · Ghost 0.299 |
+| `academia-ai` | ✅ | langchain 2 · llama_index 6 | qdrant 0.309 · langchain 0.306 · datasets 0.299 |
+| `academia-ai-v2` | ✅ | langchain 3 · llama_index 6 | transformers 0.358 · ollama 0.348 · langchain 0.345 |
+| `logistica-messaging` | ✅ | kafka 2 · flink 1 · beam 4 | flink 0.479 · kafka 0.379 · airflow 0.358 |
+| `logistica-messaging-v2` | ✅ | kafka 3 · flink 1 · beam 2 | flink 0.449 · beam 0.389 · kafka 0.382 |
+| `logistica-database` | ❌ | ClickHouse 27 · supabase 7 | etcd 0.294 · seaweedfs 0.290 · valkey 0.279 |
+| `logistica-database-v2` | ❌ | ClickHouse 34 · supabase 7 | etcd 0.296 · seaweedfs 0.277 · valkey 0.275 |
+| `logistica-analytics` | ✅ | grafana 2 · metabase 1 | metabase 0.362 · grafana 0.347 · dbt 0.291 |
+| `logistica-analytics-v2` | ✅ | grafana 1 · metabase 2 | grafana 0.367 · metabase 0.283 · dbt 0.261 |
+| `soporte-ai` | ✅ | ollama 1 · vllm 2 | ollama 0.526 · vllm 0.488 · langchain 0.424 |
+| `soporte-ai-v2` | ✅ | ollama 1 · vllm 3 | ollama 0.423 · datasets 0.361 · vllm 0.342 |
+| `soporte-search` | ✅ | OpenSearch 4 · meilisearch 1 · typesense 3 | meilisearch 0.390 · ripgrep 0.364 · typesense 0.354 |
+| `soporte-search-v2` | ✅ | OpenSearch 4 · meilisearch 2 · typesense 1 | typesense 0.361 · meilisearch 0.358 · qdrant 0.327 |
+| `soporte-observability` | ✅ | grafana 3 · opentelemetry-collector 4 · prometheus 1 | prometheus 0.400 · jaeger 0.351 · grafana 0.349 |
+| `soporte-observability-v2` | ✅ | grafana 3 · opentelemetry-collector 5 · prometheus 1 | prometheus 0.384 · jaeger 0.371 · grafana 0.357 |
+| `periodico-cms` | ✅ | Ghost 3 · strapi 5 · payload 7 | vscode 0.312 · neovim 0.269 · Ghost 0.257 |
+| `periodico-cms-v2` | ✅ | Ghost 1 · strapi 4 · payload 2 | Ghost 0.336 · payload 0.278 · astro 0.264 |
+| `periodico-frontend` | ✅ | nuxt 9 · next.js 6 · astro 2 | vite 0.409 · astro 0.382 · django 0.359 |
+| `periodico-frontend-v2` | ❌ | nuxt 13 · next.js 10 · astro 12 | tailwindcss 0.484 · core 0.471 · react 0.459 |
+| `periodico-communication` | ✅ | listmonk 2 · postal 1 | postal 0.286 · listmonk 0.244 · novu 0.207 |
+| `periodico-communication-v2` | ✅ | listmonk 2 · postal 1 | postal 0.296 · listmonk 0.205 · novu 0.158 |
+| `periodico-analytics` | ❌ | analytics 7 · umami 4 · posthog 11 | prometheus 0.131 · grafana 0.121 · react-testing-library 0.115 |
+| `periodico-analytics-v2` | ✅ | analytics 1 · umami 2 · posthog 6 | analytics 0.354 · umami 0.340 · lago 0.315 |
+| `saas-largo-auth` | ✅ | keycloak 1 · zitadel 3 | keycloak 0.516 · supertokens-core 0.446 · zitadel 0.412 |
+| `saas-largo-auth-v2` | ✅ | keycloak 2 · zitadel 3 | supertokens-core 0.373 · keycloak 0.357 · zitadel 0.355 |
+| `rag-largo-ai` | ✅ | ollama 1 · vllm 4 | ollama 0.413 · transformers 0.357 · langchain 0.345 |
+| `rag-largo-ai-v2` | ✅ | ollama 1 · vllm 3 | ollama 0.370 · transformers 0.357 · vllm 0.337 |
+| `rag-largo-search` | ✅ | OpenSearch 7 · pgvector 3 · meilisearch 1 · qdrant 2 · typesense 4 | meilisearch 0.546 · qdrant 0.485 · pgvector 0.415 |
+| `rag-largo-search-v2` | ✅ | OpenSearch 7 · pgvector 3 · meilisearch 1 · qdrant 2 · typesense 4 | meilisearch 0.558 · qdrant 0.509 · pgvector 0.461 |
+| `rag-largo-auth` | ✅ | keycloak 2 · zitadel 3 | vault 0.341 · keycloak 0.326 · zitadel 0.312 |
+| `rag-largo-auth-v2` | ❌ | keycloak 4 · zitadel 5 | cert-manager 0.335 · vault 0.264 · alertmanager 0.261 |
+| `api-largo-database` | ✅ | postgres 1 · server 4 · supabase 8 | postgres 0.410 · sqlalchemy 0.407 · sqlmodel 0.386 |
+| `api-largo-cache` | ✅ | redis 1 · valkey 2 | redis 0.435 · valkey 0.411 · etcd 0.352 |
+| `api-largo-cache-v2` | ✅ | redis 1 · valkey 2 | redis 0.456 · valkey 0.445 · etcd 0.405 |
+| `api-largo-infrastructure` | ❌ | kubernetes 11 · nginx 17 · traefik 20 | valkey 0.333 · hyperswitch 0.330 · kafka 0.319 |
+| `api-largo-infrastructure-v2` | ✅ | kubernetes 1 | kubernetes 0.385 · containerd 0.342 · compose 0.342 |
+| `saas-corto-auth` | ✅ | keycloak 1 · zitadel 5 | keycloak 0.375 · supertokens-core 0.368 · kratos 0.336 |
+| `saas-corto-auth-v2` | ✅ | keycloak 1 · zitadel 4 | keycloak 0.434 · kratos 0.419 · supertokens-core 0.413 |
+| `rag-corto-ai` | ✅ | langchain 7 · llama_index 1 | llama_index 0.283 · vllm 0.271 · transformers 0.254 |
+| `rag-corto-ai-v2` | ❌ | langchain 13 · llama_index 4 | pgvector 0.226 · vllm 0.225 · jaeger 0.222 |
+| `rag-corto-auth` | ✅ | keycloak 1 · zitadel 2 | keycloak 0.504 · zitadel 0.492 · kratos 0.468 |
+| `rag-corto-auth-v2` | ✅ | keycloak 1 · zitadel 4 | keycloak 0.385 · vault 0.367 · supertokens-core 0.345 |
+| `api-corto-cache` | ✅ | redis 2 · valkey 1 | valkey 0.292 · redis 0.282 · etcd 0.231 |
+| `api-corto-cache-v2` | ✅ | redis 1 · valkey 2 | redis 0.388 · valkey 0.372 · etcd 0.255 |
+| `api-corto-infrastructure` | ✅ | kubernetes 1 | kubernetes 0.320 · containerd 0.289 · runc 0.274 |
+| `api-corto-infrastructure-v2` | ✅ | kubernetes 15 · nginx 27 · traefik 2 | terraform 0.345 · traefik 0.236 · ansible 0.226 |
+| `eventos-messaging` | ✅ | kafka 3 · celery 11 | flink 0.325 · beam 0.301 · kafka 0.289 |
+| `eventos-messaging-v2` | ✅ | kafka 7 · celery 2 | beam 0.341 · celery 0.322 · starlette 0.300 |
+| `observabilidad-observability` | ✅ | opentelemetry-collector 2 · prometheus 3 · grafana 1 | grafana 0.547 · opentelemetry-collector 0.434 · prometheus 0.421 |
+| `observabilidad-observability-v2` | ✅ | jaeger 4 · opentelemetry-collector 2 · prometheus 3 | grafana 0.468 · opentelemetry-collector 0.434 · prometheus 0.424 |
+| `una-busqueda-search` | ✅ | OpenSearch 3 · meilisearch 2 · typesense 1 | typesense 0.537 · meilisearch 0.397 · OpenSearch 0.350 |
+| `una-pagos-payments` | ✅ | killbill 1 · lago 2 | killbill 0.361 · lago 0.316 · Ghost 0.286 |
+| `back-api` | ✅ | fastapi 1 · django 7 · flask 2 | fastapi 0.521 · flask 0.507 · openai-python 0.472 |
+| `back-asgi` | ✅ | starlette 1 · fastapi 7 | starlette 0.529 · flask 0.413 · caddy 0.398 |
+| `dev-lint-python` | ✅ | ruff 1 · black 2 | ruff 0.481 · black 0.471 · cpython 0.443 |
+| `dev-lint-javascript` | ✅ | eslint 1 · biome 9 | eslint 0.527 · jest 0.373 · TypeScript 0.373 |
+| `dev-test-navegador` | ✅ | playwright 1 · cypress 2 | playwright 0.562 · cypress 0.463 · vitest 0.405 |
+| `dev-test-unitarias` | ✅ | pytest 1 | pytest 0.562 · cpython 0.454 · black 0.372 |
+| `dev-dependencias` | ✅ | uv 1 | uv 0.487 · pnpm 0.420 · sqlalchemy 0.372 |
+| `infra-despliegue-continuo` | ✅ | argo-cd 5 · flux2 3 | containerd 0.500 · kubernetes 0.483 · flux2 0.466 |
+| `infra-como-codigo` | ✅ | terraform 1 | terraform 0.552 · lago 0.377 · traefik 0.372 |
+| `auto-servidores` | ✅ | ansible 1 | ansible 0.456 · caddy 0.362 · cert-manager 0.351 |
+| `obs-trazas` | ✅ | jaeger 1 · opentelemetry-collector 6 | jaeger 0.479 · istio 0.343 · traefik 0.321 |
+| `seguridad-secretos` | ✅ | vault 1 | vault 0.513 · keycloak 0.376 · zitadel 0.372 |
+| `datos-lotes` | ✅ | spark 3 · beam 1 | beam 0.424 · flink 0.422 · spark 0.365 |
+| `datos-orquestacion` | ✅ | airflow 1 · prefect 3 · dagster 4 | airflow 0.452 · flink 0.410 · prefect 0.402 |
+| `busqueda-vectorial` | ✅ | pgvector 1 · OpenSearch 9 · meilisearch 3 · qdrant 2 · typesense 4 | pgvector 0.553 · qdrant 0.479 · meilisearch 0.378 |
 
 ## Pares (deben dar resultados distintos)
 
 | Par | Consulta | Top-3 |
 |---|---|---|
-| access | `clinica-auth` | alertmanager 0.277 · vault 0.258 · react 0.250 |
-| access | `seguridad-secretos` | vault 0.493 · cert-manager 0.359 · alertmanager 0.309 |
-| automation | `tienda-automation` | duckdb 0.258 · ClickHouse 0.242 · airflow 0.230 |
-| automation | `auto-servidores` | ansible 0.450 · caddy 0.365 · terraform 0.348 |
-| lint | `dev-lint-python` | black 0.488 · ruff 0.466 · cpython 0.462 |
-| lint | `dev-lint-javascript` | eslint 0.531 · jest 0.384 · TypeScript 0.372 |
-| tests | `dev-test-navegador` | playwright 0.565 · cypress 0.448 · vitest 0.405 |
-| tests | `dev-test-unitarias` | pytest 0.559 · cpython 0.384 · vitest 0.383 |
+| access | `clinica-auth` | kratos 0.487 · keycloak 0.473 · zitadel 0.453 |
+| access | `seguridad-secretos` | vault 0.513 · keycloak 0.376 · zitadel 0.372 |
+| automation | `tienda-automation` | listmonk 0.282 · ClickHouse 0.250 · lago 0.246 |
+| automation | `auto-servidores` | ansible 0.456 · caddy 0.362 · cert-manager 0.351 |
+| lint | `dev-lint-python` | ruff 0.481 · black 0.471 · cpython 0.443 |
+| lint | `dev-lint-javascript` | eslint 0.527 · jest 0.373 · TypeScript 0.373 |
+| tests | `dev-test-navegador` | playwright 0.562 · cypress 0.463 · vitest 0.405 |
+| tests | `dev-test-unitarias` | pytest 0.562 · cpython 0.454 · black 0.372 |
 
 ## Consultas sin respuesta (el puntaje del 1.º sirve para el umbral)
 
 | Consulta | Top-3 (puntaje) |
 |---|---|
-| `none-pagos` | cli 0.179 · opentelemetry-collector 0.178 · cli 0.157 |
-| `none-login` | react 0.208 · storybook 0.195 · compose 0.181 |
-| `none-recordatorios` | alertmanager 0.214 · celery 0.133 · cert-manager 0.131 |
-| `none-videos` | etcd 0.162 · redis 0.160 · vllm 0.160 |
-| `none-cms` | vscode 0.294 · prettier 0.272 · neovim 0.233 |
-| `none-analitica-web` | grafana 0.230 · prometheus 0.205 · playwright 0.192 |
-| `clinica-auth` | alertmanager 0.277 · vault 0.258 · react 0.250 |
-| `clinica-auth-v2` | alertmanager 0.278 · vault 0.276 · kubernetes 0.251 |
-| `clinica-communication` | alertmanager 0.218 · celery 0.180 · jaeger 0.162 |
-| `clinica-communication-v2` | alertmanager 0.212 · celery 0.200 · envoy 0.176 |
-| `clinica-payments` | beam 0.255 · opentelemetry-collector 0.252 · prefect 0.203 |
-| `clinica-payments-v2` | opentelemetry-collector 0.282 · flink 0.273 · beam 0.253 |
-| `tienda-payments` | flink 0.159 · beam 0.153 · caddy 0.148 |
-| `tienda-payments-v2` | beam 0.168 · playwright 0.155 · flink 0.154 |
-| `tienda-automation` | duckdb 0.258 · ClickHouse 0.242 · airflow 0.230 |
-| `academia-auth` | react 0.217 · storybook 0.197 · core 0.197 |
-| `academia-storage` | etcd 0.204 · redis 0.194 · pgvector 0.186 |
-| `academia-storage-v2` | etcd 0.180 · redis 0.177 · vault 0.170 |
-| `academia-payments` | ripgrep 0.174 · prefect 0.165 · alertmanager 0.165 |
-| `academia-payments-v2` | opentelemetry-collector 0.170 · prometheus 0.162 · cli 0.160 |
-| `periodico-cms` | vscode 0.327 · prettier 0.243 · neovim 0.241 |
-| `periodico-cms-v2` | astro 0.261 · pnpm 0.255 · alertmanager 0.253 |
-| `periodico-communication` | alertmanager 0.181 · celery 0.157 · envoy 0.155 |
-| `periodico-communication-v2` | celery 0.171 · envoy 0.149 · nginx 0.131 |
-| `periodico-analytics` | prometheus 0.137 · grafana 0.122 · opentelemetry-collector 0.111 |
-| `periodico-analytics-v2` | astro 0.305 · ClickHouse 0.275 · duckdb 0.274 |
-| `saas-largo-auth` | react 0.293 · runc 0.272 · cert-manager 0.259 |
-| `saas-largo-auth-v2` | vault 0.246 · etcd 0.226 · flux2 0.210 |
-| `rag-largo-auth` | vault 0.320 · cert-manager 0.256 · llama_index 0.239 |
-| `rag-largo-auth-v2` | cert-manager 0.323 · alertmanager 0.261 · vault 0.236 |
-| `api-largo-database` | sqlalchemy 0.438 · sqlmodel 0.386 · ClickHouse 0.374 |
-| `saas-corto-auth` | vault 0.306 · ansible 0.246 · playwright 0.222 |
-| `saas-corto-auth-v2` | vault 0.324 · cert-manager 0.317 · ansible 0.294 |
-| `rag-corto-auth` | vault 0.348 · istio 0.261 · alertmanager 0.253 |
-| `rag-corto-auth-v2` | vault 0.344 · alertmanager 0.310 · cert-manager 0.308 |
-| `una-pagos-payments` | ripgrep 0.179 · prefect 0.172 · alertmanager 0.169 |
-| `none-contabilidad` | pnpm 0.163 · alertmanager 0.160 · cli 0.152 |
-| `none-inventario` | flux2 0.213 · vault 0.206 · git 0.200 |
-| `none-videollamadas` | playwright 0.294 · core 0.236 · cypress 0.233 |
-| `none-factura-electronica` | cert-manager 0.147 · duckdb 0.137 · jaeger 0.134 |
+| `tienda-automation` | listmonk 0.282 · ClickHouse 0.250 · lago 0.246 |
+| `none-contabilidad` | killbill 0.193 · listmonk 0.190 · alertmanager 0.164 |
+| `none-inventario` | flux2 0.210 · vault 0.209 · git 0.205 |
+| `none-videollamadas` | playwright 0.287 · cypress 0.271 · core 0.236 |
+| `none-factura-electronica` | killbill 0.256 · lago 0.213 · Ghost 0.157 |
 
 ## Umbral de `no_evidence`
 
@@ -143,12 +143,14 @@ Si el 1.er resultado de una necesidad puntúa menos que el umbral, se responde c
 
 | | Valor |
 |---|---|
-| 1.er resultado, con respuesta resueltas (52) | 0.234 – 0.565 |
-| 1.er resultado, con respuesta no resueltas (8) | 0.187 – 0.493 |
-| 1.er resultado, sin respuesta (40) | 0.137 – 0.438 |
-| Umbral actual del modelo | 0.23 |
-| Umbral que sugiere la regla | **0.23** |
-| Umbral actual: resueltas bloqueadas (error grave) | 0/52: — |
-| Umbral actual: sin respuesta que pasan | 20/40: `none-cms`, `none-analitica-web`, `clinica-auth`, `clinica-auth-v2`, `clinica-payments`, `clinica-payments-v2`, `tienda-automation`, `periodico-cms`, `periodico-cms-v2`, `periodico-analytics-v2`, `saas-largo-auth`, `saas-largo-auth-v2`, `rag-largo-auth`, `rag-largo-auth-v2`, `api-largo-database`, `saas-corto-auth`, `saas-corto-auth-v2`, `rag-corto-auth`, `rag-corto-auth-v2`, `none-videollamadas` |
+| 1.er resultado, con respuesta resueltas (85) | 0.193 – 0.562 |
+| 1.er resultado, con respuesta no resueltas (10) | 0.131 – 0.484 |
+| 1.er resultado, sin respuesta (5) | 0.193 – 0.287 |
+| Umbral actual del modelo | 0.18 |
+| Umbral que sugiere la regla | **0.19** |
+| Umbral actual: resueltas bloqueadas (error grave) | 0/85: — |
+| Umbral actual: sin respuesta que pasan | 5/5: `tienda-automation`, `none-contabilidad`, `none-inventario`, `none-videollamadas`, `none-factura-electronica` |
+| Umbral sugerido: resueltas bloqueadas (error grave) | 0/85: — |
+| Umbral sugerido: sin respuesta que pasan | 5/5: `tienda-automation`, `none-contabilidad`, `none-inventario`, `none-videollamadas`, `none-factura-electronica` |
 
-Fallos de búsqueda (no cuentan para el umbral): `an-tableros`, `tienda-analytics`, `tienda-analytics-v2`, `logistica-database`, `logistica-database-v2`, `periodico-frontend-v2`, `api-largo-infrastructure`, `api-corto-infrastructure-v2`
+Fallos de búsqueda (no cuentan para el umbral): `an-tableros`, `tienda-analytics`, `tienda-analytics-v2`, `logistica-database`, `logistica-database-v2`, `periodico-frontend-v2`, `periodico-analytics`, `rag-largo-auth-v2`, `api-largo-infrastructure`, `rag-corto-ai-v2`

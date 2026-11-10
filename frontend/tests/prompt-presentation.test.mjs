@@ -8,11 +8,11 @@ test('first request reserves layout, then reveals its result',()=>{
  assert.equal(promptPresentation(pending,{type:'submit'}),pending);
  assert.deepEqual(promptPresentation(pending,{type:'success'}),{pending:false,expanded:true,hasResult:true});
 });
-test('updates preserve existing architecture, including cancellation and failure',()=>{
+test('new requests clear the previous result, including after cancellation and failure',()=>{
  const ready=promptPresentation(promptPresentation(initialPresentation,{type:'submit'}),{type:'success'});
  const updating=promptPresentation(ready,{type:'submit'});
- assert.equal(updating.hasResult,true);assert.equal(updating.expanded,true);
- for(const type of ['cancel','failure'])assert.deepEqual(promptPresentation(updating,{type}),ready);
+ assert.equal(updating.hasResult,false);assert.equal(updating.expanded,true);
+ for(const type of ['cancel','failure'])assert.deepEqual(promptPresentation(updating,{type}),initialPresentation);
  assert.deepEqual(promptPresentation(updating,{type:'success'}),ready);
 });
 test('cancelled initial request cannot display a late result',()=>{

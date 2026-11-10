@@ -122,8 +122,11 @@ def list_repos(
         "`categories: []`, `use_cases: []` e `integration_ideas: []`.\n\n"
         "La ficha cumple `shared.contracts.repo_detail`: como mucho tres ideas, "
         "todas del mismo repositorio, y ninguna si el repositorio está archivado.\n\n"
-        "`is_maintained` se calcula en la API desde `archived` y `pushed_at`; "
-        "`health_score` viaja en `null` porque no hay fórmula acordada."
+        "`is_maintained` se calcula en lectura desde `archived` y `pushed_at` "
+        "(no archivado y push en los últimos 180 días).\n\n"
+        "`health_score` se calcula con el motor v1 sólo con "
+        "`HEALTH_SCORE_ENABLED=true`; apagado viaja en `null` y el frontend "
+        "muestra «Sin evaluar»."
     ),
     responses={
         200: {"description": "Ficha del repositorio."},

@@ -1,44 +1,17 @@
-import {useEffect,useId,useState} from 'react';
+import {useId,useState} from 'react';
+import {FollowingTooltip} from './FollowingTooltip';
 import {ArrowUpRight,ChevronDown,SignalLow,SignalMedium,SignalHigh,Check,Sparkles} from 'lucide-react';
 import {Snippet} from './Snippet';
 
 function ReviewBadge({idea}){
- const [open,setOpen]=useState(false);
- const [dismissed,setDismissed]=useState(false);
- const id=useId();
- useEffect(()=>{
-  const dismiss=()=>{setDismissed(true);setOpen(false);};
-  window.addEventListener('dismiss-review-tooltip',dismiss);
-  return()=>window.removeEventListener('dismiss-review-tooltip',dismiss);
- },[]);
  const reviewed=idea.reviewStatus==='reviewed';
  const supported=reviewed||idea.reviewStatus==='suggested';
  if(!idea.reviewLabel)return null;
  if(!supported)return <span className="integration-review">{idea.reviewLabel}</span>;
  const Icon=reviewed?Check:Sparkles;
- const followPointer=event=>{
-  if(event.pointerType==='touch')return;
-  const wrap=event.currentTarget;
-  const rect=wrap.getBoundingClientRect();
-  const tooltip=wrap.querySelector('[role="tooltip"]');
-  const bounds=wrap.closest('.integration')?.getBoundingClientRect();
-  const right=Math.min(bounds?.right??window.innerWidth,window.innerWidth)-12;
-  const x=Math.max(0,Math.min(event.clientX-rect.left+12,right-rect.left-tooltip.offsetWidth));
-  wrap.style.setProperty('--review-x',`${x}px`);
-  wrap.style.setProperty('--review-y',`${event.clientY-rect.bottom+16}px`);
- };
- const resetPosition=event=>{
-  event.currentTarget.parentElement.style.removeProperty('--review-x');
-  event.currentTarget.parentElement.style.removeProperty('--review-y');
- };
- return <span className="integration-review-wrap" onPointerEnter={event=>{followPointer(event);setDismissed(false);setOpen(true);}} onPointerMove={followPointer} onMouseLeave={()=>setOpen(false)}>
-  <button type="button" className="integration-review" data-review={idea.reviewStatus} aria-describedby={open&&!dismissed?id:undefined}
-   onFocus={event=>{resetPosition(event);setDismissed(false);setOpen(true);}} onBlur={()=>setOpen(false)} onClick={event=>{event.stopPropagation();setDismissed(false);setOpen(true);}}
-   onKeyDown={event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();setDismissed(true);setOpen(false);}}}>
-   <Icon size={13} strokeWidth={1.7} aria-hidden="true"/>{idea.reviewLabel}
-  </button>
-  <span id={id} role="tooltip" aria-hidden={!open||dismissed} data-open={open&&!dismissed} className="integration-review-tooltip">{reviewed?'Esta idea fue revisada por profesionales.':'Esta idea fue generada por IA y aún no ha sido revisada por profesionales.'}</span>
- </span>;
+ return <FollowingTooltip text={reviewed?'Esta idea fue revisada por profesionales.':'Esta idea fue generada por IA y aún no ha sido revisada por profesionales.'}>
+  {trigger=><button type="button" className="integration-review" data-review={idea.reviewStatus} {...trigger}><Icon size={13} strokeWidth={1.7} aria-hidden="true"/>{idea.reviewLabel}</button>}
+ </FollowingTooltip>;
 }
 
 export function IntegrationIdeas({ideas}){

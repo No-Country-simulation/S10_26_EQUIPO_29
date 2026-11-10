@@ -7,7 +7,8 @@ la respuesta debería mencionarlo como limitación.
 
 Las reglas que comparan contra otros archivos (categorías, catálogo) viven en
 ai/tests/test_assistant_cases.py.
-Los casos de validación y los reservados viven aparte, con el mismo esquema.
+Los casos de validación, los reservados, los de negocios, los de abstención, los de
+registros y reportes, los de detección y la prueba final viven aparte, con el mismo esquema.
 """
 
 from pathlib import Path
@@ -24,8 +25,20 @@ VALIDATION_CASES_FILE = EVAL_DIR / "assistant_cases_validation.json"
 # Casos reservados: se escriben antes de cambiar el prompt y se corren solo con la línea
 # base y con la versión final. Sus textos no se leen para ajustar.
 HOLDOUT_CASES_FILE = EVAL_DIR / "assistant_cases_holdout.json"
+# Pedidos de pequeños negocios escritos por otro modelo sin ver el catálogo.
+BUSINESS_CASES_FILE = EVAL_DIR / "assistant_cases_business.json"
+# Necesidades parecidas a algo del catálogo pero no cubiertas, junto a otras que sí lo están.
+ABSTENTION_CASES_FILE = EVAL_DIR / "assistant_cases_abstention.json"
+# Prueba final: pedidos escritos sin ver el catálogo. Se corre una sola vez, con la versión elegida.
+TEST_CASES_FILE = EVAL_DIR / "assistant_cases_test.json"
+# Pedidos de negocios con registros y reportes, escritos por otro modelo sin ver el catálogo.
+RECORDS_CASES_FILE = EVAL_DIR / "assistant_cases_records.json"
+# Pedidos con y sin necesidad de guardar datos, escritos por otro modelo sin ver el catálogo.
+DETECTION_CASES_FILE = EVAL_DIR / "assistant_cases_detection.json"
 CASE_FILES = {"base": ASSISTANT_CASES_FILE, "validation": VALIDATION_CASES_FILE,
-              "holdout": HOLDOUT_CASES_FILE}
+              "holdout": HOLDOUT_CASES_FILE, "business": BUSINESS_CASES_FILE,
+              "abstention": ABSTENTION_CASES_FILE, "records": RECORDS_CASES_FILE,
+              "detection": DETECTION_CASES_FILE, "test": TEST_CASES_FILE}
 
 # Mismos valores que el status de la respuesta del asistente.
 Status = AssistantResponse.model_fields["status"].annotation
@@ -45,7 +58,7 @@ class ExpectedNeed(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     category: str = Field(min_length=1)
-    acceptable: list[str] = Field(max_length=3)
+    acceptable: list[str] = Field(max_length=5)   # hasta 5: los candidatos que ve el modelo por necesidad
     note: str = Field(min_length=1)
 
     @field_validator("acceptable")

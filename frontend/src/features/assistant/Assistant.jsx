@@ -37,9 +37,21 @@ export function Assistant({flow,workspace=false}){
  const {assistantResponse,originalPrompt,slow,resultHeading,finished,pending,expanded,hasResult,input,newArchitecture,error,canRetry}=flow;
  const errorCopy=error?getAssistantError(error):null;
  const headerActive=expanded||Boolean(error);
+ const architectureHeader=hasResult&&!pending&&!error&&assistantResponse?.status==='ok';
  const heading=pending?'Preparando tu stack':errorCopy?errorCopy.title:assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura');
  const description=pending?(slow?'La solicitud está tardando más de lo habitual.':'Estamos generando tu propuesta.'):errorCopy?errorCopy.description:assistantResponse?.summary||'';
  const headerSizes=useRef(new Map());
+ // Validation must not scroll the textarea over the message. Reveal the whole
+ // header only when necessary, without stealing focus from the user's input.
+ useLayoutEffect(()=>{
+  if((!error&&!['needs_clarification','no_evidence'].includes(assistantResponse?.status))||flow.isDetail)return;
+  const frame=requestAnimationFrame(()=>{
+   const heading=host.current?.querySelector('.prompt-heading');
+   if(!heading)return;
+   if(window.scrollY>0)window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  });
+  return()=>cancelAnimationFrame(frame);
+ },[error,assistantResponse,flow.isDetail]);
  useLayoutEffect(()=>{
   const animations=[];
   for(const selector of ['.prompt-heading','.prompt-intro']){
@@ -47,20 +59,22 @@ export function Assistant({flow,workspace=false}){
    const height=element.getBoundingClientRect().height;
    const previous=headerSizes.current.get(selector);
    headerSizes.current.set(selector,height);
-   if(previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+   if(!document.documentElement.hasAttribute('data-architecture-reset')&&previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
     animations.push(element.animate([{height:`${previous}px`},{height:`${height}px`}],{duration:360,easing:'cubic-bezier(.22,1,.36,1)'}));
    }
   }
   return()=>animations.forEach(animation=>animation.cancel());
  },[heading,description]);
- return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
+ return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')+(architectureHeader?' has-architecture-header':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
+ <div className="architecture-header">
  <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={headerActive}><RevealHeading as="h1" text="De tu idea a tu stack" gradientWord="stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!headerActive}><span className={'assistant-heading-content'+(pending?' is-pending':'')}><span className="assistant-light-loader" aria-hidden="true"/><span key={heading} className="assistant-heading-copy">{pending?<>Preparando tu <span className="gradient-word"><span className="reveal-letter" data-glow="stack" style={{'--word-play-state':'running'}}>stack</span></span></>:heading}</span></span></h1></div>
  <div className="prompt-intro" role="status" aria-live="polite" aria-atomic="true"><p className="intro intro-initial" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id="prompt-error" className={'intro intro-result'+(pending?' intro-working':'')} aria-hidden={!headerActive}>{pending&&!slow?<WorkingWords/>:<span key={description} className="assistant-heading-copy">{description}</span>}</p></div>
- <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt}/>
+ </div>
+ <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt} onNewArchitecture={newArchitecture}/>
 
  <PromptComposer {...flow} workspace={workspace} exampleReveal={exampleReveal}/>
 
- </div><PromptSuggestions flow={flow} onSelect={text=>setExampleReveal({text,id:performance.now()})}/></section>
+ </div><PromptSuggestions flow={flow} workspace={workspace} onSelect={text=>setExampleReveal({text,id:performance.now()})}/></section>
  </div>
 );
 }

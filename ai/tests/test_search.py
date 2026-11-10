@@ -144,6 +144,58 @@ def test_filtro_de_categoria():
     assert [r.score for r in results] == pytest.approx([0.6, 0.0])
 
 
+# --- Umbral y prioridad por categoría ---
+
+def test_umbral_deja_fuera_a_los_que_no_llegan_y_el_igual_pasa():
+    index = make_index((make_repo("a"), A), (make_repo("b"), B), (make_repo("c"), C))
+    assert names(index.search_vector(QUERY, k=5, min_score=0.8)) == ["a", "b"]
+
+
+def test_prioridad_con_suficientes_de_la_categoria_solo_trae_esos():
+    index = make_index(
+        (make_repo("a", categories=["storage"]), A),
+        (make_repo("b", categories=["database"]), B),
+        (make_repo("c", categories=["database"]), C),
+    )
+    results = index.search_vector(QUERY, k=2, prefer_category="database")
+    assert names(results) == ["b", "c"]
+    assert [r.score for r in results] == pytest.approx([0.8, 0.6])   # el puntaje no cambia
+
+
+def test_prioridad_con_pocos_de_la_categoria_completa_con_los_demas():
+    index = make_index(
+        (make_repo("a", categories=["storage"]), A),
+        (make_repo("b", categories=["cache"]), B),
+        (make_repo("c", categories=["database"]), C),
+    )
+    assert names(index.search_vector(QUERY, k=3, prefer_category="database")) == ["c", "a", "b"]
+
+
+def test_prioridad_sin_repos_de_la_categoria_es_la_busqueda_abierta():
+    index = make_index((make_repo("a", categories=["storage"]), A),
+                       (make_repo("b", categories=["cache"]), B))
+    assert names(index.search_vector(QUERY, k=2, prefer_category="database")) == ["a", "b"]
+
+
+def test_los_de_la_categoria_bajo_el_umbral_no_ocupan_lugar():
+    # c es de la categoría pero no llega al umbral: su lugar es para la búsqueda abierta.
+    index = make_index(
+        (make_repo("a", categories=["storage"]), A),
+        (make_repo("b", categories=["database"]), B),
+        (make_repo("c", categories=["database"]), C),
+    )
+    results = index.search_vector(QUERY, k=2, prefer_category="database", min_score=0.7)
+    assert names(results) == ["b", "a"]
+
+
+def test_prioridad_solo_cuenta_la_categoria_principal():
+    index = make_index(
+        (make_repo("a", categories=["cache", "database"]), A),   # base de datos, secundaria
+        (make_repo("b", categories=["database"]), B),
+    )
+    assert names(index.search_vector(QUERY, k=2, prefer_category="database")) == ["b", "a"]
+
+
 # --- Texto a embeber ---
 
 def test_clean_topics_quita_ruido_y_conserva_el_orden():

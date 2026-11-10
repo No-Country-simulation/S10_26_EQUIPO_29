@@ -48,7 +48,7 @@ def test_detail_without_ai_results_is_200_with_empty_values():
     assert body["repo"]["categories"] == []
     assert body["integration_ideas"] == []
     assert body["repo"]["readme_text"] is None
-    assert body["repo"]["is_maintained"] is None
+    assert isinstance(body["repo"]["is_maintained"], bool)
     assert body["repo"]["health_score"] is None
 
 

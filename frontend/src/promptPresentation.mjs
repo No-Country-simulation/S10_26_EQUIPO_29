@@ -3,7 +3,7 @@ export const initialPresentation=Object.freeze({pending:false,expanded:false,has
 export function promptPresentation(state,action){
  switch(action.type){
   case 'reset':return initialPresentation;
-  case 'submit':return state.pending?state:{...state,pending:true,expanded:true};
+  case 'submit':return state.pending?state:{...state,pending:true,expanded:true,hasResult:false};
   case 'success':return state.pending?{...state,pending:false,hasResult:true}:state;
   case 'cancel':case 'failure':return {...state,pending:false,expanded:state.hasResult};
   default:return state;

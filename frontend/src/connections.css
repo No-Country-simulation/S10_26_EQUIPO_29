@@ -13,3 +13,113 @@
 .hero .stack-content .connection-route-copy p{color:#bdc6d3;font-size:14px;font-weight:300;line-height:1.5;margin:14px auto 0;max-width:44ch;overflow-wrap:anywhere}
 @media(max-width:800px){.connection-group{grid-template-columns:160px minmax(0,1fr);gap:40px}.connection-branch{grid-template-columns:minmax(0,1fr) 160px;gap:16px}.connection-node{padding:12px;font-size:14px;gap:8px}}
 @media(max-width:640px){.connection-map{gap:28px}.connection-group{grid-template-columns:minmax(0,1fr);gap:20px}.connection-source{width:min(230px,80%)}.connection-branches{padding-left:48px;gap:18px}.connection-branch{grid-template-columns:1fr;gap:10px;min-height:0}.connection-destination{grid-row:1}.connection-route-copy{text-align:left;padding-top:0}.hero .stack-content .connection-route-copy p{margin:8px 0 0}.connection-node{min-height:56px}.connection-route-protocol{line-height:18px}.connection-wires>path{stroke-width:1.25}}
+
+/* Give the diagram its own breathing room between navigation and response context. */
+#proposal-panel-connections{padding-block:48px}
+@media(max-width:640px){#proposal-panel-connections{padding-block:32px}}
+
+/* Node centers define the routes; descriptions do not shift their alignment. */
+.connection-source{align-self:start}
+.connection-wires>path{stroke-dasharray:1 5;stroke-linecap:round}
+
+.proposal-toolbar{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.hero .proposal-toolbar [role=tablist]{margin:0}
+
+.connection-endpoint{display:block;position:relative}
+.connection-node{position:relative;width:100%;font-family:inherit;text-align:left;cursor:help}
+.proposal-tool:after,.connection-node:after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;background:radial-gradient(140px circle at var(--glare-x,50%) var(--glare-y,50%),#ebf5ffa6,#dcedff33 45%,transparent 100%);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .3s;z-index:2}
+@media(hover:hover){.proposal-tool:hover:after,.connection-node:hover:after{opacity:1}}
+.proposal-tool:focus-within:after,.connection-node:focus-visible:after{opacity:1}
+.connection-node:focus-visible{outline:2px solid #dcedff;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.proposal-tool:after,.connection-node:after{transition:none}}
+.connection-endpoint.integration-review-wrap{display:block}
+.connection-endpoint:has([data-open=true]){z-index:5}
+
+/* Stagger cards without moving the grid or accumulating a second panel entrance. */
+.hero .proposal-panels #proposal-panel-tools:not([hidden]){animation:none}
+.hero .proposal-tool{animation:proposal-card-reveal .72s cubic-bezier(.22,.8,.25,1) var(--card-reveal-delay,0ms) both}
+.hero .proposal-tool:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(130deg,#eff8ffb3,#d4eaff40 45%,transparent 80%);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;animation:proposal-card-rim 1s cubic-bezier(.22,.8,.25,1) var(--card-reveal-delay,0ms) both;z-index:2}
+@keyframes proposal-card-reveal{from{opacity:0;transform:translateY(7px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes proposal-card-rim{0%{opacity:0}45%{opacity:.5}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero .proposal-tool,.hero .proposal-tool:before{animation:none}}
+
+.proposal-title-row{display:flex;align-items:center;gap:8px;min-width:0}
+.proposal-title-row h3{min-width:0}
+.proposal-license-tip.integration-review-wrap{display:inline-flex;flex-shrink:0;margin:0}
+.proposal-license-icon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;flex-shrink:0;padding:0;border:0;border-radius:50%;background:#35234d;color:#ddbcff;cursor:help}
+.proposal-license-icon:focus-visible{outline:2px solid #ddbcff;outline-offset:3px}
+.proposal-license-tip .integration-review-tooltip{width:180px;max-width:calc(100vw - 80px)}
+
+/* Keep the highlight inside the clipped card, rather than outside its border. */
+.hero .proposal-tool:after{inset:0;padding:1px;background:radial-gradient(180px circle at var(--glare-x,50%) var(--glare-y,50%),#f1f8ffe6,#dcedff66 45%,transparent 100%)}
+
+/* Nested entrances follow each card without changing its layout or replaying on expansion. */
+.hero .proposal-tool :is(.proposal-brand,.proposal-title-row,.proposal-tool-heading>div>p,.proposal-rationale,.proposal-tool-actions>*){
+ animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) both;
+ animation-delay:calc(var(--card-reveal-delay,0ms) + var(--content-step,100ms));
+}
+.hero .proposal-tool .proposal-brand{--content-step:80ms}
+.hero .proposal-tool .proposal-title-row{--content-step:120ms}
+.hero .proposal-tool .proposal-tool-heading>div>p{--content-step:160ms}
+.hero .proposal-tool .proposal-rationale{--content-step:200ms}
+.hero .proposal-tool .proposal-tool-actions>:first-child{--content-step:240ms}
+.hero .proposal-tool .proposal-tool-actions>:last-child{--content-step:280ms}
+.hero .has-architecture-header .prompt-heading-result .assistant-heading-copy{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 90ms both}
+.hero .has-architecture-header .intro-result .assistant-heading-copy{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 150ms both}
+.hero .stack-layers-panel .proposal-toolbar{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 140ms both}
+.hero .stack-layers-panel :is(.proposal-context-open,.proposal-original){animation:proposal-content-reveal 500ms cubic-bezier(.22,1,.36,1) 240ms both}
+.hero .stack-layers-panel :is(.context-panel>h3,.proposal-original>h3){animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 300ms both}
+.hero .stack-layers-panel .context-panel li{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) calc(340ms + var(--item-reveal-delay,0ms)) both}
+.hero .stack-layers-panel .proposal-original>p{animation:proposal-content-reveal 460ms cubic-bezier(.22,1,.36,1) 360ms both}
+@keyframes proposal-content-reveal{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+ .hero .proposal-tool :is(.proposal-brand,.proposal-title-row,.proposal-tool-heading>div>p,.proposal-rationale,.proposal-tool-actions>*),
+ .hero .has-architecture-header :is(.prompt-heading-result,.intro-result) .assistant-heading-copy,
+ .hero .stack-layers-panel :is(.proposal-toolbar,.proposal-context-open,.proposal-original,.context-panel>h3,.proposal-original>h3,.context-panel li,.proposal-original>p){animation:none}
+}
+
+/* Parent surfaces lead their content; grid opacity avoids stacking vertical travel. */
+.hero .has-architecture-header .architecture-header{animation:proposal-content-reveal 520ms cubic-bezier(.22,1,.36,1) both}
+.hero .stack-layers-panel .proposal-tools{animation:proposal-group-reveal 380ms ease-out 120ms both}
+.hero .stack-layers-panel .context-panel{animation:proposal-group-reveal 420ms ease-out 270ms both}
+@keyframes proposal-group-reveal{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+ .hero .has-architecture-header .architecture-header,
+ .hero .stack-layers-panel :is(.proposal-tools,.context-panel){animation:none}
+}
+
+/* ELK owns geometry; existing endpoints and following tooltips own presentation. */
+.elk-scroll{max-width:100%;overflow:auto;overscroll-behavior-x:contain;padding:4px;scrollbar-width:none}
+@media(min-width:641px){.elk-scroll{overflow:visible;overscroll-behavior:auto}}
+.elk-map{position:relative;margin-inline:auto;min-height:160px}
+.elk-node{width:200px;position:absolute;visibility:hidden}
+.elk-map.is-ready .elk-node{visibility:visible;animation:proposal-content-reveal 400ms cubic-bezier(.22,1,.36,1) both}
+.elk-wires{position:absolute;inset:0;pointer-events:none;color:#9aafca;overflow:visible}
+.elk-wire-base{fill:none;stroke:currentColor;stroke-width:1.5;stroke-dasharray:1 5;stroke-linecap:round;stroke-linejoin:round}
+.elk-label{position:absolute;display:flex;justify-content:center;align-items:center;text-align:center}
+.elk-label .connection-route-protocol{font-family:inherit;cursor:help;line-height:22px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.elk-label .connection-route-protocol:focus-visible{outline:2px solid #dcedff;outline-offset:3px}
+.elk-map.has-fallback .elk-node{position:relative;visibility:visible;margin-bottom:12px}
+@media(prefers-reduced-motion:reduce){.elk-map.is-ready .elk-node{animation:none}}
+
+/* Connection hover feedback preserves each tool's own palette. */
+.elk-label .connection-route-protocol{transition:background-color 160ms ease,color 160ms ease,border-color 160ms ease}
+.connection-node{transition:filter 200ms cubic-bezier(.22,1,.36,1)}
+@media(hover:hover){
+ .elk-label .connection-route-protocol:hover{background:#fff;color:#111318;border-color:#fff}
+ .connection-node:hover{filter:brightness(1.2)}
+}
+.elk-label .connection-route-protocol:focus-visible{background:#fff;color:#111318;border-color:#fff}
+.connection-node:focus-visible{filter:brightness(1.2)}
+@media(prefers-reduced-motion:reduce){.elk-label .connection-route-protocol,.connection-node{transition:none}}
+
+.elk-scroll::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* One continuous light per edge, including the path beneath its protocol badge. */
+.elk-wire-sweep{fill:none;stroke:white;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18 200;animation:connection-light-travel var(--wire-duration,4s) linear var(--wire-delay,0s) infinite alternate;pointer-events:none}
+.elk-wire-lit-dots{fill:none;stroke:#edf8ff;stroke-width:1.5;stroke-dasharray:1 5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 2px #b8e1ff)}
+@keyframes connection-light-travel{0%{stroke-dashoffset:18;opacity:0}8%{opacity:.85}92%{opacity:.85}100%{stroke-dashoffset:-100;opacity:0}}
+@media(prefers-reduced-motion:reduce){.elk-wire-sweep,.elk-wire-lit-dots{display:none;animation:none}}
+
+.hero .stack-content .proposal-connections-empty{min-height:300px;justify-content:center;padding:24px 20px 56px}
+.hero .stack-content .proposal-connections-empty>p{font-size:clamp(22px,2.2vw,30px);font-weight:400;line-height:1.35;text-align:center;margin:0;color:#eee}

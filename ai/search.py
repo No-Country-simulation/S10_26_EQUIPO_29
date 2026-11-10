@@ -171,15 +171,24 @@ class SearchIndex:
                *,
                licenses: Collection[str] | None = None,
                min_health: float | None = None,
-               categories: Collection[str] | None = None,) -> list[SearchResult]:
-        """Los k repos más parecidos a la consulta que pasan los filtros"""
+               categories: Collection[str] | None = None,
+               min_score: float | None = None,
+               prefer_category: str | None = None,) -> list[SearchResult]:
+        """Los k repos más parecidos a la consulta que pasan los filtros.
+
+        min_score: puntaje mínimo; los que no llegan no ocupan lugar.
+        prefer_category: primero los repos con esa categoría principal; si no llenan los
+        k lugares, se completa con los demás. Cada grupo, en orden de similitud.
+        """
         from ai import embeddings
 
         return self.search_vector(embeddings.embed_query(query),
                                   k,
                                   licenses=licenses,
                                   min_health=min_health,
-                                  categories=categories,)
+                                  categories=categories,
+                                  min_score=min_score,
+                                  prefer_category=prefer_category,)
 
     def search_vector(self,
                       query_vector: np.ndarray,
@@ -187,7 +196,9 @@ class SearchIndex:
                       *,
                       licenses: Collection[str] | None = None,
                       min_health: float | None = None,
-                      categories: Collection[str] | None = None,) -> list[SearchResult]:
+                      categories: Collection[str] | None = None,
+                      min_score: float | None = None,
+                      prefer_category: str | None = None,) -> list[SearchResult]:
         """Como `search`, pero con la consulta ya convertida en vector."""
         if k < 1:
             raise ValueError("k debe ser al menos 1")
@@ -200,8 +211,14 @@ class SearchIndex:
             return []
 
         scores = self.vectors[keep] @ query_vector
-        order = np.argsort(-scores, kind="stable")[:k]
-        return [_to_result(self.repos[keep[j]], float(scores[j])) for j in order]
+        order = np.argsort(-scores, kind="stable")
+        ranked = [(keep[j], float(scores[j])) for j in order]
+        if min_score is not None:
+            ranked = [(i, score) for i, score in ranked if score >= min_score]
+        if prefer_category is not None:
+            # sort es estable: dentro de cada grupo se conserva el orden por similitud.
+            ranked.sort(key=lambda item: _primary_category(self.repos[item[0]]) != prefer_category)
+        return [_to_result(self.repos[i], score) for i, score in ranked[:k]]
 
 
 def _passes(repo: Repo,
@@ -219,6 +236,11 @@ def _passes(repo: Repo,
     if categories is not None and not any(a.category_id in categories for a in repo.categories):
         return False
     return True
+
+
+def _primary_category(repo: Repo) -> str | None:
+    """La categoría principal del repo: la primera asignada (None si no tiene)."""
+    return repo.categories[0].category_id if repo.categories else None
 
 
 def _to_result(repo: Repo, score: float) -> SearchResult:

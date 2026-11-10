@@ -1,0 +1,790 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
+  "cases": [
+    {
+      "id": "cafeteria-de-barrio",
+      "query": "Tengo una cafetería pequeña y recibo muchos pedidos para llevar, pero no siempre sé qué productos se venden mejor. Quiero conocer las ventas por producto y por día para decidir qué preparar. También necesito conservar el historial de mis clientes frecuentes y sus compras, y recibir pagos sin depender únicamente del efectivo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"conocer las ventas por producto y por día para decidir qué preparar\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"conservar el historial de mis clientes frecuentes y sus compras\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir pagos sin depender únicamente del efectivo\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "mantenimiento-aires-acondicionados",
+      "query": "Dirijo un negocio de mantenimiento de aires acondicionados para hogares y oficinas. Quiero conservar los datos de cada cliente, los equipos que tiene y las visitas de mantenimiento que hemos realizado. Necesito que el sistema recuerde cuándo corresponde una nueva visita y avise tanto al cliente como al técnico encargado.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"conservar los datos de cada cliente, los equipos que tiene y las visitas de mantenimiento que hemos realizado\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"recuerde cuándo corresponde una nueva visita\": recordar o programar visitas = agenda del negocio (sin herramienta, como las visitas periódicas de otros conjuntos). Casi: airflow, prefect y dagster programan tareas de datos; ansible configura servidores."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"avise tanto al cliente como al técnico encargado\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "centro-formacion-oficios",
+      "query": "Soy responsable de un centro donde ofrecemos cursos presenciales de cocina, electricidad y mecánica básica. Quiero tener organizada la información de los estudiantes, sus inscripciones y los cursos que están realizando. Necesito que cada estudiante pueda ingresar a su cuenta y que los instructores solo puedan consultar la información que necesitan. También quiero recibir los pagos de las matrículas por internet.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"tener organizada la información de los estudiantes, sus inscripciones y los cursos que están realizando\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada estudiante pueda ingresar a su cuenta y que los instructores solo puedan consultar la información que necesitan\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir los pagos de las matrículas por internet\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "tienda-productos-regionales",
+      "query": "Tengo una tienda donde vendo productos típicos de distintas regiones de Colombia. Quiero saber qué productos tienen más salida y de qué lugares vienen la mayoría de mis compradores. También necesito que la información de los productos, sus descripciones y sus fotografías se pueda actualizar fácilmente sin tener que pedirle ayuda a un programador.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"saber qué productos tienen más salida y de qué lugares vienen la mayoría de mis compradores\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"la información de los productos, sus descripciones y sus fotografías se pueda actualizar fácilmente sin tener que pedirle ayuda a un programador\": contenido del sitio que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms. Ghost no: plataforma de publicación."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "fumigacion-agricola",
+      "query": "Tengo una empresa que presta servicios de control de plagas a fincas y cultivos. Quiero tener el historial de los servicios realizados en cada finca y los datos de contacto de sus responsables. Además, me gustaría comparar los costos y los resultados de los trabajos por zona para saber dónde estamos ofreciendo el servicio con mayor frecuencia. Necesito que los clientes reciban un aviso antes de la fecha de su próxima visita.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"tener el historial de los servicios realizados en cada finca y los datos de contacto de sus responsables\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar los costos y los resultados de los trabajos por zona para saber dónde estamos ofreciendo el servicio con mayor frecuencia\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"los clientes reciban un aviso antes de la fecha de su próxima visita\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "escuela-cocina-presencial",
+      "query": "Administro una escuela presencial de gastronomía con cursos cortos y talleres de fin de semana. Quiero organizar las inscripciones, la asistencia y el historial de cada estudiante. También me interesa conocer cuántas personas terminan los cursos y cuáles tienen mayor demanda para decidir qué talleres ofrecer el próximo semestre. Los estudiantes deberían poder pagar sus matrículas en línea.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"organizar las inscripciones, la asistencia y el historial de cada estudiante\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"conocer cuántas personas terminan los cursos y cuáles tienen mayor demanda para decidir qué talleres ofrecer el próximo semestre\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"pagar sus matrículas en línea\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "reparacion-calzado",
+      "query": "Tengo un pequeño negocio de reparación de zapatos y bolsos. Quiero que mis clientes reciban un mensaje cuando su artículo esté listo para recoger y que puedan consultarme cualquier duda por un canal de comunicación. También necesito recibir anticipos y pagos completos sin tener que manejar todo en efectivo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"mis clientes reciban un mensaje cuando su artículo esté listo para recoger y que puedan consultarme cualquier duda por un canal de comunicación\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir anticipos y pagos completos sin tener que manejar todo en efectivo\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "excursiones-pesca-artesanal",
+      "query": "Organizo salidas de pesca artesanal para turistas y grupos pequeños en la costa. Necesito que las personas puedan pagar su reserva por internet y que los guías tengan una cuenta propia para consultar las salidas que tienen asignadas. También quiero enviar a los participantes un mensaje con la información de su excursión antes de cada salida.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"puedan pagar su reserva por internet\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"los guías tengan una cuenta propia para consultar las salidas que tienen asignadas\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar a los participantes un mensaje con la información de su excursión antes de cada salida\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "estudio-tatuajes",
+      "query": "Tengo un estudio de tatuajes y trabajo con varios artistas independientes. Quiero que cada artista pueda ingresar con su propia cuenta y que tenga acceso únicamente a sus compromisos de trabajo. También necesito que los clientes puedan pagar una parte del servicio para confirmar su reserva y que reciban un correo con las indicaciones generales antes de su visita.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada artista pueda ingresar con su propia cuenta y que tenga acceso únicamente a sus compromisos de trabajo\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"los clientes puedan pagar una parte del servicio para confirmar su reserva\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal",
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"reciban un correo con las indicaciones generales antes de su visita\": enviar un correo. postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "escuela-surf",
+      "query": "Soy dueño de una escuela de surf y ofrecemos clases para turistas y residentes. Quiero que los instructores puedan ingresar a su espacio de trabajo con permisos distintos a los de los administradores. También necesito enviar avisos cuando una clase se cambie por condiciones del clima y ofrecer a los estudiantes la posibilidad de pagar sus clases por internet.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"los instructores puedan ingresar a su espacio de trabajo con permisos distintos a los de los administradores\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar avisos cuando una clase se cambie por condiciones del clima\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"ofrecer a los estudiantes la posibilidad de pagar sus clases por internet\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "organizacion-bodas",
+      "query": "Me dedico a organizar bodas y celebraciones familiares. Quiero poder cambiar personalmente los textos, fotografías y ejemplos de eventos que aparecen en nuestra página, sin depender de otra persona cada vez que tengamos algo nuevo que mostrar. También necesito comunicarme con los clientes por correo y ofrecerles una forma de pagar anticipos para separar la fecha.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"cambiar personalmente los textos, fotografías y ejemplos de eventos que aparecen en nuestra página, sin depender de otra persona cada vez que tengamos algo nuevo que mostrar\": contenido del sitio que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms. Ghost no: plataforma de publicación."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal"
+          ],
+          "note": "\"comunicarme con los clientes por correo\": comunicarse por correo en los dos sentidos exige recibir y enviar correo. postal: \"mail delivery platform for incoming & outgoing e-mail\". novu y apprise solo envían."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"ofrecerles una forma de pagar anticipos para separar la fecha\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "club-lectura-presencial",
+      "query": "Coordino un club de lectura que organiza encuentros en varias ciudades. Quiero que los miembros tengan una cuenta para consultar las actividades a las que están invitados y que los coordinadores puedan gestionar sus propios grupos. También necesito publicar novedades, reseñas y fotografías de los encuentros sin tener que pedir ayuda técnica. Para mantener a todos informados, quiero enviar avisos cuando se anuncie una nueva actividad.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"los miembros tengan una cuenta para consultar las actividades a las que están invitados y que los coordinadores puedan gestionar sus propios grupos\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload",
+            "TryGhost/Ghost"
+          ],
+          "note": "\"publicar novedades, reseñas y fotografías de los encuentros sin tener que pedir ayuda técnica\": publicar novedades y reseñas = contenido y publicaciones. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms; Ghost: \"modern publishing\", topics blogging, cms."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar avisos cuando se anuncie una nueva actividad\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "hostal-familiar",
+      "query": "Administro un hostal familiar y recibimos huéspedes de diferentes países. Necesito que los huéspedes puedan realizar pagos en línea y que el personal tenga cuentas con permisos diferentes según sus responsabilidades. Además, quiero actualizar por mi cuenta la información del alojamiento, las fotografías y las recomendaciones para los visitantes. Me gustaría que los huéspedes recibieran una confirmación por correo después de hacer una reserva.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"los huéspedes puedan realizar pagos en línea\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"el personal tenga cuentas con permisos diferentes según sus responsabilidades\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"actualizar por mi cuenta la información del alojamiento, las fotografías y las recomendaciones para los visitantes\": contenido del sitio que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms. Ghost no: plataforma de publicación."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal",
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"los huéspedes recibieran una confirmación por correo después de hacer una reserva\": enviar un correo. postal: \"mail delivery platform\"; novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "limpieza-fachadas",
+      "query": "Tengo una empresa que realiza limpieza de fachadas y espacios exteriores para edificios comerciales. Quiero que las solicitudes de servicio se distribuyan automáticamente entre los supervisores según la zona donde trabajen. También necesito enviar avisos a los clientes cuando tengamos que cambiar la fecha de una visita y recibir pagos por los servicios contratados.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"las solicitudes de servicio se distribuyan automáticamente entre los supervisores según la zona donde trabajen\": asignar o crear tareas del negocio automáticamente = flujo de trabajo del negocio. Casi: ansible (servidores), airflow, prefect y dagster (datos), celery (cola de tareas de código), playwright (navegador)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar avisos a los clientes cuando tengamos que cambiar la fecha de una visita\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir pagos por los servicios contratados\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "cuidado-mascotas-domicilio",
+      "query": "Tengo un negocio de cuidado de mascotas a domicilio y contamos con varios cuidadores. Quiero que cada cuidador tenga una cuenta para consultar únicamente los servicios que tiene asignados. Necesito que los dueños de las mascotas reciban mensajes cuando el cuidador llegue y cuando termine la visita. También quiero que puedan pagar los servicios sin tener que entregar dinero en efectivo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada cuidador tenga una cuenta para consultar únicamente los servicios que tiene asignados\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"los dueños de las mascotas reciban mensajes cuando el cuidador llegue y cuando termine la visita\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"puedan pagar los servicios sin tener que entregar dinero en efectivo\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "agencia-traduccion",
+      "query": "Tengo una pequeña agencia de traducción e interpretación y trabajo con profesionales independientes. Necesito que cada traductor pueda ingresar a su cuenta y consultar únicamente los encargos que tiene asignados. Quiero que los clientes puedan solicitar cambios o hacer preguntas por correo y que reciban una notificación cuando su trabajo esté terminado. También necesito cobrar los servicios por internet.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada traductor pueda ingresar a su cuenta y consultar únicamente los encargos que tiene asignados\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal"
+          ],
+          "note": "\"los clientes puedan solicitar cambios o hacer preguntas por correo y que reciban una notificación cuando su trabajo esté terminado\": comunicarse por correo en los dos sentidos exige recibir y enviar correo. postal: \"mail delivery platform for incoming & outgoing e-mail\". novu y apprise solo envían."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"cobrar los servicios por internet\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "optica-familiar",
+      "query": "Soy dueña de una óptica de barrio y manejamos pedidos de lentes, monturas y reparaciones. Quiero llevar un registro de clientes, fórmulas, compras y el estado de cada pedido para no perder la información. También necesito que los vendedores ingresen con su propia cuenta y que yo pueda limitar quién modifica precios o elimina registros. Cuando un pedido esté listo, quisiera avisarle al cliente sin tener que llamar uno por uno.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero llevar un registro de clientes, fórmulas, compras y el estado de cada pedido para no perder la información.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"También necesito que los vendedores ingresen con su propia cuenta y que yo pueda limitar quién modifica precios o elimina registros.\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"Cuando un pedido esté listo, quisiera avisarle al cliente sin tener que llamar uno por uno.\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "taller-bicicletas",
+      "query": "En mi taller recibimos bicicletas para mantenimiento y reparación, y a veces se nos mezclan los turnos con los repuestos. Necesito conservar el historial de cada bicicleta, los trabajos realizados y las piezas usadas. Quiero que el sistema encuentre rápido una reparación anterior cuando busque por el nombre del cliente o por el número del marco. También quisiera que se creen recordatorios de revisión cuando una bicicleta lleve varios meses sin volver.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Necesito conservar el historial de cada bicicleta, los trabajos realizados y las piezas usadas.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"Quiero que el sistema encuentre rápido una reparación anterior cuando busque por el nombre del cliente o por el número del marco.\": buscar dentro de los datos de la aplicación por atributos o texto. meilisearch: \"search engine API\", topic faceting (licencia: el README indica MIT); typesense: topics faceting, full-text-search, fuzzy-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"También quisiera que se creen recordatorios de revisión cuando una bicicleta lleve varios meses sin volver.\": recordar o programar visitas = agenda del negocio (sin herramienta, como las visitas periódicas de otros conjuntos). Casi: airflow, prefect y dagster programan tareas de datos; ansible configura servidores."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "distribuidora-productos-aseo",
+      "query": "Administro una distribuidora de productos de aseo que vende a tiendas y restaurantes pequeños. Quiero registrar cada venta, cliente, producto y cantidad disponible para saber qué tenemos y cuánto debemos reponer. Me interesa ver cuáles productos se venden más por mes y qué clientes han reducido sus pedidos. Además, necesito que los clientes puedan pagar sus facturas pendientes por internet.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero registrar cada venta, cliente, producto y cantidad disponible para saber qué tenemos y cuánto debemos reponer.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"Me interesa ver cuáles productos se venden más por mes y qué clientes han reducido sus pedidos.\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"Además, necesito que los clientes puedan pagar sus facturas pendientes por internet.\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "centro-refuerzo-escolar",
+      "query": "Dirijo un centro de refuerzo escolar con profesores por horas y estudiantes de varios colegios. Quiero mantener el historial de matrículas, horarios, asistencia y pagos de cada estudiante. Los acudientes y profesores deben entrar con cuentas diferentes, y cada grupo solo debería ver la información que le corresponde. También quiero enviar avisos a las familias cuando cambie un horario o se acerque una evaluación.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero mantener el historial de matrículas, horarios, asistencia y pagos de cada estudiante.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"Los acudientes y profesores deben entrar con cuentas diferentes, y cada grupo solo debería ver la información que le corresponde.\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"También quiero enviar avisos a las familias cuando cambie un horario o se acerque una evaluación.\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "frutas-deshidratadas",
+      "query": "Mi familia produce frutas deshidratadas y mezclas de frutos secos para tiendas saludables. Quiero registrar las compras de materia prima, los lotes de producción, las cantidades empacadas y los pedidos de cada comercio. También necesito calcular cuánto material se consume y cuánto producto terminado queda después de cada jornada. Quisiera enviar a cada comercio una confirmación del pedido y un aviso cuando salga el despacho.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero registrar las compras de materia prima, los lotes de producción, las cantidades empacadas y los pedidos de cada comercio.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"También necesito calcular cuánto material se consume y cuánto producto terminado queda después de cada jornada.\": cálculo agregado sobre muchos registros. airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"Quisiera enviar a cada comercio una confirmación del pedido y un aviso cuando salga el despacho.\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "tienda-instrumentos-musicales",
+      "query": "Soy dueño de una tienda de instrumentos musicales y accesorios, y tengo productos de muchos modelos y características. Quiero llevar un registro de existencias, proveedores, compras y ventas para saber qué hay disponible. Mis clientes deberían poder encontrar artículos por tipo, rango de precio o características, aunque no escriban el nombre exacto. También quiero aceptar pagos en línea para los pedidos que hacemos por encargo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero llevar un registro de existencias, proveedores, compras y ventas para saber qué hay disponible.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"Mis clientes deberían poder encontrar artículos por tipo, rango de precio o características, aunque no escriban el nombre exacto.\": buscar dentro de los datos de la aplicación por atributos o texto. meilisearch: \"search engine API\", topic faceting (licencia: el README indica MIT); typesense: topics faceting, full-text-search, fuzzy-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"También quiero aceptar pagos en línea para los pedidos que hacemos por encargo.\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "instalacion-paneles-solares",
+      "query": "Mi empresa instala paneles solares en casas y pequeños comercios, y damos mantenimiento después de la instalación. Quiero guardar los datos de cada cliente, la dirección, los equipos instalados, las visitas y el historial de mantenimiento. Necesito que los técnicos puedan entrar desde el celular, pero que solo el personal administrativo vea los costos y los datos de facturación. También me gustaría guardar fotos de la instalación y documentos de garantía asociados a cada proyecto.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero guardar los datos de cada cliente, la dirección, los equipos instalados, las visitas y el historial de mantenimiento.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"Necesito que los técnicos puedan entrar desde el celular, pero que solo el personal administrativo vea los costos y los datos de facturación.\": permisos según el rol o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"También me gustaría guardar fotos de la instalación y documentos de garantía asociados a cada proyecto.\": guardar archivos. seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "galeria-arte-local",
+      "query": "Gestiono una galería que también vende obras de artistas locales por encargo. Necesito mantener un catálogo de obras con sus autores, medidas, precios, disponibilidad y movimientos cuando una pieza se presta o se vende. Quiero poder editar por mi cuenta los textos y las imágenes que aparecen en la página de la galería, sin pedir ayuda cada vez. Además, me interesa conocer qué obras reciben más consultas y cuáles terminan en venta.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Necesito mantener un catálogo de obras con sus autores, medidas, precios, disponibilidad y movimientos cuando una pieza se presta o se vende.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"Quiero poder editar por mi cuenta los textos y las imágenes que aparecen en la página de la galería, sin pedir ayuda cada vez.\": contenido del sitio que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms. Ghost no: plataforma de publicación."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "PostHog/posthog",
+            "umami-software/umami"
+          ],
+          "note": "\"Además, me interesa conocer qué obras reciben más consultas y cuáles terminan en venta.\": consultas y conversión = analítica de producto con embudos. posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee); umami: \"web and product analytics … conversions\". plausible fuera: no declara embudos."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    },
+    {
+      "id": "taller-maquinas-coser",
+      "query": "En mi taller reparamos máquinas de coser domésticas e industriales. Quiero registrar los clientes, los equipos que recibimos, los diagnósticos, las cotizaciones y las reparaciones realizadas para consultar después cada caso. Cuando un cliente acepte una cotización, quisiera que se genere automáticamente la orden de trabajo y se asigne al técnico disponible. También necesito mandar mensajes al cliente para informarle cuando el equipo esté listo o cuando debamos esperar una pieza.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"Quiero registrar los clientes, los equipos que recibimos, los diagnósticos, las cotizaciones y las reparaciones realizadas para consultar después cada caso.\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"Cuando un cliente acepte una cotización, quisiera que se genere automáticamente la orden de trabajo y se asigne al técnico disponible.\": asignar o crear tareas del negocio automáticamente = flujo de trabajo del negocio. Casi: ansible (servidores), airflow, prefect y dagster (datos), celery (cola de tareas de código), playwright (navegador)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"También necesito mandar mensajes al cliente para informarle cuando el equipo esté listo o cuando debamos esperar una pieza.\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (10-nov). Pide guardar y consultar datos del negocio."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "source": "public.v_repos_for_ai",
-  "taken_at": "2026-11-08T16:26:25+00:00",
+  "taken_at": "2026-11-10T09:20:33+00:00",
   "count": 127,
   "command": "python -m ai.scripts.export_catalog_snapshot",
   "ignored_columns": [
