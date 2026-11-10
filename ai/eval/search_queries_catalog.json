@@ -1,7 +1,7 @@
 {
-  "version": 3,
+  "version": 4,
   "source": "snapshot",
-  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
   "queries": [
     {
       "id": "msg-eventos",
@@ -574,12 +574,13 @@
       "expected": [
         "opensearch-project/OpenSearch",
         "pgvector/pgvector",
+        "seaweedfs/seaweedfs",
         "meilisearch/meilisearch",
         "qdrant/qdrant",
         "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. Búsqueda híbrida y vectorial: OpenSearch ('search engine') y pgvector ('vector similarity search', agregado con evidencia; la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. Búsqueda híbrida y vectorial: OpenSearch ('search engine') y pgvector ('vector similarity search', agregado con evidencia; la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search. Catálogo de 127 (10-nov): seaweedfs: README \"S3 Vector Buckets expose the AWS S3 Vectors API for semantic search\", \"Find the nearest vectors with cosine or Euclidean distance\" (licencia Apache-2.0)."
     },
     {
       "id": "rag-largo-search-v2",
@@ -587,12 +588,13 @@
       "expected": [
         "opensearch-project/OpenSearch",
         "pgvector/pgvector",
+        "seaweedfs/seaweedfs",
         "meilisearch/meilisearch",
         "qdrant/qdrant",
         "typesense/typesense"
       ],
       "pair": null,
-      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Igual que la anterior: OpenSearch y pgvector. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Igual que la anterior: OpenSearch y pgvector. Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search. Catálogo de 127 (10-nov): seaweedfs: README \"S3 Vector Buckets expose the AWS S3 Vectors API for semantic search\", \"Find the nearest vectors with cosine or Euclidean distance\" (licencia Apache-2.0)."
     },
     {
       "id": "rag-largo-auth",
@@ -970,13 +972,14 @@
       "query": "búsqueda por similitud de vectores",
       "expected": [
         "pgvector/pgvector",
+        "seaweedfs/seaweedfs",
         "opensearch-project/OpenSearch",
         "meilisearch/meilisearch",
         "qdrant/qdrant",
         "typesense/typesense"
       ],
       "pair": null,
-      "note": "Escrita a mano. pgvector: 'vector similarity search for Postgres'. OpenSearch: motor de búsqueda (la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search."
+      "note": "Escrita a mano. pgvector: 'vector similarity search for Postgres'. OpenSearch: motor de búsqueda (la búsqueda no filtra por licencia). Catálogo de 127 (8-nov): meilisearch: topics full-text-search, typo-tolerance, hybrid-search, vector-search (licencia: el README indica MIT); qdrant: \"Vector Database and Vector Search Engine\", topics hybrid-search, image-search; typesense: \"typo tolerant … Search Engine\", topics full-text-search, vector-search. Catálogo de 127 (10-nov): seaweedfs: README \"S3 Vector Buckets expose the AWS S3 Vectors API for semantic search\", \"Find the nearest vectors with cosine or Euclidean distance\" (licencia Apache-2.0)."
     },
     {
       "id": "none-contabilidad",
