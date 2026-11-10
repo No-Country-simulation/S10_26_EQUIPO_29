@@ -379,11 +379,14 @@ class LLMResult:
 def generate_valid(messages: list[dict], schema: type[BaseModel],
                    check, provider: str | None,
                    format_hint: str | None = None,
-                   deadline: Deadline | None = None) -> LLMResult:
+                   deadline: Deadline | None = None,
+                   clean=None) -> LLMResult:
     """Llama al modelo y reintenta una vez si la respuesta no cumple el esquema o las reglas.
 
     `check` recibe la respuesta ya validada contra `schema` y devuelve la lista de
     reglas que no cumple (vacía = cumple).
+    `clean`, si se pasa, recibe la respuesta validada y devuelve la versión que se
+    revisa y se entrega: va antes de `check`, para revisar el mismo texto que se mostrará.
     `format_hint` se suma al aviso cuando la respuesta no cumple el formato: dice qué
     valores son válidos, porque el error del proveedor no lo dice.
     Con `deadline`, si no queda tiempo para el reintento, generar() lanza LLMTimeout.
@@ -401,9 +404,11 @@ def generate_valid(messages: list[dict], schema: type[BaseModel],
                 problems.append(format_hint)
         else:
             out.data, raw = result.data, result.text
+            if clean is not None:
+                out.data = clean(out.data)
             out.input_tokens += result.input_tokens or 0
             out.output_tokens += result.output_tokens or 0
-            problems = check(result.data)
+            problems = check(out.data)
         out.seconds += time.perf_counter() - start
 
         if attempt == 1:

@@ -8,6 +8,7 @@ por necesidad y explica la propuesta. El código arma la respuesta del contrato.
 La búsqueda queda fuera de este archivo.
 """
 
+import html
 import re
 import time
 import unicodedata
@@ -189,13 +190,29 @@ def rule_problems(data: BaseModel) -> list[str]:
     return problems
 
 
+def decode_entities(value):
+    """Copia con las entidades HTML de los textos decodificadas (Qu&eacute; → Qué).
+
+    El modelo a veces escribe entidades y el frontend muestra texto plano. Recorre
+    todos los textos del modelo, también los de listas y objetos anidados.
+    """
+    if isinstance(value, str):
+        return html.unescape(value)
+    if isinstance(value, list):
+        return [decode_entities(item) for item in value]
+    if isinstance(value, BaseModel):
+        return value.model_copy(update={name: decode_entities(getattr(value, name))
+                                        for name in type(value).model_fields})
+    return value
+
+
 def entender(request: str, *, provider: str | None = None,
              deadline: Deadline | None = None) -> LLMResult:
     """Necesidades del pedido, con un reintento si la respuesta no cumple las reglas."""
     messages = [{"role": "system", "content": system_prompt()},
                 {"role": "user", "content": guardrails.as_data("pedido", request)}]
     return generate_valid(messages, understanding_schema(), rule_problems, provider,
-                           deadline=deadline)
+                           deadline=deadline, clean=decode_entities)
 
 
 # --- Generar ---
@@ -450,7 +467,8 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
         return problems
 
     result = generate_valid(messages, schema, check, provider,
-                             format_hint=_format_hint(with_tools), deadline=deadline)
+                             format_hint=_format_hint(with_tools), deadline=deadline,
+                             clean=decode_entities)
     ok = result.data is not None and not result.problems_final
     return (to_response(result.data, needs, candidates, request=request) if ok else None), result
 

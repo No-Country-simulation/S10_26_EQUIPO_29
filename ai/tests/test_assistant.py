@@ -102,3 +102,33 @@ def test_reintento_sin_texto_no_manda_un_mensaje_vacio(monkeypatch):
 
     retry = calls[1]  # la segunda llamada: el reintento
     assert retry[-2] == {"role": "assistant", "content": "(respuesta vacía)"}
+
+
+# --- Entidades HTML en los textos del modelo ---
+
+@pytest.mark.parametrize("text, expected", [
+    ("¿Qu&eacute; vendes?", "¿Qué vendes?"),          # con nombre
+    ("Conexi&#243;n", "Conexión"),                     # numérica
+    ("Conexi&#xf3;n", "Conexión"),                     # hexadecimal
+    ("pr&aacutecticas", "prácticas"),                  # sin punto y coma (visto en un reporte)
+    ("Pagos & envíos, AT&T, Q&A", "Pagos & envíos, AT&T, Q&A"),  # sin entidades: igual
+])
+def test_decodifica_entidades(text, expected):
+    assert assistant.decode_entities(text) == expected
+
+
+def test_decodifica_dentro_de_listas_y_objetos():
+    data = understanding(questions=["¿Qu&eacute; vendes?", "¿Cu&aacute;ntos clientes?"])
+    clean = assistant.decode_entities(data)
+    assert clean.clarification_questions == ["¿Qué vendes?", "¿Cuántos clientes?"]
+    assert data.clarification_questions[0] == "¿Qu&eacute; vendes?"  # no cambia el original
+
+
+def test_entender_entrega_las_preguntas_decodificadas(monkeypatch):
+    generar, calls = fake_generar([understanding(questions=["¿Qu&eacute; vendes?"])])
+    monkeypatch.setattr(llm, "generar", generar)
+
+    result = assistant.entender("Tengo un negocio.")
+
+    assert result.data.clarification_questions == ["¿Qué vendes?"]
+    assert result.attempts == 1                      # decodificar no es un error: sin reintento
