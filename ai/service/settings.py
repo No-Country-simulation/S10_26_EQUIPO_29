@@ -11,16 +11,21 @@ DEFAULT_CORS_ORIGINS = ("http://localhost:4173", "http://127.0.0.1:4173")
 # evaluaciones usan siempre los archivos.
 CATALOG_SOURCES = ("database", "files")
 
+# Cada cuántos minutos revisa si se publicó algo nuevo en la base (0 = solo al arrancar).
+DEFAULT_RELOAD_MINUTES = 10
+
 
 @dataclass(frozen=True)
 class Settings:
     cors_origins: tuple[str, ...] = DEFAULT_CORS_ORIGINS
     catalog_source: str = "database"
+    reload_minutes: int = DEFAULT_RELOAD_MINUTES
 
     @classmethod
     def from_env(cls) -> "Settings":
         """AI_CORS_ORIGINS: orígenes separados por comas; sin definir, los de local.
         AI_CATALOG_SOURCE: database (por defecto) o files. Otro valor es un error al arrancar.
+        AI_CATALOG_RELOAD_MINUTES: entero de 0 en adelante (por defecto 10). Otro valor es un error.
         """
         source = os.environ.get("AI_CATALOG_SOURCE") or "database"
         if source not in CATALOG_SOURCES:
@@ -28,4 +33,8 @@ class Settings:
         raw = os.environ.get("AI_CORS_ORIGINS")
         origins = (DEFAULT_CORS_ORIGINS if raw is None
                    else tuple(o.strip() for o in raw.split(",") if o.strip()))
-        return cls(cors_origins=origins, catalog_source=source)
+        raw_minutes = os.environ.get("AI_CATALOG_RELOAD_MINUTES") or str(DEFAULT_RELOAD_MINUTES)
+        minutes = int(raw_minutes) if raw_minutes.isdigit() else -1
+        if minutes < 0:
+            raise ValueError(f"AI_CATALOG_RELOAD_MINUTES={raw_minutes!r}; un entero de 0 en adelante")
+        return cls(cors_origins=origins, catalog_source=source, reload_minutes=minutes)

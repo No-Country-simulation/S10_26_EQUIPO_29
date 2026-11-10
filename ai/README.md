@@ -226,7 +226,10 @@ python -m uvicorn ai.service.app:create_app --factory --port 8001
 Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
 dónde salió el catálogo y la cadena de proveedores
 (`listo: 100 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
-hasta terminar. Para que use un catálogo actualizado, se reinicia.
+hasta terminar. Con la base, revisa cada `AI_CATALOG_RELOAD_MINUTES` minutos (10 por defecto;
+0 = solo al arrancar) si se publicó algo nuevo y, si es así, recarga el catálogo sin reiniciar:
+un pedido en curso termina con el anterior. Si la revisión o la recarga fallan, sigue con el que
+tiene y `GET /health` lo dice (`catalog_reload_error`).
 
 - **Catálogo:** `AI_CATALOG_SOURCE=database` (por defecto) lee lo publicado en la base (la vista
   más las tablas `ai.*`, lo mismo que muestra la ficha) con `AI_READER_DATABASE_URL`;
@@ -242,7 +245,7 @@ hasta terminar. Para que use un catálogo actualizado, se reinicia.
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, vectores guardados y calculados al arrancar, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos), de cuándo es, cuándo se cargó y se revisó por última vez y el último error de recarga, vectores guardados y calculados en la última carga, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
