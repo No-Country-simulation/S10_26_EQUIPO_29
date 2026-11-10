@@ -282,16 +282,21 @@ def publish_vectors(conn: psycopg.Connection, cur: psycopg.Cursor) -> tuple[int,
     return len(current), len(missing)
 
 
-def write_database(plan: Plan, delete_orphans: bool, max_delete: int = MAX_DELETE) -> None:
+def write_database(plan: Plan, delete_orphans: bool, max_delete: int = MAX_DELETE,
+                   enrichment_file: Path | None = None, ideas_file: Path | None = None,
+                   snapshot: list[dict] | None = None) -> None:
     """Publica en ai.* lo que el plan marca, en una sola transacción, con los escritores de siempre.
 
-    Solo los repos desactualizados en la base; con su fila en ai_processing.
+    Solo los repos desactualizados en la base; con su fila en ai_processing. Lee los archivos de
+    ai/data/catalog/, salvo que se pasen otros (la actualización automática usa copias temporales).
     """
-    snapshot = json.loads(SNAPSHOT_FILE.read_text(encoding="utf-8"))
+    if snapshot is None:
+        snapshot = json.loads(SNAPSHOT_FILE.read_text(encoding="utf-8"))
     wanted = {r.github_id for r in plan.publish_enrichment}
-    enrichment = [r for r in load_records(ENRICHMENT_FILE).values() if r["github_id"] in wanted]
+    enrichment = [r for r in load_records(enrichment_file or ENRICHMENT_FILE).values()
+                  if r["github_id"] in wanted]
     wanted = {r.github_id for r in plan.publish_ideas}
-    ideas = [r for r in load_records(IDEAS_FILE).values() if r["github_id"] in wanted]
+    ideas = [r for r in load_records(ideas_file or IDEAS_FILE).values() if r["github_id"] in wanted]
     try:
         write_enrichment.validate_records(enrichment, snapshot, set(load_categories()))
         write_ideas.validate_records(ideas, snapshot)

@@ -271,6 +271,7 @@ python -m pytest ai/tests -v                     # tests de la IA, sin el modelo
 AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~20 s)
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
+python -m ai.scripts.auto_refresh_ai_data        # actualización automática: decide con la base, con freno, sin revisión (--informe, --permitir-mas-cambios)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.scripts.compare_catalog             # qué cambió en la vista frente a lo que tiene la IA (0 igual, 1 cambios, 2 error)
 python -m ai.scripts.refresh_ai_data             # plan para actualizar la IA según la vista (--generar, --escribir)
