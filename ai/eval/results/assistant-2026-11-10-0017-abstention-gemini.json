@@ -1,0 +1,2957 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "telemedicina-consultas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "videollamadas desde el navegador",
+          "evidence": "atiendan a sus pacientes por videollamada desde el navegador"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "guardar las historias clínicas en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "microsoft/playwright",
+          0.287
+        ],
+        [
+          "cypress-io/cypress",
+          0.271
+        ],
+        [
+          "vuejs/core",
+          0.236
+        ],
+        [
+          "encode/httpx",
+          0.201
+        ],
+        [
+          "envoyproxy/envoy",
+          0.199
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.43
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.421
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.404
+        ],
+        [
+          "postgres/postgres",
+          0.367
+        ],
+        [
+          "duckdb/duckdb",
+          0.365
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Videollamadas y Base de Datos Relacional",
+      "summary": "La propuesta cubre parcialmente la infraestructura de base de datos relacional para guardar historias clínicas utilizando MariaDB, pero no cuenta con candidatos adecuados para ofrecer capacidad directa de videollamadas en el navegador.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide realizar videollamadas desde el navegador y el candidato más cercano, microsoft/playwright, permite automatización y pruebas web.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Comunicación",
+          "role": "Sin herramienta adecuada para videollamadas",
+          "rationale": "Los candidatos encontrados en esta categoría están orientados a pruebas de extremo a extremo, automatización web o desarrollo de interfaces, y no proveen la capacidad de realizar videollamadas."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide guardar historias clínicas en una base de datos relacional y el candidato MariaDB/server provee un sistema de base de datos relacional basado en MySQL.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB/server",
+          "role": "Almacén de datos relacional para historias clínicas",
+          "rationale": "MariaDB server es un servidor de base de datos desarrollado por la comunidad y bifurcado de MySQL, ideal para almacenar de manera confiable y estructurada las historias clínicas de los pacientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con personal técnico para integrar una solución externa de videollamadas, ya que no hay herramientas para ello en los candidatos."
+      ],
+      "other_limitations": [
+        "No hay herramientas que resuelvan la capacidad de videollamadas en el navegador entre médicos y pacientes."
+      ]
+    },
+    "response": {
+      "id": "9fdd36a8b3ba4d00931a308d90cd89a7",
+      "status": "ok",
+      "title": "Sistema de Videollamadas y Base de Datos Relacional",
+      "summary": "La propuesta cubre parcialmente la infraestructura de base de datos relacional para guardar historias clínicas utilizando MariaDB, pero no cuenta con candidatos adecuados para ofrecer capacidad directa de videollamadas en el navegador.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "MariaDB/server",
+          "role": "Almacén de datos relacional para historias clínicas",
+          "full_name": "MariaDB/server",
+          "rationale": "MariaDB server es un servidor de base de datos desarrollado por la comunidad y bifurcado de MySQL, ideal para almacenar de manera confiable y estructurada las historias clínicas de los pacientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con personal técnico para integrar una solución externa de videollamadas, ya que no hay herramientas para ello en los candidatos."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Los candidatos encontrados en esta categoría están orientados a pruebas de extremo a extremo, automatización web o desarrollo de interfaces, y no proveen la capacidad de realizar videollamadas.",
+        "No hay herramientas que resuelvan la capacidad de videollamadas en el navegador entre médicos y pacientes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:12:22.030790Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos en grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "autenticacion con terceros",
+          "evidence": "que los usuarios entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.34
+        ],
+        [
+          "redis/redis",
+          0.327
+        ],
+        [
+          "valkey-io/valkey",
+          0.307
+        ],
+        [
+          "grafana/grafana",
+          0.272
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.247
+        ]
+      ],
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.437
+        ],
+        [
+          "keycloak/keycloak",
+          0.397
+        ],
+        [
+          "zitadel/zitadel",
+          0.383
+        ],
+        [
+          "ory/kratos",
+          0.38
+        ],
+        [
+          "supabase/supabase",
+          0.282
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura para Red Profesional y Recomendación",
+      "summary": "La propuesta cubre la autenticación de usuarios mediante proveedores externos y un sistema de almacenamiento clave-valor. No fue posible incluir una base de datos de grafos dedicada ya que los candidatos encontrados ofrecen modelos clave-valor, distribuidos o de almacenamiento de objetos, pero se seleccionó la mejor alternativa disponible en el catálogo.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos de grafos para guardar relaciones de trabajo, pero el candidato que más se acerca provee almacenamiento distribuido clave-valor.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "etcd-io/etcd",
+          "role": "Almacenamiento de datos",
+          "rationale": "etcd-io/etcd ofrece un almacén de clave-valor distribuido y confiable para sistemas distribuidos, pero no implementa un motor de grafos nativo para modelar relaciones complejas entre usuarios."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide autenticación con cuentas de terceros como LinkedIn o Google, y Keycloak provee gestión de identidad y acceso para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestión de identidad",
+          "rationale": "Keycloak es una solución de código abierto para la gestión de identidad y accesos que permite configurar autenticación y federación con múltiples proveedores externos."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "El servicio de autenticación valida las sesiones y guarda los perfiles de usuario en el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la red profesional puede operar temporalmente con un almacenamiento estructurado clave-valor en lugar de una base de datos de grafos estricta.",
+        "Se requiere un servidor de identidad centralizado para manejar los flujos de inicio de sesión social."
+      ],
+      "other_limitations": [
+        "No se dispone de una base de datos de grafos nativa en los candidatos evaluados, por lo que las recomendaciones de contactos requerirán lógica adicional en la aplicación."
+      ]
+    },
+    "response": {
+      "id": "73d209e5ebdc496482f03f32e7b36db4",
+      "status": "ok",
+      "title": "Infraestructura para Red Profesional y Recomendación",
+      "summary": "La propuesta cubre la autenticación de usuarios mediante proveedores externos y un sistema de almacenamiento clave-valor. No fue posible incluir una base de datos de grafos dedicada ya que los candidatos encontrados ofrecen modelos clave-valor, distribuidos o de almacenamiento de objetos, pero se seleccionó la mejor alternativa disponible en el catálogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Gestión de identidad",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak es una solución de código abierto para la gestión de identidad y accesos que permite configurar autenticación y federación con múltiples proveedores externos."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red profesional puede operar temporalmente con un almacenamiento estructurado clave-valor en lugar de una base de datos de grafos estricta.",
+        "Se requiere un servidor de identidad centralizado para manejar los flujos de inicio de sesión social."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. etcd-io/etcd ofrece un almacén de clave-valor distribuido y confiable para sistemas distribuidos, pero no implementa un motor de grafos nativo para modelar relaciones complejas entre usuarios.",
+        "No se dispone de una base de datos de grafos nativa en los candidatos evaluados, por lo que las recomendaciones de contactos requerirán lógica adicional en la aplicación."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:12:34.413189Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución global de archivos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y similitud de imágenes",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.419
+        ],
+        [
+          "rustfs/rustfs",
+          0.372
+        ],
+        [
+          "etcd-io/etcd",
+          0.35
+        ],
+        [
+          "valkey-io/valkey",
+          0.277
+        ],
+        [
+          "git/git",
+          0.262
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.4
+        ],
+        [
+          "pgvector/pgvector",
+          0.345
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.325
+        ],
+        [
+          "typesense/typesense",
+          0.315
+        ],
+        [
+          "huggingface/transformers",
+          0.262
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura global de almacenamiento y búsqueda visual",
+      "summary": "Esta propuesta implementa un sistema para una tienda en línea internacional, utilizando almacenamiento distribuido para servir fotos eficientemente y un motor de búsqueda vectorial para encontrar productos mediante imágenes.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide un sistema para servir fotos desde servidores cercanos a cada comprador, y SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento distribuido",
+          "rationale": "Resuelve la necesidad de almacenar y distribuir archivos a gran escala mediante un sistema distribuido para almacenamiento de objetos. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador donde el cliente suba una foto y encuentre productos parecidos, y Qdrant ofrece un motor de búsqueda de vectores con capacidad de búsqueda de imágenes.",
+          "fit": "serves",
+          "full_name": "qdrant/qdrant",
+          "label": "Qdrant",
+          "role": "Búsqueda vectorial",
+          "rationale": "Permite realizar búsquedas por similitud de imágenes y vectores a escala masiva gracias a su motor de búsqueda vectorial de alto rendimiento. Posee licencia Apache-2.0 y actualización reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "El motor de búsqueda puede consultar o hacer referencia a las rutas de las imágenes almacenadas en el sistema de almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribución global de SeaweedFS se configura mediante múltiples nodos replicados en las regiones geográficas de los compradores."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas de almacenamiento incluye de forma nativa una red de entrega de contenido (CDN) global para la última milla, por lo que se requerirá infraestructura adicional."
+      ]
+    },
+    "response": {
+      "id": "a0fb9051bc184f5799247241c228429f",
+      "status": "ok",
+      "title": "Arquitectura global de almacenamiento y búsqueda visual",
+      "summary": "Esta propuesta implementa un sistema para una tienda en línea internacional, utilizando almacenamiento distribuido para servir fotos eficientemente y un motor de búsqueda vectorial para encontrar productos mediante imágenes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento distribuido",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la necesidad de almacenar y distribuir archivos a gran escala mediante un sistema distribuido para almacenamiento de objetos. Cuenta con licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Qdrant",
+          "role": "Búsqueda vectorial",
+          "full_name": "qdrant/qdrant",
+          "rationale": "Permite realizar búsquedas por similitud de imágenes y vectores a escala masiva gracias a su motor de búsqueda vectorial de alto rendimiento. Posee licencia Apache-2.0 y actualización reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "El motor de búsqueda puede consultar o hacer referencia a las rutas de las imágenes almacenadas en el sistema de almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la distribución global de SeaweedFS se configura mediante múltiples nodos replicados en las regiones geográficas de los compradores."
+      ],
+      "limitations": [
+        "Ninguna de las herramientas de almacenamiento incluye de forma nativa una red de entrega de contenido (CDN) global para la última milla, por lo que se requerirá infraestructura adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:12:45.946812Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de factura electronica",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.236
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.293
+        ],
+        [
+          "rustfs/rustfs",
+          0.265
+        ],
+        [
+          "etcd-io/etcd",
+          0.252
+        ],
+        [
+          "pnpm/pnpm",
+          0.228
+        ],
+        [
+          "hashicorp/vault",
+          0.206
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para facturas y almacenamiento",
+      "summary": "Esta propuesta organiza el almacenamiento de archivos de la distribuidora mediante un sistema distribuido y deja constancia de las limitaciones para la facturación electrónica ante la autoridad tributaria.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir la factura electrónica ante la autoridad tributaria, y los candidatos ofrecen gestión de suscripciones y facturación por uso, sin mencionar integración con autoridades tributarias.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Pagos",
+          "role": "Gestión de cobros y suscripciones",
+          "rationale": "Los candidatos encontrados se enfocan en cobros y facturación basada en uso, pero ninguno realiza la emisión de facturas electrónicas fiscales ante la autoridad tributaria."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar los PDF de las facturas en almacenamiento de archivos, y SeaweedFS provee un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para guardar los PDF de las facturas."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La distribuidora requiere alta disponibilidad para acceder a los comprobantes almacenados.",
+        "Se necesitará desarrollar o integrar un módulo externo para conectar con la autoridad tributaria."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta en los candidatos que resuelva la emisión de facturas electrónicas ante la autoridad tributaria."
+      ]
+    },
+    "response": {
+      "id": "84ff7639b303445791d6eeadf89fe7d9",
+      "status": "ok",
+      "title": "Sistema de gestión para facturas y almacenamiento",
+      "summary": "Esta propuesta organiza el almacenamiento de archivos de la distribuidora mediante un sistema distribuido y deja constancia de las limitaciones para la facturación electrónica ante la autoridad tributaria.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para guardar los PDF de las facturas."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La distribuidora requiere alta disponibilidad para acceder a los comprobantes almacenados.",
+        "Se necesitará desarrollar o integrar un módulo externo para conectar con la autoridad tributaria."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Los candidatos encontrados se enfocan en cobros y facturación basada en uso, pero ninguno realiza la emisión de facturas electrónicas fiscales ante la autoridad tributaria.",
+        "No se encontró ninguna herramienta en los candidatos que resuelva la emisión de facturas electrónicas ante la autoridad tributaria."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:12:57.642906Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.285
+        ],
+        [
+          "novuhq/novu",
+          0.228
+        ],
+        [
+          "knadh/listmonk",
+          0.202
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones para solicitudes de compra",
+      "summary": "Se propone una plataforma de correo para enviar avisos automáticos a cada involucrado en las solicitudes de compra. El flujo de aprobación y registro de compras queda pendiente por falta de herramientas específicas en esta selección.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide el envío de correos electrónicos transaccionales y el candidato postalserver/postal ofrece una plataforma completa de entrega de correo entrante y saliente.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Envío de correos de notificación",
+          "rationale": "Postal resuelve el envío de correos electrónicos transaccionales mediante una plataforma completa con licencia MIT y mantenimiento reciente, ideal para avisar a cada persona cuando tenga una solicitud pendiente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema externo o manual para el flujo de aprobación entre el residente, el ingeniero y compras.",
+        "El pedido sugiere un gestor de flujos de trabajo o ERP que no se encuentra entre los candidatos disponibles."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la gestión del flujo de aprobación ni el registro formal de las solicitudes de compra."
+      ]
+    },
+    "response": {
+      "id": "d59442b5d6a34be99cd7bbc9eea048a3",
+      "status": "ok",
+      "title": "Sistema de notificaciones para solicitudes de compra",
+      "summary": "Se propone una plataforma de correo para enviar avisos automáticos a cada involucrado en las solicitudes de compra. El flujo de aprobación y registro de compras queda pendiente por falta de herramientas específicas en esta selección.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Postal",
+          "role": "Envío de correos de notificación",
+          "full_name": "postalserver/postal",
+          "rationale": "Postal resuelve el envío de correos electrónicos transaccionales mediante una plataforma completa con licencia MIT y mantenimiento reciente, ideal para avisar a cada persona cuando tenga una solicitud pendiente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema externo o manual para el flujo de aprobación entre el residente, el ingeniero y compras.",
+        "El pedido sugiere un gestor de flujos de trabajo o ERP que no se encuentra entre los candidatos disponibles."
+      ],
+      "limitations": [
+        "La propuesta no incluye la gestión del flujo de aprobación ni el registro formal de las solicitudes de compra."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:13:08.471384Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo con clientes",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de visitas por producto",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "novuhq/novu",
+          0.243
+        ],
+        [
+          "openai/openai-python",
+          0.201
+        ],
+        [
+          "envoyproxy/envoy",
+          0.194
+        ],
+        [
+          "PostHog/posthog",
+          0.191
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.188
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.405
+        ],
+        [
+          "plausible/analytics",
+          0.38
+        ],
+        [
+          "PostHog/posthog",
+          0.336
+        ],
+        [
+          "metabase/metabase",
+          0.272
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.268
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para tienda de mascotas con chat y analitica",
+      "summary": "La propuesta integra herramientas de comunicacion y analitica para cubrir las necesidades de la tienda de mascotas. Se establece una infraestructura para agentes y comunicacion junto con una plataforma de analitica web orientada a la privacidad.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un chat en vivo para clientes y Novu provee infraestructura de comunicacion para agentes y productos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicacion",
+          "rationale": "Novu ofrece la infraestructura de comunicacion necesaria para conectar a los clientes con los agentes. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide medir visitantes por producto y Umami ofrece una plataforma de analitica web y de producto para medir trafico.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Plataforma de analitica web",
+          "rationale": "Umami permite medir el trafico y comportamiento de los visitantes en la pagina web sin utilizar cookies. Cuenta con licencia MIT y actualizacion reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda de mascotas cuenta con un sitio web propio donde integrar estas herramientas.",
+        "Se asume que los agentes de soporte utilizaran la infraestructura provista para atender las consultas de los clientes."
+      ],
+      "other_limitations": [
+        "No se cubren aspectos de gestion de inventario o pasarela de pagos para la tienda de mascotas."
+      ]
+    },
+    "response": {
+      "id": "1c53023da59642c999bde7fe5dcf7755",
+      "status": "ok",
+      "title": "Sistema para tienda de mascotas con chat y analitica",
+      "summary": "La propuesta integra herramientas de comunicacion y analitica para cubrir las necesidades de la tienda de mascotas. Se establece una infraestructura para agentes y comunicacion junto con una plataforma de analitica web orientada a la privacidad.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Novu",
+          "role": "Infraestructura de comunicacion",
+          "full_name": "novuhq/novu",
+          "rationale": "Novu ofrece la infraestructura de comunicacion necesaria para conectar a los clientes con los agentes. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Umami",
+          "role": "Plataforma de analitica web",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami permite medir el trafico y comportamiento de los visitantes en la pagina web sin utilizar cookies. Cuenta con licencia MIT y actualizacion reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda de mascotas cuenta con un sitio web propio donde integrar estas herramientas.",
+        "Se asume que los agentes de soporte utilizaran la infraestructura provista para atender las consultas de los clientes."
+      ],
+      "limitations": [
+        "No se cubren aspectos de gestion de inventario o pasarela de pagos para la tienda de mascotas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:13:20.768884Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "copias de seguridad automáticas de archivos",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "gestión de usuarios y control de acceso basado en roles",
+          "evidence": "cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "rustfs/rustfs",
+          0.264
+        ],
+        [
+          "hashicorp/vault",
+          0.257
+        ],
+        [
+          "caddyserver/caddy",
+          0.242
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.238
+        ],
+        [
+          "cert-manager/cert-manager",
+          0.221
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.372
+        ],
+        [
+          "ory/kratos",
+          0.363
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.345
+        ],
+        [
+          "hashicorp/vault",
+          0.338
+        ],
+        [
+          "zitadel/zitadel",
+          0.322
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de archivos y acceso para estudio contable",
+      "summary": "Esta propuesta implementa un sistema seguro para el estudio contable mediante un almacenamiento distribuido de alta capacidad para las copias de seguridad de las carpetas de los clientes y una infraestructura de identidad centralizada para gestionar el acceso por roles de los contadores.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide un almacenamiento para copias de seguridad automáticas de archivos y el candidato ofrece un sistema de almacenamiento distribuido para archivos y objetos con alta capacidad.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "rationale": "Resuelve la necesidad de guardar las carpetas de los clientes al ser un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido y bajo Apache-2.0."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide gestión de usuarios y control de acceso y el candidato ofrece gestión de identidad y acceso para aplicaciones modernas con autenticación y autorización.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestión de acceso y cuentas",
+          "rationale": "Permite que cada contador ingrese con su propia cuenta de forma segura mediante una infraestructura de identidad y acceso open source con licencia Apache-2.0."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales de los contadores antes de permitirles acceder a las carpetas de los clientes en el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el estudio contable cuenta con un script o agente externo para programar y ejecutar las copias de seguridad automáticas cada noche hacia el sistema de almacenamiento.",
+        "Se asume que la interfaz de usuario que consultarán los contadores integrará el control de acceso provisto por la herramienta de autenticación."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la interfaz de usuario final ni el software específico para la visualización de las carpetas de los clientes por cada contador."
+      ]
+    },
+    "response": {
+      "id": "7951d7f02ff945b492452988c76d968b",
+      "status": "ok",
+      "title": "Sistema de gestión de archivos y acceso para estudio contable",
+      "summary": "Esta propuesta implementa un sistema seguro para el estudio contable mediante un almacenamiento distribuido de alta capacidad para las copias de seguridad de las carpetas de los clientes y una infraestructura de identidad centralizada para gestionar el acceso por roles de los contadores.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la necesidad de guardar las carpetas de los clientes al ser un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido y bajo Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestión de acceso y cuentas",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Permite que cada contador ingrese con su propia cuenta de forma segura mediante una infraestructura de identidad y acceso open source con licencia Apache-2.0."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales de los contadores antes de permitirles acceder a las carpetas de los clientes en el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el estudio contable cuenta con un script o agente externo para programar y ejecutar las copias de seguridad automáticas cada noche hacia el sistema de almacenamiento.",
+        "Se asume que la interfaz de usuario que consultarán los contadores integrará el control de acceso provisto por la herramienta de autenticación."
+      ],
+      "limitations": [
+        "La propuesta no incluye la interfaz de usuario final ni el software específico para la visualización de las carpetas de los clientes por cada contador."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:13:32.353705Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío masivo de correo electrónico",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.286
+        ],
+        [
+          "knadh/listmonk",
+          0.244
+        ],
+        [
+          "novuhq/novu",
+          0.207
+        ],
+        [
+          "prometheus/alertmanager",
+          0.186
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de boletines por correo electrónico",
+      "summary": "La propuesta cubre el envío de boletines mensuales mediante un gestor especializado. Queda sin resolver la medición de menciones en Instagram y TikTok por falta de candidatos específicos en el catálogo.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un gestor para envío masivo de correos y listmonk ofrece un sistema autohospedado de boletines y listas de correo con panel de control.",
+          "fit": "serves",
+          "full_name": "knadh/listmonk",
+          "label": "listmonk",
+          "role": "Gestor de listas y campañas de correo",
+          "rationale": "Permite administrar listas de suscriptores y enviar campañas de marketing por correo electrónico de alto rendimiento con un panel moderno."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la marca de ropa cuenta con una base de datos de suscriptores existente para importar al sistema.",
+        "El usuario requiere medir menciones en redes sociales, pero no se encontraron herramientas para dicha tarea entre los candidatos analizados."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la medición de menciones en Instagram y TikTok."
+      ]
+    },
+    "response": {
+      "id": "08a1c0eb6db14ce19c6da701a539725c",
+      "status": "ok",
+      "title": "Sistema de gestión de boletines por correo electrónico",
+      "summary": "La propuesta cubre el envío de boletines mensuales mediante un gestor especializado. Queda sin resolver la medición de menciones en Instagram y TikTok por falta de candidatos específicos en el catálogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "listmonk",
+          "role": "Gestor de listas y campañas de correo",
+          "full_name": "knadh/listmonk",
+          "rationale": "Permite administrar listas de suscriptores y enviar campañas de marketing por correo electrónico de alto rendimiento con un panel moderno."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la marca de ropa cuenta con una base de datos de suscriptores existente para importar al sistema.",
+        "El usuario requiere medir menciones en redes sociales, pero no se encontraron herramientas para dicha tarea entre los candidatos analizados."
+      ],
+      "limitations": [
+        "La propuesta no incluye la medición de menciones en Instagram y TikTok."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:13:43.996846Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "telemedicina-consultas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historias clinicas relacionales",
+          "evidence": "guardar las historias clínicas en una base de datos relacional"
+        },
+        {
+          "category": "communication",
+          "query": "atencion medica por videollamada web",
+          "evidence": "que los médicos atiendan a sus pacientes por videollamada desde el navegador"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.304
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.247
+        ],
+        [
+          "rustfs/rustfs",
+          0.245
+        ],
+        [
+          "valkey-io/valkey",
+          0.245
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.242
+        ]
+      ],
+      "communication": [
+        [
+          "pallets/flask",
+          0.198
+        ],
+        [
+          "vuejs/core",
+          0.197
+        ],
+        [
+          "vllm-project/vllm",
+          0.189
+        ],
+        [
+          "ollama/ollama",
+          0.189
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de sistema para red de consultorios médicos",
+      "summary": "Se seleccionaron herramientas para el manejo de bases de datos relacionales y el desarrollo de interfaces web. Quedan por resolver aspectos específicos de infraestructura de videollamadas en tiempo real y gestión segura de historias clínicas.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de historias clínicas relacionales y el candidato más cercano, sqlalchemy, es un kit de herramientas de base de datos para Python.",
+          "fit": "serves",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "label": "SQLAlchemy",
+          "role": "Kit de herramientas de base de datos",
+          "rationale": "Resuelve la gestión de bases de datos para guardar las historias clínicas mediante su kit de herramientas SQL para Python."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide atención médica por videollamada web y el candidato más cercano, pallets/flask, es un microframework web para Python.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Comunicación",
+          "role": "Desarrollo web general",
+          "rationale": "Los candidatos disponibles en esta categoría ofrecen frameworks web o motores de inferencia de IA, pero ninguno provee de manera nativa la capacidad de realizar videollamadas desde el navegador."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con personal técnico para integrar bibliotecas de videollamadas WebRTC de manera externa.",
+        "El negocio requiere cumplimiento con normativas de privacidad de datos médicos."
+      ],
+      "other_limitations": [
+        "Ningún candidato de la lista de comunicación ofrece un sistema dedicado a videollamadas médicas.",
+        "Faltan herramientas especializadas para la gestión integral de turnos y agendas médicas."
+      ]
+    },
+    "response": {
+      "id": "ae9a87cad18e4eb3b0d3442d977ee341",
+      "status": "ok",
+      "title": "Propuesta de sistema para red de consultorios médicos",
+      "summary": "Se seleccionaron herramientas para el manejo de bases de datos relacionales y el desarrollo de interfaces web. Quedan por resolver aspectos específicos de infraestructura de videollamadas en tiempo real y gestión segura de historias clínicas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SQLAlchemy",
+          "role": "Kit de herramientas de base de datos",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "rationale": "Resuelve la gestión de bases de datos para guardar las historias clínicas mediante su kit de herramientas SQL para Python."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con personal técnico para integrar bibliotecas de videollamadas WebRTC de manera externa.",
+        "El negocio requiere cumplimiento con normativas de privacidad de datos médicos."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Los candidatos disponibles en esta categoría ofrecen frameworks web o motores de inferencia de IA, pero ninguno provee de manera nativa la capacidad de realizar videollamadas desde el navegador.",
+        "Faltan herramientas especializadas para la gestión integral de turnos y agendas médicas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:13:56.713164Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos en grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "inicio de sesión con redes sociales",
+          "evidence": "que los usuarios entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.34
+        ],
+        [
+          "redis/redis",
+          0.327
+        ],
+        [
+          "valkey-io/valkey",
+          0.307
+        ],
+        [
+          "grafana/grafana",
+          0.272
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.247
+        ]
+      ],
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.332
+        ],
+        [
+          "ory/kratos",
+          0.254
+        ],
+        [
+          "keycloak/keycloak",
+          0.245
+        ],
+        [
+          "zitadel/zitadel",
+          0.242
+        ],
+        [
+          "jestjs/jest",
+          0.201
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de Identidad y Datos para Red Profesional",
+      "summary": "La propuesta implementa autenticación centralizada con soporte para inicio de sesión social y opciones de almacenamiento distribuido. No incluye bases de datos de grafos nativas entre los candidatos evaluados, por lo que se requiere un ajuste en la estrategia de almacenamiento.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de datos en grafos, y el candidato que más se acerca provee almacenamiento distribuido de clave-valor.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Almacenamiento de datos",
+          "rationale": "Ninguno de los candidatos evaluados ofrece una base de datos de grafos nativa para guardar relaciones complejas."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide inicio de sesión con redes sociales como LinkedIn o Google, y el candidato ofrece gestión de identidad y autenticación con soporte para inicio de sesión social.",
+          "fit": "serves",
+          "full_name": "ory/kratos",
+          "label": "Ory Kratos",
+          "role": "Gestión de identidad y autenticación",
+          "rationale": "Ory Kratos es un sistema de gestión de identidad y autenticación nativo de la nube que soporta inicio de sesión social, ideal para permitir que los usuarios entren con sus cuentas externas bajo licencia Apache-2.0."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red profesional requiere una infraestructura escalable para la gestión de usuarios y relaciones.",
+        "Se asume la necesidad de integrar proveedores OAuth externos para Google y LinkedIn."
+      ],
+      "other_limitations": [
+        "No se dispone de una base de datos de grafos en los candidatos de almacenamiento, lo que impide cumplir exactamente con el requisito de guardar relaciones de trabajo en un grafo nativo."
+      ]
+    },
+    "response": {
+      "id": "340289168030480bb02fe8d71e2ffbe5",
+      "status": "ok",
+      "title": "Arquitectura de Identidad y Datos para Red Profesional",
+      "summary": "La propuesta implementa autenticación centralizada con soporte para inicio de sesión social y opciones de almacenamiento distribuido. No incluye bases de datos de grafos nativas entre los candidatos evaluados, por lo que se requiere un ajuste en la estrategia de almacenamiento.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Ory Kratos",
+          "role": "Gestión de identidad y autenticación",
+          "full_name": "ory/kratos",
+          "rationale": "Ory Kratos es un sistema de gestión de identidad y autenticación nativo de la nube que soporta inicio de sesión social, ideal para permitir que los usuarios entren con sus cuentas externas bajo licencia Apache-2.0."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red profesional requiere una infraestructura escalable para la gestión de usuarios y relaciones.",
+        "Se asume la necesidad de integrar proveedores OAuth externos para Google y LinkedIn."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Ninguno de los candidatos evaluados ofrece una base de datos de grafos nativa para guardar relaciones complejas.",
+        "No se dispone de una base de datos de grafos en los candidatos de almacenamiento, lo que impide cumplir exactamente con el requisito de guardar relaciones de trabajo en un grafo nativo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:14:07.926942Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución global de archivos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y similitud de imágenes",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.419
+        ],
+        [
+          "rustfs/rustfs",
+          0.372
+        ],
+        [
+          "etcd-io/etcd",
+          0.35
+        ],
+        [
+          "valkey-io/valkey",
+          0.277
+        ],
+        [
+          "git/git",
+          0.262
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.4
+        ],
+        [
+          "pgvector/pgvector",
+          0.345
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.325
+        ],
+        [
+          "typesense/typesense",
+          0.315
+        ],
+        [
+          "huggingface/transformers",
+          0.262
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura global de almacenamiento y búsqueda visual de productos",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para servir fotos de productos de forma eficiente y un motor de búsqueda vectorial para encontrar productos similares a partir de imágenes subidas por los usuarios. Cubre todas las necesidades planteadas con herramientas de código abierto con mantenimiento activo.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide un almacenamiento que sirva fotos desde servidores cercanos globalmente, y el candidato más cercano es un sistema de almacenamiento distribuido para archivos y objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución global de fotos de productos",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, lo que permite gestionar las fotos de los productos de la tienda en línea."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador donde el cliente suba una foto y encuentre productos parecidos, y el candidato más cercano ofrece un motor de búsqueda vectorial con capacidad de búsqueda de imágenes.",
+          "fit": "serves",
+          "full_name": "qdrant/qdrant",
+          "label": "Qdrant",
+          "role": "Búsqueda visual por similitud de imágenes",
+          "rationale": "Qdrant es un motor de búsqueda vectorial de alto rendimiento que incluye búsqueda de imágenes y similitud por embeddings, permitiendo encontrar productos parecidos a la foto que sube el cliente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "HTTP/S3",
+          "description": "El buscador de vectores puede consultar referencias o metadatos de las imágenes almacenadas en el sistema distribuido."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda en línea cuenta con una pasarela de aplicación propia para coordinar las peticiones entre el almacenamiento de imágenes y el motor de búsqueda.",
+        "Se asume la necesidad de procesamiento previo de las imágenes para extraer los embeddings antes de indexarlos en el motor de búsqueda."
+      ],
+      "other_limitations": [
+        "La propuesta actual no incluye una red de entrega de contenido (CDN) nativa para optimizar la cercanía extrema en múltiples continentes, aunque SeaweedFS provee una base de almacenamiento distribuido.",
+        "No se incluye de forma nativa el modelo de inteligencia artificial para transformar la foto subida por el usuario en un vector de características."
+      ]
+    },
+    "response": {
+      "id": "a76da4c9174942ec87f6c143ef7f8b49",
+      "status": "ok",
+      "title": "Arquitectura global de almacenamiento y búsqueda visual de productos",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para servir fotos de productos de forma eficiente y un motor de búsqueda vectorial para encontrar productos similares a partir de imágenes subidas por los usuarios. Cubre todas las necesidades planteadas con herramientas de código abierto con mantenimiento activo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución global de fotos de productos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, lo que permite gestionar las fotos de los productos de la tienda en línea."
+        },
+        {
+          "key": "c2",
+          "label": "Qdrant",
+          "role": "Búsqueda visual por similitud de imágenes",
+          "full_name": "qdrant/qdrant",
+          "rationale": "Qdrant es un motor de búsqueda vectorial de alto rendimiento que incluye búsqueda de imágenes y similitud por embeddings, permitiendo encontrar productos parecidos a la foto que sube el cliente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTP/S3",
+          "description": "El buscador de vectores puede consultar referencias o metadatos de las imágenes almacenadas en el sistema distribuido."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda en línea cuenta con una pasarela de aplicación propia para coordinar las peticiones entre el almacenamiento de imágenes y el motor de búsqueda.",
+        "Se asume la necesidad de procesamiento previo de las imágenes para extraer los embeddings antes de indexarlos en el motor de búsqueda."
+      ],
+      "limitations": [
+        "La propuesta actual no incluye una red de entrega de contenido (CDN) nativa para optimizar la cercanía extrema en múltiples continentes, aunque SeaweedFS provee una base de almacenamiento distribuido.",
+        "No se incluye de forma nativa el modelo de inteligencia artificial para transformar la foto subida por el usuario en un vector de características."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:14:19.829407Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de factura electronica",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.236
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.293
+        ],
+        [
+          "rustfs/rustfs",
+          0.265
+        ],
+        [
+          "etcd-io/etcd",
+          0.252
+        ],
+        [
+          "pnpm/pnpm",
+          0.228
+        ],
+        [
+          "hashicorp/vault",
+          0.206
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para facturación y almacenamiento",
+      "summary": "La propuesta cubre parcialmente la emisión de facturas y resuelve de forma robusta el almacenamiento de archivos PDF con un sistema distribuido. Queda pendiente la integración específica con la autoridad tributaria para la facturación electrónica.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir la factura electrónica ante la autoridad tributaria, y Kill Bill ofrece una plataforma de facturación por suscripción y pagos.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Pagos",
+          "role": "Gestionar suscripciones y pagos",
+          "rationale": "No se encontraron candidatos que realicen la emisión directa de facturas electrónicas ante la autoridad tributaria. Kill Bill gestiona pagos y suscripciones pero no la facturación fiscal solicitada."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar los PDF de las facturas en un almacenamiento de archivos, y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenar y organizar los PDF de las facturas",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para guardar los PDF de las facturas de manera eficiente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la distribuidora de repuestos requiere una interfaz para consultar los documentos almacenados.",
+        "Se asume que la emisión ante la autoridad tributaria requerirá un desarrollo a medida o un módulo adicional no disponible en los candidatos."
+      ],
+      "other_limitations": [
+        "Ningún candidato resuelve la emisión de facturas electrónicas ante la autoridad tributaria."
+      ]
+    },
+    "response": {
+      "id": "c637556dc9d748b784fe0f08ea81f4a7",
+      "status": "ok",
+      "title": "Sistema de gestión para facturación y almacenamiento",
+      "summary": "La propuesta cubre parcialmente la emisión de facturas y resuelve de forma robusta el almacenamiento de archivos PDF con un sistema distribuido. Queda pendiente la integración específica con la autoridad tributaria para la facturación electrónica.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenar y organizar los PDF de las facturas",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para guardar los PDF de las facturas de manera eficiente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la distribuidora de repuestos requiere una interfaz para consultar los documentos almacenados.",
+        "Se asume que la emisión ante la autoridad tributaria requerirá un desarrollo a medida o un módulo adicional no disponible en los candidatos."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. No se encontraron candidatos que realicen la emisión directa de facturas electrónicas ante la autoridad tributaria. Kill Bill gestiona pagos y suscripciones pero no la facturación fiscal solicitada.",
+        "Ningún candidato resuelve la emisión de facturas electrónicas ante la autoridad tributaria."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:14:31.064542Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.285
+        ],
+        [
+          "novuhq/novu",
+          0.228
+        ],
+        [
+          "knadh/listmonk",
+          0.202
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones por correo para solicitudes de compra",
+      "summary": "Se propone una plataforma de envío de correos electrónicos para avisar a cada persona cuando tenga una solicitud pendiente. Quedan fuera del alcance la gestión del flujo de aprobación entre el residente, el ingeniero y compras, debido a la falta de herramientas específicas en los candidatos encontrados.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide el envío de correos electrónicos transaccionales y el candidato postalserver/postal es una plataforma de entrega de correo completamente funcional para correos salientes.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Servidor de correo",
+          "rationale": "Permite gestionar el envío de correos electrónicos para notificar a los usuarios sobre las solicitudes pendientes. Cuenta con licencia MIT y se mantiene activamente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema externo para registrar el flujo de aprobación de las solicitudes de compra, ya que no hay herramientas para ello en los candidatos.",
+        "Se necesita integrar el sistema de aprobaciones con la plataforma de correo para disparar las alertas automáticamente."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la gestión del flujo de aprobación de las solicitudes de compra entre el residente de obra, el ingeniero y compras."
+      ]
+    },
+    "response": {
+      "id": "86fdb703ca2e4c1e874c83a4013ae263",
+      "status": "ok",
+      "title": "Sistema de notificaciones por correo para solicitudes de compra",
+      "summary": "Se propone una plataforma de envío de correos electrónicos para avisar a cada persona cuando tenga una solicitud pendiente. Quedan fuera del alcance la gestión del flujo de aprobación entre el residente, el ingeniero y compras, debido a la falta de herramientas específicas en los candidatos encontrados.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Postal",
+          "role": "Servidor de correo",
+          "full_name": "postalserver/postal",
+          "rationale": "Permite gestionar el envío de correos electrónicos para notificar a los usuarios sobre las solicitudes pendientes. Cuenta con licencia MIT y se mantiene activamente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema externo para registrar el flujo de aprobación de las solicitudes de compra, ya que no hay herramientas para ello en los candidatos.",
+        "Se necesita integrar el sistema de aprobaciones con la plataforma de correo para disparar las alertas automáticamente."
+      ],
+      "limitations": [
+        "La propuesta no incluye la gestión del flujo de aprobación de las solicitudes de compra entre el residente de obra, el ingeniero y compras."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:14:42.511067Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo con asesor",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de visitantes por producto",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "envoyproxy/envoy",
+          0.211
+        ],
+        [
+          "langchain-ai/langchain",
+          0.205
+        ],
+        [
+          "openai/openai-python",
+          0.202
+        ],
+        [
+          "novuhq/novu",
+          0.198
+        ],
+        [
+          "ollama/ollama",
+          0.192
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.32
+        ],
+        [
+          "plausible/analytics",
+          0.269
+        ],
+        [
+          "getlago/lago",
+          0.234
+        ],
+        [
+          "PostHog/posthog",
+          0.231
+        ],
+        [
+          "grafana/grafana",
+          0.196
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de chat y analítica para tienda de mascotas",
+      "summary": "Esta propuesta incluye la infraestructura de comunicación para agentes y productos, junto con una plataforma de analítica web para medir el tráfico en las páginas de cada producto. Quedan sin resolver las necesidades de atención con asesor humano en tiempo real por falta de herramientas específicas en los candidatos.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide chat en vivo con un asesor y la herramienta más cercana ofrece infraestructura de comunicación para agentes y productos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Proporciona la infraestructura de comunicación para agentes y productos. La licencia de la herramienta no fue identificada por GitHub. Su último cambio fue reciente y cuenta con alta adopción en la comunidad de desarrollo de Node.js y agentes de comunicación."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide medir visitantes por producto y la herramienta ofrece analítica web y de productos enfocada en tráfico, comportamiento y conversiones.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Plataforma de analítica web",
+          "rationale": "Permite medir el tráfico, comportamiento y conversiones en un solo lugar mediante una plataforma de analítica web orientada a la privacidad. No utiliza cookies y ofrece opciones de alojamiento propio o en la nube. Su último cambio es muy reciente y utiliza licencia MIT."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la tienda de mascotas opera mediante un sitio web autohospedado donde se puede integrar un script de analítica y la infraestructura de comunicación.",
+        "El cliente requiere que los datos de analítica de tráfico por producto se mantengan privados y autohospedados."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos en comunicación ofrece un chat en vivo síncrono estándar para la interacción directa entre un cliente y un asesor humano."
+      ]
+    },
+    "response": {
+      "id": "4c39fb74ce464192adaaed19e6311cbf",
+      "status": "ok",
+      "title": "Sistema de chat y analítica para tienda de mascotas",
+      "summary": "Esta propuesta incluye la infraestructura de comunicación para agentes y productos, junto con una plataforma de analítica web para medir el tráfico en las páginas de cada producto. Quedan sin resolver las necesidades de atención con asesor humano en tiempo real por falta de herramientas específicas en los candidatos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "full_name": "novuhq/novu",
+          "rationale": "Proporciona la infraestructura de comunicación para agentes y productos. La licencia de la herramienta no fue identificada por GitHub. Su último cambio fue reciente y cuenta con alta adopción en la comunidad de desarrollo de Node.js y agentes de comunicación."
+        },
+        {
+          "key": "c2",
+          "label": "Umami",
+          "role": "Plataforma de analítica web",
+          "full_name": "umami-software/umami",
+          "rationale": "Permite medir el tráfico, comportamiento y conversiones en un solo lugar mediante una plataforma de analítica web orientada a la privacidad. No utiliza cookies y ofrece opciones de alojamiento propio o en la nube. Su último cambio es muy reciente y utiliza licencia MIT."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la tienda de mascotas opera mediante un sitio web autohospedado donde se puede integrar un script de analítica y la infraestructura de comunicación.",
+        "El cliente requiere que los datos de analítica de tráfico por producto se mantengan privados y autohospedados."
+      ],
+      "limitations": [
+        "Ninguno de los candidatos en comunicación ofrece un chat en vivo síncrono estándar para la interacción directa entre un cliente y un asesor humano."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:14:54.773670Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y respaldos",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos de usuario",
+          "evidence": "cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.338
+        ],
+        [
+          "rustfs/rustfs",
+          0.324
+        ],
+        [
+          "hashicorp/vault",
+          0.278
+        ],
+        [
+          "etcd-io/etcd",
+          0.251
+        ],
+        [
+          "valkey-io/valkey",
+          0.234
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.364
+        ],
+        [
+          "hashicorp/vault",
+          0.361
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.331
+        ],
+        [
+          "zitadel/zitadel",
+          0.322
+        ],
+        [
+          "ory/kratos",
+          0.31
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de respaldos y autenticación contable",
+      "summary": "Esta propuesta implementa un sistema para el estudio contable utilizando almacenamiento distribuido para las copias de seguridad de los clientes y un gestor de identidad y accesos para que cada contador ingrese de forma segura. Ambas herramientas se mantienen activamente y cuentan con licencias abiertas.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos para copias de seguridad automáticas de carpetas de clientes, y SeaweedFS es un sistema de almacenamiento distribuido para sistemas de archivos y almacenamiento de objetos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "rationale": "Resuelve la necesidad de guardar las copias de seguridad de las carpetas de los clientes mediante un sistema de almacenamiento distribuido con acceso por sistemas de archivos. Posee licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso y permisos para que cada contador entre con su cuenta, y Keycloak ofrece gestión de identidad y acceso para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Autenticación de usuarios",
+          "rationale": "Permite gestionar las cuentas de usuario para que los contadores inicien sesión de manera centralizada. Utiliza licencia Apache-2.0 y cuenta con desarrollo constante."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los respaldos automáticos nocturnos se programarán mediante scripts externos que enviarán la información al almacenamiento seleccionado.",
+        "Se asume que la asignación específica de clientes por contador se configurará a nivel de aplicación sobre la infraestructura de autenticación."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye la interfaz de usuario ni la lógica de negocio para filtrar la vista exclusiva de los clientes asignados a cada contador."
+      ]
+    },
+    "response": {
+      "id": "2c2e825dd9c54dec840d497b0b8d5cf4",
+      "status": "ok",
+      "title": "Sistema de gestión de respaldos y autenticación contable",
+      "summary": "Esta propuesta implementa un sistema para el estudio contable utilizando almacenamiento distribuido para las copias de seguridad de los clientes y un gestor de identidad y accesos para que cada contador ingrese de forma segura. Ambas herramientas se mantienen activamente y cuentan con licencias abiertas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de respaldos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la necesidad de guardar las copias de seguridad de las carpetas de los clientes mediante un sistema de almacenamiento distribuido con acceso por sistemas de archivos. Posee licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Autenticación de usuarios",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Permite gestionar las cuentas de usuario para que los contadores inicien sesión de manera centralizada. Utiliza licencia Apache-2.0 y cuenta con desarrollo constante."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los respaldos automáticos nocturnos se programarán mediante scripts externos que enviarán la información al almacenamiento seleccionado.",
+        "Se asume que la asignación específica de clientes por contador se configurará a nivel de aplicación sobre la infraestructura de autenticación."
+      ],
+      "limitations": [
+        "La propuesta no incluye la interfaz de usuario ni la lógica de negocio para filtrar la vista exclusiva de los clientes asignados a cada contador."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:15:07.042962Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío masivo de boletines por correo",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "knadh/listmonk",
+          0.282
+        ],
+        [
+          "postalserver/postal",
+          0.271
+        ],
+        [
+          "caronc/apprise",
+          0.237
+        ],
+        [
+          "prometheus/alertmanager",
+          0.221
+        ],
+        [
+          "novuhq/novu",
+          0.217
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de boletines por correo",
+      "summary": "La propuesta cubre el envío masivo de boletines por correo a los suscriptores de la marca de ropa. No se encontraron candidatos para medir las menciones en redes sociales como Instagram y TikTok.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide el envío masivo de boletines por correo y knadh/listmonk gestiona listas de correo y boletines.",
+          "fit": "serves",
+          "full_name": "knadh/listmonk",
+          "label": "listmonk",
+          "role": "Gestor de listas y boletines de correo",
+          "rationale": "Permite administrar listas de suscriptores y enviar boletines mensuales de forma eficiente mediante una aplicación autónoma con panel moderno. Su licencia es AGPL-3.0 y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La marca de ropa cuenta con una base de datos propia de suscriptores para importar en la plataforma.",
+        "Se requiere medir menciones en Instagram y TikTok pero no hay candidatos disponibles en el sistema para esta necesidad."
+      ],
+      "other_limitations": [
+        "No se dispone de herramientas en los candidatos para medir las menciones en Instagram y TikTok solicitadas por el usuario."
+      ]
+    },
+    "response": {
+      "id": "4dd6fe16ff1f4b7088bfadc6a7b43ea0",
+      "status": "ok",
+      "title": "Sistema de gestión de boletines por correo",
+      "summary": "La propuesta cubre el envío masivo de boletines por correo a los suscriptores de la marca de ropa. No se encontraron candidatos para medir las menciones en redes sociales como Instagram y TikTok.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "listmonk",
+          "role": "Gestor de listas y boletines de correo",
+          "full_name": "knadh/listmonk",
+          "rationale": "Permite administrar listas de suscriptores y enviar boletines mensuales de forma eficiente mediante una aplicación autónoma con panel moderno. Su licencia es AGPL-3.0 y cuenta con mantenimiento activo reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La marca de ropa cuenta con una base de datos propia de suscriptores para importar en la plataforma.",
+        "Se requiere medir menciones en Instagram y TikTok pero no hay candidatos disponibles en el sistema para esta necesidad."
+      ],
+      "limitations": [
+        "No se dispone de herramientas en los candidatos para medir las menciones en Instagram y TikTok solicitadas por el usuario."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:15:18.868666Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "telemedicina-consultas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "realización de videollamadas web",
+          "evidence": "que los médicos atiendan a sus pacientes por videollamada desde el navegador"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar las historias clínicas en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "pallets/flask",
+          0.272
+        ],
+        [
+          "vuejs/core",
+          0.257
+        ],
+        [
+          "microsoft/playwright",
+          0.249
+        ],
+        [
+          "Kludex/starlette",
+          0.234
+        ],
+        [
+          "vercel/next.js",
+          0.232
+        ]
+      ],
+      "database": [
+        [
+          "MariaDB/server",
+          0.385
+        ],
+        [
+          "etcd-io/etcd",
+          0.379
+        ],
+        [
+          "redis/redis",
+          0.377
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.371
+        ],
+        [
+          "valkey-io/valkey",
+          0.366
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura para Videollamadas Médicas y Historias Clínicas",
+      "summary": "Esta propuesta integra una base de datos relacional para resguardar las historias clínicas. Sin embargo, no se encontraron herramientas específicas para la realización de videollamadas web.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide realización de videollamadas web y el candidato más cercano, vercel/next.js, es un framework de React para construir aplicaciones web.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Comunicación",
+          "role": "Interfaz web para la aplicación",
+          "rationale": "Permite desarrollar interfaces de usuario basadas en componentes web, pero no incluye capacidades nativas para la transmisión de videollamadas."
+        },
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento en base de datos relacional y MariaDB/server es un servidor de base de datos relacional desarrollado por la comunidad.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "Base de datos",
+          "role": "Almacenamiento de historias clínicas",
+          "rationale": "Ofrece un sistema robusto de base de datos relacional bajo licencia GPL-2.0, ideal para guardar de forma segura las historias clínicas con soporte para motores como InnoDB."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con servidores propios o infraestructura en la nube para alojar la base de datos y la aplicación web."
+      ],
+      "other_limitations": [
+        "Ninguno de los candidatos evaluados en el área de comunicación ofrece soporte directo para videollamadas desde el navegador."
+      ]
+    },
+    "response": {
+      "id": "0668ae327eb54d739f0d4b4c6a8ea612",
+      "status": "ok",
+      "title": "Arquitectura para Videollamadas Médicas y Historias Clínicas",
+      "summary": "Esta propuesta integra una base de datos relacional para resguardar las historias clínicas. Sin embargo, no se encontraron herramientas específicas para la realización de videollamadas web.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Base de datos",
+          "role": "Almacenamiento de historias clínicas",
+          "full_name": "MariaDB/server",
+          "rationale": "Ofrece un sistema robusto de base de datos relacional bajo licencia GPL-2.0, ideal para guardar de forma segura las historias clínicas con soporte para motores como InnoDB."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red de consultorios cuenta con servidores propios o infraestructura en la nube para alojar la base de datos y la aplicación web."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Permite desarrollar interfaces de usuario basadas en componentes web, pero no incluye capacidades nativas para la transmisión de videollamadas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:15:30.380184Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "red-profesional-contactos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos orientados a grafos",
+          "evidence": "guardar quién trabajó con quién en una base de datos de grafos"
+        },
+        {
+          "category": "auth",
+          "query": "inicio de sesión federado con proveedores externos",
+          "evidence": "que los usuarios entren con su cuenta de LinkedIn o Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.378
+        ],
+        [
+          "redis/redis",
+          0.357
+        ],
+        [
+          "valkey-io/valkey",
+          0.342
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.31
+        ],
+        [
+          "rustfs/rustfs",
+          0.302
+        ]
+      ],
+      "auth": [
+        [
+          "supertokens/supertokens-core",
+          0.45
+        ],
+        [
+          "zitadel/zitadel",
+          0.382
+        ],
+        [
+          "keycloak/keycloak",
+          0.361
+        ],
+        [
+          "ory/kratos",
+          0.357
+        ],
+        [
+          "juspay/hyperswitch",
+          0.316
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Infraestructura para red profesional de recomendación y autenticación",
+      "summary": "Se propone una solución con Keycloak para gestionar la autenticación federada con proveedores externos, permitiendo el inicio de sesión de usuarios. No se encontraron candidatos de bases de datos de grafos entre las opciones disponibles, por lo que esa necesidad queda sin resolver en esta propuesta.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide una base de datos orientada a grafos para guardar relaciones de trabajo, y el candidato etcd-io/etcd es un almacén clave-valor distribuido.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Almacenamiento de datos",
+          "rationale": "Ninguno de los candidatos analizados ofrece almacenamiento orientado a grafos para registrar quién trabajó con quién."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide inicio de sesión federado con Google o LinkedIn, y keycloak/keycloak ofrece gestión de identidad y acceso de código abierto con soporte para OIDC.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestión de identidad y accesos",
+          "rationale": "Permite resolver la autenticación y el inicio de sesión utilizando proveedores externos mediante estándares modernos como OIDC."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la red profesional requerirá una infraestructura escalable para la gestión de usuarios y sesiones.",
+        "El sistema necesitará una base de datos de grafos especializada que no está presente en el catálogo de candidatos para la recomendación de contactos."
+      ],
+      "other_limitations": [
+        "No se dispone de una base de datos de grafos para guardar quién trabajó con quién."
+      ]
+    },
+    "response": {
+      "id": "8a8523e9b9b14180ba2329bdc30b3f4c",
+      "status": "ok",
+      "title": "Infraestructura para red profesional de recomendación y autenticación",
+      "summary": "Se propone una solución con Keycloak para gestionar la autenticación federada con proveedores externos, permitiendo el inicio de sesión de usuarios. No se encontraron candidatos de bases de datos de grafos entre las opciones disponibles, por lo que esa necesidad queda sin resolver en esta propuesta.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Gestión de identidad y accesos",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Permite resolver la autenticación y el inicio de sesión utilizando proveedores externos mediante estándares modernos como OIDC."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la red profesional requerirá una infraestructura escalable para la gestión de usuarios y sesiones.",
+        "El sistema necesitará una base de datos de grafos especializada que no está presente en el catálogo de candidatos para la recomendación de contactos."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Ninguno de los candidatos analizados ofrece almacenamiento orientado a grafos para registrar quién trabajó con quién.",
+        "No se dispone de una base de datos de grafos para guardar quién trabajó con quién."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:15:42.043559Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-global-imagenes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución global de archivos",
+          "evidence": "las fotos de sus productos se sirvan desde servidores cercanos a cada comprador"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda visual y similitud de imágenes",
+          "evidence": "un buscador donde el cliente suba una foto y encuentre productos parecidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.419
+        ],
+        [
+          "rustfs/rustfs",
+          0.372
+        ],
+        [
+          "etcd-io/etcd",
+          0.35
+        ],
+        [
+          "valkey-io/valkey",
+          0.277
+        ],
+        [
+          "git/git",
+          0.262
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.4
+        ],
+        [
+          "pgvector/pgvector",
+          0.345
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.325
+        ],
+        [
+          "typesense/typesense",
+          0.315
+        ],
+        [
+          "huggingface/transformers",
+          0.262
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de almacenamiento y búsqueda visual",
+      "summary": "Esta propuesta implementa un sistema distribuido para una tienda en línea internacional, permitiendo gestionar las fotos de los productos mediante almacenamiento de objetos y habilitar un motor de búsqueda por similitud de imágenes para que los clientes encuentren productos subiendo fotos.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide servir fotos de productos desde servidores cercanos a cada comprador y SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución de archivos multimedia",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido para almacenamiento de objetos S3 y sistemas de archivos, diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para servir fotos de productos globalmente."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide un buscador donde el cliente suba una foto y encuentre productos parecidos, y Qdrant ofrece un motor de búsqueda vectorial y de similitud de imágenes.",
+          "fit": "serves",
+          "full_name": "qdrant/qdrant",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda visual y por vectores",
+          "rationale": "Qdrant es un motor de búsqueda vectorial de alto rendimiento enfocado en la similitud de embeddings y búsqueda de imágenes, lo que permite implementar el buscador para que los clientes encuentren productos parecidos a partir de una foto."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "HTTP",
+          "description": "El motor de búsqueda consulta las imágenes almacenadas en el sistema de archivos distribuido para mostrar los resultados visuales al usuario."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con una infraestructura de red o CDN complementaria para garantizar la distribución de los archivos en múltiples continentes.",
+        "Se asume la disponibilidad de modelos de aprendizaje automático para convertir las fotos subidas por los usuarios en vectores compatibles con el motor de búsqueda."
+      ],
+      "other_limitations": [
+        "La solución propuesta no incluye de manera nativa la CDN geográfica específica para la entrega en el borde, aunque SeaweedFS provee el almacenamiento distribuido base."
+      ]
+    },
+    "response": {
+      "id": "f497136ebbca4c6392c0199964fc61c6",
+      "status": "ok",
+      "title": "Arquitectura de almacenamiento y búsqueda visual",
+      "summary": "Esta propuesta implementa un sistema distribuido para una tienda en línea internacional, permitiendo gestionar las fotos de los productos mediante almacenamiento de objetos y habilitar un motor de búsqueda por similitud de imágenes para que los clientes encuentren productos subiendo fotos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento y distribución de archivos multimedia",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido para almacenamiento de objetos S3 y sistemas de archivos, diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para servir fotos de productos globalmente."
+        },
+        {
+          "key": "c2",
+          "label": "Qdrant",
+          "role": "Motor de búsqueda visual y por vectores",
+          "full_name": "qdrant/qdrant",
+          "rationale": "Qdrant es un motor de búsqueda vectorial de alto rendimiento enfocado en la similitud de embeddings y búsqueda de imágenes, lo que permite implementar el buscador para que los clientes encuentren productos parecidos a partir de una foto."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTP",
+          "description": "El motor de búsqueda consulta las imágenes almacenadas en el sistema de archivos distribuido para mostrar los resultados visuales al usuario."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con una infraestructura de red o CDN complementaria para garantizar la distribución de los archivos en múltiples continentes.",
+        "Se asume la disponibilidad de modelos de aprendizaje automático para convertir las fotos subidas por los usuarios en vectores compatibles con el motor de búsqueda."
+      ],
+      "limitations": [
+        "La solución propuesta no incluye de manera nativa la CDN geográfica específica para la entrega en el borde, aunque SeaweedFS provee el almacenamiento distribuido base."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:15:56.442626Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": [
+        "el título tiene 81 caracteres; el máximo es 80: escríbelo en menos de 10 palabras"
+      ]
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "repuestos-factura-electronica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de factura electronica fiscal",
+          "evidence": "emitir la factura electrónica de cada venta ante la autoridad tributaria"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los PDF de las facturas en un almacenamiento de archivos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": [
+        [
+          "killbill/killbill",
+          0.215
+        ],
+        [
+          "getlago/lago",
+          0.183
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.293
+        ],
+        [
+          "rustfs/rustfs",
+          0.265
+        ],
+        [
+          "etcd-io/etcd",
+          0.252
+        ],
+        [
+          "pnpm/pnpm",
+          0.228
+        ],
+        [
+          "hashicorp/vault",
+          0.206
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión de facturación y almacenamiento para repuestos",
+      "summary": "La propuesta cubre el almacenamiento seguro de los archivos PDF mediante un sistema de almacenamiento distribuido. La emisión de facturas electrónicas ante la autoridad tributaria no cuenta con herramientas candidatas directas en el catálogo y queda pendiente de integración.",
+      "boxes": [
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide emitir factura electrónica fiscal y el candidato gestiona suscripciones y pagos.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Pagos",
+          "role": "Gestión de pagos y suscripciones",
+          "rationale": "Los candidatos evaluados gestionan pagos y facturación por suscripción, pero ninguno realiza la emisión de facturas electrónicas ante la autoridad tributaria solicitada."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar archivos PDF en almacenamiento y el candidato ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, lo que permite guardar los PDF de las facturas de manera eficiente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un sistema ERP o de ventas propio que se conectará con un módulo externo para la emisión de facturas electrónicas."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta en el catálogo para la emisión de facturas electrónicas ante la autoridad tributaria."
+      ]
+    },
+    "response": {
+      "id": "ade7ee0d946c4f39bc5bc96374523fec",
+      "status": "ok",
+      "title": "Sistema de gestión de facturación y almacenamiento para repuestos",
+      "summary": "La propuesta cubre el almacenamiento seguro de los archivos PDF mediante un sistema de almacenamiento distribuido. La emisión de facturas electrónicas ante la autoridad tributaria no cuenta con herramientas candidatas directas en el catálogo y queda pendiente de integración.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos PDF",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, lo que permite guardar los PDF de las facturas de manera eficiente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la distribuidora cuenta con un sistema ERP o de ventas propio que se conectará con un módulo externo para la emisión de facturas electrónicas."
+      ],
+      "limitations": [
+        "Pagos: ninguna de las herramientas encontradas encaja. Los candidatos evaluados gestionan pagos y facturación por suscripción, pero ninguno realiza la emisión de facturas electrónicas ante la autoridad tributaria solicitada.",
+        "No se encontró ninguna herramienta en el catálogo para la emisión de facturas electrónicas ante la autoridad tributaria."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:16:07.585419Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "constructora-aprobaciones",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos de notificación",
+          "evidence": "avisar por correo a cada persona cuando tenga una solicitud pendiente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "caronc/apprise",
+          0.369
+        ],
+        [
+          "novuhq/novu",
+          0.337
+        ],
+        [
+          "postalserver/postal",
+          0.282
+        ],
+        [
+          "prometheus/alertmanager",
+          0.281
+        ],
+        [
+          "knadh/listmonk",
+          0.249
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de notificaciones para solicitudes de compra",
+      "summary": "Esta propuesta cubre la necesidad de notificar por correo electrónico a los involucrados en el flujo de aprobación de compras. No se encontraron herramientas específicas para la gestión del flujo de trabajo de aprobación.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar correos de notificación y Postal ofrece una plataforma completa de entrega de correo para enviar correos electrónicos salientes.",
+          "fit": "serves",
+          "full_name": "postalserver/postal",
+          "label": "Postal",
+          "role": "Servidor de correo",
+          "rationale": "Resuelve la necesidad de avisar por correo a cada persona cuando tenga una solicitud pendiente mediante una plataforma de entrega de correo completamente funcional con licencia MIT y mantenimiento reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema o módulo externo para gestionar el flujo de aprobación de las solicitudes de compra.",
+        "Se necesita la necesidad de gestión de flujos de aprobación o workflow que no cuenta con candidatos en el catálogo."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un sistema de flujo de trabajo para que el residente de obra la pida, el ingeniero la apruebe y compras la registre."
+      ]
+    },
+    "response": {
+      "id": "df067300b10848f38449dfeb73ad0453",
+      "status": "ok",
+      "title": "Sistema de notificaciones para solicitudes de compra",
+      "summary": "Esta propuesta cubre la necesidad de notificar por correo electrónico a los involucrados en el flujo de aprobación de compras. No se encontraron herramientas específicas para la gestión del flujo de trabajo de aprobación.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Postal",
+          "role": "Servidor de correo",
+          "full_name": "postalserver/postal",
+          "rationale": "Resuelve la necesidad de avisar por correo a cada persona cuando tenga una solicitud pendiente mediante una plataforma de entrega de correo completamente funcional con licencia MIT y mantenimiento reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la constructora cuenta con un sistema o módulo externo para gestionar el flujo de aprobación de las solicitudes de compra.",
+        "Se necesita la necesidad de gestión de flujos de aprobación o workflow que no cuenta con candidatos en el catálogo."
+      ],
+      "limitations": [
+        "La propuesta no incluye un sistema de flujo de trabajo para que el residente de obra la pida, el ingeniero la apruebe y compras la registre."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:16:18.621485Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-mascotas-chat",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en vivo para clientes",
+          "evidence": "un chat en vivo para que sus clientes conversen con un asesor desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de tráfico web de visitantes",
+          "evidence": "medir cuántos visitantes llegan a la página de cada producto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "novuhq/novu",
+          0.249
+        ],
+        [
+          "openai/openai-python",
+          0.211
+        ],
+        [
+          "envoyproxy/envoy",
+          0.198
+        ],
+        [
+          "PostHog/posthog",
+          0.189
+        ],
+        [
+          "encode/httpx",
+          0.184
+        ]
+      ],
+      "analytics": [
+        [
+          "plausible/analytics",
+          0.38
+        ],
+        [
+          "umami-software/umami",
+          0.366
+        ],
+        [
+          "grafana/grafana",
+          0.248
+        ],
+        [
+          "traefik/traefik",
+          0.228
+        ],
+        [
+          "microsoft/playwright",
+          0.224
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de infraestructura web para tienda de mascotas",
+      "summary": "Se propone una solución de analítica web para medir el tráfico de visitantes en las páginas de productos, mientras que la necesidad de chat en vivo quedó sin una herramienta adecuada en los candidatos encontrados.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide un chat en vivo para clientes y el candidato más cercano, novuhq/novu, ofrece infraestructura de comunicación para agentes y productos.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Novu",
+          "role": "Infraestructura de comunicación",
+          "rationale": "Novu ofrece infraestructura de comunicación para agentes y productos, pero no implementa un chat en vivo integrado para que los clientes conversen con un asesor desde la página."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide medir cuántos visitantes llegan a la página de cada producto y el candidato plausible/analytics ofrece analítica web de código abierto y respetuosa con la privacidad.",
+          "fit": "serves",
+          "full_name": "plausible/analytics",
+          "label": "Plausible Analytics",
+          "role": "Analítica web",
+          "rationale": "Plausible Analytics provee analítica web ligera y sin cookies para medir las visitas de los usuarios. Su licencia es AGPL-3.0 y se mantiene activa con cambios recientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La tienda de mascotas opera un sitio web transaccional donde cada producto tiene una URL dedicada.",
+        "Se requiere un chat en vivo para la atención al cliente."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta entre los candidatos que resuelva específicamente la necesidad de chat en vivo para clientes."
+      ]
+    },
+    "response": {
+      "id": "4a6d6636282e4445881f1a5b1ba70aca",
+      "status": "ok",
+      "title": "Propuesta de infraestructura web para tienda de mascotas",
+      "summary": "Se propone una solución de analítica web para medir el tráfico de visitantes en las páginas de productos, mientras que la necesidad de chat en vivo quedó sin una herramienta adecuada en los candidatos encontrados.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Plausible Analytics",
+          "role": "Analítica web",
+          "full_name": "plausible/analytics",
+          "rationale": "Plausible Analytics provee analítica web ligera y sin cookies para medir las visitas de los usuarios. Su licencia es AGPL-3.0 y se mantiene activa con cambios recientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La tienda de mascotas opera un sitio web transaccional donde cada producto tiene una URL dedicada.",
+        "Se requiere un chat en vivo para la atención al cliente."
+      ],
+      "limitations": [
+        "Comunicación: ninguna de las herramientas encontradas encaja. Novu ofrece infraestructura de comunicación para agentes y productos, pero no implementa un chat en vivo integrado para que los clientes conversen con un asesor desde la página.",
+        "No se encontró ninguna herramienta entre los candidatos que resuelva específicamente la necesidad de chat en vivo para clientes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:16:30.510651Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "estudio-contable-respaldos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "copias de seguridad automáticas de archivos",
+          "evidence": "copias de seguridad automáticas cada noche de las carpetas de sus clientes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por usuario",
+          "evidence": "que cada contador entre con su cuenta y vea solo los clientes que tiene asignados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "rustfs/rustfs",
+          0.264
+        ],
+        [
+          "hashicorp/vault",
+          0.257
+        ],
+        [
+          "caddyserver/caddy",
+          0.242
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.238
+        ],
+        [
+          "cert-manager/cert-manager",
+          0.221
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.355
+        ],
+        [
+          "hashicorp/vault",
+          0.343
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.337
+        ],
+        [
+          "zitadel/zitadel",
+          0.324
+        ],
+        [
+          "ory/kratos",
+          0.315
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de almacenamiento seguro y gestión de acceso para estudio contable",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para las copias de seguridad de las carpetas de los clientes y una plataforma de gestión de identidad y acceso para los contadores. El sistema no incluye de manera nativa la automatización de las copias nocturnas, lo cual deberá resolverse mediante tareas programadas externas.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar archivos mediante copias de seguridad y SeaweedFS ofrece un sistema de almacenamiento distribuido para archivos y objetos diseñado para manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos",
+          "rationale": "SeaweedFS resuelve la necesidad de almacenar las carpetas de los clientes gracias a su arquitectura de almacenamiento distribuido y sistemas de archivos con acceso rápido a disco. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso por usuario y Keycloak ofrece gestión de identidad y acceso para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Autenticación de usuarios",
+          "rationale": "Keycloak permite que cada contador entre con su cuenta mediante una infraestructura robusta de gestión de acceso e identidad de código abierto con licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "HTTP/OIDC",
+          "description": "El servicio de autenticación valida las credenciales de los contadores antes de permitir el acceso al almacenamiento de clientes."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la automatización de las copias de seguridad cada noche se implementará a nivel de sistema operativo o mediante scripts externos que interactúen con el almacenamiento.",
+        "Se asume que la asignación específica de clientes por contador se configurará a nivel de la aplicación que consuma el sistema de autenticación."
+      ],
+      "other_limitations": [
+        "Ninguna de las herramientas candidatas incluye la programación nativa de copias de seguridad nocturnas."
+      ]
+    },
+    "response": {
+      "id": "15e348e838724fe79a14a9c20d6a67c8",
+      "status": "ok",
+      "title": "Sistema de almacenamiento seguro y gestión de acceso para estudio contable",
+      "summary": "Esta propuesta implementa un sistema de almacenamiento distribuido para las copias de seguridad de las carpetas de los clientes y una plataforma de gestión de identidad y acceso para los contadores. El sistema no incluye de manera nativa la automatización de las copias nocturnas, lo cual deberá resolverse mediante tareas programadas externas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de archivos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS resuelve la necesidad de almacenar las carpetas de los clientes gracias a su arquitectura de almacenamiento distribuido y sistemas de archivos con acceso rápido a disco. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Autenticación de usuarios",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak permite que cada contador entre con su cuenta mediante una infraestructura robusta de gestión de acceso e identidad de código abierto con licencia Apache-2.0 y mantenimiento activo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTP/OIDC",
+          "description": "El servicio de autenticación valida las credenciales de los contadores antes de permitir el acceso al almacenamiento de clientes."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la automatización de las copias de seguridad cada noche se implementará a nivel de sistema operativo o mediante scripts externos que interactúen con el almacenamiento.",
+        "Se asume que la asignación específica de clientes por contador se configurará a nivel de la aplicación que consuma el sistema de autenticación."
+      ],
+      "limitations": [
+        "Ninguna de las herramientas candidatas incluye la programación nativa de copias de seguridad nocturnas."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:16:42.336530Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "marca-ropa-redes",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío masivo de correos electrónicos",
+          "evidence": "enviar un boletín mensual por correo a sus suscriptores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [
+        [
+          "postalserver/postal",
+          0.282
+        ],
+        [
+          "knadh/listmonk",
+          0.248
+        ],
+        [
+          "novuhq/novu",
+          0.2
+        ],
+        [
+          "prometheus/alertmanager",
+          0.197
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de boletines y marketing para marca de ropa",
+      "summary": "La propuesta implementa una plataforma especializada para gestionar listas de correo y enviar boletines mensuales a los suscriptores. La medición de menciones en Instagram y TikTok no pudo resolverse por falta de candidatos específicos en esta área.",
+      "boxes": [
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar un boletín mensual por correo a sus suscriptores y knadh/listmonk permite gestionar listas de correo y campañas de boletines.",
+          "fit": "serves",
+          "full_name": "knadh/listmonk",
+          "label": "listmonk",
+          "role": "Gestión de boletines",
+          "rationale": "Resuelve el envío de boletines mensuales al funcionar como un administrador de listas de correo de alto rendimiento con un panel moderno. Utiliza la licencia AGPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La marca de ropa ya cuenta con una lista de suscriptores recolectada en su sitio web o tienda física.",
+        "El monitoreo de menciones en redes sociales como Instagram y TikTok requerirá herramientas externas adicionales no incluidas en los candidatos actuales."
+      ],
+      "other_limitations": [
+        "No se encontraron candidatos para medir las menciones de la marca en Instagram y TikTok."
+      ]
+    },
+    "response": {
+      "id": "2b4890e3ed394bb6a3bb5e53e87119ce",
+      "status": "ok",
+      "title": "Arquitectura de boletines y marketing para marca de ropa",
+      "summary": "La propuesta implementa una plataforma especializada para gestionar listas de correo y enviar boletines mensuales a los suscriptores. La medición de menciones en Instagram y TikTok no pudo resolverse por falta de candidatos específicos en esta área.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "listmonk",
+          "role": "Gestión de boletines",
+          "full_name": "knadh/listmonk",
+          "rationale": "Resuelve el envío de boletines mensuales al funcionar como un administrador de listas de correo de alto rendimiento con un panel moderno. Utiliza la licencia AGPL-3.0 y cuenta con mantenimiento activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La marca de ropa ya cuenta con una lista de suscriptores recolectada en su sitio web o tienda física.",
+        "El monitoreo de menciones en redes sociales como Instagram y TikTok requerirá herramientas externas adicionales no incluidas en los candidatos actuales."
+      ],
+      "limitations": [
+        "No se encontraron candidatos para medir las menciones de la marca en Instagram y TikTok."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-10T05:16:53.282535Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]

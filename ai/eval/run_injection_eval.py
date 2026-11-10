@@ -75,8 +75,8 @@ def load_cases(name: str = "dev") -> InjectionCases:
 
 def poisoned_search(buscar, poison: str):
     """Búsqueda cuyo primer resultado trae el ataque al inicio de su descripción."""
-    def wrapped(query, k):
-        results = buscar(query, k)
+    def wrapped(query, k, **filters):
+        results = buscar(query, k, **filters)
         if not results:
             return results
         first = results[0]

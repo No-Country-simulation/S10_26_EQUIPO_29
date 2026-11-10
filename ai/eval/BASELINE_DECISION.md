@@ -8,6 +8,11 @@ documento.
 **Las reglas de abajo se fijaron antes de medir.** La fecha del commit que las agregó
 es anterior a la de cualquier reporte de esta medición.
 
+**Después de esta línea base:** desde el 10-nov, el asistente prioriza los candidatos de
+la categoría de cada necesidad. Las cifras de este documento describen la versión
+anterior (`ba94ef4`); el cambio y sus cifras están en
+[`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md).
+
 ## Conjuntos y su papel
 
 | Papel | Búsqueda | Asistente |

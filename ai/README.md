@@ -31,12 +31,13 @@ validación aparte para comprobar reglas nuevas con pedidos que el prompt no vio
 [`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
 
 **Asistente.** `asistir()` responde un pedido en tres pasos: **entender** (modelo de lenguaje:
-necesidades o preguntas), **buscar** (embeddings, una búsqueda por necesidad) y **generar** el
-mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus 5 primeros candidatos,
-o ninguna si no sirven). El modelo escribe con salida estructurada; el código valida contra el
-contrato `AssistantResponse` y reintenta una vez si no cumple. Todo el pedido tiene un
-presupuesto de 15 s, y si el proveedor principal falla por algo temporal, la llamada pasa al
-respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Servicio del asistente](#servicio-del-asistente)).
+necesidades o preguntas), **buscar** (embeddings, una búsqueda por necesidad: primero los repos
+cuya categoría principal es la de la necesidad y, si no llenan los lugares, la búsqueda abierta)
+y **generar** el mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus 5
+primeros candidatos, o ninguna si no sirven). El modelo escribe con salida estructurada; el
+código valida contra el contrato `AssistantResponse` y reintenta una vez si no cumple. Todo el
+pedido tiene un presupuesto de 15 s, y si el proveedor principal falla por algo temporal, la
+llamada pasa al respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Servicio del asistente](#servicio-del-asistente)).
 
 **Defensa contra prompt injection.** `guardrails.py` revisa el pedido antes de llamar al
 modelo (si parece una orden al asistente, responde con preguntas, sin llamar al modelo),
@@ -92,6 +93,7 @@ ai/
 │   ├── README.md               # Evaluación de la búsqueda: cómo correrla y leerla
 │   ├── SEARCH_DECISION.md      # Modelo de embeddings y umbral: decisión y evidencia
 │   ├── GUARDRAILS_DECISION.md  # Defensa contra prompt injection: decisión, evidencia y límites
+│   ├── CATEGORY_PRIORITY_DECISION.md  # Prioridad por categoría en los candidatos: decisión y evidencia
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
 │   ├── LLM_DECISION.md         # Elección del modelo de lenguaje: criterios, resultados y descartados
 │   ├── assistant_cases.json    # Casos de prueba del asistente

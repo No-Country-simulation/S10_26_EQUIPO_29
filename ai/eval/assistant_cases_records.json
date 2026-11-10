@@ -1,0 +1,541 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-08T16:26:25+00:00",
+  "cases": [
+    {
+      "id": "panaderia-pedidos",
+      "query": "Tengo una panadería de barrio y recibo encargos por teléfono y por redes. Quiero guardar los datos de mis clientes, los pedidos y el inventario de ingredientes en un mismo lugar. También necesito que la gente pueda pagar sus encargos por internet y consultar un resumen de ventas por semana.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"guardar los datos de mis clientes, los pedidos y el inventario de ingredientes en un mismo lugar\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"que la gente pueda pagar sus encargos por internet\": pago de un pedido o una compra. hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"consultar un resumen de ventas por semana\": resumen de ventas: tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registros, pagos y un resumen semanal de ventas."
+    },
+    {
+      "id": "compra-cacao-productores",
+      "query": "Compro cacao a pequeños productores y luego lo clasifico y vendo a fabricantes. Quiero registrar cada compra con el productor, el peso, la calidad y la fecha, y consultar todo ese historial cuando lo necesite. Necesito calcular automáticamente los totales por zona y por mes, y ver cuáles calidades se venden más.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar cada compra con el productor, el peso, la calidad y la fecha, y consultar todo ese historial cuando lo necesite\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"calcular automáticamente los totales por zona y por mes\": cálculo programado sobre los datos propios (totales por zona y mes). airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"ver cuáles calidades se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de compras, totales automáticos por zona y mes, y reporte de ventas."
+    },
+    {
+      "id": "tortas-personalizadas",
+      "query": "Tengo un emprendimiento de tortas por encargo y cada cliente pide sabores, tamaños y decoraciones diferentes. Quiero conservar el historial de pedidos y las preferencias de cada cliente para no tener que buscar conversaciones viejas. También necesito recibir pagos por adelantado y mandar una confirmación cuando el pedido quede reservado.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"conservar el historial de pedidos y las preferencias de cada cliente\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"recibir pagos por adelantado\": pago de un pedido o una compra. hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"mandar una confirmación cuando el pedido quede reservado\": aviso a una persona, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Historial de pedidos, pagos por adelantado y confirmaciones."
+    },
+    {
+      "id": "limpieza-domiciliaria",
+      "query": "Dirijo un pequeño equipo de limpieza a domicilio. Quiero que el sistema asigne automáticamente los servicios del día según la disponibilidad de cada trabajador. También necesito que cada empleado pueda entrar con su propia cuenta y consultar únicamente sus tareas, y que los clientes reciban un aviso el día anterior a la visita.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"asigne automáticamente los servicios del día según la disponibilidad de cada trabajador\": asignar los servicios según la disponibilidad = agenda del negocio. Casi: airflow, prefect y dagster programan tareas de datos; ansible configura servidores."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada empleado pueda entrar con su propia cuenta y consultar únicamente sus tareas\": \"Sus tareas\" son las que le asignan: ver solo lo que le asignan = permisos. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"los clientes reciban un aviso el día anterior a la visita\": aviso a una persona, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Sin necesidades de base de datos ni reportes; la asignación automática de servicios no tiene herramienta."
+    },
+    {
+      "id": "lavado-detallado-motos",
+      "query": "Tengo un negocio de lavado y detallado de motos. Quiero que cada empleado vea únicamente los servicios que le asigno y que el cliente reciba un mensaje cuando su moto esté lista. También me gustaría que, al confirmar un servicio, se cree automáticamente una tarea para preparar el puesto de trabajo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada empleado vea únicamente los servicios que le asigno\": ver solo lo que le asignan = permisos. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"el cliente reciba un mensaje cuando su moto esté lista\": aviso a una persona, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"se cree automáticamente una tarea para preparar el puesto de trabajo\": crear una tarea del negocio cuando se confirma un servicio = flujo de trabajo del negocio. Casi: ansible (servidores), airflow, prefect y dagster (datos), celery (cola de tareas de código), playwright (navegador)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Sin necesidades de base de datos ni reportes; crear tareas al confirmar un servicio no tiene herramienta."
+    },
+    {
+      "id": "almuerzos-empresariales",
+      "query": "Preparo almuerzos para oficinas y empresas pequeñas. Quiero registrar los menús solicitados por cada empresa y las cantidades entregadas cada día. Me gustaría ver cuánto vendí por cliente y por semana, y permitir que las empresas paguen sus pedidos en línea.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar los menús solicitados por cada empresa y las cantidades entregadas cada día\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"ver cuánto vendí por cliente y por semana\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"permitir que las empresas paguen sus pedidos en línea\": pago de un pedido o una compra. hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de entregas, ventas por cliente y pagos."
+    },
+    {
+      "id": "miel-productos-colmena",
+      "query": "Tengo una pequeña marca familiar de miel y otros productos de la colmena. Necesito actualizar las descripciones, fotos y precios de mi página sin pedir ayuda cada vez. Además, quiero guardar los catálogos y las fichas de producto para descargarlos cuando los envíe a tiendas, y responder por correo las preguntas de los compradores.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "cms",
+          "acceptable": [
+            "strapi/strapi",
+            "payloadcms/payload"
+          ],
+          "note": "\"actualizar las descripciones, fotos y precios de mi página sin pedir ayuda cada vez\": contenido del sitio que edita el negocio. strapi: \"headless CMS\" (licencia: el archivo LICENSE indica MIT Expat para la edición Community, salvo la carpeta ee); payload: topics cms, headless-cms. Ghost no: plataforma de publicación."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"guardar los catálogos y las fichas de producto para descargarlos\": guardar archivos. seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "postalserver/postal"
+          ],
+          "note": "\"responder por correo las preguntas de los compradores\": responder por correo exige recibir y enviar correo. postal: \"mail delivery platform for incoming & outgoing e-mail\". novu y apprise solo envían avisos."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Sin necesidades de base de datos ni reportes: contenido, archivos y correo."
+    },
+    {
+      "id": "mantenimiento-jardines",
+      "query": "Ofrezco mantenimiento de jardines a conjuntos residenciales y casas. Quiero registrar cada visita, los materiales utilizados y las observaciones de mis trabajadores. También necesito calcular cuánto material se consume por tipo de jardín y comparar los costos entre meses, y conservar fotos de los trabajos realizados.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar cada visita, los materiales utilizados y las observaciones de mis trabajadores\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"calcular cuánto material se consume por tipo de jardín\": cálculo agregado sobre muchos registros (consumo por tipo de jardín). airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar los costos entre meses\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"conservar fotos de los trabajos realizados\": guardar archivos. seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de visitas, cálculo de consumo, costos por mes y fotos."
+    },
+    {
+      "id": "distribuidora-agua",
+      "query": "Distribuyo agua embotellada a hogares y pequeños comercios. Quiero tener el historial de cada cliente, sus pedidos habituales y los saldos pendientes. Me gustaría permitir que los clientes paguen sus pedidos por internet y mostrarme cuáles son las zonas con más ventas.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"tener el historial de cada cliente, sus pedidos habituales y los saldos pendientes\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"permitir que los clientes paguen sus pedidos por internet\": pago de un pedido o una compra. hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"mostrarme cuáles son las zonas con más ventas\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Historial y saldos, pagos y ventas por zona."
+    },
+    {
+      "id": "alquiler-trajes-tipicos",
+      "query": "Alquilo trajes típicos para fiestas y presentaciones culturales. Quiero llevar el control de cada prenda, su talla, estado y fechas en que está reservada, para evitar entregar dos veces la misma. También quisiera que los clientes encuentren un traje buscando por talla, color o tipo de evento, y conocer cuáles se alquilan más.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar el control de cada prenda, su talla, estado y fechas en que está reservada\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"que los clientes encuentren un traje buscando por talla, color o tipo de evento\": buscar por atributos (facetas). meilisearch: \"search engine API\", topic faceting (licencia: el README indica MIT); typesense: topics faceting, full-text-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"conocer cuáles se alquilan más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Control de prendas y reservas, búsqueda por atributos y reporte."
+    },
+    {
+      "id": "granja-produccion-huevos",
+      "query": "Produzco y vendo huevos a tiendas y restaurantes de mi municipio. Quiero registrar la producción diaria por galpón, las unidades clasificadas y las entregas que hacemos. El sistema debería sumar automáticamente la producción semanal y mostrarme si algún galpón está produciendo menos que lo habitual.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar la producción diaria por galpón, las unidades clasificadas y las entregas que hacemos\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"sumar automáticamente la producción semanal\": cálculo programado (suma semanal). airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"mostrarme si algún galpón está produciendo menos que lo habitual\": comparar con lo habitual; grafana tiene además el topic alerting. tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de producción, suma semanal y comparación por galpón."
+    },
+    {
+      "id": "comercializadora-flores",
+      "query": "Compro flores a cultivadores y preparo arreglos para hoteles y organizadores de eventos. Necesito consultar el historial de compras y ventas, buscar rápidamente los arreglos por tipo de flor o color, y comparar cuáles generan mejores ingresos.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"consultar el historial de compras y ventas\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"buscar rápidamente los arreglos por tipo de flor o color\": buscar por atributos (facetas). meilisearch: \"search engine API\", topic faceting (licencia: el README indica MIT); typesense: topics faceting, full-text-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"comparar cuáles generan mejores ingresos\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Historial, búsqueda por atributos y comparación de ingresos."
+    },
+    {
+      "id": "tienda-articulos-cuero",
+      "query": "Tengo una tienda virtual de artículos de cuero hechos por artesanos de la región. Quiero que los compradores puedan encontrar productos por tipo, color y material, y que puedan pagar directamente desde la página. Necesito saber qué productos reciben más visitas y cuáles terminan en compra.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "search",
+          "acceptable": [
+            "meilisearch/meilisearch",
+            "typesense/typesense",
+            "opensearch-project/OpenSearch"
+          ],
+          "note": "\"los compradores puedan encontrar productos por tipo, color y material\": buscar por atributos (facetas). meilisearch: \"search engine API\", topic faceting (licencia: el README indica MIT); typesense: topics faceting, full-text-search; OpenSearch: \"search engine\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"puedan pagar directamente desde la página\": pago de un pedido o una compra. hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "PostHog/posthog",
+            "umami-software/umami"
+          ],
+          "note": "\"saber qué productos reciben más visitas y cuáles terminan en compra\": visitas y conversión = analítica de producto con embudos. posthog: topics product-analytics, web-analytics (licencia: el README indica MIT expat, salvo la carpeta ee); umami: \"web and product analytics … conversions\". plausible fuera: no declara embudos."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Búsqueda, pagos y analítica de visitas y conversión (sin base de datos)."
+    },
+    {
+      "id": "reparacion-maquinaria-agricola",
+      "query": "Reparo maquinaria agrícola y atiendo fincas de varios municipios. Quiero guardar el historial de cada equipo, las reparaciones realizadas y los repuestos utilizados. Me gustaría que el sistema identifique patrones de fallas frecuentes para ayudarme a anticipar qué revisiones conviene ofrecer, y ver los repuestos que más utilizo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"guardar el historial de cada equipo, las reparaciones realizadas y los repuestos utilizados\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "ai",
+          "acceptable": [
+            "scikit-learn/scikit-learn"
+          ],
+          "note": "\"identifique patrones de fallas frecuentes para ayudarme a anticipar qué revisiones conviene ofrecer\": aprender de datos históricos para anticipar = aprendizaje automático clásico. scikit-learn: \"machine learning in Python\"."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"ver los repuestos que más utilizo\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Historial de equipos, patrones de fallas y reporte de repuestos."
+    },
+    {
+      "id": "parqueadero-bicicletas",
+      "query": "Administro un parqueadero para bicicletas cerca de varias oficinas. Quiero registrar las entradas, salidas, espacios ocupados y pagos de cada usuario. Necesito calcular la ocupación por hora y conocer cuáles son las franjas de mayor demanda. Además, quiero cobrar los abonos mensuales en línea.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar las entradas, salidas, espacios ocupados y pagos de cada usuario\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"calcular la ocupación por hora\": cálculo agregado sobre muchos registros (ocupación por hora). airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"conocer cuáles son las franjas de mayor demanda\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"cobrar los abonos mensuales en línea\": abono mensual = cobro recurrente. killbill: \"Subscription Billing & Payments Platform\"; lago: topics subscriptions, billing."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de entradas y salidas, ocupación por hora, demanda y abonos mensuales."
+    },
+    {
+      "id": "salsas-conservas-artesanales",
+      "query": "Tengo un pequeño negocio que produce salsas y conservas para tiendas de barrio. Quiero registrar los lotes, los ingredientes utilizados, las fechas de elaboración y los pedidos de cada tienda. Necesito calcular automáticamente cuánto debo producir según los pedidos confirmados y revisar qué sabores tienen más salida.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"registrar los lotes, los ingredientes utilizados, las fechas de elaboración y los pedidos de cada tienda\": base de datos de la aplicación. postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "data-processing",
+          "acceptable": [
+            "apache/airflow",
+            "PrefectHQ/prefect",
+            "dagster-io/dagster"
+          ],
+          "note": "\"calcular automáticamente cuánto debo producir según los pedidos confirmados\": suma de los pedidos confirmados, automática = cálculo programado. airflow: \"author, schedule, and monitor workflows\", topic automation; prefect: \"workflow orchestration framework for … data pipelines\", topic automation; dagster: \"orchestration platform … data\", topic data-orchestrator."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"revisar qué sabores tienen más salida\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por GPT-6 sin ver el catálogo (9-nov). Registro de lotes y pedidos, cálculo de producción y reporte de ventas."
+    }
+  ]
+}

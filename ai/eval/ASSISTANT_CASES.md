@@ -129,6 +129,19 @@ catálogo, antes de ver respuestas del asistente con él: son de desarrollo.
 python -m ai.eval.run_assistant_eval gemini --cases abstention
 ```
 
+## Casos de registros y reportes (16 casos)
+
+`assistant_cases_records.json`. Pedidos de pequeños negocios escritos por otro modelo
+de lenguaje sin ver el catálogo, con el mismo procedimiento que la prueba final: 13 de
+16 piden guardar registros del negocio, reportes sobre sus datos o cálculos sobre
+ellos, y 3 no. Filtrados con reglas fijas, sin editar; etiquetas puestas después, con
+datos de GitHub. Se escribieron para decidir un cambio en cómo se eligen los candidatos
+de cada necesidad; después de esa decisión son de desarrollo.
+
+```bash
+python -m ai.eval.run_assistant_eval gemini --cases records
+```
+
 ## Prueba final (16 casos)
 
 `assistant_cases_test.json`. Pedidos de pequeños negocios escritos por otro modelo
