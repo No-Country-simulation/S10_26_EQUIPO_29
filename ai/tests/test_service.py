@@ -9,7 +9,7 @@ from ai import assistant, llm
 from ai.assistant import Assisted
 from ai.llm import LLMRateLimited, LLMTimeout, LLMUnavailable
 from ai.service import app as service_app
-from ai.service.app import Catalog, create_app, read_catalog
+from ai.service.app import Catalog, create_app, read_catalog, read_marker
 from ai.service.settings import DEFAULT_CORS_ORIGINS, Settings
 
 QUERY = {"query": "Necesito cobrar suscripciones mensuales a mis clientes."}
@@ -132,6 +132,135 @@ def test_sin_load_explicito_usa_el_origen_de_la_configuracion(monkeypatch):
     with TestClient(create_app(settings=Settings(catalog_source="files"))):
         pass
     assert seen == ["files"]
+
+
+# --- Recarga sin reiniciar ---
+
+def reloading_app(monkeypatch, marks: list, loads: list):
+    """App con marca y carga falsas: cada llamada toma el siguiente valor (o lo lanza si es error)."""
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+
+    def next_of(values):
+        def call():
+            value = values.pop(0)
+            if isinstance(value, Exception):
+                raise value
+            return value
+        return call
+    return create_app(load=next_of(loads), marker=next_of(marks),
+                      settings=Settings(cors_origins=(FRONTEND,), reload_minutes=0))
+
+
+def catalog_of(repos: int, reason: str | None = None, buscar=lambda query, k: []) -> Catalog:
+    return Catalog(buscar=buscar, min_score=0.19, repos=repos, embedding_model="falso",
+                   catalog_source="files" if reason else "database", catalog_fallback_reason=reason)
+
+
+def test_recarga_cuando_se_publica_algo_nuevo(monkeypatch):
+    app = reloading_app(monkeypatch, marks=[(254, "lunes"), (256, "martes")],
+                        loads=[catalog_of(127), catalog_of(128)])
+    with TestClient(app) as c:
+        app.state.reloader.check()
+        body = c.get("/health").json()
+    assert body["repos"] == 128 and body["catalog_reload_error"] is None
+    assert body["catalog_loaded_at"] and body["catalog_checked_at"]
+
+
+def test_sin_publicacion_nueva_no_recarga(monkeypatch):
+    app = reloading_app(monkeypatch, marks=[(254, "lunes"), (254, "lunes")],
+                        loads=[catalog_of(127)])     # una segunda carga fallaría: no hay más valores
+    with TestClient(app) as c:
+        app.state.reloader.check()
+        body = c.get("/health").json()
+    assert body["repos"] == 127 and body["catalog_reload_error"] is None
+
+
+def test_si_la_revision_falla_sigue_el_catalogo_anterior_y_se_recupera(monkeypatch):
+    app = reloading_app(monkeypatch,
+                        marks=[(254, "lunes"), RuntimeError("no se pudo consultar la base: sin red"),
+                               (256, "martes")],
+                        loads=[catalog_of(127), catalog_of(128)])
+    with TestClient(app) as c:
+        app.state.reloader.check()
+        failed = c.get("/health").json()
+        app.state.reloader.check()
+        recovered = c.get("/health").json()
+    assert failed["repos"] == 127 and "sin red" in failed["catalog_reload_error"]
+    assert recovered["repos"] == 128 and recovered["catalog_reload_error"] is None
+
+
+def test_no_cambia_la_base_por_los_archivos_si_la_base_falla_al_recargar(monkeypatch):
+    fallback = catalog_of(127, reason="no se pudo leer el catálogo de la base: sin permiso")
+    app = reloading_app(monkeypatch, marks=[(254, "lunes"), (256, "martes")],
+                        loads=[catalog_of(127), fallback])
+    with TestClient(app) as c:
+        app.state.reloader.check()
+        body = c.get("/health").json()
+    assert body["catalog_source"] == "database"
+    assert "sin permiso" in body["catalog_reload_error"]
+
+
+def test_un_pedido_en_curso_sigue_con_el_catalogo_que_tomo_al_empezar(monkeypatch):
+    old = catalog_of(127, buscar=lambda query, k: ["viejo"])
+    new = catalog_of(128, buscar=lambda query, k: ["nuevo"])
+    app = reloading_app(monkeypatch, marks=[(254, "lunes"), (256, "martes")], loads=[old, new])
+    seen = []
+
+    def fake_asistir(request, buscar, **kwargs):
+        app.state.reloader.check()            # se publica y se recarga a mitad del pedido
+        seen.append(buscar("consulta", 1))
+        return Assisted(response=assistant.clarification_response(["¿Qué vende?"]))
+    monkeypatch.setattr(assistant, "asistir", fake_asistir)
+    with TestClient(app) as c:
+        assert c.post("/assistant", json=QUERY).status_code == 200
+        assert c.get("/health").json()["repos"] == 128
+    assert seen == [["viejo"]]
+
+
+def test_sin_marca_no_revisa_y_lo_dice(client):
+    body = client.get("/health").json()
+    assert body["catalog_checked_at"] is None and body["catalog_reload_error"] is None
+    assert body["catalog_loaded_at"]
+
+
+def test_sin_load_explicito_y_con_la_base_revisa_la_marca(monkeypatch):
+    calls = []
+    monkeypatch.setattr(service_app, "load_catalog", lambda settings: fake_catalog())
+    monkeypatch.setattr(service_app, "read_marker", lambda: calls.append("marca") or (1, "x"))
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    with TestClient(create_app(settings=Settings(reload_minutes=0))):
+        pass
+    assert calls == ["marca"]
+
+
+def test_la_marca_sin_variable_lo_dice(monkeypatch):
+    monkeypatch.delenv(READER, raising=False)
+    with pytest.raises(RuntimeError, match=READER):
+        read_marker()
+
+
+def test_la_marca_no_muestra_el_host_si_falla(monkeypatch):
+    import psycopg
+    monkeypatch.setenv(READER, "postgresql://lector@db.servidor-secreto.com/base")
+
+    def fails(url):
+        raise psycopg.OperationalError('connection to server at "db.servidor-secreto.com" failed')
+    monkeypatch.setattr("ai.published.fetch_marker", fails)
+    with pytest.raises(RuntimeError) as err:
+        read_marker()
+    assert "no se pudo consultar" in str(err.value) and "servidor-secreto" not in str(err.value)
+
+
+def test_intervalo_de_recarga_desde_el_entorno(monkeypatch):
+    monkeypatch.delenv("AI_CATALOG_RELOAD_MINUTES", raising=False)
+    assert Settings.from_env().reload_minutes == 10
+    monkeypatch.setenv("AI_CATALOG_RELOAD_MINUTES", "0")
+    assert Settings.from_env().reload_minutes == 0
+    monkeypatch.setenv("AI_CATALOG_RELOAD_MINUTES", "diez")
+    with pytest.raises(ValueError, match="AI_CATALOG_RELOAD_MINUTES"):
+        Settings.from_env()
 
 
 # --- Pedido ---
