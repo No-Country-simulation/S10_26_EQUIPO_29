@@ -12,15 +12,29 @@ DEFAULT_CORS_ORIGINS = ("http://localhost:4173", "http://127.0.0.1:4173")
 CATALOG_SOURCES = ("database", "files")
 
 
+def _bool_env(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None or not raw.strip():
+        return default
+    value = raw.strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    if value in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"{name}={raw!r}; opciones: true o false")
+
+
 @dataclass(frozen=True)
 class Settings:
     cors_origins: tuple[str, ...] = DEFAULT_CORS_ORIGINS
     catalog_source: str = "database"
+    require_database: bool = False
 
     @classmethod
     def from_env(cls) -> "Settings":
         """AI_CORS_ORIGINS: orígenes separados por comas; sin definir, los de local.
         AI_CATALOG_SOURCE: database (por defecto) o files. Otro valor es un error al arrancar.
+        AI_REQUIRE_DATABASE: true exige leer Supabase al arrancar y falla si no está disponible.
         """
         source = os.environ.get("AI_CATALOG_SOURCE") or "database"
         if source not in CATALOG_SOURCES:
@@ -28,4 +42,8 @@ class Settings:
         raw = os.environ.get("AI_CORS_ORIGINS")
         origins = (DEFAULT_CORS_ORIGINS if raw is None
                    else tuple(o.strip() for o in raw.split(",") if o.strip()))
-        return cls(cors_origins=origins, catalog_source=source)
+        return cls(
+            cors_origins=origins,
+            catalog_source=source,
+            require_database=_bool_env("AI_REQUIRE_DATABASE", False),
+        )

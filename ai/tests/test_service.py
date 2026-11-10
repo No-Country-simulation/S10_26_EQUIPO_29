@@ -110,6 +110,15 @@ def test_con_files_no_toca_la_base(monkeypatch):
     assert source == "files" and reason is None
 
 
+def test_require_database_no_cae_silenciosamente_a_archivos(monkeypatch):
+    monkeypatch.delenv(READER, raising=False)
+    monkeypatch.setenv("AI_REQUIRE_DATABASE", "true")
+    settings = Settings.from_env()
+    assert settings.require_database is True
+    with pytest.raises(RuntimeError, match="AI_REQUIRE_DATABASE=true"):
+        read_catalog(settings)
+
+
 def test_salud_dice_de_donde_salio_el_catalogo(monkeypatch):
     monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
     monkeypatch.setenv("AI_LLM_FALLBACK", "")

@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-const source=readFileSync(new URL('../src/useCatalogBounce.js',import.meta.url),'utf8').replace(/import .*?;\n/,'').replace('export function','function');
+const source=readFileSync(new URL('../src/useCatalogBounce.js',import.meta.url),'utf8').replace(/import .*?;\r?\n/,'').replace('export function','function');
 function run(hz,tail,modalOpen=false){
  let now=0,id=0,offset=0,peak=0,queue=new Map(),events={};
  const shell={closest:()=>null,getBoundingClientRect:()=>({top:500+offset}),style:{setProperty:(_,v)=>{offset=parseFloat(v);peak=Math.max(peak,offset)},removeProperty:()=>{offset=0}},dataset:{},removeAttribute:()=>{}};

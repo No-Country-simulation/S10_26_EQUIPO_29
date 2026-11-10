@@ -17,7 +17,7 @@ function transition(reduced=false){
   getComputedStyle:()=>({gridTemplateColumns:'300px 300px 300px'}),innerHeight:800,
   setTimeout:fn=>{timers.push(fn);return 1;},clearTimeout(){}};
  vm.createContext(context);
- const source=readFileSync(new URL('../src/useAnimatedCatalog.js',import.meta.url),'utf8').replace(/^import .*\n/,'').replace('export function','function');
+ const source=readFileSync(new URL('../src/useAnimatedCatalog.js',import.meta.url),'utf8').replace(/^import .*\r?\n/,'').replace('export function','function');
  vm.runInContext(source+'\nthis.run=useAnimatedCatalog;',context);
  const tools=[{id:'owner-b/cli',name:'cli'}];
  context.run(tools);effects[0]();

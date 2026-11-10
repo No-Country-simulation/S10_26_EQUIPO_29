@@ -78,6 +78,8 @@ def read_catalog(settings: Settings
             except Exception as e:      # cualquier falla de la base: se arranca con los archivos
                 first = (redact(str(e), url).splitlines() or [type(e).__name__])[0]
                 reason = f"no se pudo leer el catálogo de la base: {first}"
+        if settings.require_database:
+            raise RuntimeError(f"AI_REQUIRE_DATABASE=true impide respaldo a archivos: {reason}")
         log.warning("catálogo desde los archivos (respaldo): %s", reason)
     return load_repos("snapshot"), {}, "files", snapshot_taken_at(), reason
 
