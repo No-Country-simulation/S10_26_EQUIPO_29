@@ -1,0 +1,14 @@
+[
+ {"id":"000","value":"#000000","role":"Negro","use":"Sombras y extremos de iluminación"},
+ {"id":"100","value":"#101010","role":"Fondo","use":"Página y navbar sólido"},
+ {"id":"200","value":"#181818","role":"Superficie","use":"Paneles y superficies oscuras"},
+ {"id":"300","value":"#292929","role":"División","use":"Bordes y separaciones discretas"},
+ {"id":"400","value":"#3a3a3a","role":"Borde","use":"Contornos de controles y superficies elevadas"},
+ {"id":"500","value":"#555555","role":"Gris medio oscuro","use":"Detalles de contraste bajo; no texto esencial"},
+ {"id":"600","value":"#777777","role":"Gris medio","use":"Iconos y texto de menor énfasis según superficie"},
+ {"id":"700","value":"#929292","role":"Texto secundario","use":"Metadatos y etiquetas auxiliares"},
+ {"id":"800","value":"#aaaaaa","role":"Texto de apoyo","use":"Descripciones y contenido secundario"},
+ {"id":"900","value":"#c7c7c7","role":"Texto destacado","use":"Contenido de énfasis intermedio"},
+ {"id":"1000","value":"#ebebeb","role":"Texto principal","use":"Lectura principal sobre superficies oscuras"},
+ {"id":"1100","value":"#ffffff","role":"Blanco","use":"Luz, foco y acciones claras"}
+]

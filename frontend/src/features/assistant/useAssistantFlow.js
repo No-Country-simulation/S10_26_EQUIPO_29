@@ -9,10 +9,10 @@ import {usePromptLayout} from '../../usePromptLayout';
 import {queryErrorCode,getAssistantError} from '../../errorPresentation.mjs';
 import {requestAssistant} from '../../data/assistantRequest.mjs';
 import {assistantScenarioOptions} from '../../mocks/assistant-scenarios.mjs';
-export function useAssistantFlow(isDetail){
+export function useAssistantFlow(isDetail,{provider:providerOverride}={}){
  const {tools}=useCatalogData();
  const baseUrl=process.env.NEXT_PUBLIC_ASSISTANT_API_BASE_URL||'';
- const provider=useMemo(()=>baseUrl?createHttpAssistantProvider({baseUrl}):null,[baseUrl]);
+ const provider=useMemo(()=>providerOverride||(baseUrl?createHttpAssistantProvider({baseUrl}):null),[baseUrl,providerOverride]);
  const [query,setQuery]=useState(()=>sixToolPreview()?'Quiero una plataforma para gestionar varias empresas, con acceso por roles, datos separados por organización, reportes rápidos y seguimiento del rendimiento.':''),[error,setError]=useState('');
  const [assistantResponse,setAssistantResponse]=useState(null);
  const [originalPrompt,setOriginalPrompt]=useState('');

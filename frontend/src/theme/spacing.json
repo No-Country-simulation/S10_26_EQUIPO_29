@@ -1,0 +1,82 @@
+[
+  {
+    "name": "space-component-4",
+    "value": 4,
+    "family": "component"
+  },
+  {
+    "name": "space-component-6",
+    "value": 6,
+    "family": "component"
+  },
+  {
+    "name": "space-component-8",
+    "value": 8,
+    "family": "component"
+  },
+  {
+    "name": "space-component-10",
+    "value": 10,
+    "family": "component"
+  },
+  {
+    "name": "space-component-12",
+    "value": 12,
+    "family": "component"
+  },
+  {
+    "name": "space-component-14",
+    "value": 14,
+    "family": "component"
+  },
+  {
+    "name": "space-component-16",
+    "value": 16,
+    "family": "component"
+  },
+  {
+    "name": "space-component-20",
+    "value": 20,
+    "family": "component"
+  },
+  {
+    "name": "space-component-24",
+    "value": 24,
+    "family": "component"
+  },
+  {
+    "name": "space-component-32",
+    "value": 32,
+    "family": "component"
+  },
+  {
+    "name": "space-layout-40",
+    "value": 40,
+    "family": "layout"
+  },
+  {
+    "name": "space-layout-48",
+    "value": 48,
+    "family": "layout"
+  },
+  {
+    "name": "space-layout-64",
+    "value": 64,
+    "family": "layout"
+  },
+  {
+    "name": "space-layout-96",
+    "value": 96,
+    "family": "layout"
+  },
+  {
+    "name": "space-layout-128",
+    "value": 128,
+    "family": "layout"
+  },
+  {
+    "name": "space-layout-176",
+    "value": 176,
+    "family": "layout"
+  }
+]

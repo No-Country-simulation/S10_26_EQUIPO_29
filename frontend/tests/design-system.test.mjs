@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
+import {components,tabs,infrastructure} from '../src/app/design-system/catalog.mjs';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const inventory=JSON.parse(fs.readFileSync(path.join(root,'src/app/design-system/inventory.generated.json')));
+test('design inventory is synchronized with the reachable application sources',()=>{execFileSync(process.execPath,['scripts/design-inventory.mjs','--check'],{cwd:root});});
+test('each active JSX module has a component entry or an explicit infrastructure classification',()=>{for(const source of inventory.sources.filter(s=>s.path.endsWith('.jsx'))){const file=source.path.replace(/^src\//,'');assert.ok(components.some(c=>c.source===file)||infrastructure[file],`Unclassified UI: ${file}`);}});
+test('documentation routes and component anchors are unique and backed by actual files',()=>{assert.equal(new Set(components.map(c=>c.id)).size,components.length);assert.equal(tabs.length,6);for(const [route] of tabs)assert.ok(fs.existsSync(path.join(root,'src/app/design-system',route,'page.jsx')));for(const c of components){assert.ok(fs.existsSync(path.join(root,'src',c.source)),c.source);for(const key of ['purpose','behavior','states','example'])assert.ok(c[key],`${c.id}.${key}`);}});
+test('every documented public asset exists; referenced assets retain provenance',()=>{for(const asset of inventory.assets){assert.ok(fs.existsSync(path.join(root,'public',asset.url)));if(asset.status==='referenciado')assert.ok(asset.uses.length);}});
+test('production entrypoints do not import the documentation or its fixtures',()=>{for(const source of inventory.sources)assert.doesNotMatch(source.code||'',/from\s*['"][^'"]*app\/design-system/);});

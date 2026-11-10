@@ -1,40 +1,52 @@
-/* Action buttons: primary, outlined and a single text-only ghost variant, two sizes. Section styles own layout only. */
+/* Action buttons: primary, outlined and a single text-only ghost variant, three sizes (large is an opt-in extension). Section styles own layout only. */
 .ui-button {
  --action-bg:transparent; --action-border:transparent; --action-color:#ededf0;
  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
- gap:8px; min-width:0; min-height:44px; padding:10px 18px;
- border:1px solid var(--action-border); border-radius:999px;
+ gap:var(--space-component-8); min-width:0; min-height:44px; padding:var(--space-component-10) 18px;
+ border:1px solid var(--action-border); border-radius:var(--radius-999);
  background:var(--action-bg); color:var(--action-color);
- font-family:inherit; font-size:14px; font-weight:500; line-height:22px;
+ font-family:inherit; font-size:var(--type-size-14); font-weight:var(--type-weight-500); line-height:22px;
  text-decoration:none; white-space:nowrap; cursor:pointer;
  transition:background-color 140ms ease-out,color 140ms ease-out,border-color 140ms ease-out;
 }
 .ui-button::before { content:none; }
-.ui-button--primary { --action-bg:var(--button-brand,#1745c7); --action-color:#fff; }
-.ui-button--secondary { --action-border:#ffffff38; }
-.ui-button--compact { min-height:40px; padding:8px 14px; font-size:13px; line-height:22px; }
+.ui-button--primary { --action-bg:var(--button-brand,#1745c7); --action-color:var(--neutral-1100); }
+.ui-button--secondary { --action-border:rgb(var(--neutral-1100-rgb) / 0.219608); }
+.ui-button--compact { min-height:40px; padding:var(--space-component-8) var(--space-component-14); font-size:var(--type-size-13); line-height:22px; }
 .ui-button--icon { width:44px; padding:0; flex-shrink:0; }
 .ui-button--icon.ui-button--compact { width:40px; }
 .ui-button svg { display:block; width:16px; height:16px; flex-shrink:0; color:currentColor; }
 @media(hover:hover) {
- .ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):hover { background:#fff; border-color:#fff; color:#141414; }
+ .ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):hover { background:var(--neutral-1100); border-color:var(--neutral-1100); color:var(--neutral-100); }
  .tool-card[data-return-rest] .ui-button:hover { background:var(--action-bg); border-color:var(--action-border); color:var(--action-color); }
 }
 .ui-button:focus-visible { outline:2px solid var(--control-focus,#8ccfff); outline-offset:3px; }
-.ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):active { background:#e2e5ea; border-color:#e2e5ea; color:#141414; }
+.ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):active { background:#e2e5ea; border-color:#e2e5ea; color:var(--neutral-100); }
 .ui-button:is(:disabled,[aria-disabled=true]) { opacity:.45; cursor:not-allowed; }
-.tool-card-details>.tool-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:auto; }
-.tool-actions>.ui-button { width:100%; padding-inline:8px; }
+.tool-card-details>.tool-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-component-8); margin-top:auto; }
+.tool-actions>.ui-button { width:100%; padding-inline:var(--space-component-8); }
 @media(prefers-reduced-motion:reduce) { .ui-button { transition:none; } }
 @media(forced-colors:active) { .ui-button { border:1px solid ButtonText; } }
 
 /* Inline action: inherits text metrics so a truncated description stays on three lines. */
-.ui-button--text{display:inline;min-height:0;padding:0;border:0;border-radius:2px;background:transparent;color:inherit;font-family:inherit;font-size:14px;font-weight:500;line-height:22px;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity 140ms ease-out}
+.ui-button--text{display:inline;min-height:0;padding:0;border:0;border-radius:2px;background:transparent;color:inherit;font-family:inherit;font-size:var(--type-size-14);font-weight:var(--type-weight-500);line-height:22px;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity 140ms ease-out}
 @media(hover:hover){.ui-button--text:not(:disabled):not([aria-disabled=true]):hover{opacity:.75}}
 .ui-button--text:not(:disabled):not([aria-disabled=true]):active{opacity:.6}
 @media(prefers-reduced-motion:reduce){.ui-button--text{transition:none}}
 
-.ui-button--text.ui-button--compact{font-size:13px;padding:0;min-height:0}
+.ui-button--text.ui-button--compact{font-size:var(--type-size-13);padding:0;min-height:0}
 
 /* Catalog external link: align its text and arrow with the adjacent action. */
-.tool-actions>.repository-link.ui-button--text{display:inline-flex;align-items:center;justify-content:center;align-self:stretch;gap:8px;min-height:40px;padding:8px;text-decoration:none;line-height:22px}
+.tool-actions>.repository-link.ui-button--text{display:inline-flex;align-items:center;justify-content:center;align-self:stretch;gap:var(--space-component-8);min-height:40px;padding:var(--space-component-8);text-decoration:none;line-height:22px}
+
+/* Opt-in large size; existing controls keep their current dimensions. */
+.ui-button--large{min-height:48px;padding:var(--space-component-12) 22px;font-size:var(--type-size-15);line-height:22px}
+.ui-button--icon.ui-button--large{width:48px;padding:0}
+.ui-button--text.ui-button--large{font-size:var(--type-size-15);padding:0;min-height:0}
+.ds-button-library .ui-button--text svg{display:inline-block;vertical-align:middle;margin-left:var(--space-component-6)}
+/* Pinned documentation states use the same visual values as native states. */
+.ds-button-library .ui-button:not(.ui-button--text)[data-demo-state=hover]{background:var(--neutral-1100);border-color:var(--neutral-1100);color:var(--neutral-100)}
+.ds-button-library .ui-button[data-demo-state=focus]{outline:2px solid var(--control-focus,#8ccfff);outline-offset:3px}
+.ds-button-library .ui-button:not(.ui-button--text)[data-demo-state=pressed]{background:#e2e5ea;border-color:#e2e5ea;color:var(--neutral-100)}
+.ds-button-library .ui-button--text[data-demo-state=hover]{opacity:.75}
+.ds-button-library .ui-button--text[data-demo-state=pressed]{opacity:.6}

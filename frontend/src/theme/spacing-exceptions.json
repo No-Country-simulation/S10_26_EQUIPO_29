@@ -1,0 +1,1073 @@
+[
+  {
+    "source": "buttons.css",
+    "selector": ".ui-button",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "buttons.css",
+    "selector": ".ui-button--large",
+    "property": "padding",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".connection-map",
+    "property": "gap",
+    "value": "36px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".connection-map",
+    "property": "gap",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".proposal-toolbar",
+    "property": "margin-bottom",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".proposal-tool:after,.connection-node:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".hero .proposal-tool:before",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".hero .proposal-tool:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "connections.css",
+    "selector": ".hero .stack-content .proposal-connections-empty",
+    "property": "padding",
+    "value": "56px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "features/assistant/skeletonStudio.css",
+    "selector": ".proposal-skeleton .proposal-skeleton-card:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".nav",
+    "property": "gap",
+    "value": "44px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding",
+    "value": "68px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding",
+    "value": "44px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".intro",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".composer",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".composer-footer>span",
+    "property": "gap",
+    "value": "7px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".suggestion button",
+    "property": "gap",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog",
+    "property": "padding-top",
+    "value": "42px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".search-row",
+    "property": "margin-top",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".search-box:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".badge",
+    "property": "padding",
+    "value": "2px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".categories button",
+    "property": "padding",
+    "value": "7px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".categories button",
+    "property": "padding",
+    "value": "11px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".results-meta button",
+    "property": "gap",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".metrics i",
+    "property": "margin",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".empty",
+    "property": "padding",
+    "value": "65px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".icon-button",
+    "property": "padding",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".loading",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": "footer",
+    "property": "margin-top",
+    "value": "52px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding",
+    "value": "44px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding",
+    "value": "30px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".composer-footer .primary",
+    "property": "margin-top",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".suggestion",
+    "property": "gap",
+    "value": "2px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding-top",
+    "value": "74px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding-bottom",
+    "value": "58px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding-top",
+    "value": "44px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding-bottom",
+    "value": "34px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".card-surface:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner",
+    "property": "padding-bottom",
+    "value": "104px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tag-overflow summary",
+    "property": "padding",
+    "value": "9px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": "button.primary",
+    "property": "padding",
+    "value": "13px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": "button.primary",
+    "property": "padding",
+    "value": "17px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": "button.primary",
+    "property": "padding",
+    "value": "13px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-cover-inner",
+    "property": "padding-bottom",
+    "value": "36px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-identity",
+    "property": "margin-top",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-overview",
+    "property": "gap",
+    "value": "56px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-summary",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-integrations>p",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".integration",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".integration",
+    "property": "padding",
+    "value": "36px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".snippet>div",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".snippet button",
+    "property": "gap",
+    "value": "7px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-missing",
+    "property": "padding-top",
+    "value": "70px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-cover-inner",
+    "property": "padding-bottom",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-overview",
+    "property": "gap",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".architecture-result,.proposal-pending",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".identity-connection",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".identity-connection>svg",
+    "property": "margin-top",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-width",
+    "property": "padding",
+    "value": "104px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture",
+    "property": "padding-top",
+    "value": "42px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .composer",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .composer",
+    "property": "padding",
+    "value": "74px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .composer",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture",
+    "property": "padding-top",
+    "value": "30px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture",
+    "property": "padding-bottom",
+    "value": "104px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-footer",
+    "property": "margin-top",
+    "value": "52px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-footer",
+    "property": "margin-top",
+    "value": "36px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-footer",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .prompt-heading-initial h1",
+    "property": "margin",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .prompt-heading-initial h1",
+    "property": "margin",
+    "value": "19px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".prompt-intro",
+    "property": "margin-bottom",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .composer",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .composer textarea",
+    "property": "padding-right",
+    "value": "56px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".prompt-update-status",
+    "property": "margin",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .prompt-heading-initial h1",
+    "property": "margin",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture .prompt-heading-initial h1",
+    "property": "margin",
+    "value": "19px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero button.new-architecture",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layers-panel",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layers-header",
+    "property": "margin",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layers-header p",
+    "property": "margin-top",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layer-role p",
+    "property": "margin-top",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layer-category",
+    "property": "padding",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layer-copy a",
+    "property": "padding",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-content .stack-integration-note",
+    "property": "margin",
+    "value": "34px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-integration ol",
+    "property": "margin",
+    "value": "34px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-step-number",
+    "property": "margin-top",
+    "value": "1px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-outcome",
+    "property": "padding",
+    "value": "36px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-new-action",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .stack-new-action button.new-architecture",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-layers-header",
+    "property": "margin-bottom",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .composer-footer",
+    "property": "column-gap",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".composer-error-copy>svg",
+    "property": "margin-top",
+    "value": "3px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero button.composer-retry",
+    "property": "gap",
+    "value": "3px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero button.composer-retry",
+    "property": "margin-left",
+    "value": "9px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero button.composer-retry",
+    "property": "padding",
+    "value": "3px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-cover-inner",
+    "property": "padding-bottom",
+    "value": "30px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-cover-inner",
+    "property": "padding-right",
+    "value": "76px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-missing",
+    "property": "padding-top",
+    "value": "60px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".snippet pre",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-tabs [role=tab]>span",
+    "property": "padding",
+    "value": "2px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".stack-content .proposal-tool-heading p",
+    "property": "margin",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-rationale summary",
+    "property": "padding",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-empty",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero-inner.has-architecture:has(.proposal-tabs)",
+    "property": "padding-top",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".integration-header-field",
+    "property": "gap",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".without-snippet .integration-facts>div+div",
+    "property": "padding-top",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".prompt-suggestions-list",
+    "property": "padding",
+    "value": "144px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".prompt-suggestions-list",
+    "property": "padding-bottom",
+    "value": "112px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-skeleton-description",
+    "property": "margin-top",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-skeleton-health",
+    "property": "margin-bottom",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".integration-skeleton-heading",
+    "property": "margin-bottom",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-cover-inner",
+    "property": "padding-top",
+    "value": "30px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".light-color-control input",
+    "property": "padding",
+    "value": "2px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": "#landing-view>.hero",
+    "property": "padding-top",
+    "value": "66px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .composer-footer button.prompt-submit:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".catalog-error",
+    "property": "padding",
+    "value": "72px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-cover-inner",
+    "property": "padding-top",
+    "value": "30px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-cover-inner",
+    "property": "padding-bottom",
+    "value": "26px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-body",
+    "property": "padding-top",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-body",
+    "property": "padding-bottom",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-overview",
+    "property": "gap",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-tabs",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-tabs button",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".detail-drawer-footer",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner .composer,.hero .hero-inner.has-architecture .composer",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .proposal-tool>a",
+    "property": "padding",
+    "value": "9px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".assistant-workspace",
+    "property": "padding-bottom",
+    "value": "210px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".assistant-workspace",
+    "property": "padding-bottom",
+    "value": "190px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".assistant-workspace",
+    "property": "padding-bottom",
+    "value": "36px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner,.hero.assistant-workspace .hero-inner",
+    "property": "padding-top",
+    "value": "104px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .proposal-tool",
+    "property": "padding",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".connection-tile-direction",
+    "property": "gap",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .stack-content .proposal-context-open h3",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-context-open ul",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".proposal-original",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".connection-protocol",
+    "property": "padding",
+    "value": "3px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .stack-outcome .clarification-question",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .stack-outcome .clarification-question",
+    "property": "padding",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".clarification-question:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner .prompt-heading h1,.hero .hero-inner .prompt-heading h1.prompt-heading-result",
+    "property": "margin",
+    "value": "22px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner .prompt-heading h1,.hero .hero-inner .prompt-heading h1.prompt-heading-result",
+    "property": "margin",
+    "value": "19px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .proposal-tabs [role=tablist]",
+    "property": "margin",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .proposal-tabs [role=tab]",
+    "property": "padding",
+    "value": "18px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-tags span,.tag-overflow summary,.card-tech-summary>.language-tag",
+    "property": "padding",
+    "value": "5px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-tags span,.tag-overflow summary,.card-tech-summary>.language-tag",
+    "property": "padding",
+    "value": "9px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-modal-frame .detail-tabs button",
+    "property": "padding",
+    "value": "17px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero.assistant-workspace",
+    "property": "padding-bottom",
+    "value": "210px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero.assistant-workspace",
+    "property": "padding-bottom",
+    "value": "104px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".prompt-suggestion:after",
+    "property": "padding",
+    "value": "1px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner.has-architecture-header .architecture-header",
+    "property": "padding",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".hero .hero-inner.has-architecture-header .architecture-header",
+    "property": "margin-bottom",
+    "value": "28px",
+    "reason": "Geometría de control, composición o compensación"
+  },
+  {
+    "source": "styles.css",
+    "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
+    "property": "padding",
+    "value": "2px",
+    "reason": "Medida específica conservada para no alterar la composición"
+  }
+]

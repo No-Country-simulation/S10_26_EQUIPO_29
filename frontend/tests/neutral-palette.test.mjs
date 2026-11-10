@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../src');
+const palette=JSON.parse(fs.readFileSync(path.join(root,'theme/neutrals.json')));
+const luminance=h=>{const n=parseInt(h.slice(1,3),16)/255;return n<=.04045?n/12.92:((n+.055)/1.055)**2.4;};
+test('neutral scale has twelve unique ordered tones and CSS definitions match its source',()=>{assert.equal(palette.length,12);assert.equal(new Set(palette.map(p=>p.value)).size,12);const css=fs.readFileSync(path.join(root,'theme/neutrals.css'),'utf8');let previous=-1;for(const p of palette){const n=parseInt(p.value.slice(1,3),16);assert.ok(n>previous);previous=n;assert.ok(css.includes(`--neutral-${p.id}:${p.value}`));assert.ok(css.includes(`--neutral-${p.id}-rgb:${n} ${n} ${n}`));}});
+test('main and secondary text remain readable on the dark structural surfaces',()=>{for(const foreground of ['700','800','900','1000','1100'])for(const background of ['100','200']){const a=palette.find(p=>p.id===foreground),b=palette.find(p=>p.id===background);assert.ok((luminance(a.value)+.05)/(luminance(b.value)+.05)>=4.5,`${foreground}/${background}`);}});
+test('shared production styles reference neutral tokens instead of independent grayscale hex literals',()=>{for(const name of ['styles.css','buttons.css','connections.css','control-states.css']){const css=fs.readFileSync(path.join(root,name),'utf8');for(const [hex] of css.matchAll(/#[\da-f]{3,8}\b/gi)){let h=hex.slice(1);if(h.length===3||h.length===4)h=h.split('').map(c=>c+c).join('');assert.ok(!(h.slice(0,2)===h.slice(2,4)&&h.slice(0,2)===h.slice(4,6)),`${name}: ${hex}`);}}});
