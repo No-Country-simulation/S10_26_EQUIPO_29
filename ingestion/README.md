@@ -52,7 +52,22 @@ y rechaza cuentas administrativas (`postgres`, `postgres.*`).
 python -m pytest tests -q
 ```
 
-260 pruebas offline. No requieren red, PostgreSQL ni credenciales.
+324 pruebas offline. No requieren red, PostgreSQL ni credenciales.
+
+## Campos operativos (`disabled`, `open_issues_count`, `is_maintained`)
+
+- `disabled` y `open_issues_count` se extraen en `src/extract_github.py` y viajan
+  en `SUPPLEMENTARY_FIELDS` hasta `catalog_repositories.disabled` y
+  `.open_issues_count`, sin pasar por el planificador de hash.
+- **No alteran `content_hash_v1`**: el hash cubre solo los 13 campos del
+  contrato canónico, así que un cambio de issues o de estado operativo deja
+  `content_hash_version = openbridge-ai-v1` intacto y no fuerza una nueva
+  revisión de la IA. Lo fijan
+  `test_apply_updates_operational_fields_without_changing_the_hash` y
+  `test_supplementary_fields_stay_out_of_the_hash_payload`.
+- `is_maintained` **no se persiste ni viaja en el plan**: la API lo calcula en
+  lectura desde `archived` y `pushed_at` (no archivado y push dentro de 180
+  días). Por eso no existe columna física ni migración pendiente para él.
 
 ## Garantías de seguridad
 
