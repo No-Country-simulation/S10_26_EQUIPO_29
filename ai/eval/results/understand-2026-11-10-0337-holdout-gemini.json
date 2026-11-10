@@ -1,0 +1,940 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de inventario y ventas por sucursal",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal para consultas rápidas de catálogo",
+          "evidence": "las consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.8,
+    "input_tokens": 2241,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "domicilios-push",
+    "error": "LLMTimeout: gemini: sin respuesta en 15.0 s",
+    "data": null,
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de base de datos de grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.45,
+    "input_tokens": 2231,
+    "output_tokens": 53,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework de interfaz basado en Vue",
+          "evidence": "un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenido para no programadores",
+          "evidence": "que su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.96,
+    "input_tokens": 2245,
+    "output_tokens": 122,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "respaldo de archivos fuera del servidor",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero analítico de métricas operativas",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2239,
+    "output_tokens": 128,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de facturas electronicas",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de embudos de conversion",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.89,
+    "input_tokens": 2227,
+    "output_tokens": 65,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y registro de solicitudes",
+          "evidence": "recursos humanos la registra"
+        },
+        {
+          "category": "messaging",
+          "query": "flujo de tareas y aprobaciones",
+          "evidence": "las solicitudes de vacaciones sigan un flujo de aprobación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.38,
+    "input_tokens": 2234,
+    "output_tokens": 107,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "rastreo de solicitudes distribuidas entre microservicios",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo automatizado en clúster",
+          "evidence": "que cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2244,
+    "output_tokens": 129,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real entre usuarios",
+          "evidence": "un chat en tiempo real entre compradores y vendedores dentro de la página"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de texto tolerante a errores",
+          "evidence": "un buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2233,
+    "output_tokens": 119,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "distribuidora-datos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos analiticos rapidos",
+          "evidence": "guardar el resultado en una base analítica rápida para consultar millones de filas"
+        },
+        {
+          "category": "data-processing",
+          "query": "transformacion de datos con codigo sql",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado"
+        },
+        {
+          "category": "dev-tools",
+          "query": "framework de pruebas de datos",
+          "evidence": "con pruebas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2240,
+    "output_tokens": 163,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "revista-cdn",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución de archivos multimedia",
+          "evidence": "sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2225,
+    "output_tokens": 75,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "instituto-videoclases",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "clases en vivo por videollamada",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "guardar las grabaciones",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean después"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.96,
+    "input_tokens": 2227,
+    "output_tokens": 115,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario y ventas",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal para consultas rápidas",
+          "evidence": "las consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2241,
+    "output_tokens": 121,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "domicilios-push",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones móviles",
+          "evidence": "enviar una notificación al celular del cliente"
+        },
+        {
+          "category": "messaging",
+          "query": "ejecución de tareas en segundo plano",
+          "evidence": "generar en segundo plano el recibo en PDF de cada pedido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.94,
+    "input_tokens": 2237,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos en grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.88,
+    "input_tokens": 2231,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework de interfaz basado en Vue",
+          "evidence": "un sitio web con un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenido para no programadores",
+          "evidence": "su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.97,
+    "input_tokens": 2245,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "copias de seguridad automáticas de archivos",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero analítico de métricas del negocio",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.95,
+    "input_tokens": 2239,
+    "output_tokens": 129,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emision de facturas electronicas",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de embudos de conversion",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.93,
+    "input_tokens": 2227,
+    "output_tokens": 65,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y almacenamiento de datos",
+          "evidence": "recursos humanos la registra"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de roles y permisos",
+          "evidence": "el empleado la pide, su jefe la aprueba y recursos humanos la registra"
+        },
+        {
+          "category": "messaging",
+          "query": "flujo de tareas y aprobaciones",
+          "evidence": "las solicitudes de vacaciones sigan un flujo de aprobación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2234,
+    "output_tokens": 152,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "rastreo distribuido de solicitudes",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo en clúster",
+          "evidence": "que cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2244,
+    "output_tokens": 123,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real entre usuarios",
+          "evidence": "un chat en tiempo real entre compradores y vendedores dentro de la página"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de texto tolerante a errores",
+          "evidence": "un buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2233,
+    "output_tokens": 86,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "distribuidora-datos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos analiticos",
+          "evidence": "guardar el resultado en una base analítica rápida para consultar millones de filas"
+        },
+        {
+          "category": "data-processing",
+          "query": "transformacion de datos con sql",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2240,
+    "output_tokens": 126,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "revista-cdn",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos distribuidos",
+          "evidence": "que sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.91,
+    "input_tokens": 2225,
+    "output_tokens": 56,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "instituto-videoclases",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "clases en vivo por videollamada",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos de video",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean después"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2227,
+    "output_tokens": 71,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ferreteria-sucursales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario y ventas",
+          "evidence": "cada sucursal vea solo su propio inventario y sus ventas"
+        },
+        {
+          "category": "cache",
+          "query": "cache en memoria para respuestas rápidas",
+          "evidence": "las consultas repetidas al catálogo de productos respondan rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 2241,
+    "output_tokens": 119,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "domicilios-push",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones móviles",
+          "evidence": "enviar una notificación al celular del cliente cuando su pedido salga del restaurante"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de tareas asíncronas",
+          "evidence": "generar en segundo plano el recibo en PDF de cada pedido para no demorar la app"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2237,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "red-mascotas-grafos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de relaciones en grafos",
+          "evidence": "guardar quién conoce a quién en una base de datos de grafos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.93,
+    "input_tokens": 2231,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "mercadeo-sitio-vue",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web basado en Vue",
+          "evidence": "un framework basado en Vue"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenidos sin codigo",
+          "evidence": "su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2245,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "laboratorio-respaldos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "respaldo externo de copias de seguridad",
+          "evidence": "copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal"
+        },
+        {
+          "category": "analytics",
+          "query": "tablero de métricas y analítica",
+          "evidence": "un tablero que muestre cuántas muestras procesa cada sede por día"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2239,
+    "output_tokens": 128,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cosmeticos-facturas-embudo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "emisión de factura electrónica",
+          "evidence": "emitir la factura electrónica de cada venta"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de embudos de conversión",
+          "evidence": "saber en qué paso del proceso de compra abandonan los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2227,
+    "output_tokens": 110,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "empresa-aprobaciones",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y registro de solicitudes",
+          "evidence": "recursos humanos la registra"
+        },
+        {
+          "category": "messaging",
+          "query": "flujo de tareas y aprobaciones",
+          "evidence": "el empleado la pide, su jefe la aprueba y recursos humanos la registra"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2234,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "startup-trazas-gitops",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "trazas distribuidas entre microservicios",
+          "evidence": "ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora"
+        },
+        {
+          "category": "infrastructure",
+          "query": "despliegue continuo en clúster",
+          "evidence": "que cada cambio aprobado en el repositorio se despliegue solo en su clúster"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2244,
+    "output_tokens": 126,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "artesanias-chat-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "chat en tiempo real",
+          "evidence": "un chat en tiempo real entre compradores y vendedores dentro de la página"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador de productos que encuentre resultados aunque el comprador escriba con errores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2233,
+    "output_tokens": 84,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "distribuidora-datos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "transformación de datos con SQL versionado",
+          "evidence": "transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento para consultas analíticas rápidas",
+          "evidence": "guardar el resultado en una base analítica rápida para consultar millones de filas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2240,
+    "output_tokens": 129,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "revista-cdn",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y distribución multimedia",
+          "evidence": "sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2225,
+    "output_tokens": 75,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "instituto-videoclases",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "clases en vivo por videollamada",
+          "evidence": "dar clases en vivo por videollamada desde el navegador"
+        },
+        {
+          "category": "storage",
+          "query": "guardar las grabaciones de video",
+          "evidence": "guardar las grabaciones para que los estudiantes las vean después"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2227,
+    "output_tokens": 117,
+    "waited": 0.0
+  }
+]

@@ -89,7 +89,7 @@ archivo de licencia, nunca el resumen de la IA) y las revisó una persona.
 | Asistente `holdout` | Asistente de IA, después de leer el catálogo (7-nov) | abstención (7-nov) | desarrollo |
 | Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
 | Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
-| Asistente `records` | Otro modelo de lenguaje sin ver el catálogo (9-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | prioridad por categoría (10-nov) | desarrollo |
+| Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
 | Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
 | Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
 

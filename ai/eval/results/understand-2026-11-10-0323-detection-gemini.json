@@ -1,0 +1,2377 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cafeteria-de-barrio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "análisis de ventas por producto y día",
+          "evidence": "Quiero conocer las ventas por producto y por día para decidir qué preparar."
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de historial de clientes y compras",
+          "evidence": "conservar el historial de mis clientes frecuentes y sus compras"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos electrónicos",
+          "evidence": "recibir pagos sin depender únicamente del efectivo."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.35,
+    "input_tokens": 2257,
+    "output_tokens": 161,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "mantenimiento-aires-acondicionados",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "conservar los datos de cada cliente, los equipos que tiene y las visitas de mantenimiento que hemos realizado"
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones",
+          "evidence": "avise tanto al cliente como al técnico encargado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.0,
+    "input_tokens": 2256,
+    "output_tokens": 122,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "centro-formacion-oficios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de estudiantes y cursos",
+          "evidence": "organizada la información de los estudiantes, sus inscripciones y los cursos"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación y control de accesos",
+          "evidence": "cada estudiante pueda ingresar a su cuenta y que los instructores solo puedan consultar la información que necesitan"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "recibir los pagos de las matrículas por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2269,
+    "output_tokens": 170,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-productos-regionales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analisis de ventas y procedencia de compradores",
+          "evidence": "Quiero saber qué productos tienen más salida y de qué lugares vienen la mayoría de mis compradores."
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido para catalogo de productos",
+          "evidence": "necesito que la información de los productos, sus descripciones y sus fotografías se pueda actualizar fácilmente sin tener que pedirle ayuda a un programador."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.48,
+    "input_tokens": 2260,
+    "output_tokens": 142,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "fumigacion-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros históricos",
+          "evidence": "Quiero tener el historial de los servicios realizados en cada finca y los datos de contacto de sus responsables."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de costos y frecuencia geográfica",
+          "evidence": "comparar los costos y los resultados de los trabajos por zona para saber dónde estamos ofreciendo el servicio con mayor frecuencia."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones programadas a clientes",
+          "evidence": "Necesito que los clientes reciban un aviso antes de la fecha de su próxima visita."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2280,
+    "output_tokens": 190,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-cocina-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de estudiantes y cursos",
+          "evidence": "organizar las inscripciones, la asistencia y el historial de cada estudiante"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de datos y reportes de negocio",
+          "evidence": "conocer cuántas personas terminan los cursos y cuáles tienen mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "pagar sus matrículas en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2267,
+    "output_tokens": 165,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "reparacion-calzado",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de notificaciones y chat con clientes",
+          "evidence": "Quiero que mis clientes reciban un mensaje cuando su articulo este listo para recoger y que puedan consultarme cualquier duda por un canal de comunicacion."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos y anticipos en linea",
+          "evidence": "Tambien necesito recibir anticipos y pagos completos sin tener que manejar todo en efectivo."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2254,
+    "output_tokens": 95,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "excursiones-pesca-artesanal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de reservas en linea",
+          "evidence": "que las personas puedan pagar su reserva por internet"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes informativos",
+          "evidence": "enviar a los participantes un mensaje con la información de su excursión antes de cada salida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2262,
+    "output_tokens": 116,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "estudio-tatuajes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y permisos",
+          "evidence": "cada artista pueda ingresar con su propia cuenta y que tenga acceso únicamente a sus compromisos de trabajo"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de anticipos en línea",
+          "evidence": "los clientes puedan pagar una parte del servicio para confirmar su reserva"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos transaccionales",
+          "evidence": "reciban un correo con las indicaciones generales antes de su visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2263,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-surf",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de usuarios y permisos diferenciados",
+          "evidence": "los instructores puedan ingresar a su espacio de trabajo con permisos distintos a los de los administradores"
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones por cambios",
+          "evidence": "enviar avisos cuando una clase se cambie por condiciones del clima"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea",
+          "evidence": "ofrecer a los estudiantes la posibilidad de pagar sus clases por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2263,
+    "output_tokens": 171,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "organizacion-bodas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestión de contenido web autogestionable",
+          "evidence": "Quiero poder cambiar personalmente los textos, fotografías y ejemplos de eventos que aparecen en nuestra página, sin depender de otra persona cada vez que tengamos algo nuevo que mostrar."
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "También necesito comunicarme con los clientes por correo"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos y anticipos en línea",
+          "evidence": "ofrecerles una forma de pagar anticipos para separar la fecha."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2264,
+    "output_tokens": 186,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "club-lectura-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de cuentas y permisos de usuarios",
+          "evidence": "quiero que los miembros tengan una cuenta para consultar las actividades a las que están invitados y que los coordinadores puedan gestionar sus propios grupos"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido editorial y multimedia",
+          "evidence": "publicar novedades, reseñas y fotografías de los encuentros sin tener que pedir ayuda técnica"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos y notificaciones a personas",
+          "evidence": "quiero enviar avisos cuando se anuncie una nueva actividad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2274,
+    "output_tokens": 183,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "hostal-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "pagos en linea",
+          "evidence": "que los huéspedes puedan realizar pagos en línea"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos",
+          "evidence": "que el personal tenga cuentas con permisos diferentes según sus responsabilidades"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido web",
+          "evidence": "actualizar por mi cuenta la información del alojamiento, las fotografías y las recomendaciones para los visitantes"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos transaccionales",
+          "evidence": "que los huéspedes recibieran una confirmación por correo después de hacer una reserva"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2274,
+    "output_tokens": 207,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "limpieza-fachadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones a clientes",
+          "evidence": "enviar avisos a los clientes cuando tengamos que cambiar la fecha de una visita"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por servicios",
+          "evidence": "recibir pagos por los servicios contratados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2261,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cuidado-mascotas-domicilio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de cuentas y permisos de usuarios",
+          "evidence": "cada cuidador tenga una cuenta para consultar únicamente los servicios que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes a clientes",
+          "evidence": "los dueños de las mascotas reciban mensajes cuando el cuidador llegue y cuando termine la visita"
+        },
+        {
+          "category": "payments",
+          "query": "pasarela de pagos en linea",
+          "evidence": "pagar los servicios sin tener que entregar dinero en efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.11,
+    "input_tokens": 2270,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-traduccion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas e inicio de sesión",
+          "evidence": "cada traductor pueda ingresar a su cuenta"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de encargos asignados",
+          "evidence": "consultar únicamente los encargos que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "recepción y envío de correos electrónicos",
+          "evidence": "los clientes puedan solicitar cambios o hacer preguntas por correo y que reciban una notificación"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos por internet",
+          "evidence": "cobrar los servicios por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.35,
+    "input_tokens": 2266,
+    "output_tokens": 205,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "optica-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de datos",
+          "evidence": "Quiero llevar un registro de clientes, fórmulas, compras y el estado de cada pedido"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y roles",
+          "evidence": "necesito que los vendedores ingresen con su propia cuenta y que yo pueda limitar quién modifica precios o elimina registros"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "quisiera avisarle al cliente sin tener que llamar uno por uno"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.15,
+    "input_tokens": 2282,
+    "output_tokens": 175,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de historiales",
+          "evidence": "conservar el historial de cada bicicleta, los trabajos realizados y las piezas usadas"
+        },
+        {
+          "category": "search",
+          "query": "busqueda de texto en registros",
+          "evidence": "encuentre rápido una reparación anterior cuando busque por el nombre del cliente o por el número del marco"
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios periodicos",
+          "evidence": "se creen recordatorios de revisión cuando una bicicleta lleve varios meses sin volver"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2281,
+    "output_tokens": 131,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "distribuidora-productos-aseo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos transaccionales",
+          "evidence": "Quiero registrar cada venta, cliente, producto y cantidad disponible para saber qué tenemos y cuánto debemos reponer."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y comportamiento de clientes",
+          "evidence": "Me interesa ver cuáles productos se venden más por mes y qué clientes han reducido sus pedidos."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "necesito que los clientes puedan pagar sus facturas pendientes por internet."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2270,
+    "output_tokens": 182,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "centro-refuerzo-escolar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y registros escolares",
+          "evidence": "Quiero mantener el historial de matrículas, horarios, asistencia y pagos de cada estudiante."
+        },
+        {
+          "category": "payments",
+          "query": "registro y control de pagos",
+          "evidence": "pagos de cada estudiante"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles de usuario",
+          "evidence": "Los acudientes y profesores deben entrar con cuentas diferentes, y cada grupo solo debería ver la información que le corresponde."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a usuarios",
+          "evidence": "También quiero enviar avisos a las familias cuando cambie un horario o se acerque una evaluación."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2277,
+    "output_tokens": 226,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "frutas-deshidratadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de datos del negocio",
+          "evidence": "Quiero registrar las compras de materia prima, los lotes de producción, las cantidades empacadas y los pedidos de cada comercio."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo de consumo y stock",
+          "evidence": "calcular cuánto material se consume y cuánto producto terminado queda después de cada jornada"
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos y confirmaciones",
+          "evidence": "enviar a cada comercio una confirmación del pedido y un aviso cuando salga el despacho"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2277,
+    "output_tokens": 186,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-instrumentos-musicales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario y ventas",
+          "evidence": "Quiero llevar un registro de existencias, proveedores, compras y ventas para saber qué hay disponible."
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de productos por filtros",
+          "evidence": "Mis clientes deberían poder encontrar artículos por tipo, rango de precio o características, aunque no escriban el nombre exacto."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "También quiero aceptar pagos en línea para los pedidos que hacemos por encargo."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2275,
+    "output_tokens": 180,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "instalacion-paneles-solares",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos de clientes y servicios",
+          "evidence": "Quiero guardar los datos de cada cliente, la dirección, los equipos instalados, las visitas y el historial de mantenimiento."
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "que solo el personal administrativo vea los costos y los datos de facturación"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia y documentos",
+          "evidence": "guardar fotos de la instalación y documentos de garantía asociados a cada proyecto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.35,
+    "input_tokens": 2286,
+    "output_tokens": 182,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "galeria-arte-local",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión y consulta de catálogo y movimientos",
+          "evidence": "mantener un catálogo de obras con sus autores, medidas, precios, disponibilidad y movimientos cuando una pieza se presta o se vende"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenidos editables",
+          "evidence": "editar por mi cuenta los textos y las imágenes que aparecen en la página de la galería"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de consultas y ventas",
+          "evidence": "conocer qué obras reciben más consultas y cuáles terminan en venta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2282,
+    "output_tokens": 180,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-maquinas-coser",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "Quiero registrar los clientes, los equipos que recibimos, los diagnósticos, las cotizaciones y las reparaciones realizadas para consultar después cada caso."
+        },
+        {
+          "category": "messaging",
+          "query": "generación y asignación automática de tareas",
+          "evidence": "Cuando un cliente acepte una cotización, quisiera que se genere automáticamente la orden de trabajo y se asigne al técnico disponible."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "También necesito mandar mensajes al cliente para informarle cuando el equipo esté listo o cuando debamos esperar una pieza."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2289,
+    "output_tokens": 203,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cafeteria-de-barrio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analisis de ventas por producto",
+          "evidence": "Quiero conocer las ventas por producto y por día para decidir qué preparar"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de historial de clientes",
+          "evidence": "conservar el historial de mis clientes frecuentes y sus compras"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos digitales",
+          "evidence": "recibir pagos sin depender únicamente del efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2257,
+    "output_tokens": 92,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "mantenimiento-aires-acondicionados",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos de clientes y equipos",
+          "evidence": "conservar los datos de cada cliente, los equipos que tiene y las visitas de mantenimiento que hemos realizado"
+        },
+        {
+          "category": "messaging",
+          "query": "programación de tareas y eventos",
+          "evidence": "el sistema recuerde cuándo corresponde una nueva visita"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a personas",
+          "evidence": "avise tanto al cliente como al técnico encargado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 2256,
+    "output_tokens": 166,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "centro-formacion-oficios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "Quiero tener organizada la información de los estudiantes, sus inscripciones y los cursos que están realizando."
+        },
+        {
+          "category": "auth",
+          "query": "autenticación y control de accesos",
+          "evidence": "Necesito que cada estudiante pueda ingresar a su cuenta y que los instructores solo puedan consultar la información que necesitan."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "También quiero recibir los pagos de las matrículas por internet."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2269,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-productos-regionales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y origen de clientes",
+          "evidence": "Quiero saber qué productos tienen más salida y de qué lugares vienen la mayoría de mis compradores."
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenido y catálogo de productos",
+          "evidence": "También necesito que la información de los productos, sus descripciones y sus fotografías se pueda actualizar fácilmente sin tener que pedirle ayuda a un programador."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2260,
+    "output_tokens": 140,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "fumigacion-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales de servicio y contactos",
+          "evidence": "Quiero tener el historial de los servicios realizados en cada finca y los datos de contacto de sus responsables."
+        },
+        {
+          "category": "analytics",
+          "query": "analisis comparativo de costos y frecuencia por zona",
+          "evidence": "comparar los costos y los resultados de los trabajos por zona para saber dónde estamos ofreciendo el servicio con mayor frecuencia."
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios de visitas programadas",
+          "evidence": "Necesito que los clientes reciban un aviso antes de la fecha de su próxima visita."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2280,
+    "output_tokens": 196,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-cocina-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros académicos",
+          "evidence": "organizar las inscripciones, la asistencia y el historial de cada estudiante"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de datos y métricas educativas",
+          "evidence": "conocer cuántas personas terminan los cursos y cuáles tienen mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos y matrículas en línea",
+          "evidence": "Los estudiantes deberían poder pagar sus matrículas en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2267,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "reparacion-calzado",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de mensajes y chat de soporte",
+          "evidence": "Quiero que mis clientes reciban un mensaje cuando su artículo esté listo para recoger y que puedan consultarme cualquier duda por un canal de comunicación."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos electrónicos y anticipos",
+          "evidence": "necesito recibir anticipos y pagos completos sin tener que manejar todo en efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2254,
+    "output_tokens": 137,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "excursiones-pesca-artesanal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobros en linea por internet",
+          "evidence": "que las personas puedan pagar su reserva por internet"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de cuentas y roles de usuarios",
+          "evidence": "que los guías tengan una cuenta propia para consultar las salidas que tienen asignadas"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes a participantes",
+          "evidence": "enviar a los participantes un mensaje con la información de su excursión"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2262,
+    "output_tokens": 163,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "estudio-tatuajes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles de usuarios",
+          "evidence": "cada artista pueda ingresar con su propia cuenta y que tenga acceso únicamente a sus compromisos de trabajo"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de anticipos para reservas",
+          "evidence": "que los clientes puedan pagar una parte del servicio para confirmar su reserva"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "reciban un correo con las indicaciones generales antes de su visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2263,
+    "output_tokens": 172,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-surf",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de roles y permisos",
+          "evidence": "Quiero que los instructores puedan ingresar a su espacio de trabajo con permisos distintos a los de los administradores."
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos",
+          "evidence": "enviar avisos cuando una clase se cambie por condiciones del clima"
+        },
+        {
+          "category": "payments",
+          "query": "cobros en linea",
+          "evidence": "ofrecer a los estudiantes la posibilidad de pagar sus clases por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2263,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "organizacion-bodas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenidos web",
+          "evidence": "Quiero poder cambiar personalmente los textos, fotografías y ejemplos de eventos que aparecen en nuestra página, sin depender de otra persona"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos electronicos",
+          "evidence": "comunicarme con los clientes por correo"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea",
+          "evidence": "ofrecerles una forma de pagar anticipos para separar la fecha"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2264,
+    "output_tokens": 167,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "club-lectura-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y roles de usuario",
+          "evidence": "Quiero que los miembros tengan una cuenta para consultar las actividades a las que están invitados y que los coordinadores puedan gestionar sus propios grupos."
+        },
+        {
+          "category": "cms",
+          "query": "gestión y publicación de contenido editorial",
+          "evidence": "publicar novedades, reseñas y fotografías de los encuentros sin tener que pedir ayuda técnica."
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones a usuarios",
+          "evidence": "enviar avisos cuando se anuncie una nueva actividad."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2274,
+    "output_tokens": 184,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "hostal-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "pasarela de pagos en linea",
+          "evidence": "que los huéspedes puedan realizar pagos en línea"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de usuarios y permisos",
+          "evidence": "que el personal tenga cuentas con permisos diferentes según sus responsabilidades"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido web",
+          "evidence": "actualizar por mi cuenta la información del alojamiento, las fotografías y las recomendaciones para los visitantes"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos transaccionales",
+          "evidence": "que los huéspedes recibieran una confirmación por correo después de hacer una reserva"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2274,
+    "output_tokens": 209,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "limpieza-fachadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones a clientes",
+          "evidence": "enviar avisos a los clientes cuando tengamos que cambiar la fecha de una visita"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por servicios",
+          "evidence": "recibir pagos por los servicios contratados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.15,
+    "input_tokens": 2261,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cuidado-mascotas-domicilio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y roles",
+          "evidence": "cada cuidador tenga una cuenta para consultar únicamente los servicios que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes a clientes",
+          "evidence": "los dueños de las mascotas reciban mensajes cuando el cuidador llegue y cuando termine la visita"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "pagar los servicios sin tener que entregar dinero en efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.27,
+    "input_tokens": 2270,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-traduccion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y roles de usuario",
+          "evidence": "cada traductor pueda ingresar a su cuenta"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de encargos y asignaciones",
+          "evidence": "consultar únicamente los encargos que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos y notificaciones",
+          "evidence": "hacer preguntas por correo y que reciban una notificación"
+        },
+        {
+          "category": "payments",
+          "query": "cobros en línea",
+          "evidence": "cobrar los servicios por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2266,
+    "output_tokens": 198,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "optica-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro persistente de datos de negocio",
+          "evidence": "llevar un registro de clientes, fórmulas, compras y el estado de cada pedido para no perder la información"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios y control de accesos",
+          "evidence": "que los vendedores ingresen con su propia cuenta y que yo pueda limitar quién modifica precios o elimina registros"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "quisiera avisarle al cliente sin tener que llamar uno por uno"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2282,
+    "output_tokens": 183,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historial de reparaciones",
+          "evidence": "conservar el historial de cada bicicleta, los trabajos realizados y las piezas usadas"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de registros por cliente o marco",
+          "evidence": "encuentre rápido una reparación anterior cuando busque por el nombre del cliente o por el número del marco"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios de revisión",
+          "evidence": "se creen recordatorios de revisión cuando una bicicleta lleve varios meses sin volver"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2281,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "distribuidora-productos-aseo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario y ventas",
+          "evidence": "registrar cada venta, cliente, producto y cantidad disponible para saber qué tenemos y cuánto debemos reponer"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y comportamiento de clientes",
+          "evidence": "ver cuáles productos se venden más por mes y qué clientes han reducido sus pedidos"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de facturas en línea",
+          "evidence": "necesito que los clientes puedan pagar sus facturas pendientes por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2270,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "centro-refuerzo-escolar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de historial de matrículas y asistencia",
+          "evidence": "mantener el historial de matrículas, horarios, asistencia y pagos de cada estudiante"
+        },
+        {
+          "category": "payments",
+          "query": "registro y gestión de pagos de estudiantes",
+          "evidence": "pagos de cada estudiante"
+        },
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y control de acceso por roles",
+          "evidence": "Los acudientes y profesores deben entrar con cuentas diferentes, y cada grupo solo debería ver la información que le corresponde."
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones a familias",
+          "evidence": "enviar avisos a las familias cuando cambie un horario o se acerque una evaluación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2277,
+    "output_tokens": 236,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "frutas-deshidratadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario y pedidos",
+          "evidence": "Quiero registrar las compras de materia prima, los lotes de producción, las cantidades empacadas y los pedidos de cada comercio."
+        },
+        {
+          "category": "data-processing",
+          "query": "calculo de consumo de materiales",
+          "evidence": "calcular cuánto material se consume y cuánto producto terminado queda después de cada jornada."
+        },
+        {
+          "category": "communication",
+          "query": "envio de confirmaciones y avisos",
+          "evidence": "Quisiera enviar a cada comercio una confirmación del pedido y un aviso cuando salga el despacho."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2277,
+    "output_tokens": 186,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-instrumentos-musicales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de inventario",
+          "evidence": "llevar un registro de existencias, proveedores, compras y ventas para saber qué hay disponible"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de productos por filtros",
+          "evidence": "encontrar artículos por tipo, rango de precio o características, aunque no escriban el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "aceptar pagos en línea para los pedidos que hacemos por encargo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2275,
+    "output_tokens": 176,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "instalacion-paneles-solares",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos de clientes",
+          "evidence": "Quiero guardar los datos de cada cliente, la dirección, los equipos instalados, las visitas y el historial de mantenimiento."
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y roles de usuario",
+          "evidence": "que solo el personal administrativo vea los costos y los datos de facturación"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos e imágenes",
+          "evidence": "guardar fotos de la instalación y documentos de garantía asociados a cada proyecto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2286,
+    "output_tokens": 182,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "galeria-arte-local",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de catálogo y movimientos",
+          "evidence": "mantener un catálogo de obras con sus autores, medidas, precios, disponibilidad y movimientos cuando una pieza se presta o se vende"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenidos web autogestionable",
+          "evidence": "editar por mi cuenta los textos y las imágenes que aparecen en la página de la galería"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de consultas y ventas de productos",
+          "evidence": "conocer qué obras reciben más consultas y cuáles terminan en venta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2282,
+    "output_tokens": 187,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-maquinas-coser",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos operativos",
+          "evidence": "Quiero registrar los clientes, los equipos que recibimos, los diagnósticos, las cotizaciones y las reparaciones realizadas para consultar después cada caso."
+        },
+        {
+          "category": "automation",
+          "query": "automatización de procesos y tareas de negocio",
+          "evidence": "Cuando un cliente acepte una cotización, quisiera que se genere automáticamente la orden de trabajo y se asigne al técnico disponible."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "También necesito mandar mensajes al cliente para informarle cuando el equipo esté listo o cuando debamos esperar una pieza."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.37,
+    "input_tokens": 2289,
+    "output_tokens": 205,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cafeteria-de-barrio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analisis de ventas por producto",
+          "evidence": "Quiero conocer las ventas por producto y por día para decidir qué preparar."
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de historial de clientes",
+          "evidence": "También necesito conservar el historial de mis clientes frecuentes y sus compras"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos electronicos",
+          "evidence": "recibir pagos sin depender únicamente del efectivo."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2257,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "mantenimiento-aires-acondicionados",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "conservar los datos de cada cliente, los equipos que tiene y las visitas de mantenimiento que hemos realizado"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "avise tanto al cliente como al técnico encargado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2256,
+    "output_tokens": 121,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "centro-formacion-oficios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "organizada la información de los estudiantes, sus inscripciones y los cursos que están realizando"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación y gestión de roles",
+          "evidence": "cada estudiante pueda ingresar a su cuenta y que los instructores solo puedan consultar la información que necesitan"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "recibir los pagos de las matrículas por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2269,
+    "output_tokens": 172,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-productos-regionales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analisis de ventas y origen de clientes",
+          "evidence": "Quiero saber qué productos tienen más salida y de qué lugares vienen la mayoría de mis compradores."
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido para catalogo de productos",
+          "evidence": "necesito que la información de los productos, sus descripciones y sus fotografías se pueda actualizar fácilmente sin tener que pedirle ayuda a un programador."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2260,
+    "output_tokens": 141,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "fumigacion-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y contactos",
+          "evidence": "historial de los servicios realizados en cada finca y los datos de contacto de sus responsables"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis comparativo de costos y frecuencia por zona",
+          "evidence": "comparar los costos y los resultados de los trabajos por zona para saber dónde estamos ofreciendo el servicio con mayor frecuencia"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos programados de visitas",
+          "evidence": "que los clientes reciban un aviso antes de la fecha de su próxima visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2280,
+    "output_tokens": 188,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-cocina-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "organizar las inscripciones, la asistencia y el historial de cada estudiante"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de datos del negocio",
+          "evidence": "conocer cuántas personas terminan los cursos y cuáles tienen mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "pagar sus matrículas en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.15,
+    "input_tokens": 2267,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "reparacion-calzado",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de mensajes a clientes y chat de consultas",
+          "evidence": "reciban un mensaje cuando su artículo esté listo para recoger y que puedan consultarme cualquier duda por un canal de comunicación"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea y anticipos",
+          "evidence": "recibir anticipos y pagos completos sin tener que manejar todo en efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2254,
+    "output_tokens": 133,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "excursiones-pesca-artesanal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "puedan pagar su reserva por internet"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes informativos",
+          "evidence": "enviar a los participantes un mensaje con la información de su excursión antes de cada salida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.99,
+    "input_tokens": 2262,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "estudio-tatuajes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de identidad y control de acceso",
+          "evidence": "cada artista pueda ingresar con su propia cuenta y que tenga acceso únicamente a sus compromisos de trabajo"
+        },
+        {
+          "category": "payments",
+          "query": "cobros parciales y procesamiento de pagos",
+          "evidence": "los clientes puedan pagar una parte del servicio para confirmar su reserva"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correo electronico transaccional",
+          "evidence": "reciban un correo con las indicaciones generales antes de su visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2263,
+    "output_tokens": 172,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-surf",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de usuarios y permisos",
+          "evidence": "los instructores puedan ingresar a su espacio de trabajo con permisos distintos a los de los administradores"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos a personas",
+          "evidence": "enviar avisos cuando una clase se cambie por condiciones del clima"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos en linea",
+          "evidence": "ofrecer a los estudiantes la posibilidad de pagar sus clases por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2263,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "organizacion-bodas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenidos web",
+          "evidence": "Quiero poder cambiar personalmente los textos, fotografías y ejemplos de eventos que aparecen en nuestra página, sin depender de otra persona cada vez que tengamos algo nuevo que mostrar."
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos electronicos",
+          "evidence": "También necesito comunicarme con los clientes por correo"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea",
+          "evidence": "ofrecerles una forma de pagar anticipos para separar la fecha."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2264,
+    "output_tokens": 176,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "club-lectura-presencial",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de cuentas y autenticacion",
+          "evidence": "quiero que los miembros tengan una cuenta"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenidos editoriales",
+          "evidence": "publicar novedades, reseñas y fotografías de los encuentros sin tener que pedir ayuda técnica"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos y notificaciones",
+          "evidence": "enviar avisos cuando se anuncie una nueva actividad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2274,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "hostal-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "pagos en linea",
+          "evidence": "que los huéspedes puedan realizar pagos en línea"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de usuarios y permisos",
+          "evidence": "el personal tenga cuentas con permisos diferentes según sus responsabilidades"
+        },
+        {
+          "category": "cms",
+          "query": "gestion de contenido web",
+          "evidence": "actualizar por mi cuenta la información del alojamiento, las fotografías y las recomendaciones"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos transaccionales",
+          "evidence": "los huéspedes recibieran una confirmación por correo después de hacer una reserva"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2274,
+    "output_tokens": 202,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "limpieza-fachadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones a clientes",
+          "evidence": "enviar avisos a los clientes cuando tengamos que cambiar la fecha de una visita"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por servicios",
+          "evidence": "recibir pagos por los servicios contratados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 2261,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cuidado-mascotas-domicilio",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de cuentas y roles de usuario",
+          "evidence": "Quiero que cada cuidador tenga una cuenta para consultar únicamente los servicios que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes y notificaciones transaccionales",
+          "evidence": "Quiero que los dueños de las mascotas reciban mensajes cuando el cuidador llegue y cuando termine la visita"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en línea",
+          "evidence": "También quiero que puedan pagar los servicios sin tener que entregar dinero en efectivo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2270,
+    "output_tokens": 184,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-traduccion",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación y gestión de cuentas de usuario",
+          "evidence": "cada traductor pueda ingresar a su cuenta"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de encargos asignados",
+          "evidence": "consultar únicamente los encargos que tiene asignados"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos y notificaciones",
+          "evidence": "hacer preguntas por correo y que reciban una notificación cuando su trabajo esté terminado"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos por internet",
+          "evidence": "cobrar los servicios por internet"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.51,
+    "input_tokens": 2266,
+    "output_tokens": 207,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "optica-familiar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro persistente de clientes y pedidos",
+          "evidence": "llevar un registro de clientes, fórmulas, compras y el estado de cada pedido para no perder la información"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios con roles y permisos",
+          "evidence": "los vendedores ingresen con su propia cuenta y que yo pueda limitar quién modifica precios o elimina registros"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "avisarle al cliente sin tener que llamar uno por uno"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2282,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historial de reparaciones y piezas",
+          "evidence": "conservar el historial de cada bicicleta, los trabajos realizados y las piezas usadas"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida por cliente o marco",
+          "evidence": "encuentre rápido una reparación anterior cuando busque por el nombre del cliente o por el número del marco"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios de revisión",
+          "evidence": "creen recordatorios de revisión cuando una bicicleta lleve varios meses sin volver"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.36,
+    "input_tokens": 2281,
+    "output_tokens": 180,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "distribuidora-productos-aseo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario y ventas",
+          "evidence": "Quiero registrar cada venta, cliente, producto y cantidad disponible para saber qué tenemos y cuánto debemos reponer."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y comportamiento de clientes",
+          "evidence": "Me interesa ver cuáles productos se venden más por mes y qué clientes han reducido sus pedidos."
+        },
+        {
+          "category": "payments",
+          "query": "cobro de facturas en línea",
+          "evidence": "necesito que los clientes puedan pagar sus facturas pendientes por internet."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2270,
+    "output_tokens": 183,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "centro-refuerzo-escolar",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y registros escolares",
+          "evidence": "mantener el historial de matrículas, horarios, asistencia y pagos de cada estudiante"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y roles de usuario",
+          "evidence": "Los acudientes y profesores deben entrar con cuentas diferentes, y cada grupo solo debería ver la información que le corresponde."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones y avisos",
+          "evidence": "enviar avisos a las familias cuando cambie un horario o se acerque una evaluación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2277,
+    "output_tokens": 187,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "frutas-deshidratadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de inventario y pedidos",
+          "evidence": "Quiero registrar las compras de materia prima, los lotes de producción, las cantidades empacadas y los pedidos de cada comercio."
+        },
+        {
+          "category": "data-processing",
+          "query": "calculo de consumo de materiales y stock",
+          "evidence": "calcular cuánto material se consume y cuánto producto terminado queda después de cada jornada."
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones y confirmaciones de pedidos",
+          "evidence": "enviar a cada comercio una confirmación del pedido y un aviso cuando salga el despacho."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2277,
+    "output_tokens": 190,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-instrumentos-musicales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de inventario",
+          "evidence": "Quiero llevar un registro de existencias, proveedores, compras y ventas para saber qué hay disponible."
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de productos",
+          "evidence": "Mis clientes deberían poder encontrar artículos por tipo, rango de precio o características, aunque no escriban el nombre exacto."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "También quiero aceptar pagos en línea para los pedidos que hacemos por encargo."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2275,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "instalacion-paneles-solares",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos de clientes",
+          "evidence": "Quiero guardar los datos de cada cliente, la dirección, los equipos instalados, las visitas y el historial de mantenimiento."
+        },
+        {
+          "category": "auth",
+          "query": "gestión de permisos y roles de usuario",
+          "evidence": "que solo el personal administrativo vea los costos y los datos de facturación"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar fotos de la instalación y documentos de garantía asociados a cada proyecto"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2286,
+    "output_tokens": 183,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "galeria-arte-local",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de catálogo y disponibilidad de obras",
+          "evidence": "mantener un catálogo de obras con sus autores, medidas, precios, disponibilidad y movimientos cuando una pieza se presta o se vende"
+        },
+        {
+          "category": "cms",
+          "query": "gestión de contenidos de textos e imágenes",
+          "evidence": "Quiero poder editar por mi cuenta los textos y las imágenes que aparecen en la página de la galería"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de consultas y conversiones de ventas",
+          "evidence": "conocer qué obras reciben más consultas y cuáles terminan en venta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2282,
+    "output_tokens": 190,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-maquinas-coser",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "Quiero registrar los clientes, los equipos que recibimos, los diagnósticos, las cotizaciones y las reparaciones realizadas para consultar después cada caso."
+        },
+        {
+          "category": "messaging",
+          "query": "automatización de tareas y procesos",
+          "evidence": "Cuando un cliente acepte una cotización, quisiera que se genere automáticamente la orden de trabajo y se asigne al técnico disponible."
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "También necesito mandar mensajes al cliente para informarle cuando el equipo esté listo o cuando debamos esperar una pieza."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2289,
+    "output_tokens": 201,
+    "waited": 0.0
+  }
+]

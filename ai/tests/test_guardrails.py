@@ -22,7 +22,7 @@ def test_pedidos_normales_pasan(request_):
     assert guardrails.check_request(request_) == []
 
 
-@pytest.mark.parametrize("name", ["base", "validation", "abstention", "business", "records"])
+@pytest.mark.parametrize("name", ["base", "validation", "abstention", "business", "records", "detection"])
 def test_pedidos_de_desarrollo_del_asistente_pasan(name):
     """Los conjuntos de desarrollo del asistente son pedidos normales: ninguno se marca."""
     for case in load_assistant_cases(CASE_FILES[name]).cases:

@@ -93,6 +93,7 @@ ai/
 │   ├── README.md               # Evaluación de la búsqueda: cómo correrla y leerla
 │   ├── SEARCH_DECISION.md      # Modelo de embeddings y umbral: decisión y evidencia
 │   ├── GUARDRAILS_DECISION.md  # Defensa contra prompt injection: decisión, evidencia y límites
+│   ├── DETECTION_DECISION.md   # Detección de pedidos de guardar datos: medida y no integrada
 │   ├── CATEGORY_PRIORITY_DECISION.md  # Prioridad por categoría en los candidatos: decisión y evidencia
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
 │   ├── LLM_DECISION.md         # Elección del modelo de lenguaje: criterios, resultados y descartados
