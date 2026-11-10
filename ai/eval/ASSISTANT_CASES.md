@@ -142,6 +142,20 @@ de cada necesidad; después de esa decisión son de desarrollo.
 python -m ai.eval.run_assistant_eval gemini --cases records
 ```
 
+## Casos de detección (25 casos)
+
+`assistant_cases_detection.json`. Pedidos de pequeños negocios escritos por otro modelo
+de lenguaje sin ver el catálogo, en dos tandas con el mismo procedimiento: 14 piden
+guardar o consultar los datos del negocio y 11 no (para ver si se agrega una base de
+datos que nadie pidió). Filtrados con reglas fijas, sin editar; etiquetas puestas
+después, con datos de GitHub. Se escribieron para decidir un cambio en cómo el paso de
+entender detecta esas necesidades; después de esa decisión son de desarrollo.
+
+```bash
+python -m ai.eval.run_understand_eval gemini --cases detection
+python -m ai.eval.run_assistant_eval gemini --cases detection
+```
+
 ## Prueba final (16 casos)
 
 `assistant_cases_test.json`. Pedidos de pequeños negocios escritos por otro modelo

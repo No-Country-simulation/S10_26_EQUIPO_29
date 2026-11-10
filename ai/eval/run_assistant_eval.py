@@ -238,6 +238,7 @@ def main() -> None:
                              "business: pedidos de negocios escritos sin ver el catálogo; "
                              "abstention: necesidades parecidas a algo del catálogo pero no cubiertas; "
                              "records: pedidos de negocios con registros y reportes, escritos sin ver el catálogo; "
+                             "detection: pedidos con y sin necesidad de guardar datos, escritos sin ver el catálogo; "
                              "test: la prueba final (una sola corrida, con la versión elegida)")
     parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
                         help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
