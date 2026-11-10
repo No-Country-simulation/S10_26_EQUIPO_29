@@ -493,7 +493,9 @@ def asistir(request: str, buscar, *, min_score: float,
             shown: int = CANDIDATES_SHOWN) -> Assisted:
     """Entender → buscar → generar, dentro de un presupuesto de tiempo.
 
-    `buscar(query, k)` devuelve los k repos más parecidos a la consulta.
+    `buscar(query, k, prefer_category=..., min_score=...)` devuelve hasta k repos parecidos
+    a la consulta que pasan el umbral: primero los de la categoría principal pedida y, si
+    no llenan los k lugares, los demás.
     `budget`: segundos para todo el pedido; None = sin límite (evaluaciones).
     `shown`: candidatos por necesidad que ve el modelo (se registran al menos 5).
     Los errores del proveedor (límite de uso, tiempo agotado) se propagan a quien llama;
@@ -514,8 +516,9 @@ def asistir(request: str, buscar, *, min_score: float,
 
     start = time.perf_counter()
     for need in data.needs:
-        out.found[need.category] = [r for r in buscar(need.query, max(CANDIDATES_LOGGED, shown))
-                                    if r.score >= min_score]
+        found = buscar(need.query, max(CANDIDATES_LOGGED, shown),
+                       prefer_category=need.category, min_score=min_score)
+        out.found[need.category] = [r for r in found if r.score >= min_score]
     out.search_seconds = round(time.perf_counter() - start, 2)
 
     candidates = {c: found[:shown] for c, found in out.found.items() if found}

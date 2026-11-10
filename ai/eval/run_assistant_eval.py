@@ -252,8 +252,8 @@ def main() -> None:
     index = SearchIndex.build()
     min_score = embeddings.model_spec().min_score
 
-    def buscar(query, k):
-        return index.search(query, k)
+    def buscar(query, k, **filters):
+        return index.search(query, k, **filters)
 
     case_set = load_assistant_cases(CASE_FILES[args.cases])
     # De la base se usan solo los rápidos; los de validación son pocos y se usan todos.

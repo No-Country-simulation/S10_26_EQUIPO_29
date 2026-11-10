@@ -41,7 +41,7 @@ log = logging.getLogger("ai.service")
 class Catalog:
     """Lo que el servicio carga una vez al arrancar."""
 
-    buscar: Callable        # buscar(query, k) -> resultados, como espera asistir()
+    buscar: Callable        # buscar(query, k, prefer_category=, min_score=), como espera asistir()
     min_score: float
     repos: int
     embedding_model: str
