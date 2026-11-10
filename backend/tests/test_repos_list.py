@@ -183,8 +183,12 @@ def test_is_maintained_computes_boolean_from_pushed_at_and_archived():
         item = client.get("/repos").json()[0]
         assert item["is_maintained"] is False
 
-    # Sin dato explícito en base de datos: None (actividad desconocida)
-    with build_client(FakeRepository([list_row(archived=False, is_maintained=None)])) as client:
+    # Fecha futura: actividad no verificable -> None
+    with build_client(
+        FakeRepository(
+            [list_row(archived=False, is_maintained=None, pushed_at="2099-01-01T00:00:00Z")]
+        )
+    ) as client:
         item = client.get("/repos").json()[0]
         assert item["is_maintained"] is None
 
