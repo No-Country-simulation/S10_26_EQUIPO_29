@@ -13,12 +13,12 @@ Documentos relacionados:
 
 | Campo | Tipo | Origen | Significado | Tratamiento de `null` en Frontend |
 |---|---|---|---|---|
-| `is_maintained` | `boolean \| null` | Calculado en FastAPI (`CASE WHEN` SQL / fallback servicio) | `true`: no archivado y push en los últimos 180 días.<br>`false`: archivado o push anterior a 180 días.<br>`null`: fecha ausente o sin dato. | Mostrar badge «Mantenido» (`true`), «Inactivo / Obsoleto» (`false`) o «Sin evaluar» (`null`). **No asumir false**. |
+| `is_maintained` | `boolean \| null` | Calculado únicamente en el servicio Python de FastAPI | `true`: no archivado y push en los últimos 180 días.<br>`false`: archivado o push anterior a 180 días.<br>`null`: fecha ausente o sin dato. | Mostrar badge «Mantenido» (`true`), «Inactivo / Obsoleto» (`false`) o «Sin evaluar» (`null`). **No asumir false**. |
 | `open_issues_count` | `integer \| null` | Extraído de GitHub (`public.catalog_repositories`) | Conteo total de issues abiertas + PRs abiertas en GitHub. | Mostrar conteo numérico si es entero $\ge 0$. Si es `null`, mostrar «—» o «Sin dato». **No convertir a 0**. |
 | `disabled` | `boolean \| null` | Extraído de GitHub (`public.catalog_repositories`) | Indica si GitHub deshabilitó administrativamente el repositorio (no clonable/bloqueado). | Si es `true`, alertar «Repositorio deshabilitado». Si es `null` o `false`, comportamiento normal. |
 
 > [!IMPORTANT]
-> `is_maintained` **no es una columna física en Supabase**. Se calcula dinámicamente en tiempo de consulta mediante SQL (`CASE WHEN ... END`) y en el servicio backend, garantizando que el estado refleje siempre la ventana móvil de los últimos 180 días respecto a `NOW()`.
+> `is_maintained` **no es una columna física en Supabase**. Se calcula al servir la respuesta mediante `compute_is_maintained(archived, pushed_at)` en Python, con una ventana móvil de 180 días en UTC. SQL devuelve la fecha original sin conversiones ni cálculos redundantes. Una fecha futura produce mantenimiento desconocido; fechas ausentes o inválidas se rechazan con 503 por el contrato del repositorio, antes de construir la respuesta.
 
 ---
 

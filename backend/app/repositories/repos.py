@@ -33,7 +33,7 @@ _BASE_JOINS = """
     ) categories ON TRUE
 """
 
-_LIST_COLUMNS = r"""
+_LIST_COLUMNS = """
     r.github_id,
     r.full_name,
     r.name,
@@ -47,19 +47,13 @@ _LIST_COLUMNS = r"""
     r.archived,
     r.disabled,
     r.open_issues_count,
-    CASE
-        WHEN r.archived IS TRUE THEN FALSE
-        WHEN r.archived IS FALSE AND r.pushed_at IS NOT NULL AND r.pushed_at ~ '^\d{4}-\d{2}-\d{2}' AND r.pushed_at::timestamptz >= (NOW() - INTERVAL '180 days') THEN TRUE
-        WHEN r.archived IS FALSE AND r.pushed_at IS NOT NULL AND r.pushed_at ~ '^\d{4}-\d{2}-\d{2}' AND r.pushed_at::timestamptz < (NOW() - INTERVAL '180 days') THEN FALSE
-        ELSE NULL
-    END AS is_maintained,
     e.summary_es,
     COALESCE(e.use_cases, ARRAY[]::text[]) AS use_cases,
     categories.categories,
     COUNT(*) OVER () AS total_count
 """
 
-_DETAIL_QUERY = r"""
+_DETAIL_QUERY = """
 SELECT
     r.github_id,
     v.full_name,
@@ -76,12 +70,6 @@ SELECT
     r.open_issues_count,
     r.disabled,
     r.html_url,
-    CASE
-        WHEN v.archived IS TRUE THEN FALSE
-        WHEN v.archived IS FALSE AND v.pushed_at IS NOT NULL AND v.pushed_at ~ '^\d{4}-\d{2}-\d{2}' AND v.pushed_at::timestamptz >= (NOW() - INTERVAL '180 days') THEN TRUE
-        WHEN v.archived IS FALSE AND v.pushed_at IS NOT NULL AND v.pushed_at ~ '^\d{4}-\d{2}-\d{2}' AND v.pushed_at::timestamptz < (NOW() - INTERVAL '180 days') THEN FALSE
-        ELSE NULL
-    END AS is_maintained,
     v.readme_text,
     e.summary_es,
     COALESCE(e.use_cases, ARRAY[]::text[]) AS use_cases,

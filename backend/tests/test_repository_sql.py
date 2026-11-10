@@ -73,13 +73,15 @@ def test_maintenance_approximation_only_uses_archived_and_disabled():
     assert "health" not in active_sql
 
 
-def test_sql_includes_is_maintained_expression():
+def test_maintenance_is_computed_only_by_the_service():
     list_sql, _ = build_list_statement(RepoFilters(), limit=1, offset=0)
     detail_sql = build_detail_statement()
-    assert "AS is_maintained" in list_sql
-    assert "AS is_maintained" in detail_sql
-    assert "180 days" in list_sql
-    assert "180 days" in detail_sql
+    for sql in (list_sql, detail_sql):
+        assert "AS is_maintained" not in sql
+        assert "::timestamptz" not in sql
+        assert "180 days" not in sql
+    assert "r.pushed_at" in list_sql
+    assert "v.pushed_at" in detail_sql
 
 
 def test_detail_reads_view_base_table_and_ai_results():
