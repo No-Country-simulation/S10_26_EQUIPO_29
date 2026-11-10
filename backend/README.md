@@ -94,10 +94,12 @@ lectura y los permisos que faltan están en
   omiten y se registran.
 - `archived` es obligatorio en el contrato: si la base lo trae NULL, la API
   responde 503 `catalog_unavailable` en vez de inventar `false`.
-- `is_maintained` viaja siempre en `null`: no hay campo ni criterio acordados.
+- `is_maintained` se calcula en la API en lectura (no archivado y `pushed_at`
+  dentro de los 180 días); no existe columna física y la sincronización no la
+  requiere.
 - `health_score` lo calcula el motor v1 (`app/services/health.py`) sólo con
-  `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en `null`. El motor nunca
-  convierte un dato faltante en 0; ver
+  `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en `null` y el frontend
+  muestra «Sin evaluar». El motor nunca convierte un dato faltante en 0; ver
   [`docs/health-score-implementation.md`](docs/health-score-implementation.md).
 - El contrato HTTP exacto que consume el frontend (URLs, endpoints, ubicación de
   `health_score`, manejo de `null` y de errores) está en

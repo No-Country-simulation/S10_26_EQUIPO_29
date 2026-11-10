@@ -1,4 +1,4 @@
-.proposal-skeleton .proposal-skeleton-card{background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-light,18%),var(--skeleton-background,#101317)),var(--skeleton-background,#101317) 65%);border-color:color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),#ffffff0a);box-shadow:var(--skeleton-shadow-x,8px) var(--skeleton-shadow-y,8px) var(--skeleton-blur,26px) rgb(0 0 0 / var(--skeleton-shadow,.35));contain:none}
+.proposal-skeleton .proposal-skeleton-card{background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-light,18%),var(--skeleton-background,#101317)),var(--skeleton-background,#101317) 65%);border-color:color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),rgb(var(--neutral-1100-rgb) / 0.039216));box-shadow:var(--skeleton-shadow-x,8px) var(--skeleton-shadow-y,8px) var(--skeleton-blur,26px) rgb(0 0 0 / var(--skeleton-shadow,.35));contain:none}
 .proposal-skeleton .proposal-skeleton-card:before{background-size:var(--skeleton-gap,12px) var(--skeleton-gap,12px)}
 .proposal-skeleton .proposal-skeleton-dots{mask-size:var(--skeleton-gap,12px) var(--skeleton-gap,12px);opacity:var(--skeleton-dots,.75)}
 .proposal-skeleton .proposal-skeleton-wave{animation-duration:var(--skeleton-speed,3.2s);background:linear-gradient(110deg,transparent 15%,transparent 30%,var(--skeleton-color,#dcecff) 50%,transparent 78%)}
@@ -6,13 +6,13 @@
 
 /* The same light direction defines the surface and the illuminated rim. */
 .proposal-skeleton .proposal-skeleton-card{border-color:transparent}
-.proposal-skeleton .proposal-skeleton-card:after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),#ffffff06 65%,#00000050);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.proposal-skeleton .proposal-skeleton-card:after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(var(--skeleton-angle,135deg),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),rgb(var(--neutral-1100-rgb) / 0.023529) 65%,rgb(var(--neutral-000-rgb) / 0.313725));mask:linear-gradient(var(--neutral-1100) 0 0) content-box,linear-gradient(var(--neutral-1100) 0 0);mask-composite:exclude}
 /* Soft dot halos share the exact sweep phase without an animated blur filter. */
-.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,#0009 0px,#0006 1.5px,#0002 3px,transparent 5px);opacity:var(--skeleton-glow,.35)}
+.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,rgb(var(--neutral-000-rgb) / 0.600000) 0px,rgb(var(--neutral-000-rgb) / 0.400000) 1.5px,rgb(var(--neutral-000-rgb) / 0.133333) 3px,transparent 5px);opacity:var(--skeleton-glow,.35)}
 
 /* All six surfaces sample one radial light in the grid's coordinate space. */
 .proposal-skeleton .proposal-skeleton-card{background:radial-gradient(circle var(--scene-light-radius,900px) at var(--scene-light-x,0px) var(--scene-light-y,0px),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-light,18%),transparent),transparent 100%),var(--skeleton-background,#101317)}
-.proposal-skeleton .proposal-skeleton-card:after{background:radial-gradient(circle var(--scene-light-radius,900px) at var(--scene-light-x,0px) var(--scene-light-y,0px),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),transparent 100%),#ffffff05}
+.proposal-skeleton .proposal-skeleton-card:after{background:radial-gradient(circle var(--scene-light-radius,900px) at var(--scene-light-x,0px) var(--scene-light-y,0px),color-mix(in srgb,var(--skeleton-color,#dcecff) var(--skeleton-edge,24%),transparent),transparent 100%),rgb(var(--neutral-1100-rgb) / 0.019608)}
 
 /* A padded light field reaches transparency before its rectangular bounds.
    Translate the shared field; scaling an off-centre ring caused hard crops. */
@@ -21,9 +21,9 @@
 @media(prefers-reduced-motion:reduce){.proposal-skeleton .proposal-skeleton-wave{animation:none;transform:none;opacity:.25;will-change:auto}}
 
 /* Split the soft halo into cool spectral fringes, retaining the neutral dot core. */
-.proposal-skeleton .proposal-skeleton-prism{mask-image:radial-gradient(circle,#000c 0px,#0008 2px,#0003 4px,transparent 6px);opacity:var(--wave-dispersion,.45)}
+.proposal-skeleton .proposal-skeleton-prism{mask-image:radial-gradient(circle,rgb(var(--neutral-000-rgb) / 0.800000) 0px,rgb(var(--neutral-000-rgb) / 0.533333) 2px,rgb(var(--neutral-000-rgb) / 0.200000) 4px,transparent 6px);opacity:var(--wave-dispersion,.45)}
 .proposal-skeleton .proposal-skeleton-prism .proposal-skeleton-wave{background:radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 48% 49%,#64dfffcc 0%,#73d9ff70 28%,#73d9ff20 60%,transparent 100%),radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 52% 51%,#f2a5e6b3 0%,#cbb5ff66 28%,#e7a9e520 60%,transparent 100%)}
-.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,#000b 0px,#0007 1.5px,#0003 3px,transparent 5px)}
+.proposal-skeleton .proposal-skeleton-halo{mask-image:radial-gradient(circle,rgb(var(--neutral-000-rgb) / 0.733333) 0px,rgb(var(--neutral-000-rgb) / 0.466667) 1.5px,rgb(var(--neutral-000-rgb) / 0.200000) 3px,transparent 5px)}
 
 /* A quiet, elongated wake behind the light front; no extra animated layer. */
 .proposal-skeleton .proposal-skeleton-wave{background:radial-gradient(ellipse var(--wave-radius-x,18%) var(--wave-radius-y,22%) at 50% 50%,color-mix(in srgb,var(--skeleton-color,#dcecff) 90%,transparent) var(--wave-core,7%),color-mix(in srgb,var(--skeleton-color,#dcecff) 48%,transparent) 30%,color-mix(in srgb,var(--skeleton-color,#dcecff) 15%,transparent) 60%,transparent 100%),radial-gradient(ellipse 27% var(--wave-radius-y,22%) at 38% 49%,color-mix(in srgb,var(--skeleton-color,#dcecff) var(--wave-trail,30%),transparent),transparent 100%);animation-timing-function:linear}
@@ -53,5 +53,5 @@
 
 /* Content-shaped skeleton: a soft shared light replaces the dot texture. */
 .proposal-skeleton .proposal-skeleton-card:before,.proposal-skeleton .proposal-skeleton-dots{mask-image:var(--skeleton-content-mask);mask-size:100% 100%;mask-repeat:no-repeat}
-.proposal-skeleton .proposal-skeleton-card:before{background:#ffffff0d}
+.proposal-skeleton .proposal-skeleton-card:before{background:rgb(var(--neutral-1100-rgb) / 0.050980)}
 .proposal-skeleton .proposal-skeleton-dots{opacity:var(--skeleton-sweep-light,.18)}

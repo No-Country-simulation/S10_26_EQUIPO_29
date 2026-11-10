@@ -64,19 +64,25 @@ def test_repo_v12_fields_are_part_of_the_shared_contract():
         assert field_name in CatalogRepo.model_fields
 
 
-def test_disabled_comes_from_the_row_and_is_maintained_is_not_invented():
-    """`disabled` se copia tal cual; `is_maintained` se calcula con la fecha disponible."""
+def test_disabled_comes_from_the_row_and_is_maintained_evaluates_contract():
+    """`disabled` se copia tal cual; `is_maintained` evalúa la regla de los 180 días."""
     with build_client(FakeRepository([list_row(disabled=True)])) as client:
         item = client.get("/repos").json()[0]
 
     assert item["disabled"] is True
-    assert isinstance(item["is_maintained"], bool)
+    assert item["is_maintained"] is True
 
-    with build_client(FakeRepository([list_row(disabled=None)])) as client:
+    # Fecha futura: no verificable -> None (no se inventa mantenimiento)
+    with build_client(
+        FakeRepository(
+            [list_row(disabled=None, is_maintained=None, pushed_at="2099-01-01T00:00:00Z")]
+        )
+    ) as client:
         item = client.get("/repos").json()[0]
 
     # NULL es "sin dato": no se convierte a false.
     assert item["disabled"] is None
+    assert item["is_maintained"] is None
 
 
 def test_detail_response_reuses_the_shared_wrapper():
@@ -106,10 +112,13 @@ def test_categories_come_from_the_shared_file_not_from_a_local_copy():
 
 
 def test_pending_fields_are_optional_and_documented():
-    for field_name in ("is_maintained", "health_score"):
-        field = CatalogRepo.model_fields[field_name]
-        assert field.default is None
-        assert field.description
+    health_field = CatalogRepo.model_fields["health_score"]
+    assert health_field.default is None
+    assert "Pendiente" in (health_field.description or "")
+
+    maintained_field = CatalogRepo.model_fields["is_maintained"]
+    assert maintained_field.default is None
+    assert "180" in (maintained_field.description or "")
 
 
 def test_detail_sql_builds_every_contract_idea_field():

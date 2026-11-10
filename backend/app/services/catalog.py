@@ -2,8 +2,9 @@
 
 No hay reglas de negocio inventadas:
 
-- `is_maintained` se calcula en lectura: no archivado y push en los últimos
-  180 días; fecha ausente, inválida o futura significa dato desconocido.
+- `is_maintained` no se lee de ninguna columna: se calcula en lectura desde
+  `archived` y `pushed_at` (no archivado y push en los últimos 180 días); fecha
+  ausente, inválida o futura significa dato desconocido.
 - `health_score` sale del motor v1 (`app/services/health.py`) sólo cuando
   `HEALTH_SCORE_ENABLED=true`; apagado (defecto) viaja en NULL. El motor nunca
   convierte un dato faltante en 0.
@@ -64,20 +65,39 @@ def _to_datetime(value: Any) -> datetime | None:
         return None
 
 
-def compute_is_maintained(archived: Any, pushed_at: datetime | None, *, reference_time: datetime | None = None) -> bool | None:
+def compute_is_maintained(
+    archived: Any,
+    pushed_at: datetime | str | None,
+    *,
+    reference_time: datetime | None = None,
+) -> bool | None:
     """Actividad reciente, independiente de disabled y del health score.
 
-    Se calcula al servir la API, no se lee ni escribe una columna persistida.
+    Se calcula al servir la API: no se lee ni se escribe una columna persistida.
+
+    Reglas de negocio:
+    - archived = True -> False (un repositorio archivado nunca está mantenido).
+    - archived distinto de False -> None (estado desconocido).
+    - archived = False:
+        - pushed_at dentro de los últimos 180 días -> True.
+        - pushed_at anterior a 180 días -> False.
+        - pushed_at ausente, inválido o futuro -> None (actividad desconocida).
+
     Un dato desconocido no equivale a falta de mantenimiento.
     """
     if archived is True:
         return False
-    if archived is not False or pushed_at is None:
+    if archived is not False:
+        return None
+    stamp = _to_datetime(pushed_at)
+    if stamp is None:
         return None
     now = reference_time or datetime.now(timezone.utc)
     # El contrato permite fechas sin zona; se interpretan consistentemente en UTC.
-    stamp = pushed_at.replace(tzinfo=timezone.utc) if pushed_at.tzinfo is None else pushed_at
-    now = now.replace(tzinfo=timezone.utc) if now.tzinfo is None else now
+    if stamp.tzinfo is None and now.tzinfo is not None:
+        stamp = stamp.replace(tzinfo=timezone.utc)
+    elif stamp.tzinfo is not None and now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
     age = (now - stamp).total_seconds()
     if age < 0:
         return None
