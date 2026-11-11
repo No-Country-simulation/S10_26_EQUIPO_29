@@ -41,9 +41,12 @@ export function ConnectionDiagram({components,connections,Endpoint}){
    {layout&&<svg className="elk-wires" width={layout.width} height={layout.height} aria-hidden="true"><defs><filter id={`${lightId}-soft-light`} x="-30%" y="-30%" width="160%" height="160%" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5"/></filter></defs>{layout.edges.map((edge,edgeIndex)=>{
     const path=(edge.sections??[]).map(sectionPath).join(' ');
     const maskId=`${lightId}-light-${edgeIndex}`;
+    const revealId=`${lightId}-reveal-${edgeIndex}`;
     const phase=((edgeIndex+1)*.61803398875)%1;
     const duration=4.8+((edgeIndex*1.73)%2.7);
-    return <g key={edge.id} style={{'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>
+    return <g key={edge.id} style={{'--connection-reveal-delay':`${Math.min(edgeIndex*80,400)}ms`,'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>
+     <defs><mask id={revealId} maskUnits="userSpaceOnUse" x="-12" y="-12" width={layout.width+24} height={layout.height+24}><path className="elk-wire-reveal" d={path} pathLength="100"/></mask></defs>
+     <g mask={`url(#${revealId})`}>
      <path className="elk-wire-base" d={path}/>
      <defs><mask id={maskId} maskUnits="userSpaceOnUse" x="-12" y="-12" width={layout.width+24} height={layout.height+24}>
       <g filter={`url(#${lightId}-soft-light)`}>
@@ -51,6 +54,7 @@ export function ConnectionDiagram({components,connections,Endpoint}){
       </g>
      </mask></defs>
      <g mask={`url(#${maskId})`}><path className="elk-wire-lit-dots" d={path}/></g>
+     </g>
     </g>;
    })}</svg>}
    {components.filter(c=>used.has(c.key)).map(component=>{const node=positions.get(component.key);return <div key={component.key} data-layout-node={component.key} className="elk-node" style={node?{left:node.x,top:node.y}:undefined}><Endpoint component={component}/></div>;})}

@@ -1677,19 +1677,23 @@ to{transform:translateY(-110%)}
 
 /* Reset only the assistant surfaces; the live background keeps running. */
 html[data-architecture-reset] {view-transition-name:none}
-html[data-architecture-reset] .composer {view-transition-name:reset-composer}
+html[data-architecture-reset="leaving"] .composer {view-transition-name:reset-composer-out}
+html[data-architecture-reset="entering"] .composer {view-transition-name:reset-composer-in}
 html[data-architecture-reset] .architecture-header {view-transition-name:reset-heading}
 html[data-architecture-reset] .has-architecture-header .architecture-header {display:grid}
 html[data-architecture-reset] .architecture-stage.is-visible {view-transition-name:reset-result}
-::view-transition-group(reset-composer){animation-duration:640ms;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-group(reset-composer-out),::view-transition-group(reset-composer-in){animation:none}
 ::view-transition-group(reset-heading){animation-duration:480ms;animation-timing-function:cubic-bezier(.22,1,.36,1)}
-::view-transition-old(reset-composer),::view-transition-new(reset-composer){animation-duration:320ms;animation-timing-function:ease-out}
+::view-transition-old(reset-composer-out){animation:reset-composer-exit 180ms ease-out both}
+::view-transition-new(reset-composer-in){animation:reset-composer-enter 360ms 100ms cubic-bezier(.22,1,.36,1) both;transform-origin:center}
 ::view-transition-old(reset-heading),::view-transition-old(reset-result){animation:reset-surface-out 180ms ease-out both}
 ::view-transition-new(reset-heading){animation:reset-surface-in 360ms 100ms cubic-bezier(.22,1,.36,1) both}
+@keyframes reset-composer-exit{to{opacity:0;translate:0 24px}}
+@keyframes reset-composer-enter{from{opacity:0;scale:.995}to{opacity:1;scale:1}}
 @keyframes reset-surface-out{to{opacity:0;translate:0 -6px}}
 @keyframes reset-surface-in{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){
- ::view-transition-group(reset-composer),::view-transition-group(reset-heading),::view-transition-old(reset-composer),::view-transition-new(reset-composer),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result){animation:none}
+ ::view-transition-group(reset-composer-out),::view-transition-group(reset-composer-in),::view-transition-group(reset-heading),::view-transition-old(reset-composer-out),::view-transition-new(reset-composer-in),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result){animation:none}
 }
 
 /* Product name and exact repository form one identity group. */
@@ -1746,3 +1750,11 @@ html[data-architecture-reset] .prompt-input-wrap,html[data-architecture-reset] .
 .catalog-design-banner{position:relative;isolation:isolate}
 .catalog-design-banner::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,transparent,var(--button-brand));opacity:.25;pointer-events:none;z-index:-1}
 @media(max-width:760px){.catalog-design-banner::before{background:linear-gradient(180deg,transparent,var(--button-brand))}}
+
+.nav-actions{display:flex;align-items:center;gap:var(--space-component-12);margin-left:auto}
+.demo-indicator{color:var(--neutral-1000);background:var(--neutral-300);border-radius:var(--radius-999);padding:var(--space-component-4) var(--space-component-8);font-size:var(--type-size-12);line-height:var(--type-leading-1-4);text-align:center}
+.demo-label-mobile{display:none}
+@media(max-width:520px){.nav-actions{gap:var(--space-component-8)}.demo-label-full{display:none}.demo-label-mobile{display:inline}}
+
+.assistant-timeout-action{display:flex;justify-content:center;margin-block:var(--space-component-24);animation:proposal-content-reveal 360ms cubic-bezier(.22,1,.36,1) both}
+@media(prefers-reduced-motion:reduce){.assistant-timeout-action{animation:none}}

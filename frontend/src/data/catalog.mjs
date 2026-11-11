@@ -3,6 +3,7 @@ import fixtures from '../mocks/catalog.fixtures.json' with {type:'json'};
 import presentation from '../mocks/catalog-presentation.json' with {type:'json'};
 import categoryList from '../generated/categories.json' with {type:'json'};
 import defaultCard from '../mocks/catalog-default.fixture.json' with {type:'json'};
+import demoMetrics from '../mocks/catalog-demo-metrics.json' with {type:'json'};
 export const catalogRepos=fixtures;
 export const catalogCategories=categoryList.categories.map(category=>({...category,name:category.id==='dev-tools'?'Desarrollo':category.name}));
 export function populatedCategories(categories,tools){
@@ -23,7 +24,7 @@ export function toCardDetail(repo,local=presentation[repo.full_name]??{}){
  return {healthScore:repo.health_score??null,openIssues:repo.open_issues_count??null,tag:local.tag,version:local.version??null,docs:local.docs??repo.homepage,
  releasePublishedAt:local.releasePublishedAt??null,releaseUrl:local.releaseUrl??null,lastCommitAt:local.lastCommitAt??null,openPullRequests:local.openPullRequests??null};
 }
-export const catalogRecords=fixtures.map(repo=>({...toTool(repo),...toCardDetail(repo)}));
+export const catalogRecords=fixtures.map(repo=>({...toTool(repo),...toCardDetail(repo),...demoMetrics[repo.full_name],isDemo:true}));
 // Fictional visual demo is not a Repo and stays outside the contract fixtures.
 catalogRecords.splice(9,0,structuredClone(defaultCard));
 export const mockCatalog={
