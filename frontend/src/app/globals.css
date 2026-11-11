@@ -1,6 +1,9 @@
 @layer theme, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "../theme/neutrals.css";
+@import "../theme/spacing.css";
+@import "../theme/type-radius.css";
 @import "../styles.css";
 @import "../control-states.css";
 @source "../";

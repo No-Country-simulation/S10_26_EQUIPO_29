@@ -6,16 +6,19 @@ una vez al arrancar, antes de aceptar pedidos.
 
 El catálogo sale de lo publicado en la base (AI_CATALOG_SOURCE=database, por defecto) o de
 los archivos (files). Si la base falla al arrancar, usa los archivos y GET /health lo dice.
+Con la base, revisa cada AI_CATALOG_RELOAD_MINUTES minutos si se publicó algo nuevo y, si es
+así, recarga el catálogo sin reiniciar.
 
 Arranque, desde la raíz del repo:
     uvicorn ai.service.app:create_app --factory --port 8001
 """
 
+import asyncio
 import logging
 import os
 import time
 from collections.abc import Callable
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from functools import partial
@@ -39,7 +42,7 @@ log = logging.getLogger("ai.service")
 
 @dataclass(frozen=True)
 class Catalog:
-    """Lo que el servicio carga una vez al arrancar."""
+    """Lo que el servicio carga al arrancar y en cada recarga. Inmutable: se reemplaza entero."""
 
     buscar: Callable        # buscar(query, k, prefer_category=, min_score=), como espera asistir()
     min_score: float
@@ -104,28 +107,129 @@ def load_catalog(settings: Settings) -> Catalog:
                    vectors_stored=index.reused, vectors_computed=index.computed)
 
 
+def read_marker() -> tuple:
+    """Marca de lo publicado en la base; cambia cada vez que se publica algo.
+
+    Los errores salen sin el host de la base.
+    """
+    from ai.published import fetch_marker
+    from ai.scripts.export_catalog_snapshot import ENV_VAR, redact
+
+    url = os.environ.get(ENV_VAR)
+    if not url:
+        raise RuntimeError(f"falta {ENV_VAR}")
+    try:
+        return fetch_marker(url)
+    except Exception as e:
+        first = (redact(str(e), url).splitlines() or [type(e).__name__])[0]
+        raise RuntimeError(f"no se pudo consultar la base: {first}") from None
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+class CatalogReloader:
+    """Mantiene al día el catálogo del servicio sin reiniciarlo.
+
+    Cada revisión pide la marca de lo publicado; si cambió, arma el catálogo nuevo aparte y lo
+    cambia de una vez en `state.catalog` (un pedido en curso sigue con el que tomó al empezar).
+    Si algo falla, sigue el catálogo que había y /health lo dice. El log solo registra cambios.
+    """
+
+    def __init__(self, state, load: Callable[[], Catalog],
+                 marker: Callable[[], tuple] | None):
+        self.state, self.load, self.marker = state, load, marker
+        self.last_marker: tuple | None = None
+        self.loaded_at: str | None = None    # última carga buena
+        self.checked_at: str | None = None   # última revisión (None: no se revisa)
+        self.error: str | None = None        # falla que la revisión siguiente no resolvió
+
+    def start(self) -> None:
+        """Primera carga. La marca se toma antes: lo que se publique mientras carga se ve después."""
+        if self.marker is not None:
+            self.checked_at = _now()
+            try:
+                self.last_marker = self.marker()
+            except Exception as e:
+                self._failed(str(e))
+        self.state.catalog = self.load()
+        self.loaded_at = _now()
+
+    def check(self) -> None:
+        """Una revisión: recarga solo si cambió lo publicado."""
+        self.checked_at = _now()
+        try:
+            current = self.marker()
+            if current == self.last_marker:
+                self._recovered()
+                return
+            catalog = self.load()
+            if catalog.catalog_fallback_reason:   # la base falló al leer: no cambiarla por los archivos
+                raise RuntimeError(catalog.catalog_fallback_reason)
+        except Exception as e:                    # cualquier falla: sigue el catálogo que había
+            self._failed(str(e))
+            return
+        self.state.catalog = catalog
+        self.last_marker, self.loaded_at = current, _now()
+        self._recovered()
+        log.warning("catálogo recargado: %d repos (%s)", catalog.repos, catalog.catalog_source)
+
+    def _failed(self, message: str) -> None:
+        if message != self.error:
+            log.warning("no se pudo revisar si hay catálogo nuevo; sigue el actual: %s", message)
+        self.error = message
+
+    def _recovered(self) -> None:
+        if self.error is not None:
+            log.warning("revisión del catálogo al día otra vez")
+        self.error = None
+
+
+async def keep_current(reloader: CatalogReloader, minutes: int) -> None:
+    """Revisa cada `minutes` minutos; la revisión corre en un hilo para no frenar los pedidos."""
+    while True:
+        await asyncio.sleep(minutes * 60)
+        await asyncio.to_thread(reloader.check)
+
+
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
     return JSONResponse(status_code=status, content=body.model_dump())
 
 
 def create_app(load: Callable[[], Catalog] | None = None,
-               settings: Settings | None = None) -> FastAPI:
-    """La app del servicio. Sin `settings`, lee el entorno y el archivo .env."""
+               settings: Settings | None = None,
+               marker: Callable[[], tuple] | None = None) -> FastAPI:
+    """La app del servicio. Sin `settings`, lee el entorno y el archivo .env.
+
+    `marker` dice si se publicó algo nuevo. Sin `load` ni `marker` y con el catálogo en la base,
+    se revisa la base; con un `load` propio (tests) solo se revisa si se pasa `marker`.
+    """
     if settings is None:
         load_dotenv()
         settings = Settings.from_env()
     if load is None:
         load = partial(load_catalog, settings)
+        if marker is None and settings.catalog_source == "database":
+            marker = read_marker
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         app.state.providers = llm.provider_chain()   # falla aquí si un nombre no existe
         if not llm.key_configured(app.state.providers[0]):
             log.warning("el proveedor principal no tiene clave: %s", app.state.providers[0])
-        app.state.catalog = load()
+        app.state.reloader = CatalogReloader(app.state, load, marker)
+        app.state.reloader.start()
         log.warning("listo: %d repos (%s), proveedores %s", app.state.catalog.repos,
                     app.state.catalog.catalog_source, " → ".join(app.state.providers))
+        task = None
+        if marker is not None and settings.reload_minutes > 0:
+            task = asyncio.create_task(keep_current(app.state.reloader, settings.reload_minutes))
         yield
+        if task is not None:
+            task.cancel()
+            with suppress(asyncio.CancelledError):
+                await task
 
     app = FastAPI(title="OpenBridge · asistente", version="1.1", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=list(settings.cors_origins),
@@ -149,6 +253,7 @@ def create_app(load: Callable[[], Catalog] | None = None,
     @app.get("/health")
     def health() -> dict:
         catalog: Catalog = app.state.catalog
+        reloader: CatalogReloader = app.state.reloader
         paused = llm.disconnected()
         llms = [{"provider": p, "model": llm.PROVIDERS[p].model,
                  "key_configured": llm.key_configured(p),
@@ -158,6 +263,9 @@ def create_app(load: Callable[[], Catalog] | None = None,
                 "catalog_source": catalog.catalog_source,
                 "catalog_fallback_reason": catalog.catalog_fallback_reason,
                 "catalog_taken_at": catalog.catalog_taken_at,
+                "catalog_loaded_at": reloader.loaded_at,
+                "catalog_checked_at": reloader.checked_at,
+                "catalog_reload_error": reloader.error,
                 "vectors": {"stored": catalog.vectors_stored,
                             "computed_at_startup": catalog.vectors_computed},
                 "embedding_model": catalog.embedding_model,

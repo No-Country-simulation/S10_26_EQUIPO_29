@@ -1,0 +1,18 @@
+:root {
+  --space-component-4: 4px;
+  --space-component-6: 6px;
+  --space-component-8: 8px;
+  --space-component-10: 10px;
+  --space-component-12: 12px;
+  --space-component-14: 14px;
+  --space-component-16: 16px;
+  --space-component-20: 20px;
+  --space-component-24: 24px;
+  --space-component-32: 32px;
+  --space-layout-40: 40px;
+  --space-layout-48: 48px;
+  --space-layout-64: 64px;
+  --space-layout-96: 96px;
+  --space-layout-128: 128px;
+  --space-layout-176: 176px;
+}

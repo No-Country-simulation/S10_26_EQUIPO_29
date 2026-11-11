@@ -67,7 +67,7 @@ def test_v12_field_types_are_the_contract_types():
     assert item["disabled"] is True
     assert item["open_issues_count"] is None
     # La fecha válida permite calcular el booleano de mantenimiento.
-    assert isinstance(item["is_maintained"], bool)
+    assert item["is_maintained"] is True
     assert isinstance(item["categories"], list)
     for assignment in item["categories"]:
         assert set(assignment) == {"category_id", "assigned_by"}

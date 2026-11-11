@@ -10,6 +10,8 @@ el servicio del asistente: lo mismo que muestra la ficha, con los vectores de b�
 en ai.ai_embeddings.
 """
 
+from datetime import datetime
+
 import psycopg
 from psycopg.rows import dict_row
 
@@ -23,6 +25,8 @@ select github_id, kind, full_name, ai_input_hash, provider, model, prompt_versio
 from ai.ai_processing
 where kind = any(%(kinds)s)
 """
+# Marca de lo publicado: cambia con cada publicación (processed_at) o borrado (count).
+SELECT_MARKER = "select count(*), max(processed_at) from ai.ai_processing"
 UPSERT_PROCESSING = """
 insert into ai.ai_processing
     (github_id, kind, full_name, ai_input_hash, provider, model, prompt_version, skipped, processed_at)
@@ -58,6 +62,17 @@ def fetch_published(url: str) -> dict[str, dict[int, dict]]:
         conn.read_only = True
         rows = conn.execute(SELECT_PUBLISHED, {"kinds": list(KINDS)}).fetchall()
     return to_records(rows)
+
+
+def fetch_marker(url: str) -> tuple[int, datetime | None]:
+    """Filas de ai_processing y fecha de la última publicación (solo lectura, con el lector).
+
+    Cambia cada vez que se publica o se borra algo: el servicio la usa para saber si recargar.
+    """
+    with psycopg.connect(url, connect_timeout=10) as conn:
+        conn.read_only = True
+        count, last = conn.execute(SELECT_MARKER).fetchone()
+    return count, last
 
 
 def processing_rows(kind: str, records: list[dict]) -> list[dict]:

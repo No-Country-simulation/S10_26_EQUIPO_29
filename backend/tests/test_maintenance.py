@@ -66,3 +66,14 @@ def test_disabled_remains_separate_from_maintenance():
         repo = client.get('/repos').json()[0]
     assert repo['disabled'] is True
     assert repo['is_maintained'] is True
+
+
+@pytest.mark.parametrize('pushed,expected', [
+    ('2026-11-08T12:00:00+00:00', True),
+    ('2026-99-99T00:00:00Z', None),
+    ('2026-02-30T00:00:00Z', None),
+    ('not-a-date', None),
+    ('2099-01-01T00:00:00Z', None),
+])
+def test_maintenance_parses_text_without_database_cast(pushed, expected):
+    assert compute_is_maintained(False, pushed, reference_time=NOW) is expected

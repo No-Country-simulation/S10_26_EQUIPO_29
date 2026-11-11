@@ -1,8 +1,11 @@
-import {useSyncExternalStore} from 'react';
+import {createContext,useContext,useSyncExternalStore} from 'react';
 import brandIdentities from './data/brand-identities.json' with {type:'json'};
 
 import {sessionPalette} from './sessionPalette.mjs';
 
+const PreviewPalette=createContext(null);
+export const BrandPreviewProvider=PreviewPalette.Provider;
+export function usePaletteResolver(){return useContext(PreviewPalette)||sessionPalette;}
 export const defaultBrand=brandIdentities.fallback;
 export const brandRegistry=brandIdentities.identities;
 export function brandKey(fullName){return typeof fullName==='string'?fullName.trim().toLowerCase():'';}
@@ -20,7 +23,8 @@ export function resolveBrand(tool,identities=brandRegistry,errors=failed,palette
 }
 const clientSnapshot=()=>true,serverSnapshot=()=>false;
 export function useBrandIdentity(tool){
+ const previewPalette=useContext(PreviewPalette);
  useSyncExternalStore(subscribe,snapshot,snapshot);
  const client=useSyncExternalStore(subscribe,clientSnapshot,serverSnapshot);
- return resolveBrand(tool,brandRegistry,failed,client?sessionPalette:undefined);
+ return resolveBrand(tool,brandRegistry,failed,previewPalette||(client?sessionPalette:undefined));
 }

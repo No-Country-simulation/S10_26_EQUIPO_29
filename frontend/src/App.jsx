@@ -12,13 +12,13 @@ import {ToolModal} from './ToolModal';
 import {useToolNavigation} from './useToolNavigation';
 import {ElasticScrollbar} from './ElasticScrollbar';
 import React, {useRef, useCallback} from 'react';
-export function App(){
+export function App({useFlow=useAssistantFlow}){
  useSessionAccent();
  const navigation=useToolNavigation();
  const openRef=useRef(navigation.open);openRef.current=navigation.open;
  const openTool=useCallback((...args)=>openRef.current(...args),[]);
  const isDetail=navigation.id!==null;
- const flow=useAssistantFlow(isDetail);
+ const flow=useFlow(isDetail);
  const {expanded,phase}=flow;
  const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
  useSmoothPageScroll(isDetail);

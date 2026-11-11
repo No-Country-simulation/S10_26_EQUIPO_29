@@ -27,7 +27,7 @@ Todos los servicios deben conectarse al repositorio `No-Country-simulation/S10_2
 Configurar un **Volume** en el servicio `ai`:
 - **Mount Path**: `/data/huggingface`
 - **Propósito**: persistir la caché del modelo `google/embeddinggemma-300m` (~1,2 GB) entre despliegues (`HF_HOME=/data/huggingface` ya está definido en `ai/Dockerfile`).
-- **Nota de RAM**: `embeddinggemma-300m` en CPU requiere ~1,2 GB de RAM; se recomienda asignar al menos 2 GB de memoria al servicio `ai` en Railway.
+- **Nota de RAM y réplicas**: `embeddinggemma-300m` en CPU requiere ~1,2 GB de RAM; se recomienda asignar al menos 2 GB de memoria al servicio `ai` en Railway y mantener **1 sola réplica** (los volúmenes de Railway no se comparten entre múltiples réplicas).
 
 ---
 
@@ -61,6 +61,7 @@ Configurar un **Volume** en el servicio `ai`:
 | `HF_TOKEN` | `<secret>` | Sí (1.er arranque) | Token Read de Hugging Face para descargar `google/embeddinggemma-300m` (modelo con licencia aceptada) hacia `/data/huggingface`. |
 | `HF_HOME` | `/data/huggingface` | Definida en Dockerfile | Persistida mediante el volumen de Railway. |
 | `AI_EMBEDDING_MODEL` | `embeddinggemma` | No | Por defecto `embeddinggemma`. |
+| `AI_CATALOG_RELOAD_MINUTES` | `10` | No | Minutos entre revisiones de nueva publicación en Supabase (`0` = solo al arrancar). |
 
 ### Servicio `frontend`
 
@@ -82,7 +83,7 @@ En el repositorio existe una discrepancia entre dos archivos del backend:
 
 Antes del primer despliegue, el administrador de datos debe confirmar en Supabase (solo lectura, sin usar credenciales administrativas en los servicios):
 1. Qué rol lector tiene `SELECT` vigente sobre `public.catalog_repositories`, `public.v_repos_for_ai` y `ai.*` para `backend` (`openbridge_api_reader` o `openbridge_ai_reader`), y asignar esa credencial a `DATABASE_URL`.
-2. Que `openbridge_ai_reader` tiene `SELECT` sobre `public.v_repos_for_ai`, `ai.ai_repo_enrichment`, `ai.ai_repo_categories` y `ai.ai_embeddings` (según `ai/sql/005_lector_vectores_ia.sql`), y asignar esa credencial a `AI_READER_DATABASE_URL`.
+2. Que `openbridge_ai_reader` tiene `SELECT` sobre `public.v_repos_for_ai`, `ai.ai_repo_enrichment`, `ai.ai_repo_categories`, `ai.ai_processing` y `ai.ai_embeddings` (según `ai/sql/004_procesamiento_ia.sql` y `ai/sql/005_lector_vectores_ia.sql`), y asignar esa credencial a `AI_READER_DATABASE_URL`.
 
 ---
 

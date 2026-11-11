@@ -226,7 +226,10 @@ python -m uvicorn ai.service.app:create_app --factory --port 8001
 Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
 dónde salió el catálogo y la cadena de proveedores
 (`listo: 100 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
-hasta terminar. Para que use un catálogo actualizado, se reinicia.
+hasta terminar. Con la base, revisa cada `AI_CATALOG_RELOAD_MINUTES` minutos (10 por defecto;
+0 = solo al arrancar) si se publicó algo nuevo y, si es así, recarga el catálogo sin reiniciar:
+un pedido en curso termina con el anterior. Si la revisión o la recarga fallan, sigue con el que
+tiene y `GET /health` lo dice (`catalog_reload_error`).
 
 - **Catálogo:** `AI_CATALOG_SOURCE=database` (por defecto) lee lo publicado en la base (la vista
   más las tablas `ai.*`, lo mismo que muestra la ficha) con `AI_READER_DATABASE_URL`;
@@ -242,7 +245,7 @@ hasta terminar. Para que use un catálogo actualizado, se reinicia.
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, vectores guardados y calculados al arrancar, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos), de cuándo es, cuándo se cargó y se revisó por última vez y el último error de recarga, vectores guardados y calculados en la última carga, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
@@ -268,6 +271,7 @@ python -m pytest ai/tests -v                     # tests de la IA, sin el modelo
 AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el modelo real (~20 s)
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
+python -m ai.scripts.auto_refresh_ai_data        # actualización automática: decide con la base, con freno, sin revisión (--informe, --permitir-mas-cambios)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.scripts.compare_catalog             # qué cambió en la vista frente a lo que tiene la IA (0 igual, 1 cambios, 2 error)
 python -m ai.scripts.refresh_ai_data             # plan para actualizar la IA según la vista (--generar, --escribir)
@@ -341,7 +345,8 @@ vuelve a correr el mismo comando.
    solo se listan; con `--borrar-huerfanos` se borran sus filas regenerables (nunca categorías humanas
    ni ideas revisadas), con un máximo de `--max-borrar` (10) para no vaciar las tablas si la vista
    devolviera de menos.
-5. Reiniciar el servicio del asistente (carga el catálogo al arrancar) y hacer commit de los archivos.
+5. Hacer commit de los archivos. El servicio del asistente carga lo publicado solo (revisa cada
+   `AI_CATALOG_RELOAD_MINUTES` minutos): no hace falta reiniciarlo.
 
 La primera vez después de aplicar `ai/sql/004_procesamiento_ia.sql`, `ai.ai_processing` está vacía: el
 plan muestra todos los repos para publicar y 0 llamadas al modelo, y `--escribir` llena el registro sin
@@ -349,6 +354,30 @@ cambiar los textos publicados.
 
 Un cambio de reglas no se regenera aquí: si el archivo está en otra versión de las reglas que el
 código, o un registro es de otro modelo, el plan lo muestra como pendiente.
+
+### Actualización automática (diaria)
+
+El workflow `.github/workflows/ai_refresh.yml` corre cada día a las 07:17 de Bogotá (12:17 UTC)
+`python -m ai.scripts.auto_refresh_ai_data`: compara la vista con lo publicado, regenera con el
+modelo solo los repos cuya descripción, topics o README cambiaron y los publica, sin revisión
+humana. Un cambio de estrellas o fechas no hace nada.
+
+- **Freno:** si cambió de una vez más del 40 % del catálogo o harían falta más de 100 llamadas al
+  modelo, se detiene sin llamar al modelo ni publicar.
+- **Aviso:** si algo se detiene o falla, abre o actualiza el issue "Actualización de los datos de la
+  IA: requiere atención" con el informe completo, y lo cierra cuando una corrida termina sin
+  pendientes. El informe también queda en el resumen de cada ejecución (pestaña Actions).
+- **Correrlo a mano:** Actions → ai-refresh → Run workflow. Para destrabar un freno legítimo, marcar
+  "Levantar el freno de volumen solo en esta corrida".
+- **Apagarlo:** Actions → ai-refresh → ⋯ → Disable workflow (sin tocar código).
+- **Secretos:** en el environment `datos-ia` (solo la rama `main`): `AI_READER_DATABASE_URL`,
+  `AI_DATABASE_URL`, `GEMINI_API_KEY` y `HF_TOKEN`. Las URL de la base deben usar el pooler de
+  Supabase: GitHub Actions no tiene IPv6.
+- **Sigue a mano:** borrar filas de repos que salieron (`refresh_ai_data --escribir
+  --borrar-huerfanos`), regenerar por un cambio de versión de las reglas y actualizar la copia de
+  `ai/data/catalog/` para las evaluaciones.
+- GitHub desactiva los workflows programados de un repo público tras 60 días sin actividad; se
+  reactivan desde la misma pestaña.
 
 ## Datos de ejemplo en las tablas de la IA
 

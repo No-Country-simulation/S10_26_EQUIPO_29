@@ -116,10 +116,16 @@ catálogo, la IA debe ejecutarse. Ninguna de las dos cosas es parte de esta tare
 
 | Campo | Estado real | Respuesta de la API |
 | --- | --- | --- |
-| `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main` | `null` siempre |
-| `health_score` | motor v1 gated por `HEALTH_SCORE_ENABLED` (apagado por defecto) → `null` si el flag está apagado o faltan datos |
+| `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main`; la API lo deriva de `archived` y `pushed_at` | `true`/`false` calculado; `null` si falta un dato o la fecha es futura |
+| `health_score` | motor v1 gated por `HEALTH_SCORE_ENABLED` (apagado por defecto) → `null` si el flag está apagado o faltan datos | `null` con el motor apagado; `0`–`100` con el motor encendido |
 
-La API no inventa valores. `health_score` lo calcula en lectura el motor v1 (`backend/app/services/health.py`, índice por reglas con renormalización de datos faltantes) y sólo se publica con `HEALTH_SCORE_ENABLED=true`; apagado, la API mantiene `null` y el frontend muestra «Sin evaluar». `is_maintained` sigue en `null` hasta que el equipo de datos cree la columna (hay una propuesta de DDL sin ejecutar). El contrato ya admite ambos (`bool | None` y `float | None` entre 0 y 100).
+La sincronización de ingesta no escribe `is_maintained` ni valida una columna
+física para ese campo: el valor se calcula en la API con la regla de 180 días.
+`health_score` lo calcula en lectura el motor v1
+(`backend/app/services/health.py`, índice por reglas con renormalización de datos
+faltantes) y sólo se publica con `HEALTH_SCORE_ENABLED=true`; apagado, la API
+mantiene `null` y el frontend muestra «Sin evaluar». El contrato ya admite ambos
+(`bool | None` y `float | None` entre 0 y 100).
 
 ### Filas que la API no puede servir
 
