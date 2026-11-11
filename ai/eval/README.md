@@ -79,6 +79,13 @@ leído antes y para qué se usó. Las etiquetas para el catálogo de 127 repos (
 propuso un asistente de IA con evidencia de GitHub (descripción, topics, README o
 archivo de licencia, nunca el resumen de la IA) y las revisó una persona.
 
+El 11-nov se revisaron los conjuntos de desarrollo del asistente con
+[`LABEL_CRITERIA.md`](LABEL_CRITERIA.md) (borrador de un asistente de IA, revisado por
+una persona): cambiaron 5 pedidos, todos con una base de datos que faltaba
+(`validation` v4, `holdout` v3, `abstention` v2). Quien etiquetó conocía los resultados
+de la regla de detección del 10-nov ([`DETECTION_DECISION.md`](DETECTION_DECISION.md));
+esa decisión no se recalcula con estas etiquetas. La prueba final conserva las suyas.
+
 | Conjunto | Quién lo escribió y qué había leído | Usado para decidir | Papel |
 |---|---|---|---|
 | Búsqueda `catalog` | 69 consultas del paso de entender (Gemini, 3-nov); 31 redactadas con ayuda de IA después de leer el catálogo y revisadas | umbral (3 y 6-nov), texto de los repos (6-nov) | desarrollo |

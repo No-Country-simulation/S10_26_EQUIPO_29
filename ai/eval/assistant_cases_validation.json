@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "catalog_taken_at": "2026-11-10T09:20:33+00:00",
   "cases": [
     {
@@ -76,6 +76,15 @@
       "query": "Un colegio quiere una aplicación donde los profesores registren la asistencia. Cada noche debe calcular el porcentaje de asistencia de cada estudiante y avisar por correo o SMS a los padres cuando baje del 80 %.",
       "expected_status": "ok",
       "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"los profesores registren la asistencia\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
         {
           "category": "data-processing",
           "acceptable": [
@@ -184,6 +193,15 @@
       "query": "Una cadena de doce restaurantes quiere procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno, y mandar por correo el reporte a cada gerente a primera hora.",
       "expected_status": "ok",
       "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"recalcular el inventario de cada uno\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
         {
           "category": "data-processing",
           "acceptable": [
