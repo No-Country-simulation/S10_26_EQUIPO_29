@@ -17,10 +17,10 @@ function ComponentEntry({entry,show,onToggle}){
  {entry.id==='buttons'?<VariantSet entry={entry}/>:<div className="ds-entry-actions"><button className="ui-button ui-button--secondary" onClick={onToggle} aria-expanded={show}>{show?'Cerrar muestra':'Abrir muestra real'}</button>{show&&<button className="ui-button ui-button--text" onClick={()=>setRun(n=>n+1)}>Restablecer</button>}</div>}
  {entry.id!=='buttons'&&show&&<div className="ds-demo" key={run}><Preview id={entry.id}/></div>}
  <dl className="ds-specs"><div><dt>Comportamiento</dt><dd>{entry.behavior}</dd></div><div><dt>Variantes y estados</dt><dd>{entry.states}</dd></div></dl>
- {entry.id!=='buttons'&&<VariantSet entry={entry}/>}<ComponentSpecs entry={entry}/><p className="ds-foundation-links">Reglas compartidas: <Link href="/design-system/tipografia/#tamanos">Tipografía</Link> · <Link href="/design-system/espaciado/#geometria">Espaciado</Link>.</p><details className="ds-source"><summary>Ejemplo de uso</summary><pre><code>{entry.example}</code></pre></details>
+ {entry.id!=='buttons'&&<VariantSet entry={entry}/>}<ComponentSpecs entry={entry}/><p className="ds-foundation-links">Reglas compartidas: <Link href="/design-system/tipografia/#tamanos">Tipografía</Link> y <Link href="/design-system/espaciado/#geometria">Espaciado</Link>.</p>
  </article>;
 }
-export default function DesignSystem({section='componentes'}){
+export default function DesignSystem({section='tipografia'}){
  const [query,setQuery]=useState(''),[active,setActive]=useState(null);
  const isComponents=section==='componentes';
  const entries=isComponents?components.filter(c=>(c.name+' '+c.family+' '+c.purpose+' '+c.states).toLowerCase().includes(query.toLowerCase())):foundationSections[section]||[];
