@@ -18,6 +18,7 @@ eligieron el modelo de embeddings y el umbral, con su evidencia:
 | Texto de cada repo | nombre, resumen de la IA, descripción, topics y casos de uso de la IA (sin categorías) |
 | Umbral de "sin evidencia" (`min_score`) | 0,18 (catálogo de 127 repos, 8-nov) |
 | Candidatos del asistente por necesidad | primero los de la categoría principal de la necesidad que pasan el umbral; completa con la búsqueda abierta (10-nov); detalle en [`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md) |
+| Paso de entender | recibe los 3 pedidos más parecidos del banco de ejemplos (`ai/data/understand_examples.json`), ya resueltos, desde el 11-nov; detalle en [`DETECTION_EXAMPLES_DECISION.md`](DETECTION_EXAMPLES_DECISION.md) |
 | Acierto de la búsqueda (hit@3), prueba final | 41 de 56 consultas (73 %), catálogo de 127 repos; detalle en [`BASELINE_DECISION.md`](BASELINE_DECISION.md) |
 | Golden set | `catalog` v3: 100 consultas (95 con respuesta, 5 sin respuesta), catálogo de 127 repos (snapshot del 2026-11-08) |
 
@@ -97,6 +98,7 @@ esa decisión no se recalcula con estas etiquetas. La prueba final conserva las 
 | Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
 | Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
 | Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
+| Asistente `detection-2` | Otro modelo de lenguaje (Grok 4.5) sin ver el catálogo ni el banco de ejemplos (11-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después con `LABEL_CRITERIA.md` | ninguna | desarrollo |
 | Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
 | Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
 

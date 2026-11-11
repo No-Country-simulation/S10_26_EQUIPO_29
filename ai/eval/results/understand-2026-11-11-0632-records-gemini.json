@@ -1,0 +1,1513 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "panaderia-pedidos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos transaccionales",
+          "evidence": "Quiero guardar los datos de mis clientes, los pedidos y el inventario de ingredientes en un mismo lugar."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "necesito que la gente pueda pagar sus encargos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "generación de reportes de ventas",
+          "evidence": "consultar un resumen de ventas por semana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2587,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "compra-cacao-productores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de historial de compras",
+          "evidence": "Quiero registrar cada compra con el productor, el peso, la calidad y la fecha, y consultar todo ese historial cuando lo necesite."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de totales por periodo y zona",
+          "evidence": "Necesito calcular automáticamente los totales por zona y por mes"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas por categorías de calidad",
+          "evidence": "ver cuáles calidades se venden más."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2631,
+    "output_tokens": 177,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tortas-personalizadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y preferencias",
+          "evidence": "Quiero conservar el historial de pedidos y las preferencias de cada cliente"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por adelantado",
+          "evidence": "necesito recibir pagos por adelantado"
+        },
+        {
+          "category": "communication",
+          "query": "envío de confirmaciones de reserva",
+          "evidence": "mandar una confirmación cuando el pedido quede reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2611,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "limpieza-domiciliaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de identidad y permisos de usuario",
+          "evidence": "cada empleado pueda entrar con su propia cuenta y consultar únicamente sus tareas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos y notificaciones",
+          "evidence": "los clientes reciban un aviso el día anterior a la visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2481,
+    "output_tokens": 118,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "lavado-detallado-motos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles de usuario",
+          "evidence": "Quiero que cada empleado vea únicamente los servicios que le asigno"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "que el cliente reciba un mensaje cuando su moto esté lista"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de tareas operativas",
+          "evidence": "al confirmar un servicio, se cree automáticamente una tarea para preparar el puesto de trabajo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2468,
+    "output_tokens": 166,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "almuerzos-empresariales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de menús y entregas",
+          "evidence": "Quiero registrar los menús solicitados por cada empresa y las cantidades entregadas cada día."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas por cliente y periodo",
+          "evidence": "Me gustaría ver cuánto vendí por cliente y por semana"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "permitir que las empresas paguen sus pedidos en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.43,
+    "input_tokens": 2505,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "miel-productos-colmena",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenido de la web",
+          "evidence": "Necesito actualizar las descripciones, fotos y precios de mi página sin pedir ayuda cada vez"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los catálogos y las fichas de producto para descargarlos cuando los envíe a tiendas"
+        },
+        {
+          "category": "communication",
+          "query": "envio y recepcion de correos",
+          "evidence": "responder por correo las preguntas de los compradores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.37,
+    "input_tokens": 2604,
+    "output_tokens": 174,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "mantenimiento-jardines",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de visitas de mantenimiento",
+          "evidence": "Quiero registrar cada visita, los materiales utilizados y las observaciones de mis trabajadores."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo de consumo y costos por categoría",
+          "evidence": "calcular cuánto material se consume por tipo de jardín y comparar los costos entre meses"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de imágenes de trabajos realizados",
+          "evidence": "conservar fotos de los trabajos realizados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2578,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "distribuidora-agua",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de historial de clientes y saldos",
+          "evidence": "Quiero tener el historial de cada cliente, sus pedidos habituales y los saldos pendientes."
+        },
+        {
+          "category": "payments",
+          "query": "cobros en linea para pedidos",
+          "evidence": "Me gustaría permitir que los clientes paguen sus pedidos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de ventas por zona geografica",
+          "evidence": "mostrarme cuáles son las zonas con más ventas."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2588,
+    "output_tokens": 171,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "alquiler-trajes-tipicos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión y control de inventario y reservas",
+          "evidence": "Quiero llevar el control de cada prenda, su talla, estado y fechas en que está reservada"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda con filtros por atributos",
+          "evidence": "los clientes encuentren un traje buscando por talla, color o tipo de evento"
+        },
+        {
+          "category": "analytics",
+          "query": "reportes de uso y popularidad",
+          "evidence": "conocer cuáles se alquilan más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2527,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "granja-produccion-huevos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de producción diaria y entregas",
+          "evidence": "Quiero registrar la producción diaria por galpón, las unidades clasificadas y las entregas que hacemos."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de producción semanal",
+          "evidence": "El sistema debería sumar automáticamente la producción semanal"
+        },
+        {
+          "category": "analytics",
+          "query": "detección de anomalías en producción",
+          "evidence": "mostrarme si algún galpón está produciendo menos que lo habitual."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.6,
+    "input_tokens": 2608,
+    "output_tokens": 171,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "comercializadora-flores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros comerciales",
+          "evidence": "Necesito consultar el historial de compras y ventas"
+        },
+        {
+          "category": "search",
+          "query": "busqueda rapida de elementos por atributos",
+          "evidence": "buscar rápidamente los arreglos por tipo de flor o color"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de ingresos y rendimiento comercial",
+          "evidence": "comparar cuáles generan mejores ingresos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.4,
+    "input_tokens": 2571,
+    "output_tokens": 155,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-articulos-cuero",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de productos por atributos",
+          "evidence": "Quiero que los compradores puedan encontrar productos por tipo, color y material"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "que puedan pagar directamente desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de tráfico y conversiones",
+          "evidence": "Necesito saber qué productos reciben más visitas y cuáles terminan en compra"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2623,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "reparacion-maquinaria-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros historicos de equipos",
+          "evidence": "Quiero guardar el historial de cada equipo, las reparaciones realizadas y los repuestos utilizados."
+        },
+        {
+          "category": "ai",
+          "query": "analisis predictivo de patrones de fallas",
+          "evidence": "el sistema identifique patrones de fallas frecuentes para ayudarme a anticipar qué revisiones conviene ofrecer"
+        },
+        {
+          "category": "analytics",
+          "query": "reportes estadisticos de uso de componentes",
+          "evidence": "ver los repuestos que más utilizo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.27,
+    "input_tokens": 2554,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "parqueadero-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de entradas y salidas de usuarios",
+          "evidence": "registrar las entradas, salidas, espacios ocupados y pagos de cada usuario"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de demanda por franjas horarias",
+          "evidence": "calcular la ocupación por hora y conocer cuáles son las franjas de mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "cobros de abonos mensuales en linea",
+          "evidence": "cobrar los abonos mensuales en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2462,
+    "output_tokens": 104,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "salsas-conservas-artesanales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "Quiero registrar los lotes, los ingredientes utilizados, las fechas de elaboración y los pedidos de cada tienda"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de producción",
+          "evidence": "Necesito calcular automáticamente cuánto debo producir según los pedidos confirmados"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y popularidad",
+          "evidence": "revisar qué sabores tienen más salida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2631,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "panaderia-pedidos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos relacionales",
+          "evidence": "Quiero guardar los datos de mis clientes, los pedidos y el inventario de ingredientes en un mismo lugar"
+        },
+        {
+          "category": "payments",
+          "query": "cobros en linea y pasarela de pagos",
+          "evidence": "necesito que la gente pueda pagar sus encargos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis y resumenes de ventas",
+          "evidence": "consultar un resumen de ventas por semana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2587,
+    "output_tokens": 108,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "compra-cacao-productores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de historial transaccional",
+          "evidence": "Quiero registrar cada compra con el productor, el peso, la calidad y la fecha, y consultar todo ese historial cuando lo necesite."
+        },
+        {
+          "category": "data-processing",
+          "query": "agregación y cálculo de totales por periodo",
+          "evidence": "Necesito calcular automáticamente los totales por zona y por mes"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y distribución de categorías",
+          "evidence": "ver cuáles calidades se venden más."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2631,
+    "output_tokens": 177,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tortas-personalizadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y preferencias",
+          "evidence": "Quiero conservar el historial de pedidos y las preferencias de cada cliente para no tener que buscar conversaciones viejas."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por adelantado",
+          "evidence": "necesito recibir pagos por adelantado"
+        },
+        {
+          "category": "communication",
+          "query": "envio de confirmaciones de reserva",
+          "evidence": "mandar una confirmación cuando el pedido quede reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2611,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "limpieza-domiciliaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesión y gestión de roles",
+          "evidence": "cada empleado pueda entrar con su propia cuenta y consultar únicamente sus tareas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "los clientes reciban un aviso el día anterior a la visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.27,
+    "input_tokens": 2481,
+    "output_tokens": 116,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "lavado-detallado-motos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "Quiero que cada empleado vea únicamente los servicios que le asigno"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "que el cliente reciba un mensaje cuando su moto esté lista"
+        },
+        {
+          "category": "messaging",
+          "query": "creación automática de tareas asíncronas",
+          "evidence": "se cree automáticamente una tarea para preparar el puesto de trabajo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2468,
+    "output_tokens": 163,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "almuerzos-empresariales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de menús solicitados y cantidades entregadas",
+          "evidence": "Quiero registrar los menús solicitados por cada empresa y las cantidades entregadas cada día."
+        },
+        {
+          "category": "analytics",
+          "query": "análisis de ventas por cliente y periodo",
+          "evidence": "Me gustaría ver cuánto vendí por cliente y por semana"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "permitir que las empresas paguen sus pedidos en línea."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.37,
+    "input_tokens": 2505,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "miel-productos-colmena",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestión de contenidos web autogestionable",
+          "evidence": "Necesito actualizar las descripciones, fotos y precios de mi página sin pedir ayuda cada vez."
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los catálogos y las fichas de producto para descargarlos cuando los envíe a tiendas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos electrónicos transaccionales",
+          "evidence": "responder por correo las preguntas de los compradores."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2604,
+    "output_tokens": 178,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "mantenimiento-jardines",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de visitas y materiales",
+          "evidence": "Quiero registrar cada visita, los materiales utilizados y las observaciones de mis trabajadores"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo de consumo y costos",
+          "evidence": "necesito calcular cuánto material se consume por tipo de jardín y comparar los costos entre meses"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de fotografías de trabajos",
+          "evidence": "conservar fotos de los trabajos realizados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2578,
+    "output_tokens": 167,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "distribuidora-agua",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de registros e historial de clientes",
+          "evidence": "Quiero tener el historial de cada cliente, sus pedidos habituales y los saldos pendientes."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "Me gustaría permitir que los clientes paguen sus pedidos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica y visualización de ventas por zona",
+          "evidence": "mostrarme cuáles son las zonas con más ventas."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2588,
+    "output_tokens": 167,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "alquiler-trajes-tipicos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de inventario y reservas",
+          "evidence": "Quiero llevar el control de cada prenda, su talla, estado y fechas en que está reservada, para evitar entregar dos veces la misma."
+        },
+        {
+          "category": "search",
+          "query": "búsqueda con filtros múltiples",
+          "evidence": "Quisiera que los clientes encuentren un traje buscando por talla, color o tipo de evento"
+        },
+        {
+          "category": "analytics",
+          "query": "reportes de uso y popularidad",
+          "evidence": "conocer cuáles se alquilan más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2527,
+    "output_tokens": 178,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "granja-produccion-huevos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de producción y entregas",
+          "evidence": "Quiero registrar la producción diaria por galpón, las unidades clasificadas y las entregas que hacemos"
+        },
+        {
+          "category": "analytics",
+          "query": "análisis y resumen periódico de producción",
+          "evidence": "El sistema debería sumar automáticamente la producción semanal y mostrarme si algún galpón está produciendo menos que lo habitual"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2608,
+    "output_tokens": 87,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "comercializadora-flores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "consulta y almacenamiento de registros históricos",
+          "evidence": "Necesito consultar el historial de compras y ventas"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo de productos",
+          "evidence": "buscar rápidamente los arreglos por tipo de flor o color"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y rentabilidad",
+          "evidence": "comparar cuáles generan mejores ingresos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.36,
+    "input_tokens": 2571,
+    "output_tokens": 152,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-articulos-cuero",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de productos por atributos",
+          "evidence": "Quiero que los compradores puedan encontrar productos por tipo, color y material"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "y que puedan pagar directamente desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de tráfico y conversiones de comercio electrónico",
+          "evidence": "Necesito saber qué productos reciben más visitas y cuáles terminan en compra"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2623,
+    "output_tokens": 99,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "reparacion-maquinaria-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y registros de equipos",
+          "evidence": "Quiero guardar el historial de cada equipo, las reparaciones realizadas y los repuestos utilizados."
+        },
+        {
+          "category": "ai",
+          "query": "identificación de patrones en datos",
+          "evidence": "el sistema identifique patrones de fallas frecuentes para ayudarme a anticipar qué revisiones conviene ofrecer"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de uso de repuestos",
+          "evidence": "ver los repuestos que más utilizo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2554,
+    "output_tokens": 175,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "parqueadero-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de entradas y salidas de usuarios",
+          "evidence": "registrar las entradas, salidas, espacios ocupados y pagos de cada usuario"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de demanda por franjas horarias",
+          "evidence": "calcular la ocupación por hora y conocer cuáles son las franjas de mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "cobros de abonos mensuales en linea",
+          "evidence": "cobrar los abonos mensuales en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2462,
+    "output_tokens": 104,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "salsas-conservas-artesanales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de lotes e ingredientes",
+          "evidence": "Quiero registrar los lotes, los ingredientes utilizados, las fechas de elaboración y los pedidos de cada tienda."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de producción según pedidos",
+          "evidence": "Necesito calcular automáticamente cuánto debo producir según los pedidos confirmados"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas de productos",
+          "evidence": "revisar qué sabores tienen más salida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.18,
+    "input_tokens": 2631,
+    "output_tokens": 170,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "panaderia-pedidos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos de clientes y pedidos",
+          "evidence": "guardar los datos de mis clientes, los pedidos y el inventario de ingredientes en un mismo lugar"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "que la gente pueda pagar sus encargos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y reportes",
+          "evidence": "consultar un resumen de ventas por semana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2587,
+    "output_tokens": 102,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "compra-cacao-productores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de historial de compras",
+          "evidence": "Quiero registrar cada compra con el productor, el peso, la calidad y la fecha, y consultar todo ese historial cuando lo necesite."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de totales agregados",
+          "evidence": "Necesito calcular automáticamente los totales por zona y por mes"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y calidades populares",
+          "evidence": "ver cuáles calidades se venden más."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 2631,
+    "output_tokens": 175,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tortas-personalizadas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de historiales y preferencias",
+          "evidence": "Quiero conservar el historial de pedidos y las preferencias de cada cliente para no tener que buscar conversaciones viejas"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos por adelantado",
+          "evidence": "necesito recibir pagos por adelantado"
+        },
+        {
+          "category": "communication",
+          "query": "envio de confirmacion de reserva",
+          "evidence": "mandar una confirmación cuando el pedido quede reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2611,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "limpieza-domiciliaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles de usuario",
+          "evidence": "cada empleado pueda entrar con su propia cuenta y consultar únicamente sus tareas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "que los clientes reciban un aviso el día anterior a la visita"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2481,
+    "output_tokens": 84,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "lavado-detallado-motos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y permisos",
+          "evidence": "Quiero que cada empleado vea únicamente los servicios que le asigno"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "que el cliente reciba un mensaje cuando su moto esté lista"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de tareas operativas",
+          "evidence": "se cree automáticamente una tarea para preparar el puesto de trabajo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2468,
+    "output_tokens": 161,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "almuerzos-empresariales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de datos operativos",
+          "evidence": "Quiero registrar los menús solicitados por cada empresa y las cantidades entregadas cada día."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y reportes",
+          "evidence": "Me gustaría ver cuánto vendí por cliente y por semana"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos en línea",
+          "evidence": "permitir que las empresas paguen sus pedidos en línea."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2505,
+    "output_tokens": 102,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "miel-productos-colmena",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenidos web autoadministrable",
+          "evidence": "Necesito actualizar las descripciones, fotos y precios de mi página sin pedir ayuda cada vez"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los catálogos y las fichas de producto para descargarlos"
+        },
+        {
+          "category": "communication",
+          "query": "envio de correos electronicos",
+          "evidence": "responder por correo las preguntas de los compradores"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.43,
+    "input_tokens": 2604,
+    "output_tokens": 169,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "mantenimiento-jardines",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de visitas",
+          "evidence": "Quiero registrar cada visita, los materiales utilizados y las observaciones de mis trabajadores."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo y comparación de costos",
+          "evidence": "calcular cuánto material se consume por tipo de jardín y comparar los costos entre meses"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de imágenes",
+          "evidence": "conservar fotos de los trabajos realizados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2578,
+    "output_tokens": 162,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "distribuidora-agua",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de clientes y pedidos",
+          "evidence": "Quiero tener el historial de cada cliente, sus pedidos habituales y los saldos pendientes."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en linea",
+          "evidence": "Me gustaría permitir que los clientes paguen sus pedidos por internet"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis y visualizacion de ventas por zona",
+          "evidence": "mostrarme cuáles son las zonas con más ventas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2588,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "alquiler-trajes-tipicos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de inventario",
+          "evidence": "Quiero llevar el control de cada prenda, su talla, estado y fechas en que está reservada"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda por filtros y atributos",
+          "evidence": "los clientes encuentren un traje buscando por talla, color o tipo de evento"
+        },
+        {
+          "category": "analytics",
+          "query": "reportes de uso y popularidad",
+          "evidence": "conocer cuáles se alquilan más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2527,
+    "output_tokens": 104,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "granja-produccion-huevos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de datos operativos",
+          "evidence": "Quiero registrar la producción diaria por galpón, las unidades clasificadas y las entregas que hacemos."
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo y agregación automática de datos",
+          "evidence": "El sistema debería sumar automáticamente la producción semanal y mostrarme si algún galpón está produciendo menos que lo habitual."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 2608,
+    "output_tokens": 93,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "comercializadora-flores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros comerciales",
+          "evidence": "Necesito consultar el historial de compras y ventas"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de texto",
+          "evidence": "buscar rápidamente los arreglos por tipo de flor o color"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ingresos y rendimiento",
+          "evidence": "comparar cuáles generan mejores ingresos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2571,
+    "output_tokens": 152,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-articulos-cuero",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de productos",
+          "evidence": "Quiero que los compradores puedan encontrar productos por tipo, color y material"
+        },
+        {
+          "category": "payments",
+          "query": "pasarela de pagos en línea",
+          "evidence": "que puedan pagar directamente desde la página"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de tráfico y conversiones",
+          "evidence": "Necesito saber qué productos reciben más visitas y cuáles terminan en compra"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2623,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "reparacion-maquinaria-agricola",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de mantenimiento y repuestos",
+          "evidence": "Quiero guardar el historial de cada equipo, las reparaciones realizadas y los repuestos utilizados."
+        },
+        {
+          "category": "ai",
+          "query": "identificaci3n de patrones y fallas frecuentes",
+          "evidence": "Me gustar3a que el sistema identifique patrones de fallas frecuentes para ayudarme a anticipar qu3 revisiones conviene ofrecer"
+        },
+        {
+          "category": "analytics",
+          "query": "reportes de uso de repuestos y materiales",
+          "evidence": "ver los repuestos que m3s utilizo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.36,
+    "input_tokens": 2554,
+    "output_tokens": 166,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "parqueadero-bicicletas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de entradas y salidas de usuarios",
+          "evidence": "registrar las entradas, salidas, espacios ocupados y pagos de cada usuario"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de demanda por franjas horarias",
+          "evidence": "calcular la ocupación por hora y conocer cuáles son las franjas de mayor demanda"
+        },
+        {
+          "category": "payments",
+          "query": "cobros de abonos mensuales en linea",
+          "evidence": "cobrar los abonos mensuales en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.19,
+    "input_tokens": 2462,
+    "output_tokens": 104,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "salsas-conservas-artesanales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de lotes e ingredientes",
+          "evidence": "Quiero registrar los lotes, los ingredientes utilizados, las fechas de elaboración y los pedidos de cada tienda."
+        },
+        {
+          "category": "data-processing",
+          "query": "calculo automatico de produccion por demanda",
+          "evidence": "Necesito calcular automáticamente cuánto debo producir según los pedidos confirmados"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de ventas de productos",
+          "evidence": "revisar qué sabores tienen más salida."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2631,
+    "output_tokens": 171,
+    "waited": 0.0
+  }
+]

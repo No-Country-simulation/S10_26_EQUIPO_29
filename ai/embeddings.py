@@ -22,6 +22,7 @@ class ModelSpec:
     document_prompt: str = ""       # se antepone a cada documento
     left_padding: bool = False
     min_score: float | None = None  # umbral de no_evidence
+    similarity_prompt: str | None = None  # para comparar dos textos del mismo tipo; sin él, query_prompt
 
 
 QWEN3_INSTRUCTION  = (
@@ -42,7 +43,8 @@ MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B", dims=1024,
                                       # catalog-validation juntos, 135 consultas). Ver
                                       # ai/eval/BASELINE_DECISION.md. Cambiar el texto de los
                                       # repos o el catálogo obliga a recalibrarlo.
-                                      min_score=0.18),
+                                      min_score=0.18,
+                                      similarity_prompt="task: sentence similarity | query: "),
 }
 DEFAULT_MODEL = "embeddinggemma"
 
@@ -102,3 +104,12 @@ def embed_query(text: str) -> np.ndarray:
                            normalize_embeddings=True,
                            convert_to_numpy=True
     )
+
+
+def embed_similar(texts: list[str]) -> np.ndarray:
+    """Vectores normalizados para comparar textos del mismo tipo entre sí (pedido con pedido)."""
+    spec = model_spec()
+    return _model().encode(texts,
+                           prompt=spec.similarity_prompt or spec.query_prompt,
+                           normalize_embeddings=True,
+                           convert_to_numpy=True)

@@ -1,0 +1,832 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2139,
+    "output_tokens": 120,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado rápido",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.93,
+    "input_tokens": 2128,
+    "output_tokens": 56,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir la API",
+          "evidence": "queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2135,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos o mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2135,
+    "output_tokens": 75,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesion con proveedores externos",
+          "evidence": "voluntarios entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 2121,
+    "output_tokens": 80,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobros y mensualidades en linea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes por WhatsApp",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional para historial",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 2135,
+    "output_tokens": 114,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "repuestos-buscador",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "buscador de productos por texto",
+          "evidence": "buscador de productos por nombre o referencia (el equipo pensaba en Elasticsearch)"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de rendimiento y errores",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2140,
+    "output_tokens": 115,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "procesamiento y cálculo nocturno de datos",
+          "evidence": "procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno"
+        },
+        {
+          "category": "communication",
+          "query": "envío automatizado de correos electrónicos",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2133,
+    "output_tokens": 95,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "energia-medidores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "streaming de eventos en tiempo real",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de series temporales",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "observability",
+          "query": "visualización de métricas en tableros",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2150,
+    "output_tokens": 95,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "contable-chatbot",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "ejecución de modelos de lenguaje local",
+          "evidence": "un modelo de lenguaje que corra en sus propios servidores"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación y acceso de usuarios",
+          "evidence": "solo puedan entrar los empleados con cuenta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.15,
+    "input_tokens": 2133,
+    "output_tokens": 110,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de propiedades",
+          "evidence": "buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y planos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2139,
+    "output_tokens": 120,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2128,
+    "output_tokens": 50,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para desarrollo de api",
+          "evidence": "queremos elegir un framework para la API"
+        },
+        {
+          "category": "database",
+          "query": "motor de base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2135,
+    "output_tokens": 107,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de asistencia",
+          "evidence": "los profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "calculo diario de porcentajes",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envio de alertas automaticas",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2135,
+    "output_tokens": 97,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesion con proveedores externos",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2121,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en línea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por mensajería instantánea",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2135,
+    "output_tokens": 167,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "repuestos-buscador",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "b*00fasqueda de texto completo de productos",
+          "evidence": "buscador de productos por nombre o referencia (el equipo pensaba en Elasticsearch)"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de latencia y errores de la API",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2140,
+    "output_tokens": 84,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "procesamiento nocturno de inventario de ventas",
+          "evidence": "procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno"
+        },
+        {
+          "category": "communication",
+          "query": "envío automatizado de correos electrónicos",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2133,
+    "output_tokens": 82,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "energia-medidores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "ingesta de eventos en streaming",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de bases de datos para series de tiempo",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "observability",
+          "query": "visualización de métricas en tableros",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2150,
+    "output_tokens": 99,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "contable-chatbot",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "modelo de lenguaje local",
+          "evidence": "usando un modelo de lenguaje que corra en sus propios servidores"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios por cuenta",
+          "evidence": "que solo puedan entrar los empleados con cuenta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2133,
+    "output_tokens": 109,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y planos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2139,
+    "output_tokens": 126,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2128,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir apis",
+          "evidence": "queremos elegir un framework para la API"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.09,
+    "input_tokens": 2135,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "una aplicación donde los profesores registren la asistencia."
+        },
+        {
+          "category": "data-processing",
+          "query": "calculo automatico de estadisticas nocturnas",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envio de alertas automaticas por canales",
+          "evidence": "avisar por correo o SMS a los padres"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2135,
+    "output_tokens": 99,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesión con cuenta de Google",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF escaneados",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.18,
+    "input_tokens": 2121,
+    "output_tokens": 66,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "gimnasio-cobros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en linea",
+          "evidence": "cobrar las mensualidades en línea"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes por whatsapp",
+          "evidence": "avisar por WhatsApp a los socios que se atrasan en el pago"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento en base de datos relacional",
+          "evidence": "guardar el historial de pagos en una base de datos relacional"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 2135,
+    "output_tokens": 162,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "repuestos-buscador",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "buscador de productos por nombre o referencia"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de latencia y errores",
+          "evidence": "medir la latencia y los errores de la API"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 2140,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "restaurantes-reportes",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "data-processing",
+          "query": "procesamiento nocturno de inventario y ventas",
+          "evidence": "procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno"
+        },
+        {
+          "category": "communication",
+          "query": "envío automatizado de reportes por correo",
+          "evidence": "mandar por correo el reporte a cada gerente a primera hora"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2133,
+    "output_tokens": 83,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "energia-medidores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "streaming de eventos en tiempo real",
+          "evidence": "recibirlas en streaming con Kafka"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de bases de datos para series de tiempo",
+          "evidence": "guardarlas en una base de datos para series de tiempo como InfluxDB"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo y tableros de visualizacion tecnica",
+          "evidence": "mostrar tableros de consumo en Grafana"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.18,
+    "input_tokens": 2150,
+    "output_tokens": 102,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "contable-chatbot",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "ejecución local de modelos de lenguaje",
+          "evidence": "un modelo de lenguaje que corra en sus propios servidores"
+        },
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios empleados",
+          "evidence": "solo puedan entrar los empleados con cuenta"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2133,
+    "output_tokens": 109,
+    "waited": 0.0
+  }
+]

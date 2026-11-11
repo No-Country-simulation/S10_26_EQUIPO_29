@@ -157,6 +157,22 @@ python -m ai.eval.run_understand_eval gemini --cases detection
 python -m ai.eval.run_assistant_eval gemini --cases detection
 ```
 
+## Casos de detección, segunda tanda (22 casos)
+
+`assistant_cases_detection_2.json`. Pedidos de pequeños negocios escritos por otro modelo
+de lenguaje sin ver el catálogo ni el banco de ejemplos de entender: 12 piden guardar o
+consultar datos del negocio con palabras como "llevar", "controlar" u "organizar", y 10
+usan esas palabras en otro sentido. Incluyen permisos por cargo o sede, aprobaciones entre
+personas y carga rápida lejos. Filtrados con reglas fijas, sin editar, y sin pedidos
+parecidos al banco ni casi gemelos entre sí; etiquetas puestas después con
+[`LABEL_CRITERIA.md`](LABEL_CRITERIA.md). Se escribieron para decidir los ejemplos
+parecidos en entender ([`DETECTION_EXAMPLES_DECISION.md`](DETECTION_EXAMPLES_DECISION.md)).
+
+```bash
+python -m ai.eval.run_understand_eval gemini --cases detection-2
+python -m ai.eval.run_assistant_eval gemini --cases detection-2
+```
+
 ## Prueba final (16 casos)
 
 `assistant_cases_test.json`. Pedidos de pequeños negocios escritos por otro modelo
