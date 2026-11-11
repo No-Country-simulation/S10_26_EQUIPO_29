@@ -19,7 +19,7 @@ test('detail profiles use contract prose and no editorial features',async()=>{
  for(const id of ['react','nextjs','fastapi','nestjs','django','valkey','rabbitmq','prometheus','grafana','traefik'])assert.ok(items.some(tool=>tool.id===id));
 });
 
-test('real catalog metrics match their captured GitHub source without invented health or releases',async()=>{
+test('demo preserves captured metrics and marks simulated health and maintenance',async()=>{
  const {default:snapshot}=await import('../src/mocks/github-snapshot.json',{with:{type:'json'}});
  const {items}=await mockCatalog.list();
  assert.equal(items.filter(item=>item.dataSource==='github_snapshot').length,19);
@@ -28,7 +28,7 @@ test('real catalog metrics match their captured GitHub source without invented h
   const source=Object.values(snapshot.data).find(repo=>repo?.nameWithOwner===item.full_name);
   assert.equal(item.stars,source.stargazerCount);assert.equal(item.openIssues,source.issues.totalCount+source.pullRequests.totalCount);assert.equal(item.openPullRequests,source.pullRequests.totalCount);
   assert.equal(item.version,source.latestRelease?.tagName??null);assert.equal(item.archived,source.isArchived);assert.equal(item.syncedAt,snapshot.captured_at);
-  assert.equal(item.healthScore,null);assert.equal(item.maintained,null);
+  assert.ok(Number.isFinite(item.healthScore));assert.equal(typeof item.maintained,'boolean');assert.equal(item.isDemo,true);
   assert.equal(item.lastCommitAt,source.defaultBranchRef?.target?.committedDate??null);
  }
 });

@@ -1,0 +1,78 @@
+{
+  "postgres/postgres": {
+    "healthScore": 92,
+    "maintained": true
+  },
+  "keycloak/keycloak": {
+    "healthScore": 88,
+    "maintained": true
+  },
+  "meilisearch/meilisearch": {
+    "healthScore": 84,
+    "maintained": true
+  },
+  "ollama/ollama": {
+    "healthScore": 76,
+    "maintained": true
+  },
+  "plausible/analytics": {
+    "healthScore": 81,
+    "maintained": true
+  },
+  "getlago/lago": {
+    "healthScore": 68,
+    "maintained": false
+  },
+  "qdrant/qdrant": {
+    "healthScore": 90,
+    "maintained": true
+  },
+  "umami-software/umami": {
+    "healthScore": 73,
+    "maintained": true
+  },
+  "typesense/typesense": {
+    "healthScore": 86,
+    "maintained": true
+  },
+  "react/react": {
+    "healthScore": 59,
+    "maintained": false
+  },
+  "vercel/next.js": {
+    "healthScore": 94,
+    "maintained": true
+  },
+  "fastapi/fastapi": {
+    "healthScore": 79,
+    "maintained": true
+  },
+  "nestjs/nest": {
+    "healthScore": 87,
+    "maintained": true
+  },
+  "django/django": {
+    "healthScore": 65,
+    "maintained": false
+  },
+  "valkey-io/valkey": {
+    "healthScore": 83,
+    "maintained": true
+  },
+  "rabbitmq/rabbitmq-server": {
+    "healthScore": 71,
+    "maintained": true
+  },
+  "prometheus/prometheus": {
+    "healthScore": 89,
+    "maintained": true
+  },
+  "grafana/grafana": {
+    "healthScore": 78,
+    "maintained": true
+  },
+  "traefik/traefik": {
+    "healthScore": 85,
+    "maintained": true
+  }
+}

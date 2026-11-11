@@ -2,17 +2,17 @@
   "sources": [
     {
       "path": "src/App.jsx",
-      "code": "import {flushSync} from 'react-dom';\nimport {useSessionAccent} from './useSessionAccent';\nimport {ArrowUp} from 'lucide-react';\nimport {useSmoothPageScroll} from './useSmoothPageScroll';\nimport {useWorkspaceView} from './useWorkspaceView';\nimport {reloadHome} from './reloadHome.mjs';\nimport {SectionNavigation} from './SectionNavigation';\nimport {Assistant} from './features/assistant/Assistant';\nimport {useAssistantFlow} from './features/assistant/useAssistantFlow';\nimport {Catalog} from './features/catalog/Catalog';\nimport {ToolModal} from './ToolModal';\nimport {useToolNavigation} from './useToolNavigation';\nimport {ElasticScrollbar} from './ElasticScrollbar';\nimport React, {useRef, useCallback} from 'react';\nexport function App({useFlow=useAssistantFlow}){\n useSessionAccent();\n const navigation=useToolNavigation();\n const openRef=useRef(navigation.open);openRef.current=navigation.open;\n const openTool=useCallback((...args)=>openRef.current(...args),[]);\n const isDetail=navigation.id!==null;\n const flow=useFlow(isDetail);\n const {expanded,phase}=flow;\n const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);\n useSmoothPageScroll(isDetail);\n const resetting=useRef(false);\n async function resetArchitecture(){\n  if(resetting.current)return;\n  const reset=()=>{flow.newArchitecture();workspace.reset();};\n  const focus=()=>flow.input.current?.focus({preventScroll:true});\n  const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};\n  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}\n  resetting.current=true;\n  const form=flow.input.current?.closest('form');\n  const action=form?.parentElement.querySelector('.composer-new-architecture');\n  let centerMotion,buttonMotion;\n  if(form&&action){\n   const bounds=form.getBoundingClientRect();\n   const width=Math.min(756,document.documentElement.clientWidth-(innerWidth<=640?24:48));\n   const left=(document.documentElement.clientWidth-width)/2;\n   centerMotion=form.animate([\n    {translate:'0px 0px',width:`${bounds.width}px`,marginRight:'0px',flex:'none'},\n    {translate:`${left-bounds.left}px 0px`,width:`${width}px`,marginRight:`${bounds.width-width}px`,flex:'none'}\n   ],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});\n   buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});\n   await centerMotion.finished.catch(()=>{});\n  }\n  document.documentElement.dataset.architectureReset='true';\n  const transition=document.startViewTransition(()=>{centerMotion?.cancel();buttonMotion?.cancel();commit();});\n  transition.finished.catch(()=>{}).finally(()=>{\n   delete document.documentElement.dataset.architectureReset;\n   resetting.current=false;\n   focus();\n  });\n }\n\n return <><a href=\"#asistente\" className=\"skip\" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className=\"nav wrap\"><a className=\"brand\" href=\"/\" onClick={reloadHome}><img className=\"openbridge-logo\" src=\"/assets/brands/openbridge.svg\" alt=\"OpenBridge\"/></a><SectionNavigation paused={isDetail} workspace={workspace}/></div></header>\n <main inert={isDetail?true:undefined} aria-hidden={isDetail} id=\"landing-view\" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className=\"assistant-surface\" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>\n <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className=\"catalog-surface\"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type=\"button\" className=\"ui-button ui-button--primary catalog-access\" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden=\"true\"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;\n}\n",
+      "code": "import {mockMode} from './data/mockMode.mjs';\nimport {flushSync} from 'react-dom';\nimport {useSessionAccent} from './useSessionAccent';\nimport {ArrowUp} from 'lucide-react';\nimport {useSmoothPageScroll} from './useSmoothPageScroll';\nimport {useWorkspaceView} from './useWorkspaceView';\nimport {reloadHome} from './reloadHome.mjs';\nimport {SectionNavigation} from './SectionNavigation';\nimport {Assistant} from './features/assistant/Assistant';\nimport {useAssistantFlow} from './features/assistant/useAssistantFlow';\nimport {Catalog} from './features/catalog/Catalog';\nimport {ToolModal} from './ToolModal';\nimport {useToolNavigation} from './useToolNavigation';\nimport {ElasticScrollbar} from './ElasticScrollbar';\nimport React, {useRef, useCallback} from 'react';\nexport function App({useFlow=useAssistantFlow}){\n useSessionAccent();\n const navigation=useToolNavigation();\n const openRef=useRef(navigation.open);openRef.current=navigation.open;\n const openTool=useCallback((...args)=>openRef.current(...args),[]);\n const isDetail=navigation.id!==null;\n const flow=useFlow(isDetail);\n const {expanded,phase}=flow;\n const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);\n useSmoothPageScroll(isDetail);\n const resetting=useRef(false);\n async function resetArchitecture(){\n  if(resetting.current)return;\n  const reset=()=>{flow.newArchitecture();workspace.reset();};\n  const focus=()=>flow.input.current?.focus({preventScroll:true});\n  const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};\n  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}\n  resetting.current=true;\n  const form=flow.input.current?.closest('form');\n  const action=form?.parentElement.querySelector('.composer-new-architecture');\n  let centerMotion,buttonMotion;\n  if(form&&action){\n   const bounds=form.getBoundingClientRect();\n   const width=Math.min(756,document.documentElement.clientWidth-(innerWidth<=640?24:48));\n   const left=(document.documentElement.clientWidth-width)/2;\n   centerMotion=form.animate([\n    {translate:'0px 0px',width:`${bounds.width}px`,marginRight:'0px',flex:'none'},\n    {translate:`${left-bounds.left}px 0px`,width:`${width}px`,marginRight:`${bounds.width-width}px`,flex:'none'}\n   ],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});\n   buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});\n   await centerMotion.finished.catch(()=>{});\n  }\n  document.documentElement.dataset.architectureReset='true';\n  const transition=document.startViewTransition(()=>{centerMotion?.cancel();buttonMotion?.cancel();commit();});\n  transition.finished.catch(()=>{}).finally(()=>{\n   delete document.documentElement.dataset.architectureReset;\n   resetting.current=false;\n   focus();\n  });\n }\n\n return <><a href=\"#asistente\" className=\"skip\" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className=\"nav wrap\"><a className=\"brand\" href=\"/\" onClick={reloadHome}><img className=\"openbridge-logo\" src=\"/assets/brands/openbridge.svg\" alt=\"OpenBridge\"/></a><div className=\"nav-actions\">{mockMode()&&<span className=\"demo-indicator\" aria-label=\"Demo con datos de prueba\" title=\"Esta versión utiliza datos y respuestas de ejemplo.\"><span className=\"demo-label-full\" aria-hidden=\"true\">Demo con datos de prueba</span><span className=\"demo-label-mobile\" aria-hidden=\"true\">Demo</span></span>}<SectionNavigation paused={isDetail} workspace={workspace}/></div></div></header>\n <main inert={isDetail?true:undefined} aria-hidden={isDetail} id=\"landing-view\" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className=\"assistant-surface\" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>\n <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className=\"catalog-surface\"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type=\"button\" className=\"ui-button ui-button--primary catalog-access\" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden=\"true\"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;\n}\n",
       "exports": [
         "App"
       ],
       "motion": [
         {
-          "line": 43,
+          "line": 44,
           "text": "],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});"
         },
         {
-          "line": 44,
+          "line": 45,
           "text": "buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});"
         }
       ]
@@ -138,7 +138,7 @@
     },
     {
       "path": "src/HealthScore.jsx",
-      "code": "import {Activity} from 'lucide-react';\nimport {FollowingTooltip} from './FollowingTooltip';\n\nexport function HealthScore({score}){\n const available=Number.isFinite(score);\n const tone=!available?'unknown':score>=80?'good':score>=60?'moderate':'low';\n const text=available?'Se calcula con la actividad reciente, los issues respecto a las estrellas, la licencia y el estado del repositorio. Los factores sin datos se excluyen: 100/100 no garantiza calidad ni seguridad.':'Todavía no hay datos suficientes para calcular la salud de este repositorio.';\n return <FollowingTooltip text={text} className=\"health-tooltip\">\n  {trigger=><button type=\"button\" className={`health-score health-score--${tone}`} aria-label={available?`Salud del repositorio: ${score} de 100`:'Salud sin evaluar'} {...trigger}>\n   <Activity size={20} strokeWidth={1.75} className=\"health-icon\" aria-hidden=\"true\"/>\n   <strong aria-hidden=\"true\">{available?<>{score}<span>/100</span></>:<span>Sin evaluar</span>}</strong>\n  </button>}\n </FollowingTooltip>;\n}\n",
+      "code": "import {Activity} from 'lucide-react';\nimport {FollowingTooltip} from './FollowingTooltip';\n\nexport function HealthScore({score,demo=false}){\n const available=Number.isFinite(score);\n const tone=!available?'unknown':score>=80?'good':score>=60?'moderate':'low';\n const text=demo?'Puntuación de ejemplo para probar la interfaz. No es una evaluación real de esta herramienta.':available?'Se calcula con la actividad reciente, los issues respecto a las estrellas, la licencia y el estado del repositorio. Los factores sin datos se excluyen: 100/100 no garantiza calidad ni seguridad.':'Todavía no hay datos suficientes para calcular la salud de este repositorio.';\n return <FollowingTooltip text={text} className=\"health-tooltip\">\n  {trigger=><button type=\"button\" className={`health-score health-score--${tone}`} aria-label={available?`Salud del repositorio: ${score} de 100`:'Salud sin evaluar'} {...trigger}>\n   <Activity size={20} strokeWidth={1.75} className=\"health-icon\" aria-hidden=\"true\"/>\n   <strong aria-hidden=\"true\">{available?<>{score}<span>/100</span></>:<span>Sin evaluar</span>}</strong>\n  </button>}\n </FollowingTooltip>;\n}\n",
       "exports": [
         "HealthScore"
       ],
@@ -282,7 +282,7 @@
     },
     {
       "path": "src/ToolDetail.jsx",
-      "code": "import {HealthScore} from './HealthScore';\nimport {detailTarget} from './data/detailTarget.mjs';\nimport {errorPreview} from './mocks/errorPreview.mjs';\nimport {interfaceErrors,errorActions} from './errorPresentation.mjs';\nimport React,{useEffect,useState} from 'react';\nimport {useCatalogData} from './data/CatalogProvider';\nimport {IntegrationIdeas} from './IntegrationIdeas';\nimport {IntegrationIdeasSkeleton} from './IntegrationIdeasSkeleton';\nimport {ArrowLeft,ArrowUpRight,Star,GitPullRequest,GitCommitHorizontal,UserRound,Archive,Scale,Code2} from 'lucide-react';\n\nimport {repositoryStatus,toolCategoryNames} from './data/catalog.mjs';\nimport {useBrandIdentity,markBrandFailed} from './brandIdentity';\n\nexport function ToolDetail({id,onBack}){\n const [tab,setTab]=useState('about');\n const [compact,setCompact]=useState(false);\n useEffect(()=>{setTab('about');setCompact(false);},[id]);\n const {tools,profiles,http,categories,status,retry}=useCatalogData();\n const {original,fullName}=detailTarget(id,tools);\n const [remote,setRemote]=useState(null),[failed,setFailed]=useState(false),[attempt,setAttempt]=useState(0);\n useEffect(()=>{\n  setRemote(previous=>previous?.target===id?previous:null);setFailed(false);\n  if(errorPreview('detail')||errorPreview('missing')){setFailed(errorPreview('missing')?'missing':'failed');return;}\n  if(!http||!fullName)return;\n  const controller=new AbortController();\n  http.detail(fullName,categories,controller.signal,{force:attempt>0}).then(record=>{\n   if(!controller.signal.aborted)setRemote({...record,target:id});\n  }).catch(error=>{if(!controller.signal.aborted)setFailed(error.status===404||error.code==='repo_not_found'?'missing':'failed');});\n  return()=>controller.abort();\n },[http,fullName,categories,id,attempt]);\n const loaded=remote?.target===id?remote:http?.peekDetail(fullName,categories)??null;\n const tool=loaded?.tool??original;\n const identity=useBrandIdentity(tool||{id,name:''});\n if(!tool&&failed!=='missing'&&(failed||http&&fullName||status!=='ready'))return <div className=\"tool-detail wrap\"><h1 id=\"detail-title\" tabIndex={-1}>{!failed&&(fullName||status==='loading')?'Cargando ficha…':interfaceErrors.detail}</h1>{(failed||status==='error')&&<button className=\"ui-button ui-button--secondary\" onClick={()=>fullName?setAttempt(n=>n+1):retry()}>{errorActions.retry}</button>}</div>;\n if(!tool||failed==='missing'&&!loaded)return <div className=\"tool-detail detail-missing wrap\"><h1 id=\"detail-title\" tabIndex={-1}>Herramienta no encontrada</h1><p>{interfaceErrors.missing}</p><button className=\"detail-back ui-button ui-button--secondary\" onClick={onBack}><ArrowLeft size={16}/> Cerrar ficha</button></div>;\n const detail=tool,profile=loaded?.profile??profiles[original?.id??id]??{summary:tool.description||null,homepage:null,ideas:[]},brand=identity.palette;\n\n const logo=identity.logo;\n return <div className=\"tool-detail\" data-compact={compact} style={{'--brand-start':brand.start,'--brand-end':brand.end,'--brand-tag':brand.tag}}>\n  <section className=\"detail-cover\" data-tool-id={id} aria-label={`Portada de ${tool.name}`}>\n   {identity.watermark && <img className=\"detail-watermark\" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\" aria-hidden=\"true\"/>}\n   <div className=\"wrap detail-cover-inner\">\n   <div className=\"detail-identity\">{identity.fallback ? <span className=\"brand-initials\" aria-hidden=\"true\">{identity.initials}</span> : <img src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/>}<div className=\"tool-name-group\"><h1 id=\"detail-title\" tabIndex={-1}>{tool.name}</h1>{tool.full_name&&<p className=\"tool-repo-name\">{tool.full_name}</p>}</div></div>\n   <div className=\"tool-tags\">{toolCategoryNames(tool).map(category=><span key={category}>{category}</span>)}<span>{tool.language}</span></div></div>\n  </section>\n  <div className=\"detail-tabs\" role=\"tablist\" aria-label=\"Ficha técnica\">\n   {[['about','Acerca de'],['integrations','Integraciones']].map(([value,label])=><button key={value} id={`detail-tab-${value}`} role=\"tab\" aria-selected={tab===value} aria-controls={`detail-panel-${value}`} tabIndex={tab===value?0:-1} onClick={()=>setTab(value)} onKeyDown={event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?'about':event.key==='End'?'integrations':tab==='about'?'integrations':'about';setTab(next);document.getElementById(`detail-tab-${next}`)?.focus();}}}>{label}</button>)}\n  </div>\n  <div className=\"detail-body wrap\" onScroll={event=>{const top=event.currentTarget.scrollTop;if(top>80)setCompact(true);else if(top<=0)setCompact(false);}}>\n   <div id=\"detail-panel-about\" role=\"tabpanel\" aria-labelledby=\"detail-tab-about\" hidden={tab!=='about'}>\n   <div className=\"detail-overview\"><section>{profile.summary&&<><h2>Acerca de {tool.name}</h2><p className=\"detail-summary\">{profile.summary}</p></>}\n</section>\n   <aside className=\"detail-metrics\" aria-label=\"Datos técnicos\"><div className=\"detail-health\"><h2>Salud del repositorio</h2><HealthScore score={detail.healthScore}/></div>\n   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenimiento activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden=\"true\"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>\n   </div>\n   <div id=\"detail-panel-integrations\" role=\"tabpanel\" aria-labelledby=\"detail-tab-integrations\" hidden={tab!=='integrations'}>\n   {failed&&<div role=\"alert\"><p>{interfaceErrors.detail}</p><button className=\"ui-button ui-button--secondary\" onClick={()=>setAttempt(n=>n+1)}>{errorActions.retry}</button></div>}\n   {(!failed||loaded)&&(http&&fullName&&!loaded?<IntegrationIdeasSkeleton/>:<IntegrationIdeas key={id} ideas={profile.ideas}/>)}\n   </div>\n  </div>\n  <footer className=\"detail-drawer-footer\"><div className=\"detail-actions\">{tool.repo && <a className=\"ui-button ui-button--primary\" href={`https://github.com/${tool.repo}`} target=\"_blank\" rel=\"noopener noreferrer\">Repositorio <ArrowUpRight size={16}/></a>}{profile.homepage && <a className=\"ui-button ui-button--secondary\" href={profile.homepage} target=\"_blank\" rel=\"noopener noreferrer\">Sitio web <ArrowUpRight size={16}/></a>}</div></footer>\n </div>;\n}\n",
+      "code": "import {HealthScore} from './HealthScore';\nimport {detailTarget} from './data/detailTarget.mjs';\nimport {errorPreview} from './mocks/errorPreview.mjs';\nimport {interfaceErrors,errorActions} from './errorPresentation.mjs';\nimport React,{useEffect,useState} from 'react';\nimport {useCatalogData} from './data/CatalogProvider';\nimport {IntegrationIdeas} from './IntegrationIdeas';\nimport {IntegrationIdeasSkeleton} from './IntegrationIdeasSkeleton';\nimport {ArrowLeft,ArrowUpRight,Star,GitPullRequest,GitCommitHorizontal,UserRound,Archive,Scale,Code2} from 'lucide-react';\n\nimport {repositoryStatus,toolCategoryNames} from './data/catalog.mjs';\nimport {useBrandIdentity,markBrandFailed} from './brandIdentity';\n\nexport function ToolDetail({id,onBack}){\n const [tab,setTab]=useState('about');\n const [compact,setCompact]=useState(false);\n useEffect(()=>{setTab('about');setCompact(false);},[id]);\n const {tools,profiles,http,categories,status,retry}=useCatalogData();\n const {original,fullName}=detailTarget(id,tools);\n const [remote,setRemote]=useState(null),[failed,setFailed]=useState(false),[attempt,setAttempt]=useState(0);\n useEffect(()=>{\n  setRemote(previous=>previous?.target===id?previous:null);setFailed(false);\n  if(errorPreview('detail')||errorPreview('missing')){setFailed(errorPreview('missing')?'missing':'failed');return;}\n  if(!http||!fullName)return;\n  const controller=new AbortController();\n  http.detail(fullName,categories,controller.signal,{force:attempt>0}).then(record=>{\n   if(!controller.signal.aborted)setRemote({...record,target:id});\n  }).catch(error=>{if(!controller.signal.aborted)setFailed(error.status===404||error.code==='repo_not_found'?'missing':'failed');});\n  return()=>controller.abort();\n },[http,fullName,categories,id,attempt]);\n const loaded=remote?.target===id?remote:http?.peekDetail(fullName,categories)??null;\n const tool=loaded?.tool??original;\n const identity=useBrandIdentity(tool||{id,name:''});\n if(!tool&&failed!=='missing'&&(failed||http&&fullName||status!=='ready'))return <div className=\"tool-detail wrap\"><h1 id=\"detail-title\" tabIndex={-1}>{!failed&&(fullName||status==='loading')?'Cargando ficha…':interfaceErrors.detail}</h1>{(failed||status==='error')&&<button className=\"ui-button ui-button--secondary\" onClick={()=>fullName?setAttempt(n=>n+1):retry()}>{errorActions.retry}</button>}</div>;\n if(!tool||failed==='missing'&&!loaded)return <div className=\"tool-detail detail-missing wrap\"><h1 id=\"detail-title\" tabIndex={-1}>Herramienta no encontrada</h1><p>{interfaceErrors.missing}</p><button className=\"detail-back ui-button ui-button--secondary\" onClick={onBack}><ArrowLeft size={16}/> Cerrar ficha</button></div>;\n const detail=tool,profile=loaded?.profile??profiles[original?.id??id]??{summary:tool.description||null,homepage:null,ideas:[]},brand=identity.palette;\n\n const logo=identity.logo;\n return <div className=\"tool-detail\" data-compact={compact} style={{'--brand-start':brand.start,'--brand-end':brand.end,'--brand-tag':brand.tag}}>\n  <section className=\"detail-cover\" data-tool-id={id} aria-label={`Portada de ${tool.name}`}>\n   {identity.watermark && <img className=\"detail-watermark\" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\" aria-hidden=\"true\"/>}\n   <div className=\"wrap detail-cover-inner\">\n   <div className=\"detail-identity\">{identity.fallback ? <span className=\"brand-initials\" aria-hidden=\"true\">{identity.initials}</span> : <img src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/>}<div className=\"tool-name-group\"><h1 id=\"detail-title\" tabIndex={-1}>{tool.name}</h1>{tool.full_name&&<p className=\"tool-repo-name\">{tool.full_name}</p>}</div></div>\n   <div className=\"tool-tags\">{toolCategoryNames(tool).map(category=><span key={category}>{category}</span>)}<span>{tool.language}</span></div></div>\n  </section>\n  <div className=\"detail-tabs\" role=\"tablist\" aria-label=\"Ficha técnica\">\n   {[['about','Acerca de'],['integrations','Integraciones']].map(([value,label])=><button key={value} id={`detail-tab-${value}`} role=\"tab\" aria-selected={tab===value} aria-controls={`detail-panel-${value}`} tabIndex={tab===value?0:-1} onClick={()=>setTab(value)} onKeyDown={event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?'about':event.key==='End'?'integrations':tab==='about'?'integrations':'about';setTab(next);document.getElementById(`detail-tab-${next}`)?.focus();}}}>{label}</button>)}\n  </div>\n  <div className=\"detail-body wrap\" onScroll={event=>{const top=event.currentTarget.scrollTop;if(top>80)setCompact(true);else if(top<=0)setCompact(false);}}>\n   <div id=\"detail-panel-about\" role=\"tabpanel\" aria-labelledby=\"detail-tab-about\" hidden={tab!=='about'}>\n   <div className=\"detail-overview\"><section>{profile.summary&&<><h2>Acerca de {tool.name}</h2><p className=\"detail-summary\">{profile.summary}</p></>}\n</section>\n   <aside className=\"detail-metrics\" aria-label=\"Datos técnicos\"><div className=\"detail-health\"><h2>Salud del repositorio</h2><HealthScore score={detail.healthScore} demo={tool.isDemo}/></div>\n   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenimiento activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden=\"true\"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>\n   </div>\n   <div id=\"detail-panel-integrations\" role=\"tabpanel\" aria-labelledby=\"detail-tab-integrations\" hidden={tab!=='integrations'}>\n   {failed&&<div role=\"alert\"><p>{interfaceErrors.detail}</p><button className=\"ui-button ui-button--secondary\" onClick={()=>setAttempt(n=>n+1)}>{errorActions.retry}</button></div>}\n   {(!failed||loaded)&&(http&&fullName&&!loaded?<IntegrationIdeasSkeleton/>:<IntegrationIdeas key={id} ideas={profile.ideas}/>)}\n   </div>\n  </div>\n  <footer className=\"detail-drawer-footer\"><div className=\"detail-actions\">{tool.repo && <a className=\"ui-button ui-button--primary\" href={`https://github.com/${tool.repo}`} target=\"_blank\" rel=\"noopener noreferrer\">Repositorio <ArrowUpRight size={16}/></a>}{profile.homepage && <a className=\"ui-button ui-button--secondary\" href={profile.homepage} target=\"_blank\" rel=\"noopener noreferrer\">Sitio web <ArrowUpRight size={16}/></a>}</div></footer>\n </div>;\n}\n",
       "exports": [
         "ToolDetail"
       ],
@@ -417,7 +417,7 @@
     },
     {
       "path": "src/data/assistantRequest.mjs",
-      "code": "import {AssistantError,mockAssistant,validateAssistantQuery,validateAssistantResponse,validateAssistantCatalog} from './assistant.mjs';\nimport {catalogRecords} from './catalog.mjs';\nexport const assistantRequestTiming=Object.freeze({slowMs:60000,timeoutMs:90000});\n\n// Local request boundary; future HTTP providers plug in without changing the view.\n// Race cancellation/deadline even when a provider ignores AbortSignal.\nexport async function requestAssistant(request,{signal,provider=mockAssistant,catalog=catalogRecords,onSlow,slowMs=assistantRequestTiming.slowMs,timeoutMs=assistantRequestTiming.timeoutMs,...providerOptions}={}){\n const validation=validateAssistantQuery(request.query);\n if(validation)throw new AssistantError('invalid_query',validation);\n if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n const controller=new AbortController();\n let slowTimer,timeoutTimer,rejectCancellation;\n const cancelled=new Promise((_,reject)=>{rejectCancellation=reject;});\n const cancel=()=>{controller.abort();rejectCancellation(new DOMException('Cancelado','AbortError'));};\n signal?.addEventListener('abort',cancel,{once:true});\n const deadline=new Promise((_,reject)=>{\n  timeoutTimer=setTimeout(()=>{\n   // Reject with the meaningful timeout before aborting an abort-aware provider.\n   reject(new AssistantError('timeout','La consulta tardó demasiado. Tu descripción se conserva; puedes reintentar.'));\n   controller.abort();\n  },timeoutMs);\n });\n if(onSlow)slowTimer=setTimeout(()=>{if(!controller.signal.aborted)onSlow();},slowMs);\n try{\n  const pending=Promise.resolve().then(()=>{if(controller.signal.aborted)throw new DOMException('Cancelado','AbortError');return provider.ask({query:request.query},{...providerOptions,signal:controller.signal});});\n  const raw=await Promise.race([pending,deadline,cancelled]);\n  if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n  return validateAssistantCatalog(validateAssistantResponse(raw),catalog);\n }catch(error){\n  if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n  if(error instanceof AssistantError)throw error;\n  throw new AssistantError('technical_error','No pudimos generar la propuesta. Tu descripción se conserva; vuelve a intentarlo.');\n }finally{\n  clearTimeout(slowTimer);clearTimeout(timeoutTimer);signal?.removeEventListener('abort',cancel);\n }\n}\n",
+      "code": "import {AssistantError,mockAssistant,validateAssistantQuery,validateAssistantResponse,validateAssistantCatalog} from './assistant.mjs';\nimport {catalogRecords} from './catalog.mjs';\nexport const assistantRequestTiming=Object.freeze({slowMs:15000,timeoutMs:90000});\n\n// Local request boundary; future HTTP providers plug in without changing the view.\n// Race cancellation/deadline even when a provider ignores AbortSignal.\nexport async function requestAssistant(request,{signal,provider=mockAssistant,catalog=catalogRecords,onSlow,slowMs=assistantRequestTiming.slowMs,timeoutMs=assistantRequestTiming.timeoutMs,...providerOptions}={}){\n const validation=validateAssistantQuery(request.query);\n if(validation)throw new AssistantError('invalid_query',validation);\n if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n const controller=new AbortController();\n let slowTimer,timeoutTimer,rejectCancellation;\n const cancelled=new Promise((_,reject)=>{rejectCancellation=reject;});\n const cancel=()=>{controller.abort();rejectCancellation(new DOMException('Cancelado','AbortError'));};\n signal?.addEventListener('abort',cancel,{once:true});\n const deadline=new Promise((_,reject)=>{\n  timeoutTimer=setTimeout(()=>{\n   // Reject with the meaningful timeout before aborting an abort-aware provider.\n   reject(new AssistantError('timeout','La consulta tardó demasiado. Tu descripción se conserva; puedes reintentar.'));\n   controller.abort();\n  },timeoutMs);\n });\n if(onSlow)slowTimer=setTimeout(()=>{if(!controller.signal.aborted)onSlow();},slowMs);\n try{\n  const pending=Promise.resolve().then(()=>{if(controller.signal.aborted)throw new DOMException('Cancelado','AbortError');return provider.ask({query:request.query},{...providerOptions,signal:controller.signal});});\n  const raw=await Promise.race([pending,deadline,cancelled]);\n  if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n  return validateAssistantCatalog(validateAssistantResponse(raw),catalog);\n }catch(error){\n  if(signal?.aborted)throw new DOMException('Cancelado','AbortError');\n  if(error instanceof AssistantError)throw error;\n  throw new AssistantError('technical_error','No pudimos generar la propuesta. Tu descripción se conserva; vuelve a intentarlo.');\n }finally{\n  clearTimeout(slowTimer);clearTimeout(timeoutTimer);signal?.removeEventListener('abort',cancel);\n }\n}\n",
       "exports": [
         "assistantRequestTiming"
       ],
@@ -446,7 +446,7 @@
     },
     {
       "path": "src/data/catalog.mjs",
-      "code": "import brandIdentities from './brand-identities.json' with {type:'json'};\nimport fixtures from '../mocks/catalog.fixtures.json' with {type:'json'};\nimport presentation from '../mocks/catalog-presentation.json' with {type:'json'};\nimport categoryList from '../generated/categories.json' with {type:'json'};\nimport defaultCard from '../mocks/catalog-default.fixture.json' with {type:'json'};\nexport const catalogRepos=fixtures;\nexport const catalogCategories=categoryList.categories.map(category=>({...category,name:category.id==='dev-tools'?'Desarrollo':category.name}));\nexport function populatedCategories(categories,tools){\n const used=new Set(tools.flatMap(tool=>(tool.categories??[]).map(category=>category.id)));\n return categories.filter(category=>used.has(category.id));\n}\nconst categoryNames=new Map(catalogCategories.map(c=>[c.id,c.name]));\nconst dateLabel=value=>value?new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'short',year:'numeric',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'Sin datos';\n// Translate the contract once; presentation metadata is local, never API payload.\nexport function toTool(repo,local=presentation[repo.full_name]??{}){\n const categories=(repo.categories??[]).map(({category_id})=>({id:category_id,name:categoryNames.get(category_id)??category_id}));\n return {id:local.id??String(repo.github_id),githubId:repo.github_id,name:brandIdentities.identities[repo.full_name.toLowerCase()]?.displayName??local.name??repo.full_name.split('/').at(-1),full_name:repo.full_name,repo:repo.full_name,\n category:categories[0]?.name??'Sin categoría',categories,description:repo.summary_es??repo.description??'Sin descripción disponible.',\n license_spdx_id:repo.license_spdx_id,language:repo.language??'Sin datos',license:!repo.license_spdx_id||repo.license_spdx_id==='NOASSERTION'?'Revisar licencia':repo.license_spdx_id,\n stars:repo.stargazers_count,activity:dateLabel(repo.pushed_at),maintained:local.maintained??null,archived:repo.archived,disabled:local.disabled??false,dataSource:local.dataSource,syncedAt:local.syncedAt};\n}\nexport function toCardDetail(repo,local=presentation[repo.full_name]??{}){\n return {healthScore:repo.health_score??null,openIssues:repo.open_issues_count??null,tag:local.tag,version:local.version??null,docs:local.docs??repo.homepage,\n releasePublishedAt:local.releasePublishedAt??null,releaseUrl:local.releaseUrl??null,lastCommitAt:local.lastCommitAt??null,openPullRequests:local.openPullRequests??null};\n}\nexport const catalogRecords=fixtures.map(repo=>({...toTool(repo),...toCardDetail(repo)}));\n// Fictional visual demo is not a Repo and stays outside the contract fixtures.\ncatalogRecords.splice(9,0,structuredClone(defaultCard));\nexport const mockCatalog={\n async list(){return {items:structuredClone(catalogRecords),total:catalogRecords.length};},\n async getById(id){return structuredClone(catalogRecords.find(record=>record.id===id)??null);}\n};\nexport const githubSnapshotAt=Object.values(presentation).find(record=>record.dataSource==='github_snapshot')?.syncedAt??null;\nexport function snapshotDate(value){return value?new Intl.DateTimeFormat('es-CL',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'';}\nexport function repositoryStatus(tool){return ['github_snapshot','api'].includes(tool.dataSource)?(tool.disabled?'Deshabilitado':tool.archived?'Archivado':'No archivado'):'Por confirmar';}\n\nexport function toolCategoryNames(tool){return tool.categories?.length?tool.categories.map(category=>category.name):[tool.category];}\n",
+      "code": "import brandIdentities from './brand-identities.json' with {type:'json'};\nimport fixtures from '../mocks/catalog.fixtures.json' with {type:'json'};\nimport presentation from '../mocks/catalog-presentation.json' with {type:'json'};\nimport categoryList from '../generated/categories.json' with {type:'json'};\nimport defaultCard from '../mocks/catalog-default.fixture.json' with {type:'json'};\nimport demoMetrics from '../mocks/catalog-demo-metrics.json' with {type:'json'};\nexport const catalogRepos=fixtures;\nexport const catalogCategories=categoryList.categories.map(category=>({...category,name:category.id==='dev-tools'?'Desarrollo':category.name}));\nexport function populatedCategories(categories,tools){\n const used=new Set(tools.flatMap(tool=>(tool.categories??[]).map(category=>category.id)));\n return categories.filter(category=>used.has(category.id));\n}\nconst categoryNames=new Map(catalogCategories.map(c=>[c.id,c.name]));\nconst dateLabel=value=>value?new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'short',year:'numeric',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'Sin datos';\n// Translate the contract once; presentation metadata is local, never API payload.\nexport function toTool(repo,local=presentation[repo.full_name]??{}){\n const categories=(repo.categories??[]).map(({category_id})=>({id:category_id,name:categoryNames.get(category_id)??category_id}));\n return {id:local.id??String(repo.github_id),githubId:repo.github_id,name:brandIdentities.identities[repo.full_name.toLowerCase()]?.displayName??local.name??repo.full_name.split('/').at(-1),full_name:repo.full_name,repo:repo.full_name,\n category:categories[0]?.name??'Sin categoría',categories,description:repo.summary_es??repo.description??'Sin descripción disponible.',\n license_spdx_id:repo.license_spdx_id,language:repo.language??'Sin datos',license:!repo.license_spdx_id||repo.license_spdx_id==='NOASSERTION'?'Revisar licencia':repo.license_spdx_id,\n stars:repo.stargazers_count,activity:dateLabel(repo.pushed_at),maintained:local.maintained??null,archived:repo.archived,disabled:local.disabled??false,dataSource:local.dataSource,syncedAt:local.syncedAt};\n}\nexport function toCardDetail(repo,local=presentation[repo.full_name]??{}){\n return {healthScore:repo.health_score??null,openIssues:repo.open_issues_count??null,tag:local.tag,version:local.version??null,docs:local.docs??repo.homepage,\n releasePublishedAt:local.releasePublishedAt??null,releaseUrl:local.releaseUrl??null,lastCommitAt:local.lastCommitAt??null,openPullRequests:local.openPullRequests??null};\n}\nexport const catalogRecords=fixtures.map(repo=>({...toTool(repo),...toCardDetail(repo),...demoMetrics[repo.full_name],isDemo:true}));\n// Fictional visual demo is not a Repo and stays outside the contract fixtures.\ncatalogRecords.splice(9,0,structuredClone(defaultCard));\nexport const mockCatalog={\n async list(){return {items:structuredClone(catalogRecords),total:catalogRecords.length};},\n async getById(id){return structuredClone(catalogRecords.find(record=>record.id===id)??null);}\n};\nexport const githubSnapshotAt=Object.values(presentation).find(record=>record.dataSource==='github_snapshot')?.syncedAt??null;\nexport function snapshotDate(value){return value?new Intl.DateTimeFormat('es-CL',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Punta_Arenas'}).format(new Date(value)):'';}\nexport function repositoryStatus(tool){return ['github_snapshot','api'].includes(tool.dataSource)?(tool.disabled?'Deshabilitado':tool.archived?'Archivado':'No archivado'):'Por confirmar';}\n\nexport function toolCategoryNames(tool){return tool.categories?.length?tool.categories.map(category=>category.name):[tool.category];}\n",
       "exports": [
         "catalogRepos",
         "catalogCategories",
@@ -578,7 +578,7 @@
     },
     {
       "path": "src/features/assistant/ConnectionDiagram.jsx",
-      "code": "import {useEffect,useRef,useState,useId} from 'react';\nimport {FollowingTooltip} from '../../FollowingTooltip';\nimport {connectionGraph,sectionPath,connectionLabelAnchor} from './connectionLayout.mjs';\n\nexport function ConnectionDiagram({components,connections,Endpoint}){\n const root=useRef(null),sequence=useRef(0);\n const lightId=useId().replaceAll(':','');\n const [availableWidth,setAvailableWidth]=useState(0);\n const [layout,setLayout]=useState(null),[failed,setFailed]=useState(false);\n useEffect(()=>{\n  const element=root.current;\n  let disposed=false,timer,engine,last='';\n  async function measure(){\n   if(!element.clientWidth)return;\n   const width=element.clientWidth-8;\n   setAvailableWidth(width);\n   const mobile=width<640;\n   const sizes=Object.fromEntries([...element.querySelectorAll('[data-layout-node]')].map(node=>[node.dataset.layoutNode,{width:node.offsetWidth,height:node.offsetHeight}]));\n   const signature=JSON.stringify([mobile,sizes]);\n   if(signature===last)return;\n   last=signature;const request=++sequence.current;\n   try{\n    const {default:ELK}=await import('elkjs/lib/elk-api.js');\n    if(disposed)return;\n    engine??=new ELK({workerFactory:()=>new Worker('/assets/elk/elk-worker.min.js')});\n    const next=await engine.layout(connectionGraph(components,connections,sizes,mobile?'DOWN':'RIGHT'));\n    if(!disposed&&request===sequence.current){setLayout(next);setFailed(false);}\n   }catch{if(!disposed){setFailed(true);}}\n  }\n  const observer=new ResizeObserver(()=>{clearTimeout(timer);timer=setTimeout(measure,80);});\n  observer.observe(element);element.querySelectorAll('[data-layout-node]').forEach(node=>observer.observe(node));\n  measure();\n  return()=>{disposed=true;++sequence.current;clearTimeout(timer);observer.disconnect();engine?.terminateWorker();};\n },[components,connections]);\n const scale=layout&&availableWidth>=640?Math.min(1,availableWidth/layout.width):1;\n const positions=new Map(layout?.children?.map(node=>[node.id,node])??[]);\n const used=new Set(connections.flatMap(c=>[c.from_key,c.to_key]));\n return <div className=\"elk-scroll\" ref={root} tabIndex={0} aria-label=\"Diagrama de conexiones\" aria-busy={!layout&&!failed}>\n  <div style={layout?{width:layout.width*scale,height:layout.height*scale,marginInline:'auto',overflow:scale<1?'clip':undefined}:undefined}>\n  <div className={`elk-map${layout?' is-ready':''}${failed?' has-fallback':''}`} style={layout?{width:layout.width,height:layout.height,transform:`scale(${scale})`,transformOrigin:'top left'}:undefined}>\n   {layout&&<svg className=\"elk-wires\" width={layout.width} height={layout.height} aria-hidden=\"true\"><defs><filter id={`${lightId}-soft-light`} x=\"-30%\" y=\"-30%\" width=\"160%\" height=\"160%\" filterUnits=\"userSpaceOnUse\"><feGaussianBlur stdDeviation=\"5\"/></filter></defs>{layout.edges.map((edge,edgeIndex)=>{\n    const path=(edge.sections??[]).map(sectionPath).join(' ');\n    const maskId=`${lightId}-light-${edgeIndex}`;\n    const phase=((edgeIndex+1)*.61803398875)%1;\n    const duration=4.8+((edgeIndex*1.73)%2.7);\n    return <g key={edge.id} style={{'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>\n     <path className=\"elk-wire-base\" d={path}/>\n     <defs><mask id={maskId} maskUnits=\"userSpaceOnUse\" x=\"-12\" y=\"-12\" width={layout.width+24} height={layout.height+24}>\n      <g filter={`url(#${lightId}-soft-light)`}>\n       <path className=\"elk-wire-sweep\" d={path} pathLength=\"100\"/>\n      </g>\n     </mask></defs>\n     <g mask={`url(#${maskId})`}><path className=\"elk-wire-lit-dots\" d={path}/></g>\n    </g>;\n   })}</svg>}\n   {components.filter(c=>used.has(c.key)).map(component=>{const node=positions.get(component.key);return <div key={component.key} data-layout-node={component.key} className=\"elk-node\" style={node?{left:node.x,top:node.y}:undefined}><Endpoint component={component}/></div>;})}\n   {layout?.edges.map(edge=>{const label=edge.labels?.[0];const anchor=label&&connectionLabelAnchor(edge,label);return label&&<div className=\"elk-label\" key={edge.id} style={{left:anchor.x,top:anchor.y,width:label.width,transform:'translate(-50%, -50%)'}}><FollowingTooltip text={edge.connection.description}>\n    {trigger=><button type=\"button\" className=\"connection-route-protocol\" aria-label={`${components.find(c=>c.key===edge.sources[0])?.label} hacia ${components.find(c=>c.key===edge.targets[0])?.label}: ${label.text}`} {...trigger}>{label.text}</button>}\n   </FollowingTooltip></div>;})}\n   {failed&&connections.map((c,i)=><p key={i}>{components.find(n=>n.key===c.from_key)?.label} → {components.find(n=>n.key===c.to_key)?.label}{c.protocol?` · ${c.protocol}`:''}{c.description?`: ${c.description}`:''}</p>)}\n  </div>\n  </div>\n </div>;\n}\n",
+      "code": "import {useEffect,useRef,useState,useId} from 'react';\nimport {FollowingTooltip} from '../../FollowingTooltip';\nimport {connectionGraph,sectionPath,connectionLabelAnchor} from './connectionLayout.mjs';\n\nexport function ConnectionDiagram({components,connections,Endpoint}){\n const root=useRef(null),sequence=useRef(0);\n const lightId=useId().replaceAll(':','');\n const [availableWidth,setAvailableWidth]=useState(0);\n const [layout,setLayout]=useState(null),[failed,setFailed]=useState(false);\n useEffect(()=>{\n  const element=root.current;\n  let disposed=false,timer,engine,last='';\n  async function measure(){\n   if(!element.clientWidth)return;\n   const width=element.clientWidth-8;\n   setAvailableWidth(width);\n   const mobile=width<640;\n   const sizes=Object.fromEntries([...element.querySelectorAll('[data-layout-node]')].map(node=>[node.dataset.layoutNode,{width:node.offsetWidth,height:node.offsetHeight}]));\n   const signature=JSON.stringify([mobile,sizes]);\n   if(signature===last)return;\n   last=signature;const request=++sequence.current;\n   try{\n    const {default:ELK}=await import('elkjs/lib/elk-api.js');\n    if(disposed)return;\n    engine??=new ELK({workerFactory:()=>new Worker('/assets/elk/elk-worker.min.js')});\n    const next=await engine.layout(connectionGraph(components,connections,sizes,mobile?'DOWN':'RIGHT'));\n    if(!disposed&&request===sequence.current){setLayout(next);setFailed(false);}\n   }catch{if(!disposed){setFailed(true);}}\n  }\n  const observer=new ResizeObserver(()=>{clearTimeout(timer);timer=setTimeout(measure,80);});\n  observer.observe(element);element.querySelectorAll('[data-layout-node]').forEach(node=>observer.observe(node));\n  measure();\n  return()=>{disposed=true;++sequence.current;clearTimeout(timer);observer.disconnect();engine?.terminateWorker();};\n },[components,connections]);\n const scale=layout&&availableWidth>=640?Math.min(1,availableWidth/layout.width):1;\n const positions=new Map(layout?.children?.map(node=>[node.id,node])??[]);\n const used=new Set(connections.flatMap(c=>[c.from_key,c.to_key]));\n return <div className=\"elk-scroll\" ref={root} tabIndex={0} aria-label=\"Diagrama de conexiones\" aria-busy={!layout&&!failed}>\n  <div style={layout?{width:layout.width*scale,height:layout.height*scale,marginInline:'auto',overflow:scale<1?'clip':undefined}:undefined}>\n  <div className={`elk-map${layout?' is-ready':''}${failed?' has-fallback':''}`} style={layout?{width:layout.width,height:layout.height,transform:`scale(${scale})`,transformOrigin:'top left'}:undefined}>\n   {layout&&<svg className=\"elk-wires\" width={layout.width} height={layout.height} aria-hidden=\"true\"><defs><filter id={`${lightId}-soft-light`} x=\"-30%\" y=\"-30%\" width=\"160%\" height=\"160%\" filterUnits=\"userSpaceOnUse\"><feGaussianBlur stdDeviation=\"5\"/></filter></defs>{layout.edges.map((edge,edgeIndex)=>{\n    const path=(edge.sections??[]).map(sectionPath).join(' ');\n    const maskId=`${lightId}-light-${edgeIndex}`;\n    const revealId=`${lightId}-reveal-${edgeIndex}`;\n    const phase=((edgeIndex+1)*.61803398875)%1;\n    const duration=4.8+((edgeIndex*1.73)%2.7);\n    return <g key={edge.id} style={{'--connection-reveal-delay':`${Math.min(edgeIndex*80,400)}ms`,'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>\n     <defs><mask id={revealId} maskUnits=\"userSpaceOnUse\" x=\"-12\" y=\"-12\" width={layout.width+24} height={layout.height+24}><path className=\"elk-wire-reveal\" d={path} pathLength=\"100\"/></mask></defs>\n     <g mask={`url(#${revealId})`}>\n     <path className=\"elk-wire-base\" d={path}/>\n     <defs><mask id={maskId} maskUnits=\"userSpaceOnUse\" x=\"-12\" y=\"-12\" width={layout.width+24} height={layout.height+24}>\n      <g filter={`url(#${lightId}-soft-light)`}>\n       <path className=\"elk-wire-sweep\" d={path} pathLength=\"100\"/>\n      </g>\n     </mask></defs>\n     <g mask={`url(#${maskId})`}><path className=\"elk-wire-lit-dots\" d={path}/></g>\n     </g>\n    </g>;\n   })}</svg>}\n   {components.filter(c=>used.has(c.key)).map(component=>{const node=positions.get(component.key);return <div key={component.key} data-layout-node={component.key} className=\"elk-node\" style={node?{left:node.x,top:node.y}:undefined}><Endpoint component={component}/></div>;})}\n   {layout?.edges.map(edge=>{const label=edge.labels?.[0];const anchor=label&&connectionLabelAnchor(edge,label);return label&&<div className=\"elk-label\" key={edge.id} style={{left:anchor.x,top:anchor.y,width:label.width,transform:'translate(-50%, -50%)'}}><FollowingTooltip text={edge.connection.description}>\n    {trigger=><button type=\"button\" className=\"connection-route-protocol\" aria-label={`${components.find(c=>c.key===edge.sources[0])?.label} hacia ${components.find(c=>c.key===edge.targets[0])?.label}: ${label.text}`} {...trigger}>{label.text}</button>}\n   </FollowingTooltip></div>;})}\n   {failed&&connections.map((c,i)=><p key={i}>{components.find(n=>n.key===c.from_key)?.label} → {components.find(n=>n.key===c.to_key)?.label}{c.protocol?` · ${c.protocol}`:''}{c.description?`: ${c.description}`:''}</p>)}\n  </div>\n  </div>\n </div>;\n}\n",
       "exports": [
         "ConnectionDiagram"
       ],
@@ -588,12 +588,12 @@
           "text": "const observer=new ResizeObserver(()=>{clearTimeout(timer);timer=setTimeout(measure,80);});"
         },
         {
-          "line": 45,
+          "line": 46,
           "text": "const duration=4.8+((edgeIndex*1.73)%2.7);"
         },
         {
-          "line": 46,
-          "text": "return <g key={edge.id} style={{'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>"
+          "line": 47,
+          "text": "return <g key={edge.id} style={{'--connection-reveal-delay':`${Math.min(edgeIndex*80,400)}ms`,'--wire-delay':`${-phase*duration}s`,'--wire-duration':`${duration}s`}}>"
         }
       ]
     },
@@ -800,7 +800,7 @@
     },
     {
       "path": "src/features/catalog/ToolCard.jsx",
-      "code": "import {HealthScore} from '../../HealthScore';\nimport {toolHref} from '../../data/detailTarget.mjs';\nimport React from 'react';\nimport {toolCategoryNames} from '../../data/catalog.mjs';\nimport {CardDescription} from './CardDescription';\nimport {useCatalogData} from '../../data/CatalogProvider';\nimport {useBrandIdentity,markBrandFailed} from '../../brandIdentity';\nimport {useCardTilt} from '../../useCardTilt';\nimport {UserRound,Star,GitCommitHorizontal,Scale,ArrowRight,ArrowUpRight} from 'lucide-react';\nexport function ToolCard({ tool, onOpen }) {\n const {profiles}=useCatalogData();\n const tiltRef = useCardTilt();\n const description=profiles[tool.id]?.summary;\n const identity=useBrandIdentity(tool);\n const logo=identity.logo;\n const categoryNames=toolCategoryNames(tool);\n const extraCategories=categoryNames.slice(2);\n const detail = tool;\n const brand = identity.palette;\n const postgres = tool.name === 'PostgreSQL';\n const metrics = [\n  ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],\n  ['Último push', tool.activity, GitCommitHorizontal],\n  ['Licencia', tool.license, Scale],\n  ['Mantenimiento activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]\n ];\n return <article data-tool-id={tool.id} onClick={e=>{if(!e.target.closest('a,button,summary,details')&&!window.getSelection()?.toString())onOpen(tool.id,e.currentTarget.querySelector('.detail-link'));}} ref={tiltRef} className=\"tool-card\" aria-label={tool.name} style={{\n  '--brand-start': brand.start, '--brand-end': brand.end, '--brand-tag': brand.tag\n }}>\n  <div className=\"card-surface\">\n  <div className=\"tool-card-intro\">\n   {identity.watermark && (postgres ? <div className=\"card-watermark\" aria-hidden=\"true\"><img src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\"/></div> : <img className=\"brand-watermark\" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\" aria-hidden=\"true\"/>)}\n   <div className=\"tool-card-title\">\n    {identity.fallback ? <span className=\"brand-initials\" aria-hidden=\"true\">{identity.initials}</span> : postgres ? <div className=\"tool-logo\"><img src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/></div> : <img className={identity.wordmark ? 'brand-logo brand-wordmark' : 'brand-logo'} src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/>}\n    <div className=\"tool-name-group\"><h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>{tool.full_name&&<p className=\"tool-repo-name\" title={tool.full_name}>{tool.full_name}</p>}</div>\n   </div>\n   <div className=\"tool-tags\">\n    {categoryNames.slice(0,2).map(category=><span key={category}>{category}</span>)}\n    {extraCategories.length>0&&<span className=\"category-overflow\" aria-label={`${extraCategories.length} categorías más: ${extraCategories.join(\", \")}`} title={extraCategories.join(\", \")}>+{extraCategories.length}</span>}\n\n   </div>\n   {description&&<CardDescription description={description} tool={tool} onOpen={onOpen}/>}\n  </div>\n  <div className=\"tool-card-details\">\n   <div className=\"card-tech-summary\">\n   <HealthScore score={detail.healthScore}/>\n   <span className=\"language-tag\" title=\"Lenguaje principal del repositorio\">{tool.language}</span>\n   </div>\n   <dl className=\"tool-metrics\">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>\n    {index > 0 && <div className=\"metric-divider\" aria-hidden=\"true\"><img src=\"/assets/cards/divider.svg\" alt=\"\"/></div>}\n    <div className=\"tool-metric\"><dt><Icon size={14} strokeWidth={1.75} aria-hidden=\"true\"/><span>{label}</span></dt><dd>{value}</dd></div>\n   </React.Fragment>)}</dl>\n   <div className=\"tool-actions\">\n    <a className=\"detail-link ui-button ui-button--secondary ui-button--compact\" href={toolHref(tool)} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget);}}} aria-label={'Ver detalle de '+tool.name}>Ver detalle <ArrowRight size={14}/></a>\n    {tool.repo ? <a className=\"repository-link ui-button ui-button--text ui-button--compact\" href={'https://github.com/'+tool.repo} target=\"_blank\" rel=\"noopener noreferrer\" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio <ArrowUpRight size={16} aria-hidden=\"true\"/></a> : <button type=\"button\" className=\"example-repository repository-link ui-button ui-button--text ui-button--compact\" disabled aria-disabled=\"true\" aria-label=\"Repositorio no disponible para Default\">Repositorio <ArrowUpRight size={16} aria-hidden=\"true\"/></button>}\n   </div>\n  </div>\n  <div className=\"card-glare\" aria-hidden=\"true\"/>\n  </div>\n </article>;\n}\n",
+      "code": "import {HealthScore} from '../../HealthScore';\nimport {toolHref} from '../../data/detailTarget.mjs';\nimport React from 'react';\nimport {toolCategoryNames} from '../../data/catalog.mjs';\nimport {CardDescription} from './CardDescription';\nimport {useCatalogData} from '../../data/CatalogProvider';\nimport {useBrandIdentity,markBrandFailed} from '../../brandIdentity';\nimport {useCardTilt} from '../../useCardTilt';\nimport {UserRound,Star,GitCommitHorizontal,Scale,ArrowRight,ArrowUpRight} from 'lucide-react';\nexport function ToolCard({ tool, onOpen }) {\n const {profiles}=useCatalogData();\n const tiltRef = useCardTilt();\n const description=profiles[tool.id]?.summary;\n const identity=useBrandIdentity(tool);\n const logo=identity.logo;\n const categoryNames=toolCategoryNames(tool);\n const extraCategories=categoryNames.slice(2);\n const detail = tool;\n const brand = identity.palette;\n const postgres = tool.name === 'PostgreSQL';\n const metrics = [\n  ['Estrellas', tool.stars.toLocaleString('es-CL'), Star],\n  ['Último push', tool.activity, GitCommitHorizontal],\n  ['Licencia', tool.license, Scale],\n  ['Mantenimiento activo', tool.maintained === true ? 'Sí' : tool.maintained === false ? 'No' : 'Por confirmar', UserRound]\n ];\n return <article data-tool-id={tool.id} onClick={e=>{if(!e.target.closest('a,button,summary,details')&&!window.getSelection()?.toString())onOpen(tool.id,e.currentTarget.querySelector('.detail-link'));}} ref={tiltRef} className=\"tool-card\" aria-label={tool.name} style={{\n  '--brand-start': brand.start, '--brand-end': brand.end, '--brand-tag': brand.tag\n }}>\n  <div className=\"card-surface\">\n  <div className=\"tool-card-intro\">\n   {identity.watermark && (postgres ? <div className=\"card-watermark\" aria-hidden=\"true\"><img src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\"/></div> : <img className=\"brand-watermark\" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt=\"\" aria-hidden=\"true\"/>)}\n   <div className=\"tool-card-title\">\n    {identity.fallback ? <span className=\"brand-initials\" aria-hidden=\"true\">{identity.initials}</span> : postgres ? <div className=\"tool-logo\"><img src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/></div> : <img className={identity.wordmark ? 'brand-logo brand-wordmark' : 'brand-logo'} src={logo} onError={()=>markBrandFailed(logo)} alt=\"\"/>}\n    <div className=\"tool-name-group\"><h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>{tool.full_name&&<p className=\"tool-repo-name\" title={tool.full_name}>{tool.full_name}</p>}</div>\n   </div>\n   <div className=\"tool-tags\">\n    {categoryNames.slice(0,2).map(category=><span key={category}>{category}</span>)}\n    {extraCategories.length>0&&<span className=\"category-overflow\" aria-label={`${extraCategories.length} categorías más: ${extraCategories.join(\", \")}`} title={extraCategories.join(\", \")}>+{extraCategories.length}</span>}\n\n   </div>\n   {description&&<CardDescription description={description} tool={tool} onOpen={onOpen}/>}\n  </div>\n  <div className=\"tool-card-details\">\n   <div className=\"card-tech-summary\">\n   <HealthScore score={detail.healthScore} demo={tool.isDemo}/>\n   <span className=\"language-tag\" title=\"Lenguaje principal del repositorio\">{tool.language}</span>\n   </div>\n   <dl className=\"tool-metrics\">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>\n    {index > 0 && <div className=\"metric-divider\" aria-hidden=\"true\"><img src=\"/assets/cards/divider.svg\" alt=\"\"/></div>}\n    <div className=\"tool-metric\"><dt><Icon size={14} strokeWidth={1.75} aria-hidden=\"true\"/><span>{label}</span></dt><dd>{value}</dd></div>\n   </React.Fragment>)}</dl>\n   <div className=\"tool-actions\">\n    <a className=\"detail-link ui-button ui-button--secondary ui-button--compact\" href={toolHref(tool)} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget);}}} aria-label={'Ver detalle de '+tool.name}>Ver detalle <ArrowRight size={14}/></a>\n    {tool.repo ? <a className=\"repository-link ui-button ui-button--text ui-button--compact\" href={'https://github.com/'+tool.repo} target=\"_blank\" rel=\"noopener noreferrer\" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio <ArrowUpRight size={16} aria-hidden=\"true\"/></a> : <button type=\"button\" className=\"example-repository repository-link ui-button ui-button--text ui-button--compact\" disabled aria-disabled=\"true\" aria-label=\"Repositorio no disponible para Default\">Repositorio <ArrowUpRight size={16} aria-hidden=\"true\"/></button>}\n   </div>\n  </div>\n  <div className=\"card-glare\" aria-hidden=\"true\"/>\n  </div>\n </article>;\n}\n",
       "exports": [
         "ToolCard"
       ],
@@ -883,22 +883,22 @@
     },
     {
       "path": "src/mocks/assistant-scenarios.mjs",
-      "code": "import {AssistantError} from '../data/assistant.mjs';\n// Explicit local QA scenarios; never modify the published catalog to simulate bad data.\nexport function assistantScenarioOptions(scenario,catalog){\n const options={scenario:scenario==='six_tools'?'ok':scenario,delay:scenario==='six_tools'?1200:10000,slowMs:60000};\n const previewCodes=['invalid_query','invalid_response','provider_unavailable','connection_error','unavailable_tool','unverified_license','technical_error'];\n if(scenario.startsWith('error_')&&previewCodes.includes(scenario.slice(6)))return {provider:{async ask(){throw new AssistantError(scenario.slice(6),'');}}};\n if(scenario==='slow')options.delay=15000;\n if(scenario==='timeout')Object.assign(options,{delay:30000,slowMs:60000,timeoutMs:6000});\n if(scenario==='archived_tool')options.catalog=catalog.map(tool=>tool.full_name==='keycloak/keycloak'?{...tool,archived:true}:tool);\n if(scenario==='provider_unavailable')options.provider={async ask(){throw new AssistantError('provider_unavailable','El asistente no está disponible ahora. Tu descripción se conserva; puedes reintentar.');}};\n if(scenario==='unverified_license')options.catalog=catalog.map(tool=>tool.full_name==='keycloak/keycloak'?{...tool,license_spdx_id:'NOASSERTION'}:tool);\n return options;\n}\n",
+      "code": "import {assistantRequestTiming} from '../data/assistantRequest.mjs';\nimport {AssistantError} from '../data/assistant.mjs';\n// Explicit local QA scenarios; never modify the published catalog to simulate bad data.\nexport function assistantScenarioOptions(scenario,catalog){\n const options={scenario:scenario==='six_tools'?'ok':scenario,delay:scenario==='six_tools'?1200:10000,slowMs:assistantRequestTiming.slowMs};\n const previewCodes=['invalid_query','invalid_response','provider_unavailable','connection_error','unavailable_tool','unverified_license','technical_error'];\n if(scenario.startsWith('error_')&&previewCodes.includes(scenario.slice(6)))return {provider:{async ask(){throw new AssistantError(scenario.slice(6),'');}}};\n if(scenario==='slow')options.delay=18000;\n if(scenario==='timeout')Object.assign(options,{delay:30000,slowMs:assistantRequestTiming.slowMs,timeoutMs:6000});\n if(scenario==='archived_tool')options.catalog=catalog.map(tool=>tool.full_name==='keycloak/keycloak'?{...tool,archived:true}:tool);\n if(scenario==='provider_unavailable')options.provider={async ask(){throw new AssistantError('provider_unavailable','El asistente no está disponible ahora. Tu descripción se conserva; puedes reintentar.');}};\n if(scenario==='unverified_license')options.catalog=catalog.map(tool=>tool.full_name==='keycloak/keycloak'?{...tool,license_spdx_id:'NOASSERTION'}:tool);\n return options;\n}\n",
       "exports": [
         "assistantScenarioOptions"
       ],
       "motion": [
         {
-          "line": 4,
-          "text": "const options={scenario:scenario==='six_tools'?'ok':scenario,delay:scenario==='six_tools'?1200:10000,slowMs:60000};"
-        },
-        {
-          "line": 7,
-          "text": "if(scenario==='slow')options.delay=15000;"
+          "line": 5,
+          "text": "const options={scenario:scenario==='six_tools'?'ok':scenario,delay:scenario==='six_tools'?1200:10000,slowMs:assistantRequestTiming.slowMs};"
         },
         {
           "line": 8,
-          "text": "if(scenario==='timeout')Object.assign(options,{delay:30000,slowMs:60000,timeoutMs:6000});"
+          "text": "if(scenario==='slow')options.delay=18000;"
+        },
+        {
+          "line": 9,
+          "text": "if(scenario==='timeout')Object.assign(options,{delay:30000,slowMs:assistantRequestTiming.slowMs,timeoutMs:6000});"
         }
       ]
     },
@@ -910,6 +910,12 @@
     },
     {
       "path": "src/mocks/catalog-default.fixture.json",
+      "code": null,
+      "exports": [],
+      "motion": []
+    },
+    {
+      "path": "src/mocks/catalog-demo-metrics.json",
       "code": null,
       "exports": [],
       "motion": []
@@ -4597,6 +4603,94 @@
       "context": "",
       "source": "src/connections.css",
       "line": 125
+    },
+    {
+      "property": "fill",
+      "value": "none",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke",
+      "value": "white",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke-width",
+      "value": "12",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke-linecap",
+      "value": "round",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke-linejoin",
+      "value": "round",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke-dasharray",
+      "value": "100 100",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "animation",
+      "value": "connection-route-reveal 520ms cubic-bezier(.22,1,.36,1) var(--connection-reveal-delay,0ms) both",
+      "selector": ".elk-wire-reveal",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 128
+    },
+    {
+      "property": "stroke-dashoffset",
+      "value": "100",
+      "selector": "from",
+      "context": "@keyframes connection-route-reveal",
+      "source": "src/connections.css",
+      "line": 129
+    },
+    {
+      "property": "stroke-dashoffset",
+      "value": "0",
+      "selector": "to",
+      "context": "@keyframes connection-route-reveal",
+      "source": "src/connections.css",
+      "line": 129
+    },
+    {
+      "property": "animation",
+      "value": "none",
+      "selector": ".elk-wire-reveal",
+      "context": "@media (prefers-reduced-motion:reduce)",
+      "source": "src/connections.css",
+      "line": 130
+    },
+    {
+      "property": "stroke-dashoffset",
+      "value": "0",
+      "selector": ".elk-wire-reveal",
+      "context": "@media (prefers-reduced-motion:reduce)",
+      "source": "src/connections.css",
+      "line": 130
     },
     {
       "property": "--control-focus",
@@ -40869,6 +40963,126 @@
       "context": "@media (max-width:760px)",
       "source": "src/styles.css",
       "line": 1748
+    },
+    {
+      "property": "display",
+      "value": "flex",
+      "selector": ".nav-actions",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1750
+    },
+    {
+      "property": "align-items",
+      "value": "center",
+      "selector": ".nav-actions",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1750
+    },
+    {
+      "property": "gap",
+      "value": "var(--space-component-12)",
+      "selector": ".nav-actions",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1750
+    },
+    {
+      "property": "margin-left",
+      "value": "auto",
+      "selector": ".nav-actions",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1750
+    },
+    {
+      "property": "color",
+      "value": "var(--neutral-1000)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "background",
+      "value": "var(--neutral-300)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "border-radius",
+      "value": "var(--radius-999)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "padding",
+      "value": "var(--space-component-4) var(--space-component-8)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "font-size",
+      "value": "var(--type-size-12)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "line-height",
+      "value": "var(--type-leading-1-4)",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "text-align",
+      "value": "center",
+      "selector": ".demo-indicator",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1751
+    },
+    {
+      "property": "display",
+      "value": "none",
+      "selector": ".demo-label-mobile",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1752
+    },
+    {
+      "property": "gap",
+      "value": "var(--space-component-8)",
+      "selector": ".nav-actions",
+      "context": "@media (max-width:520px)",
+      "source": "src/styles.css",
+      "line": 1753
+    },
+    {
+      "property": "display",
+      "value": "none",
+      "selector": ".demo-label-full",
+      "context": "@media (max-width:520px)",
+      "source": "src/styles.css",
+      "line": 1753
+    },
+    {
+      "property": "display",
+      "value": "inline",
+      "selector": ".demo-label-mobile",
+      "context": "@media (max-width:520px)",
+      "source": "src/styles.css",
+      "line": 1753
     },
     {
       "property": "--neutral-000",

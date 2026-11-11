@@ -1,3 +1,4 @@
+import {mockMode} from './data/mockMode.mjs';
 import {flushSync} from 'react-dom';
 import {useSessionAccent} from './useSessionAccent';
 import {ArrowUp} from 'lucide-react';
@@ -53,7 +54,7 @@ export function App({useFlow=useAssistantFlow}){
   });
  }
 
- return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><SectionNavigation paused={isDetail} workspace={workspace}/></div></header>
+ return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><div className="nav-actions">{mockMode()&&<span className="demo-indicator" aria-label="Demo con datos de prueba" title="Esta versión utiliza datos y respuestas de ejemplo."><span className="demo-label-full" aria-hidden="true">Demo con datos de prueba</span><span className="demo-label-mobile" aria-hidden="true">Demo</span></span>}<SectionNavigation paused={isDetail} workspace={workspace}/></div></div></header>
  <main inert={isDetail?true:undefined} aria-hidden={isDetail} id="landing-view" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className="assistant-surface" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>
  <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className="catalog-surface"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type="button" className="ui-button ui-button--primary catalog-access" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden="true"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;
 }

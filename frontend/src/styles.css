@@ -1746,3 +1746,8 @@ html[data-architecture-reset] .prompt-input-wrap,html[data-architecture-reset] .
 .catalog-design-banner{position:relative;isolation:isolate}
 .catalog-design-banner::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,transparent,var(--button-brand));opacity:.25;pointer-events:none;z-index:-1}
 @media(max-width:760px){.catalog-design-banner::before{background:linear-gradient(180deg,transparent,var(--button-brand))}}
+
+.nav-actions{display:flex;align-items:center;gap:var(--space-component-12);margin-left:auto}
+.demo-indicator{color:var(--neutral-1000);background:var(--neutral-300);border-radius:var(--radius-999);padding:var(--space-component-4) var(--space-component-8);font-size:var(--type-size-12);line-height:var(--type-leading-1-4);text-align:center}
+.demo-label-mobile{display:none}
+@media(max-width:520px){.nav-actions{gap:var(--space-component-8)}.demo-label-full{display:none}.demo-label-mobile{display:inline}}
