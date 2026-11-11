@@ -1,6 +1,6 @@
 :root{color:var(--neutral-1000);font-synthesis:none;--muted:var(--neutral-700);--border:var(--neutral-300);--accent:var(--neutral-1000);color-scheme:dark;background:var(--neutral-100);font-family:DM Sans Variable,system-ui,sans-serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
+html{scroll-behavior:auto;scroll-padding-top:80px}
 body{margin:0;font-weight:var(--type-weight-300)}
 button,input,select,textarea{font:inherit}
 a,button,input,select,textarea{-webkit-tap-highlight-color:transparent}
