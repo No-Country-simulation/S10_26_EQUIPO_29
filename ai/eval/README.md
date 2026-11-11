@@ -93,12 +93,12 @@ esa decisión no se recalcula con estas etiquetas. La prueba final conserva las 
 | Búsqueda `catalog-validation` | Asistente de IA, después de leer los resúmenes del catálogo (7-nov) | texto de los repos (7-nov) | desarrollo |
 | Búsqueda `sample` | A mano, para 20 repos de ejemplo (26-oct) | modelo de embeddings (26-oct) | repetir esa elección |
 | Asistente `base` | Pedidos redactados con ayuda de IA y revisados (31-oct); `una-factura-electronica` conociendo el catálogo de 127 (8-nov) | prompts y modelo de lenguaje (3-nov) | desarrollo |
-| Asistente `validation` | Asistente de IA con el catálogo leído, antes de cambiar el prompt (3 y 4-nov) | tres decisiones (4, 6 y 7-nov) | desarrollo |
+| Asistente `validation` | Asistente de IA con el catálogo leído, antes de cambiar el prompt (3 y 4-nov) | tres decisiones (4, 6 y 7-nov); regresión de los títulos (11-nov) | desarrollo |
 | Asistente `holdout` | Asistente de IA, después de leer el catálogo (7-nov) | abstención (7-nov) | desarrollo |
-| Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
-| Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
+| Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | títulos del asistente (11-nov) | desarrollo |
+| Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | regresión de los pedidos parecidos en entender y de los títulos (11-nov) | desarrollo |
 | Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
-| Asistente `detection-2` | Otro modelo de lenguaje (Grok 4.5) sin ver el catálogo ni el banco de ejemplos (11-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después con `LABEL_CRITERIA.md` | ninguna | desarrollo |
+| Asistente `detection-2` | Otro modelo de lenguaje (Grok 4.5) sin ver el catálogo ni el banco de ejemplos (11-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después con `LABEL_CRITERIA.md` | pedidos parecidos en entender (11-nov); títulos del asistente (11-nov) | desarrollo |
 | Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
 | Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
 
