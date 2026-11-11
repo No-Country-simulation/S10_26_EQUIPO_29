@@ -48,12 +48,12 @@
     },
     "getlago/lago": {
       "logo": "/assets/brands/lago.svg",
-      "wordmark": true,
       "palette": {
         "start": "#152a21",
         "end": "#245d40",
         "tag": "#2b684b"
-      }
+      },
+      "displayName": "Lago"
     },
     "qdrant/qdrant": {
       "logo": "/assets/brands/qdrant.svg",
