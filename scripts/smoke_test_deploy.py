@@ -138,6 +138,14 @@ def verify_ai(ai_url: str, frontend_origin: str) -> None:
     print("[ai] OK (Supabase, LLM, CORS y contrato /assistant verificados)")
 
 
+def _chunk_paths(js: str) -> set[str]:
+    """Rutas `static/chunks/*.js` que un JS menciona, incluidas las del mapa de webpack."""
+    paths = set(re.findall(r"static/chunks/[\w.-]+\.js", js))
+    for ids in re.findall(r'"static/chunks/"\+\w+\+"-"\+\(\{([^}]*)\}\)', js):
+        paths.update(f"static/chunks/{cid}-{digest}.js" for cid, digest in re.findall(r'(\d+):"([0-9a-f]+)"', ids))
+    return paths
+
+
 def verify_frontend(frontend_url: str, backend_origin: str, ai_origin: str) -> None:
     print(f"[frontend] Verificando {frontend_url}")
     _, _, raw_html = _wait_ready(f"{frontend_url}/")
@@ -147,11 +155,21 @@ def verify_frontend(frontend_url: str, backend_origin: str, ai_origin: str) -> N
     scripts = sorted(set(re.findall(r'(?:src|href)="(/\_next/static/[^"?]+\.js)"', html)))
     assert scripts, "No se encontraron chunks JS de Next.js en index.html"
 
+    # Las URLs de las APIs pueden estar en chunks que webpack carga bajo demanda:
+    # se siguen también los que menciona cada JS, no solo los de index.html.
     bundle_parts: list[str] = [html]
-    for asset in scripts:
+    seen: set[str] = set()
+    pending = list(scripts)
+    while pending:
+        asset = pending.pop()
+        if asset in seen:
+            continue
+        seen.add(asset)
         status, _, raw_js = _request(f"{frontend_url}{asset}")
         assert status == 200, f"Asset {asset} devolvió {status}"
-        bundle_parts.append(raw_js.decode("utf-8", errors="replace"))
+        js = raw_js.decode("utf-8", errors="replace")
+        bundle_parts.append(js)
+        pending.extend(f"/_next/{path}" for path in _chunk_paths(js) if f"/_next/{path}" not in seen)
     bundle = "\n".join(bundle_parts)
 
     backend_host = urllib.parse.urlsplit(backend_origin).netloc
