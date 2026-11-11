@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from ai import assistant, llm
+from ai import assistant, examples, guardrails, llm
 from ai.catalog import load_categories
 from ai.llm import Generation, LLMInvalidResponse
 
@@ -132,3 +132,34 @@ def test_entender_entrega_las_preguntas_decodificadas(monkeypatch):
 
     assert result.data.clarification_questions == ["¿Qué vendes?"]
     assert result.attempts == 1                      # decodificar no es un error: sin reintento
+
+
+# --- Ejemplos parecidos del banco ---
+
+def test_entender_muestra_los_ejemplos_antes_del_pedido(monkeypatch):
+    ejemplo = examples.Example(
+        id="panaderia", query="Tengo una panadería y quiero saber qué encargó cada cliente.",
+        needs=[examples.ExampleNeed(category="database", evidence="saber qué encargó cada cliente")])
+    pedidos = []
+    monkeypatch.setattr(examples, "similar",
+                        lambda request, k: pedidos.append((request, k)) or [ejemplo])
+    generar, calls = fake_generar([understanding(["payments"])])
+    monkeypatch.setattr(llm, "generar", generar)
+
+    assistant.entender("Necesito cobrar suscripciones mensuales a mis clientes.")
+
+    user = calls[0][1]["content"]
+    assert pedidos == [("Necesito cobrar suscripciones mensuales a mis clientes.",
+                        assistant.EXAMPLES_SHOWN)]
+    assert user.index("Tengo una panadería") < user.index("<pedido>")
+    assert '- database: "saber qué encargó cada cliente"' in user
+
+
+def test_sin_ejemplos_el_mensaje_es_solo_el_pedido(monkeypatch):
+    generar, calls = fake_generar([understanding(["payments"])])
+    monkeypatch.setattr(llm, "generar", generar)
+    pedido = "Necesito cobrar suscripciones mensuales a mis clientes."
+
+    assistant.entender(pedido)
+
+    assert calls[0][1]["content"] == guardrails.as_data("pedido", pedido)
