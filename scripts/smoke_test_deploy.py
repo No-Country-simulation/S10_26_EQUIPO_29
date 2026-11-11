@@ -86,7 +86,12 @@ def verify_backend(backend_url: str, frontend_origin: str) -> None:
     assert opt_headers.get("access-control-allow-origin") == frontend_origin, (
         f"CORS backend no permite {frontend_origin}: {opt_headers.get('access-control-allow-origin')!r}"
     )
-    exposed = opt_headers.get("access-control-expose-headers", "").lower()
+    # Access-Control-Expose-Headers viaja en la respuesta real, no en el preflight.
+    _, cors_headers, _ = _request(
+        f"{backend_url}/repos?page=1&page_size=1",
+        headers={"Origin": frontend_origin},
+    )
+    exposed = cors_headers.get("access-control-expose-headers", "").lower()
     assert "x-total-count" in exposed, f"Cabeceras de paginación no expuestas en CORS: {exposed!r}"
     print("[backend] OK (Supabase, paginación y CORS verificados)")
 
