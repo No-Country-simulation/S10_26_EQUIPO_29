@@ -5,8 +5,9 @@ y parecidos al del usuario, ¿detecta más las necesidades que el usuario pide c
 palabras de negocio ("registrar", "llevar un historial", "controlar"), sin agregar
 necesidades que nadie pidió?
 
-**Estado:** línea base medida (11-nov). Faltan la variante, la regla de decisión
-(escrita antes de medir) y la medición con casos nuevos.
+**Estado:** línea base medida y banco de ejemplos listo (11-nov). Faltan la variante en
+el paso de entender, la regla de decisión (escrita antes de medir) y la medición con
+casos nuevos.
 
 ## Por qué
 
@@ -74,14 +75,46 @@ Reportes: `results/understand-2026-11-10-0234-detection-gemini-etiquetas-v1.md`,
 `…-0250-abstention-…-etiquetas-v2.md` y `results/understand-2026-11-11-0211-gemini.md`
 (`base`).
 
+## Banco de ejemplos (11-nov)
+
+`ai/data/understand_examples.json`, 45 pedidos.
+
+- **Quién los escribió:** otro modelo de lenguaje (GPT-6), en un chat nuevo, sin ver el
+  catálogo ni los conjuntos de evaluación. El mensaje pidió variedad: pedidos que guardan
+  datos del negocio dichos sin "base de datos", pedidos con "organizar", "llevar" o
+  "controlar" en otro sentido, y pedidos con permisos por cargo o sede, aprobaciones y
+  carga rápida lejos.
+- **Filtro con reglas fijadas antes de leer:** 60 → 54 (6 repetían una categoría).
+- **Etiquetas:** con el criterio, borrador de un asistente de IA revisado por una persona.
+  Cambiaron 25 de las 54 del otro modelo, sobre todo "organizar horarios, rutas o
+  cuadrillas", que es la app y no automatización. Un pedido quedó sin necesidades y no
+  entra (un ejemplo sin necesidades enseñaría a pedir aclaración).
+- **Separación de la evaluación:** se compara cada pedido del banco con los de todos los
+  conjuntos, la prueba final incluida. Texto igual: ninguno. Parecido con EmbeddingGemma
+  (instrucción para comparar oraciones): el umbral es el menor parecido entre los tres
+  pares de `base` que son el mismo pedido escrito corto y largo (0,882 · 0,816 · 0,827 →
+  **0,81**). Salieron 8 pedidos del banco, sin editar los demás. Lo comprueban los tests
+  de `ai/tests/test_examples.py` (el de parecido, con `AI_MODEL_TESTS=1`).
+- **Resultado:** 45 pedidos, 16 con base de datos (36 %).
+- **Límite:** el parecido mide sobre todo el tipo de negocio. Entre los propios conjuntos
+  de evaluación hay pares por encima de 0,81 (máximo 0,866) que son pedidos distintos de
+  negocios parecidos. El umbral es conservador: saca del banco pedidos del mismo rubro,
+  no solo copias.
+
+## Cómo se usan (fijado antes de medir)
+
+Para cada pedido, los 3 más parecidos del banco van en el mensaje de entender, antes del
+pedido, como "pedidos parecidos ya resueltos": el texto y cada necesidad con su categoría
+y la frase que la justifica. Siempre 3, sin parecido mínimo. Los vectores del banco se
+calculan la primera vez que se piden ejemplos.
+
 ## Próximos pasos
 
-1. **Variante:** un banco de pedidos etiquetados con el criterio, que nunca comparte
-   pedidos con los conjuntos de evaluación (comprobado en código). Para cada pedido, los
-   más parecidos del banco se dan a entender como ejemplos.
+1. **Variante:** los ejemplos en el paso de entender, en un commit aparte del banco.
 2. **Regla de decisión,** escrita aquí antes de medir la variante: cuánto tiene que subir
    la detección, cuánto margen de necesidades de más se acepta por conjunto, y sin
    regresión en la elección ni en la abstención del asistente completo.
-3. **Casos nuevos,** escritos sin ver el catálogo, con pedidos de "llevar", "controlar",
-   "organizar" y las necesidades poco detectadas de arriba. Los conjuntos de esta página
-   solo sirven para comprobar que no hay regresión.
+3. **Casos nuevos,** escritos sin ver el catálogo ni el banco, con pedidos de "llevar",
+   "controlar", "organizar" y las necesidades poco detectadas de arriba. Los que tengan un
+   pedido del banco en el umbral de separación o por encima se descartan antes de correr.
+   Los conjuntos de esta página solo sirven para comprobar que no hay regresión.
