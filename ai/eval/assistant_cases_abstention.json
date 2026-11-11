@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "catalog_taken_at": "2026-11-10T09:20:33+00:00",
   "cases": [
     {
@@ -93,6 +93,15 @@
       "query": "Una constructora quiere que las solicitudes de compra sigan un flujo de aprobación: el residente de obra la pide, el ingeniero la aprueba y compras la registra; y avisar por correo a cada persona cuando tenga una solicitud pendiente.",
       "expected_status": "ok",
       "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"compras la registra\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
         {
           "category": "automation",
           "acceptable": [],

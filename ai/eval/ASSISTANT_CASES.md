@@ -29,10 +29,11 @@ Dos capas:
 
 ## Reglas para escribirlos
 
-- **Necesidad esperada** = la que el pedido dice, con esas u otras palabras.
-  Lo que tiene cualquier software (pantallas, servidor) es la caja "tu app".
-  Lo deseable pero no pedido puede ir en `assumptions` y no se evalúa como
-  necesidad. Si el asistente detecta necesidades de más, no resta.
+- **Necesidad esperada** = la que el pedido dice, con esas u otras palabras,
+  según [`LABEL_CRITERIA.md`](LABEL_CRITERIA.md). Lo que tiene cualquier software
+  (pantallas, servidor) es la caja "tu app". Lo deseable pero no pedido puede ir en
+  `assumptions` y no se evalúa como necesidad. Si el asistente detecta necesidades de
+  más, no resta.
 - **Repo aceptable** = su descripción, topics o README muestran esa necesidad
   como propósito principal. De 0 a 5 por necesidad (los candidatos que ve el
   modelo), con la evidencia en `note`.
@@ -82,7 +83,7 @@ parece a lo pedido. Los 5 siguientes prueban las limitaciones: necesidades sin h
 (que deben aparecer una sola vez) y tecnologías que el usuario nombra y no están entre los
 candidatos (el asistente no puede afirmar qué hay en el catálogo completo).
 
-Con el catálogo de 127 repos (versión 3), todas sus necesidades tienen herramienta:
+Con el catálogo de 127 repos (versión 4), todas sus necesidades tienen herramienta:
 ya no miden la abstención.
 
 ```bash
@@ -98,7 +99,7 @@ una vez. Sus textos no se leen para ajustar; si se usan para afinar, hacen falta
 otros. No comparten ids ni pedidos con los otros archivos (lo comprueba un test).
 
 Se escribieron para probar la abstención: con el catálogo de 100 repos tenían 12
-necesidades sin herramienta. Con el de 127 quedan 7 sin herramienta y 14 con
+necesidades sin herramienta. Con el de 127 quedan 7 sin herramienta y 16 con
 herramienta (para comprobar que el asistente no deja de recomendar lo que sí sirve).
 
 ```bash
@@ -237,6 +238,19 @@ propósito. Entonces:
 3. Actualizar `catalog_taken_at`, subir `version` y recalcular `expected_status`.
 
 Las necesidades esperadas (capa 1) no cambian con el catálogo.
+
+## Volver a puntuar sin llamar al modelo
+
+Si cambian las etiquetas de un conjunto (no sus pedidos), las respuestas guardadas en el
+JSON de un reporte de entender se puntúan de nuevo con las etiquetas actuales:
+
+```bash
+python -m ai.eval.run_understand_eval --cases detection --rescore ai/eval/results/<reporte>.json
+```
+
+Escribe `<reporte>-etiquetas-v<versión>.md` junto al original. Solo vale si el código del
+paso de entender no cambió desde esa corrida (`ai/assistant.py`, `ai/llm.py`,
+`ai/guardrails.py`, `shared/contracts/categories.json`).
 
 ## Cómo validarlos
 
