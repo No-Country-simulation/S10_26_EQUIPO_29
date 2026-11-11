@@ -291,7 +291,7 @@ Durante el trabajo del asistente el catálogo sale del recorrido visible sin per
 Hooks y módulos relevantes:
 
 - `usePromptLayout` y `useResultReset`: movimiento y tamaño del prompt entre inicio, carga y resultado.
-- `useSmoothPageScroll`: suavizado del desplazamiento general.
+- Desplazamiento general nativo del navegador, sin interpolación ni retardo añadido a la rueda o al trackpad.
 - `useAnimatedCatalog` y `useCatalogBounce`: entradas y elasticidad del catálogo.
 - `PageReveal`: entrada escalonada de elementos.
 - `useDetailReveal`, `coverTransition` y módulos de scroll de modal: transiciones de ficha.

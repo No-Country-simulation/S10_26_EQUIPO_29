@@ -2,7 +2,6 @@ import {mockMode} from './data/mockMode.mjs';
 import {flushSync} from 'react-dom';
 import {useSessionAccent} from './useSessionAccent';
 import {ArrowUp} from 'lucide-react';
-import {useSmoothPageScroll} from './useSmoothPageScroll';
 import {useWorkspaceView} from './useWorkspaceView';
 import {reloadHome} from './reloadHome.mjs';
 import {SectionNavigation} from './SectionNavigation';
@@ -22,7 +21,6 @@ export function App({useFlow=useAssistantFlow}){
  const flow=useFlow(isDetail);
  const {expanded,phase}=flow;
  const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
- useSmoothPageScroll(isDetail);
  const resetting=useRef(false);
  async function resetArchitecture(){
   if(resetting.current)return;
