@@ -2,20 +2,11 @@
   "sources": [
     {
       "path": "src/App.jsx",
-      "code": "import {mockMode} from './data/mockMode.mjs';\nimport {flushSync} from 'react-dom';\nimport {useSessionAccent} from './useSessionAccent';\nimport {ArrowUp} from 'lucide-react';\nimport {useSmoothPageScroll} from './useSmoothPageScroll';\nimport {useWorkspaceView} from './useWorkspaceView';\nimport {reloadHome} from './reloadHome.mjs';\nimport {SectionNavigation} from './SectionNavigation';\nimport {Assistant} from './features/assistant/Assistant';\nimport {useAssistantFlow} from './features/assistant/useAssistantFlow';\nimport {Catalog} from './features/catalog/Catalog';\nimport {ToolModal} from './ToolModal';\nimport {useToolNavigation} from './useToolNavigation';\nimport {ElasticScrollbar} from './ElasticScrollbar';\nimport React, {useRef, useCallback} from 'react';\nexport function App({useFlow=useAssistantFlow}){\n useSessionAccent();\n const navigation=useToolNavigation();\n const openRef=useRef(navigation.open);openRef.current=navigation.open;\n const openTool=useCallback((...args)=>openRef.current(...args),[]);\n const isDetail=navigation.id!==null;\n const flow=useFlow(isDetail);\n const {expanded,phase}=flow;\n const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);\n useSmoothPageScroll(isDetail);\n const resetting=useRef(false);\n async function resetArchitecture(){\n  if(resetting.current)return;\n  const reset=()=>{flow.newArchitecture();workspace.reset();};\n  const focus=()=>flow.input.current?.focus({preventScroll:true});\n  const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};\n  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}\n  resetting.current=true;\n  const form=flow.input.current?.closest('form');\n  const action=form?.parentElement.querySelector('.composer-new-architecture');\n  let centerMotion,buttonMotion;\n  if(form&&action){\n   const bounds=form.getBoundingClientRect();\n   const width=Math.min(756,document.documentElement.clientWidth-(innerWidth<=640?24:48));\n   const left=(document.documentElement.clientWidth-width)/2;\n   centerMotion=form.animate([\n    {translate:'0px 0px',width:`${bounds.width}px`,marginRight:'0px',flex:'none'},\n    {translate:`${left-bounds.left}px 0px`,width:`${width}px`,marginRight:`${bounds.width-width}px`,flex:'none'}\n   ],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});\n   buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});\n   await centerMotion.finished.catch(()=>{});\n  }\n  document.documentElement.dataset.architectureReset='true';\n  const transition=document.startViewTransition(()=>{centerMotion?.cancel();buttonMotion?.cancel();commit();});\n  transition.finished.catch(()=>{}).finally(()=>{\n   delete document.documentElement.dataset.architectureReset;\n   resetting.current=false;\n   focus();\n  });\n }\n\n return <><a href=\"#asistente\" className=\"skip\" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className=\"nav wrap\"><a className=\"brand\" href=\"/\" onClick={reloadHome}><img className=\"openbridge-logo\" src=\"/assets/brands/openbridge.svg\" alt=\"OpenBridge\"/></a><div className=\"nav-actions\">{mockMode()&&<span className=\"demo-indicator\" aria-label=\"Demo con datos de prueba\" title=\"Esta versión utiliza datos y respuestas de ejemplo.\"><span className=\"demo-label-full\" aria-hidden=\"true\">Demo con datos de prueba</span><span className=\"demo-label-mobile\" aria-hidden=\"true\">Demo</span></span>}<SectionNavigation paused={isDetail} workspace={workspace}/></div></div></header>\n <main inert={isDetail?true:undefined} aria-hidden={isDetail} id=\"landing-view\" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className=\"assistant-surface\" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>\n <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className=\"catalog-surface\"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type=\"button\" className=\"ui-button ui-button--primary catalog-access\" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden=\"true\"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;\n}\n",
+      "code": "import {mockMode} from './data/mockMode.mjs';\nimport {flushSync} from 'react-dom';\nimport {useSessionAccent} from './useSessionAccent';\nimport {ArrowUp} from 'lucide-react';\nimport {useSmoothPageScroll} from './useSmoothPageScroll';\nimport {useWorkspaceView} from './useWorkspaceView';\nimport {reloadHome} from './reloadHome.mjs';\nimport {SectionNavigation} from './SectionNavigation';\nimport {Assistant} from './features/assistant/Assistant';\nimport {useAssistantFlow} from './features/assistant/useAssistantFlow';\nimport {Catalog} from './features/catalog/Catalog';\nimport {ToolModal} from './ToolModal';\nimport {useToolNavigation} from './useToolNavigation';\nimport {ElasticScrollbar} from './ElasticScrollbar';\nimport React, {useRef, useCallback} from 'react';\nexport function App({useFlow=useAssistantFlow}){\n useSessionAccent();\n const navigation=useToolNavigation();\n const openRef=useRef(navigation.open);openRef.current=navigation.open;\n const openTool=useCallback((...args)=>openRef.current(...args),[]);\n const isDetail=navigation.id!==null;\n const flow=useFlow(isDetail);\n const {expanded,phase}=flow;\n const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);\n useSmoothPageScroll(isDetail);\n const resetting=useRef(false);\n async function resetArchitecture(){\n  if(resetting.current)return;\n  const reset=()=>{flow.newArchitecture();workspace.reset();};\n  const focus=()=>flow.input.current?.focus({preventScroll:true});\n  const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};\n  if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}\n  resetting.current=true;\n  document.documentElement.dataset.architectureReset='leaving';\n  // Separate snapshots exit and enter in place, without interpolating the dock position.\n  const transition=document.startViewTransition(()=>{\n   document.documentElement.dataset.architectureReset='entering';\n   commit();\n  });\n  transition.finished.catch(()=>{}).finally(()=>{\n   delete document.documentElement.dataset.architectureReset;\n   resetting.current=false;\n   focus();\n  });\n }\n\n return <><a href=\"#asistente\" className=\"skip\" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className=\"nav wrap\"><a className=\"brand\" href=\"/\" onClick={reloadHome}><img className=\"openbridge-logo\" src=\"/assets/brands/openbridge.svg\" alt=\"OpenBridge\"/></a><div className=\"nav-actions\">{mockMode()&&<span className=\"demo-indicator\" aria-label=\"Demo con datos de prueba\" title=\"Esta versión utiliza datos y respuestas de ejemplo.\"><span className=\"demo-label-full\" aria-hidden=\"true\">Demo con datos de prueba</span><span className=\"demo-label-mobile\" aria-hidden=\"true\">Demo</span></span>}<SectionNavigation paused={isDetail} workspace={workspace}/></div></div></header>\n <main inert={isDetail?true:undefined} aria-hidden={isDetail} id=\"landing-view\" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className=\"assistant-surface\" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>\n <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className=\"catalog-surface\"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type=\"button\" className=\"ui-button ui-button--primary catalog-access\" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden=\"true\"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;\n}\n",
       "exports": [
         "App"
       ],
-      "motion": [
-        {
-          "line": 44,
-          "text": "],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});"
-        },
-        {
-          "line": 45,
-          "text": "buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});"
-        }
-      ]
+      "motion": []
     },
     {
       "path": "src/AssistantBrandIcon.jsx",
@@ -545,7 +536,7 @@
     },
     {
       "path": "src/features/assistant/Assistant.jsx",
-      "code": "import React,{useState,useLayoutEffect,useRef} from 'react';\nimport {PromptSuggestions} from './PromptSuggestions';\nimport {getAssistantError} from '../../errorPresentation.mjs';\nimport {RevealHeading} from '../../PageReveal';\nimport {HeroLights} from '../../HeroLights';\nimport {promptMotion} from '../../promptPresentation.mjs';\nimport {StackProposal} from './StackProposal';\nimport {PromptComposer} from './PromptComposer';\nimport {WorkingWords} from './WorkingWords';\nexport function Assistant({flow,workspace=false}){\n const host=useRef(null);\n useLayoutEffect(()=>{\n  const root=host.current,composer=root?.querySelector('.prompt-form-slot');if(!root||!composer)return;\n  const measure=()=>root.style.setProperty('--assistant-dock-height',`${composer.getBoundingClientRect().height}px`);\n  const observer=new ResizeObserver(measure);observer.observe(composer);measure();\n  return()=>observer.disconnect();\n },[workspace]);\n useLayoutEffect(()=>{\n  const slot=host.current?.querySelector('.prompt-form-slot');\n  if(!workspace||!slot?.dataset.dockOrigin)return;\n  const origin=JSON.parse(slot.dataset.dockOrigin);delete slot.dataset.dockOrigin;\n  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;\n  // Child layout effects have sized the textarea; dock CSS has no geometry\n  // transitions, so these are the final natural bounds, not an intermediate frame.\n  const form=slot.querySelector('form');\n  const target=form.getBoundingClientRect();\n  // A gentler launch and longer deceleration let the dock settle without a snap.\n  const options={duration:780,easing:'cubic-bezier(.22,.75,.18,1)'};\n  const resize=form.animate([{height:`${origin.height}px`},{height:`${form.getBoundingClientRect().height}px`}],options);\n  const animation=slot.animate([{translate:`${origin.left-target.left}px ${origin.top+origin.height-target.bottom}px`},{translate:'0px 0px'}],options);\n  const reduced=matchMedia('(prefers-reduced-motion: reduce)');\n  const cancel=()=>{animation.cancel();resize.cancel();};\n  window.addEventListener('resize',cancel);reduced.addEventListener('change',cancel);\n  return()=>{cancel();window.removeEventListener('resize',cancel);reduced.removeEventListener('change',cancel);};\n },[workspace]);\n const [exampleReveal,setExampleReveal]=useState(null);\n const {assistantResponse,originalPrompt,slow,resultHeading,finished,pending,expanded,hasResult,input,newArchitecture,error,canRetry}=flow;\n const errorCopy=error?getAssistantError(error):null;\n const headerActive=expanded||Boolean(error);\n const architectureHeader=hasResult&&!pending&&!error&&assistantResponse?.status==='ok';\n const heading=pending?'Preparando tu stack':errorCopy?errorCopy.title:assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura');\n const description=pending?(slow?'La solicitud está tardando más de lo habitual.':'Estamos generando tu propuesta.'):errorCopy?errorCopy.description:assistantResponse?.summary||'';\n const headerSizes=useRef(new Map());\n // Validation must not scroll the textarea over the message. Reveal the whole\n // header only when necessary, without stealing focus from the user's input.\n useLayoutEffect(()=>{\n  if((!error&&!['needs_clarification','no_evidence'].includes(assistantResponse?.status))||flow.isDetail)return;\n  const frame=requestAnimationFrame(()=>{\n   const heading=host.current?.querySelector('.prompt-heading');\n   if(!heading)return;\n   if(window.scrollY>0)window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});\n  });\n  return()=>cancelAnimationFrame(frame);\n },[error,assistantResponse,flow.isDetail]);\n useLayoutEffect(()=>{\n  const animations=[];\n  for(const selector of ['.prompt-heading','.prompt-intro']){\n   const element=host.current?.querySelector(selector);if(!element)continue;\n   const height=element.getBoundingClientRect().height;\n   const previous=headerSizes.current.get(selector);\n   headerSizes.current.set(selector,height);\n   if(!document.documentElement.hasAttribute('data-architecture-reset')&&previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){\n    animations.push(element.animate([{height:`${previous}px`},{height:`${height}px`}],{duration:360,easing:'cubic-bezier(.22,1,.36,1)'}));\n   }\n  }\n  return()=>animations.forEach(animation=>animation.cancel());\n },[heading,description]);\n return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id=\"asistente\"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')+(architectureHeader?' has-architecture-header':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>\n <div className=\"architecture-header\">\n <div className=\"prompt-heading\"><div className=\"prompt-heading-initial\" aria-hidden={headerActive}><RevealHeading as=\"h1\" text=\"De tu idea a tu stack\" gradientWord=\"stack\" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className=\"prompt-heading-result\" aria-hidden={!headerActive}><span className={'assistant-heading-content'+(pending?' is-pending':'')}><span className=\"assistant-light-loader\" aria-hidden=\"true\"/><span key={heading} className=\"assistant-heading-copy\">{pending?<>Preparando tu <span className=\"gradient-word\"><span className=\"reveal-letter\" data-glow=\"stack\" style={{'--word-play-state':'running'}}>stack</span></span></>:heading}</span></span></h1></div>\n <div className=\"prompt-intro\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\"><p className=\"intro intro-initial\" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id=\"prompt-error\" className={'intro intro-result'+(pending?' intro-working':'')} aria-hidden={!headerActive}>{pending&&!slow?<WorkingWords/>:<span key={description} className=\"assistant-heading-copy\">{description}</span>}</p></div>\n </div>\n <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt} onNewArchitecture={newArchitecture}/>\n\n <PromptComposer {...flow} workspace={workspace} exampleReveal={exampleReveal}/>\n\n </div><PromptSuggestions flow={flow} workspace={workspace} onSelect={text=>setExampleReveal({text,id:performance.now()})}/></section>\n </div>\n);\n}\n",
+      "code": "import React,{useState,useLayoutEffect,useRef} from 'react';\nimport {PromptSuggestions} from './PromptSuggestions';\nimport {getAssistantError} from '../../errorPresentation.mjs';\nimport {RevealHeading} from '../../PageReveal';\nimport {HeroLights} from '../../HeroLights';\nimport {promptMotion} from '../../promptPresentation.mjs';\nimport {StackProposal} from './StackProposal';\nimport {PromptComposer} from './PromptComposer';\nimport {WorkingWords} from './WorkingWords';\nexport function Assistant({flow,workspace=false}){\n const host=useRef(null);\n useLayoutEffect(()=>{\n  const root=host.current,composer=root?.querySelector('.prompt-form-slot');if(!root||!composer)return;\n  const measure=()=>root.style.setProperty('--assistant-dock-height',`${composer.getBoundingClientRect().height}px`);\n  const observer=new ResizeObserver(measure);observer.observe(composer);measure();\n  return()=>observer.disconnect();\n },[workspace]);\n useLayoutEffect(()=>{\n  const slot=host.current?.querySelector('.prompt-form-slot');\n  if(!workspace||!slot?.dataset.dockOrigin)return;\n  const origin=JSON.parse(slot.dataset.dockOrigin);delete slot.dataset.dockOrigin;\n  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;\n  // Child layout effects have sized the textarea; dock CSS has no geometry\n  // transitions, so these are the final natural bounds, not an intermediate frame.\n  const form=slot.querySelector('form');\n  const target=form.getBoundingClientRect();\n  // A gentler launch and longer deceleration let the dock settle without a snap.\n  const options={duration:780,easing:'cubic-bezier(.22,.75,.18,1)'};\n  const resize=form.animate([{height:`${origin.height}px`},{height:`${form.getBoundingClientRect().height}px`}],options);\n  const animation=slot.animate([{translate:`${origin.left-target.left}px ${origin.top+origin.height-target.bottom}px`},{translate:'0px 0px'}],options);\n  const reduced=matchMedia('(prefers-reduced-motion: reduce)');\n  const cancel=()=>{animation.cancel();resize.cancel();};\n  window.addEventListener('resize',cancel);reduced.addEventListener('change',cancel);\n  return()=>{cancel();window.removeEventListener('resize',cancel);reduced.removeEventListener('change',cancel);};\n },[workspace]);\n const [exampleReveal,setExampleReveal]=useState(null);\n const {assistantResponse,originalPrompt,slow,resultHeading,finished,pending,expanded,hasResult,input,newArchitecture,error,canRetry}=flow;\n const errorCopy=error?getAssistantError(error):null;\n const headerActive=expanded||Boolean(error);\n const architectureHeader=hasResult&&!pending&&!error&&assistantResponse?.status==='ok';\n const heading=pending?'Preparando tu stack':errorCopy?errorCopy.title:assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura');\n const description=pending?(slow?'La solicitud está tardando más de lo habitual.':'Estamos generando tu propuesta.'):errorCopy?errorCopy.description:assistantResponse?.summary||'';\n const headerSizes=useRef(new Map());\n // Validation must not scroll the textarea over the message. Reveal the whole\n // header only when necessary, without stealing focus from the user's input.\n useLayoutEffect(()=>{\n  if((!error&&!['needs_clarification','no_evidence'].includes(assistantResponse?.status))||flow.isDetail)return;\n  const frame=requestAnimationFrame(()=>{\n   const heading=host.current?.querySelector('.prompt-heading');\n   if(!heading)return;\n   if(window.scrollY>0)window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});\n  });\n  return()=>cancelAnimationFrame(frame);\n },[error,assistantResponse,flow.isDetail]);\n useLayoutEffect(()=>{\n  const animations=[];\n  for(const selector of ['.prompt-heading','.prompt-intro']){\n   const element=host.current?.querySelector(selector);if(!element)continue;\n   const height=element.getBoundingClientRect().height;\n   const previous=headerSizes.current.get(selector);\n   headerSizes.current.set(selector,height);\n   if(!document.documentElement.hasAttribute('data-architecture-reset')&&previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){\n    animations.push(element.animate([{height:`${previous}px`},{height:`${height}px`}],{duration:360,easing:'cubic-bezier(.22,1,.36,1)'}));\n   }\n  }\n  return()=>animations.forEach(animation=>animation.cancel());\n },[heading,description]);\n return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id=\"asistente\"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')+(architectureHeader?' has-architecture-header':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>\n <div className=\"architecture-header\">\n <div className=\"prompt-heading\"><div className=\"prompt-heading-initial\" aria-hidden={headerActive}><RevealHeading as=\"h1\" text=\"De tu idea a tu stack\" gradientWord=\"stack\" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className=\"prompt-heading-result\" aria-hidden={!headerActive}><span className={'assistant-heading-content'+(pending?' is-pending':'')}><span className=\"assistant-light-loader\" aria-hidden=\"true\"/><span key={heading} className=\"assistant-heading-copy\">{pending?<>Preparando tu <span className=\"gradient-word\"><span className=\"reveal-letter\" data-glow=\"stack\" style={{'--word-play-state':'running'}}>stack</span></span></>:heading}</span></span></h1></div>\n <div className=\"prompt-intro\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\"><p className=\"intro intro-initial\" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id=\"prompt-error\" className={'intro intro-result'+(pending?' intro-working':'')} aria-hidden={!headerActive}>{pending&&!slow?<WorkingWords/>:<span key={description} className=\"assistant-heading-copy\">{description}</span>}</p></div>\n </div>\n {['timeout','provider_unavailable'].includes(error)&&!pending&&<div className=\"assistant-timeout-action\"><button type=\"button\" className=\"ui-button ui-button--primary\" onClick={flow.submit}>{error==='provider_unavailable'?'Volver a intentarlo':'Reintentar'}</button></div>}\n <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt} onNewArchitecture={newArchitecture}/>\n\n <PromptComposer {...flow} workspace={workspace} exampleReveal={exampleReveal}/>\n\n </div><PromptSuggestions flow={flow} workspace={workspace} onSelect={text=>setExampleReveal({text,id:performance.now()})}/></section>\n </div>\n);\n}\n",
       "exports": [
         "Assistant"
       ],
@@ -640,7 +631,7 @@
     },
     {
       "path": "src/features/assistant/ProposalTabs.jsx",
-      "code": "import {DotSadFace} from '../../DotSadFace';\nimport {ConnectionDiagram} from './ConnectionDiagram';\nimport {toolHref} from '../../data/detailTarget.mjs';\nimport {useId,useRef,useState,useLayoutEffect} from 'react';\nimport {FollowingTooltip} from '../../FollowingTooltip';\nimport {ArrowUpRight,Box,TriangleAlert,Layers3,Workflow} from 'lucide-react';\nimport {useCatalogData} from '../../data/CatalogProvider';\nimport {resolveComponentTool,recommendationLicenseWarning} from '../../data/assistant.mjs';\nimport {BrandIcon} from '../../AssistantBrandIcon';\nimport {useBrandIdentity} from '../../brandIdentity';\n\nfunction trackBorder(event){\n if(event.pointerType==='touch')return;\n const node=event.currentTarget,rect=node.getBoundingClientRect();\n node.style.setProperty('--glare-x',`${event.clientX-rect.left}px`);\n node.style.setProperty('--glare-y',`${event.clientY-rect.top}px`);\n}\nfunction ToolRecommendation({component,index=0}){\n const [expanded,setExpanded]=useState(false);\n const rationaleId=useId();\n const rationaleRef=useRef(null);\n const [rationaleHeight,setRationaleHeight]=useState(null);\n useLayoutEffect(()=>{\n  const element=rationaleRef.current;\n  if(!element)return;\n  const paragraph=element.querySelector('p');\n  const measure=()=>{\n   const lineHeight=parseFloat(getComputedStyle(paragraph).lineHeight);\n   setRationaleHeight(expanded?paragraph.scrollHeight:Math.min(paragraph.scrollHeight,lineHeight*2));\n  };\n  measure();\n  const observer=new ResizeObserver(measure);\n  observer.observe(paragraph);\n  return()=>observer.disconnect();\n },[expanded,component.rationale]);\n const {tools}=useCatalogData();\n const tool=resolveComponentTool(component,tools);\n const identity=useBrandIdentity(tool??{name:component.label});\n const licenseWarning=recommendationLicenseWarning(tool);\n return <li className=\"proposal-tool\" onPointerMove={trackBorder} style={{'--card-reveal-delay':`${160+Math.min(index,6)*85}ms`,'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>\n  {identity.watermark&&<img className=\"proposal-watermark\" src={identity.watermark} alt=\"\" aria-hidden=\"true\"/>}\n  <div className=\"proposal-tool-heading\"><span className=\"proposal-brand\" aria-hidden=\"true\">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><div><div className=\"proposal-title-row\"><h3>{component.label}</h3>{licenseWarning&&<FollowingTooltip text={licenseWarning} className=\"proposal-license-tip\">{trigger=><button type=\"button\" className=\"proposal-license-icon\" aria-label={licenseWarning} {...trigger}><TriangleAlert size={15} aria-hidden=\"true\"/></button>}</FollowingTooltip>}</div><p>{component.role}</p></div></div>\n  <div className={'proposal-rationale'+(expanded?' is-expanded':'')} id={rationaleId} ref={rationaleRef} style={rationaleHeight===null?undefined:{height:rationaleHeight}}><p>{component.rationale}</p></div>\n  <div className=\"proposal-tool-actions\">\n   {component.rationale&&<button type=\"button\" className=\"proposal-reason-toggle ui-button ui-button--text\" aria-expanded={expanded} aria-controls={rationaleId} onClick={()=>setExpanded(value=>!value)}>{expanded?'Ver menos':'Ver motivo'}</button>}\n   {tool&&<a className=\"ui-button ui-button--secondary ui-button--compact\" href={toolHref(tool)}>Ver ficha <ArrowUpRight size={14} aria-hidden=\"true\"/></a>}\n  </div>\n </li>;\n}\nfunction Endpoint({component}){\n const {tools}=useCatalogData();\n const tool=resolveComponentTool(component,tools);\n const identity=useBrandIdentity(tool??{name:component.label});\n const description=component.rationale||component.role;\n return <FollowingTooltip text={description} className=\"connection-endpoint\">\n  {trigger=><button type=\"button\" className=\"connection-node\" onPointerMove={trackBorder} {...trigger} style={{'--node-start':identity.palette.start,'--node-end':identity.palette.end}}><span className=\"proposal-brand\" aria-hidden=\"true\">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></button>}\n </FollowingTooltip>;\n}\nexport function ProposalTabs({response}){\n const [tab,setTab]=useState('tools');\n const tabs=useRef([]);\n const connections=response.connections??[];\n const select=(index)=>{setTab(index===0?'tools':'connections');tabs.current[index]?.focus();};\n const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};\n return <div className=\"proposal-tabs\">\n  <div className=\"proposal-toolbar\">\n  <div role=\"tablist\" data-active={tab} aria-label=\"Propuesta de arquitectura\" onKeyDown={onKeyDown}>\n   {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type=\"button\" role=\"tab\" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>setTab(key)}><Icon size={17} aria-hidden=\"true\"/>{label}<span>{count}</span></button>)}\n  </div>\n  </div>\n  <div className=\"proposal-panels\">\n   <section id=\"proposal-panel-tools\" role=\"tabpanel\" aria-labelledby=\"proposal-tab-tools\" hidden={tab!=='tools'} tabIndex={0}>\n    <ul className=\"proposal-tools\">{response.components.map((component,index)=><ToolRecommendation key={component.key} component={component} index={index}/>)}</ul>\n   </section>\n   <section id=\"proposal-panel-connections\" role=\"tabpanel\" aria-labelledby=\"proposal-tab-connections\" hidden={tab!=='connections'} tabIndex={0}>\n    {connections.length===0?<div className=\"catalog-error proposal-connections-empty\"><DotSadFace/><p>¡Lo sentimos! Esta propuesta no incluye ninguna conexión.</p></div>:tab==='connections'&&<ConnectionDiagram components={response.components} connections={connections} Endpoint={Endpoint}/>}\n   </section>\n  </div>\n </div>;\n}\n",
+      "code": "import {DotSadFace} from '../../DotSadFace';\nimport {ConnectionDiagram} from './ConnectionDiagram';\nimport {toolHref} from '../../data/detailTarget.mjs';\nimport {useId,useRef,useState,useLayoutEffect} from 'react';\nimport {FollowingTooltip} from '../../FollowingTooltip';\nimport {ArrowUpRight,Box,TriangleAlert,Layers3,Workflow} from 'lucide-react';\nimport {useCatalogData} from '../../data/CatalogProvider';\nimport {resolveComponentTool,recommendationLicenseWarning} from '../../data/assistant.mjs';\nimport {BrandIcon} from '../../AssistantBrandIcon';\nimport {useBrandIdentity} from '../../brandIdentity';\n\nfunction trackBorder(event){\n if(event.pointerType==='touch')return;\n const node=event.currentTarget,rect=node.getBoundingClientRect();\n node.style.setProperty('--glare-x',`${event.clientX-rect.left}px`);\n node.style.setProperty('--glare-y',`${event.clientY-rect.top}px`);\n}\nfunction ToolRecommendation({component,index=0}){\n const [expanded,setExpanded]=useState(false);\n const rationaleId=useId();\n const rationaleRef=useRef(null);\n const [rationaleHeight,setRationaleHeight]=useState(null);\n useLayoutEffect(()=>{\n  const element=rationaleRef.current;\n  if(!element)return;\n  const paragraph=element.querySelector('p');\n  const measure=()=>{\n   const lineHeight=parseFloat(getComputedStyle(paragraph).lineHeight);\n   setRationaleHeight(expanded?paragraph.scrollHeight:Math.min(paragraph.scrollHeight,lineHeight*2));\n  };\n  measure();\n  const observer=new ResizeObserver(measure);\n  observer.observe(paragraph);\n  return()=>observer.disconnect();\n },[expanded,component.rationale]);\n const {tools}=useCatalogData();\n const tool=resolveComponentTool(component,tools);\n const identity=useBrandIdentity(tool??{name:component.label});\n const licenseWarning=recommendationLicenseWarning(tool);\n return <li className=\"proposal-tool\" onPointerMove={trackBorder} style={{'--card-reveal-delay':`${160+Math.min(index,6)*85}ms`,'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>\n  {identity.watermark&&<img className=\"proposal-watermark\" src={identity.watermark} alt=\"\" aria-hidden=\"true\"/>}\n  <div className=\"proposal-tool-heading\"><span className=\"proposal-brand\" aria-hidden=\"true\">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><div><div className=\"proposal-title-row\"><h3>{component.label}</h3>{licenseWarning&&<FollowingTooltip text={licenseWarning} className=\"proposal-license-tip\">{trigger=><button type=\"button\" className=\"proposal-license-icon\" aria-label={licenseWarning} {...trigger}><TriangleAlert size={15} aria-hidden=\"true\"/></button>}</FollowingTooltip>}</div><p>{component.role}</p></div></div>\n  <div className={'proposal-rationale'+(expanded?' is-expanded':'')} id={rationaleId} ref={rationaleRef} style={rationaleHeight===null?undefined:{height:rationaleHeight}}><p>{component.rationale}</p></div>\n  <div className=\"proposal-tool-actions\">\n   {component.rationale&&<button type=\"button\" className=\"proposal-reason-toggle ui-button ui-button--text\" aria-expanded={expanded} aria-controls={rationaleId} onClick={()=>setExpanded(value=>!value)}>{expanded?'Ver menos':'Ver motivo'}</button>}\n   {tool&&<a className=\"ui-button ui-button--secondary ui-button--compact\" href={toolHref(tool)}>Ver ficha <ArrowUpRight size={14} aria-hidden=\"true\"/></a>}\n  </div>\n </li>;\n}\nfunction Endpoint({component}){\n const {tools}=useCatalogData();\n const tool=resolveComponentTool(component,tools);\n const identity=useBrandIdentity(tool??{name:component.label});\n const description=component.rationale||component.role;\n return <FollowingTooltip text={description} className=\"connection-endpoint\">\n  {trigger=><button type=\"button\" className=\"connection-node\" onPointerMove={trackBorder} {...trigger} style={{'--node-start':identity.palette.start,'--node-end':identity.palette.end}}><span className=\"proposal-brand\" aria-hidden=\"true\">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></button>}\n </FollowingTooltip>;\n}\nexport function ProposalTabs({response}){\n const [tab,setTab]=useState('tools');\n const tabs=useRef([]),panels=useRef(null),panelHeight=useRef(null),heightMotion=useRef(null);\n const [connectionsVisited,setConnectionsVisited]=useState(false);\n const changeTab=key=>{if(key==='connections')setConnectionsVisited(true);setTab(key);};\n useLayoutEffect(()=>{\n  const host=panels.current,active=host?.querySelector('[role=tabpanel]:not([hidden])');\n  if(!host||!active)return;\n  const measure=()=>{\n   if(active.querySelector('[aria-busy=\"true\"]'))return;\n   const next=active.getBoundingClientRect().height;\n   if(panelHeight.current===next)return;\n   const previous=host.getBoundingClientRect().height;\n   const initial=panelHeight.current===null;\n   panelHeight.current=next;\n   heightMotion.current?.cancel();\n   host.style.height=`${next}px`;\n   if(!initial&&Math.abs(previous-next)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){\n    heightMotion.current=host.animate([{height:`${previous}px`},{height:`${next}px`}],{duration:320,easing:'cubic-bezier(.22,1,.36,1)'});\n   }\n  };\n  measure();\n  const observer=new ResizeObserver(measure);observer.observe(active);\n  return()=>observer.disconnect();\n },[tab]);\n useLayoutEffect(()=>()=>heightMotion.current?.cancel(),[]);\n const connections=response.connections??[];\n const select=(index)=>{changeTab(index===0?'tools':'connections');tabs.current[index]?.focus();};\n const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};\n return <div className=\"proposal-tabs\">\n  <div className=\"proposal-toolbar\">\n  <div role=\"tablist\" data-active={tab} aria-label=\"Propuesta de arquitectura\" onKeyDown={onKeyDown}>\n   {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type=\"button\" role=\"tab\" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>changeTab(key)}><Icon size={17} aria-hidden=\"true\"/>{label}<span>{count}</span></button>)}\n  </div>\n  </div>\n  <div className=\"proposal-panels\" ref={panels} data-switched={connectionsVisited||undefined}>\n   <section id=\"proposal-panel-tools\" role=\"tabpanel\" aria-labelledby=\"proposal-tab-tools\" hidden={tab!=='tools'} tabIndex={0}>\n    <ul className=\"proposal-tools\">{response.components.map((component,index)=><ToolRecommendation key={component.key} component={component} index={index}/>)}</ul>\n   </section>\n   <section id=\"proposal-panel-connections\" role=\"tabpanel\" aria-labelledby=\"proposal-tab-connections\" hidden={tab!=='connections'} tabIndex={0}>\n    {connections.length===0?<div className=\"catalog-error proposal-connections-empty\"><DotSadFace/><p>¡Lo sentimos! Esta propuesta no incluye ninguna conexión.</p></div>:connectionsVisited&&<ConnectionDiagram components={response.components} connections={connections} Endpoint={Endpoint}/>}\n   </section>\n  </div>\n </div>;\n}\n",
       "exports": [
         "ProposalTabs"
       ],
@@ -648,6 +639,10 @@
         {
           "line": 40,
           "text": "return <li className=\"proposal-tool\" onPointerMove={trackBorder} style={{'--card-reveal-delay':`${160+Math.min(index,6)*85}ms`,'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>"
+        },
+        {
+          "line": 77,
+          "text": "heightMotion.current=host.animate([{height:`${previous}px`},{height:`${next}px`}],{duration:320,easing:'cubic-bezier(.22,1,.36,1)'});"
         }
       ]
     },
@@ -4691,6 +4686,38 @@
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/connections.css",
       "line": 130
+    },
+    {
+      "property": "overflow-anchor",
+      "value": "none",
+      "selector": ".hero .proposal-panels",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 133
+    },
+    {
+      "property": "animation",
+      "value": "none",
+      "selector": ".hero .proposal-panels[data-switched] :is(.proposal-tools,.proposal-tool,.proposal-tool:before,.proposal-tool *)",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 134
+    },
+    {
+      "property": "animation",
+      "value": "proposal-group-reveal 240ms ease-out both",
+      "selector": ".hero .proposal-panels[data-switched] #proposal-panel-tools:not([hidden])",
+      "context": "",
+      "source": "src/connections.css",
+      "line": 135
+    },
+    {
+      "property": "animation",
+      "value": "none",
+      "selector": ".hero .proposal-panels[data-switched] #proposal-panel-tools:not([hidden])",
+      "context": "@media (prefers-reduced-motion:reduce)",
+      "source": "src/connections.css",
+      "line": 136
     },
     {
       "property": "--control-focus",
@@ -39942,11 +39969,19 @@
     },
     {
       "property": "view-transition-name",
-      "value": "reset-composer",
-      "selector": "html[data-architecture-reset] .composer",
+      "value": "reset-composer-out",
+      "selector": "html[data-architecture-reset=\"leaving\"] .composer",
       "context": "",
       "source": "src/styles.css",
       "line": 1680
+    },
+    {
+      "property": "view-transition-name",
+      "value": "reset-composer-in",
+      "selector": "html[data-architecture-reset=\"entering\"] .composer",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1681
     },
     {
       "property": "view-transition-name",
@@ -39954,7 +39989,7 @@
       "selector": "html[data-architecture-reset] .architecture-header",
       "context": "",
       "source": "src/styles.css",
-      "line": 1681
+      "line": 1682
     },
     {
       "property": "display",
@@ -39962,7 +39997,7 @@
       "selector": "html[data-architecture-reset] .has-architecture-header .architecture-header",
       "context": "",
       "source": "src/styles.css",
-      "line": 1682
+      "line": 1683
     },
     {
       "property": "view-transition-name",
@@ -39970,23 +40005,15 @@
       "selector": "html[data-architecture-reset] .architecture-stage.is-visible",
       "context": "",
       "source": "src/styles.css",
-      "line": 1683
-    },
-    {
-      "property": "animation-duration",
-      "value": "640ms",
-      "selector": "::view-transition-group(reset-composer)",
-      "context": "",
-      "source": "src/styles.css",
       "line": 1684
     },
     {
-      "property": "animation-timing-function",
-      "value": "cubic-bezier(.22,1,.36,1)",
-      "selector": "::view-transition-group(reset-composer)",
+      "property": "animation",
+      "value": "none",
+      "selector": "::view-transition-group(reset-composer-out),::view-transition-group(reset-composer-in)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1684
+      "line": 1685
     },
     {
       "property": "animation-duration",
@@ -39994,7 +40021,7 @@
       "selector": "::view-transition-group(reset-heading)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1685
+      "line": 1686
     },
     {
       "property": "animation-timing-function",
@@ -40002,23 +40029,31 @@
       "selector": "::view-transition-group(reset-heading)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1685
-    },
-    {
-      "property": "animation-duration",
-      "value": "320ms",
-      "selector": "::view-transition-old(reset-composer),::view-transition-new(reset-composer)",
-      "context": "",
-      "source": "src/styles.css",
       "line": 1686
     },
     {
-      "property": "animation-timing-function",
-      "value": "ease-out",
-      "selector": "::view-transition-old(reset-composer),::view-transition-new(reset-composer)",
+      "property": "animation",
+      "value": "reset-composer-exit 180ms ease-out both",
+      "selector": "::view-transition-old(reset-composer-out)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1686
+      "line": 1687
+    },
+    {
+      "property": "animation",
+      "value": "reset-composer-enter 360ms 100ms cubic-bezier(.22,1,.36,1) both",
+      "selector": "::view-transition-new(reset-composer-in)",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1688
+    },
+    {
+      "property": "transform-origin",
+      "value": "center",
+      "selector": "::view-transition-new(reset-composer-in)",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1688
     },
     {
       "property": "animation",
@@ -40026,7 +40061,7 @@
       "selector": "::view-transition-old(reset-heading),::view-transition-old(reset-result)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1687
+      "line": 1689
     },
     {
       "property": "animation",
@@ -40034,7 +40069,55 @@
       "selector": "::view-transition-new(reset-heading)",
       "context": "",
       "source": "src/styles.css",
-      "line": 1688
+      "line": 1690
+    },
+    {
+      "property": "opacity",
+      "value": "0",
+      "selector": "to",
+      "context": "@keyframes reset-composer-exit",
+      "source": "src/styles.css",
+      "line": 1691
+    },
+    {
+      "property": "translate",
+      "value": "0 24px",
+      "selector": "to",
+      "context": "@keyframes reset-composer-exit",
+      "source": "src/styles.css",
+      "line": 1691
+    },
+    {
+      "property": "opacity",
+      "value": "0",
+      "selector": "from",
+      "context": "@keyframes reset-composer-enter",
+      "source": "src/styles.css",
+      "line": 1692
+    },
+    {
+      "property": "scale",
+      "value": ".995",
+      "selector": "from",
+      "context": "@keyframes reset-composer-enter",
+      "source": "src/styles.css",
+      "line": 1692
+    },
+    {
+      "property": "opacity",
+      "value": "1",
+      "selector": "to",
+      "context": "@keyframes reset-composer-enter",
+      "source": "src/styles.css",
+      "line": 1692
+    },
+    {
+      "property": "scale",
+      "value": "1",
+      "selector": "to",
+      "context": "@keyframes reset-composer-enter",
+      "source": "src/styles.css",
+      "line": 1692
     },
     {
       "property": "opacity",
@@ -40042,7 +40125,7 @@
       "selector": "to",
       "context": "@keyframes reset-surface-out",
       "source": "src/styles.css",
-      "line": 1689
+      "line": 1693
     },
     {
       "property": "translate",
@@ -40050,7 +40133,7 @@
       "selector": "to",
       "context": "@keyframes reset-surface-out",
       "source": "src/styles.css",
-      "line": 1689
+      "line": 1693
     },
     {
       "property": "opacity",
@@ -40058,7 +40141,7 @@
       "selector": "from",
       "context": "@keyframes reset-surface-in",
       "source": "src/styles.css",
-      "line": 1690
+      "line": 1694
     },
     {
       "property": "translate",
@@ -40066,7 +40149,7 @@
       "selector": "from",
       "context": "@keyframes reset-surface-in",
       "source": "src/styles.css",
-      "line": 1690
+      "line": 1694
     },
     {
       "property": "opacity",
@@ -40074,7 +40157,7 @@
       "selector": "to",
       "context": "@keyframes reset-surface-in",
       "source": "src/styles.css",
-      "line": 1690
+      "line": 1694
     },
     {
       "property": "translate",
@@ -40082,15 +40165,15 @@
       "selector": "to",
       "context": "@keyframes reset-surface-in",
       "source": "src/styles.css",
-      "line": 1690
+      "line": 1694
     },
     {
       "property": "animation",
       "value": "none",
-      "selector": "::view-transition-group(reset-composer),::view-transition-group(reset-heading),::view-transition-old(reset-composer),::view-transition-new(reset-composer),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result)",
+      "selector": "::view-transition-group(reset-composer-out),::view-transition-group(reset-composer-in),::view-transition-group(reset-heading),::view-transition-old(reset-composer-out),::view-transition-new(reset-composer-in),::view-transition-old(reset-heading),::view-transition-new(reset-heading),::view-transition-old(reset-result)",
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/styles.css",
-      "line": 1692
+      "line": 1696
     },
     {
       "property": "min-width",
@@ -40098,7 +40181,7 @@
       "selector": ".tool-name-group",
       "context": "",
       "source": "src/styles.css",
-      "line": 1696
+      "line": 1700
     },
     {
       "property": "flex",
@@ -40106,7 +40189,7 @@
       "selector": ".tool-name-group",
       "context": "",
       "source": "src/styles.css",
-      "line": 1696
+      "line": 1700
     },
     {
       "property": "margin",
@@ -40114,7 +40197,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "font-size",
@@ -40122,7 +40205,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "font-weight",
@@ -40130,7 +40213,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "line-height",
@@ -40138,7 +40221,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "letter-spacing",
@@ -40146,7 +40229,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "color",
@@ -40154,7 +40237,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "width",
@@ -40162,7 +40245,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "max-width",
@@ -40170,7 +40253,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "box-sizing",
@@ -40178,7 +40261,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "padding",
@@ -40186,7 +40269,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "border-radius",
@@ -40194,7 +40277,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "background",
@@ -40202,7 +40285,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "backdrop-filter",
@@ -40210,7 +40293,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "-webkit-backdrop-filter",
@@ -40218,7 +40301,7 @@
       "selector": ".tool-card .tool-name-group .tool-repo-name,.detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1697
+      "line": 1701
     },
     {
       "property": "white-space",
@@ -40226,7 +40309,7 @@
       "selector": ".tool-card .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1698
+      "line": 1702
     },
     {
       "property": "overflow",
@@ -40234,7 +40317,7 @@
       "selector": ".tool-card .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1698
+      "line": 1702
     },
     {
       "property": "text-overflow",
@@ -40242,7 +40325,7 @@
       "selector": ".tool-card .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1698
+      "line": 1702
     },
     {
       "property": "overflow-wrap",
@@ -40250,7 +40333,7 @@
       "selector": ".detail-identity .tool-repo-name",
       "context": "",
       "source": "src/styles.css",
-      "line": 1699
+      "line": 1703
     },
     {
       "property": "transition",
@@ -40258,7 +40341,7 @@
       "selector": ".following-tooltip-layer,\n.following-tooltip-layer[data-open=true]",
       "context": "",
       "source": "src/styles.css",
-      "line": 1703
+      "line": 1707
     },
     {
       "property": "transition-delay",
@@ -40266,7 +40349,7 @@
       "selector": ".following-tooltip-layer[data-open=true]",
       "context": "",
       "source": "src/styles.css",
-      "line": 1704
+      "line": 1708
     },
     {
       "property": "transform-origin",
@@ -40274,7 +40357,7 @@
       "selector": ".following-tooltip-layer .tooltip-surface",
       "context": "",
       "source": "src/styles.css",
-      "line": 1705
+      "line": 1709
     },
     {
       "property": "transform",
@@ -40282,7 +40365,7 @@
       "selector": ".following-tooltip-layer .tooltip-surface",
       "context": "",
       "source": "src/styles.css",
-      "line": 1705
+      "line": 1709
     },
     {
       "property": "transition",
@@ -40290,7 +40373,7 @@
       "selector": ".following-tooltip-layer .tooltip-surface",
       "context": "",
       "source": "src/styles.css",
-      "line": 1705
+      "line": 1709
     },
     {
       "property": "transform",
@@ -40298,7 +40381,7 @@
       "selector": ".following-tooltip-layer[data-open=true] .tooltip-surface",
       "context": "",
       "source": "src/styles.css",
-      "line": 1706
+      "line": 1710
     },
     {
       "property": "transition",
@@ -40306,7 +40389,7 @@
       "selector": ".following-tooltip-layer[data-open=true] .tooltip-surface",
       "context": "",
       "source": "src/styles.css",
-      "line": 1706
+      "line": 1710
     },
     {
       "property": "transition",
@@ -40314,7 +40397,7 @@
       "selector": ".following-tooltip-layer,.following-tooltip-layer[data-open=true],.following-tooltip-layer .tooltip-surface,.following-tooltip-layer[data-open=true] .tooltip-surface",
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/styles.css",
-      "line": 1707
+      "line": 1711
     },
     {
       "property": "transform",
@@ -40322,7 +40405,7 @@
       "selector": ".following-tooltip-layer .tooltip-surface",
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/styles.css",
-      "line": 1707
+      "line": 1711
     },
     {
       "property": "display",
@@ -40330,7 +40413,7 @@
       "selector": ".hero .composer textarea::-webkit-scrollbar",
       "context": "",
       "source": "src/styles.css",
-      "line": 1710
+      "line": 1714
     },
     {
       "property": "width",
@@ -40338,7 +40421,7 @@
       "selector": ".hero .composer textarea::-webkit-scrollbar",
       "context": "",
       "source": "src/styles.css",
-      "line": 1710
+      "line": 1714
     },
     {
       "property": "height",
@@ -40346,7 +40429,7 @@
       "selector": ".hero .composer textarea::-webkit-scrollbar",
       "context": "",
       "source": "src/styles.css",
-      "line": 1710
+      "line": 1714
     },
     {
       "property": "filter",
@@ -40354,7 +40437,7 @@
       "selector": ".dot-sad-face",
       "context": "",
       "source": "src/styles.css",
-      "line": 1713
+      "line": 1717
     },
     {
       "property": "fill",
@@ -40362,7 +40445,7 @@
       "selector": ".dot-face-light",
       "context": "",
       "source": "src/styles.css",
-      "line": 1714
+      "line": 1718
     },
     {
       "property": "filter",
@@ -40370,7 +40453,7 @@
       "selector": ".dot-face-light",
       "context": "",
       "source": "src/styles.css",
-      "line": 1714
+      "line": 1718
     },
     {
       "property": "opacity",
@@ -40378,7 +40461,7 @@
       "selector": ".dot-face-light circle",
       "context": "",
       "source": "src/styles.css",
-      "line": 1715
+      "line": 1719
     },
     {
       "property": "animation",
@@ -40386,7 +40469,7 @@
       "selector": ".dot-face-light circle",
       "context": "",
       "source": "src/styles.css",
-      "line": 1715
+      "line": 1719
     },
     {
       "property": "opacity",
@@ -40394,7 +40477,7 @@
       "selector": "0%,12%,66%,100%",
       "context": "@keyframes dot-face-sweep",
       "source": "src/styles.css",
-      "line": 1716
+      "line": 1720
     },
     {
       "property": "opacity",
@@ -40402,7 +40485,7 @@
       "selector": "28%",
       "context": "@keyframes dot-face-sweep",
       "source": "src/styles.css",
-      "line": 1716
+      "line": 1720
     },
     {
       "property": "opacity",
@@ -40410,7 +40493,7 @@
       "selector": "43%",
       "context": "@keyframes dot-face-sweep",
       "source": "src/styles.css",
-      "line": 1716
+      "line": 1720
     },
     {
       "property": "animation",
@@ -40418,7 +40501,7 @@
       "selector": ".dot-face-light circle",
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/styles.css",
-      "line": 1717
+      "line": 1721
     },
     {
       "property": "opacity",
@@ -40426,7 +40509,7 @@
       "selector": ".dot-face-light circle",
       "context": "@media (prefers-reduced-motion:reduce)",
       "source": "src/styles.css",
-      "line": 1717
+      "line": 1721
     },
     {
       "property": "display",
@@ -40434,7 +40517,7 @@
       "selector": ".evidence-face",
       "context": "",
       "source": "src/styles.css",
-      "line": 1719
+      "line": 1723
     },
     {
       "property": "justify-content",
@@ -40442,7 +40525,7 @@
       "selector": ".evidence-face",
       "context": "",
       "source": "src/styles.css",
-      "line": 1719
+      "line": 1723
     },
     {
       "property": "padding",
@@ -40450,7 +40533,7 @@
       "selector": ".evidence-face",
       "context": "",
       "source": "src/styles.css",
-      "line": 1719
+      "line": 1723
     },
     {
       "property": "margin",
@@ -40458,7 +40541,7 @@
       "selector": ".evidence-face .dot-sad-face",
       "context": "",
       "source": "src/styles.css",
-      "line": 1720
+      "line": 1724
     },
     {
       "property": "display",
@@ -40466,7 +40549,7 @@
       "selector": ".clarification-symbol",
       "context": "",
       "source": "src/styles.css",
-      "line": 1722
+      "line": 1726
     },
     {
       "property": "flex",
@@ -40474,7 +40557,7 @@
       "selector": ".clarification-symbol",
       "context": "",
       "source": "src/styles.css",
-      "line": 1722
+      "line": 1726
     },
     {
       "property": "width",
@@ -40482,7 +40565,7 @@
       "selector": ".clarification-symbol",
       "context": "",
       "source": "src/styles.css",
-      "line": 1722
+      "line": 1726
     },
     {
       "property": "height",
@@ -40490,7 +40573,7 @@
       "selector": ".clarification-symbol",
       "context": "",
       "source": "src/styles.css",
-      "line": 1722
+      "line": 1726
     },
     {
       "property": "overflow",
@@ -40498,7 +40581,7 @@
       "selector": ".clarification-symbol",
       "context": "",
       "source": "src/styles.css",
-      "line": 1722
+      "line": 1726
     },
     {
       "property": "flex-basis",
@@ -40506,7 +40589,7 @@
       "selector": ".hero .stack-outcome .clarification-question",
       "context": "@media (min-width:641px) and (max-width:900px)",
       "source": "src/styles.css",
-      "line": 1723
+      "line": 1727
     },
     {
       "property": "flex-basis",
@@ -40514,7 +40597,7 @@
       "selector": ".hero .stack-outcome .clarification-question",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1724
+      "line": 1728
     },
     {
       "property": "gap",
@@ -40522,7 +40605,7 @@
       "selector": ".hero .stack-outcome .clarification-question",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1724
+      "line": 1728
     },
     {
       "property": "width",
@@ -40530,7 +40613,7 @@
       "selector": ".clarification-symbol",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1724
+      "line": 1728
     },
     {
       "property": "height",
@@ -40538,7 +40621,7 @@
       "selector": ".clarification-symbol",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1724
+      "line": 1728
     },
     {
       "property": "width",
@@ -40546,7 +40629,7 @@
       "selector": ".hero.assistant-workspace .prompt-form-slot.has-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1726
+      "line": 1730
     },
     {
       "property": "display",
@@ -40554,7 +40637,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "",
       "source": "src/styles.css",
-      "line": 1727
+      "line": 1731
     },
     {
       "property": "align-items",
@@ -40562,7 +40645,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "",
       "source": "src/styles.css",
-      "line": 1727
+      "line": 1731
     },
     {
       "property": "justify-content",
@@ -40570,7 +40653,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "",
       "source": "src/styles.css",
-      "line": 1727
+      "line": 1731
     },
     {
       "property": "gap",
@@ -40578,7 +40661,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "",
       "source": "src/styles.css",
-      "line": 1727
+      "line": 1731
     },
     {
       "property": "flex",
@@ -40586,7 +40669,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .composer",
       "context": "",
       "source": "src/styles.css",
-      "line": 1728
+      "line": 1732
     },
     {
       "property": "min-width",
@@ -40594,7 +40677,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .composer",
       "context": "",
       "source": "src/styles.css",
-      "line": 1728
+      "line": 1732
     },
     {
       "property": "margin",
@@ -40602,7 +40685,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .composer",
       "context": "",
       "source": "src/styles.css",
-      "line": 1728
+      "line": 1732
     },
     {
       "property": "flex",
@@ -40610,7 +40693,7 @@
       "selector": ".composer-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1729
+      "line": 1733
     },
     {
       "property": "white-space",
@@ -40618,7 +40701,7 @@
       "selector": ".composer-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1729
+      "line": 1733
     },
     {
       "property": "height",
@@ -40626,7 +40709,7 @@
       "selector": ".composer-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1729
+      "line": 1733
     },
     {
       "property": "min-height",
@@ -40634,7 +40717,7 @@
       "selector": ".composer-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1729
+      "line": 1733
     },
     {
       "property": "padding-inline",
@@ -40642,7 +40725,7 @@
       "selector": ".composer-new-architecture",
       "context": "",
       "source": "src/styles.css",
-      "line": 1729
+      "line": 1733
     },
     {
       "property": "width",
@@ -40650,7 +40733,7 @@
       "selector": ".hero.assistant-workspace .prompt-form-slot.has-new-architecture",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1731
+      "line": 1735
     },
     {
       "property": "flex-direction",
@@ -40658,7 +40741,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1732
+      "line": 1736
     },
     {
       "property": "align-items",
@@ -40666,7 +40749,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1732
+      "line": 1736
     },
     {
       "property": "gap",
@@ -40674,7 +40757,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .prompt-form-clip",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1732
+      "line": 1736
     },
     {
       "property": "width",
@@ -40682,7 +40765,7 @@
       "selector": ".prompt-form-slot.has-new-architecture .composer",
       "context": "@media (max-width:640px)",
       "source": "src/styles.css",
-      "line": 1733
+      "line": 1737
     },
     {
       "property": "transition",
@@ -40690,7 +40773,7 @@
       "selector": "html[data-architecture-reset] .prompt-input-wrap,html[data-architecture-reset] .prompt-heading,html[data-architecture-reset] .prompt-intro",
       "context": "",
       "source": "src/styles.css",
-      "line": 1737
+      "line": 1741
     },
     {
       "property": "color",
@@ -40698,7 +40781,7 @@
       "selector": ".tool-modal-frame .detail-integrations > h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1739
+      "line": 1743
     },
     {
       "property": "display",
@@ -40706,7 +40789,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "align-items",
@@ -40714,7 +40797,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "justify-content",
@@ -40722,7 +40805,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "gap",
@@ -40730,7 +40813,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "padding",
@@ -40738,7 +40821,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "margin-bottom",
@@ -40746,7 +40829,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "border",
@@ -40754,7 +40837,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "border-radius",
@@ -40762,7 +40845,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "background",
@@ -40770,7 +40853,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1741
+      "line": 1745
     },
     {
       "property": "margin",
@@ -40778,7 +40861,7 @@
       "selector": ".catalog-design-banner h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1742
+      "line": 1746
     },
     {
       "property": "color",
@@ -40786,7 +40869,7 @@
       "selector": ".catalog-design-banner h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1742
+      "line": 1746
     },
     {
       "property": "font-size",
@@ -40794,7 +40877,7 @@
       "selector": ".catalog-design-banner h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1742
+      "line": 1746
     },
     {
       "property": "font-weight",
@@ -40802,7 +40885,7 @@
       "selector": ".catalog-design-banner h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1742
+      "line": 1746
     },
     {
       "property": "line-height",
@@ -40810,7 +40893,7 @@
       "selector": ".catalog-design-banner h2",
       "context": "",
       "source": "src/styles.css",
-      "line": 1742
+      "line": 1746
     },
     {
       "property": "margin",
@@ -40818,7 +40901,7 @@
       "selector": ".catalog-design-banner p",
       "context": "",
       "source": "src/styles.css",
-      "line": 1743
+      "line": 1747
     },
     {
       "property": "color",
@@ -40826,7 +40909,7 @@
       "selector": ".catalog-design-banner p",
       "context": "",
       "source": "src/styles.css",
-      "line": 1743
+      "line": 1747
     },
     {
       "property": "font-size",
@@ -40834,7 +40917,7 @@
       "selector": ".catalog-design-banner p",
       "context": "",
       "source": "src/styles.css",
-      "line": 1743
+      "line": 1747
     },
     {
       "property": "line-height",
@@ -40842,7 +40925,7 @@
       "selector": ".catalog-design-banner p",
       "context": "",
       "source": "src/styles.css",
-      "line": 1743
+      "line": 1747
     },
     {
       "property": "flex-shrink",
@@ -40850,7 +40933,7 @@
       "selector": ".catalog-design-banner>.ui-button",
       "context": "",
       "source": "src/styles.css",
-      "line": 1744
+      "line": 1748
     },
     {
       "property": "flex-direction",
@@ -40858,7 +40941,7 @@
       "selector": ".catalog-design-banner",
       "context": "@media (max-width:760px)",
       "source": "src/styles.css",
-      "line": 1745
+      "line": 1749
     },
     {
       "property": "align-items",
@@ -40866,7 +40949,7 @@
       "selector": ".catalog-design-banner",
       "context": "@media (max-width:760px)",
       "source": "src/styles.css",
-      "line": 1745
+      "line": 1749
     },
     {
       "property": "padding",
@@ -40874,7 +40957,7 @@
       "selector": ".catalog-design-banner",
       "context": "@media (max-width:760px)",
       "source": "src/styles.css",
-      "line": 1745
+      "line": 1749
     },
     {
       "property": "position",
@@ -40882,7 +40965,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1746
+      "line": 1750
     },
     {
       "property": "isolation",
@@ -40890,7 +40973,7 @@
       "selector": ".catalog-design-banner",
       "context": "",
       "source": "src/styles.css",
-      "line": 1746
+      "line": 1750
     },
     {
       "property": "content",
@@ -40898,7 +40981,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "position",
@@ -40906,7 +40989,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "inset",
@@ -40914,7 +40997,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "border-radius",
@@ -40922,7 +41005,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "background",
@@ -40930,7 +41013,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "opacity",
@@ -40938,7 +41021,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "pointer-events",
@@ -40946,7 +41029,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "z-index",
@@ -40954,7 +41037,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "",
       "source": "src/styles.css",
-      "line": 1747
+      "line": 1751
     },
     {
       "property": "background",
@@ -40962,7 +41045,7 @@
       "selector": ".catalog-design-banner::before",
       "context": "@media (max-width:760px)",
       "source": "src/styles.css",
-      "line": 1748
+      "line": 1752
     },
     {
       "property": "display",
@@ -40970,7 +41053,7 @@
       "selector": ".nav-actions",
       "context": "",
       "source": "src/styles.css",
-      "line": 1750
+      "line": 1754
     },
     {
       "property": "align-items",
@@ -40978,7 +41061,7 @@
       "selector": ".nav-actions",
       "context": "",
       "source": "src/styles.css",
-      "line": 1750
+      "line": 1754
     },
     {
       "property": "gap",
@@ -40986,7 +41069,7 @@
       "selector": ".nav-actions",
       "context": "",
       "source": "src/styles.css",
-      "line": 1750
+      "line": 1754
     },
     {
       "property": "margin-left",
@@ -40994,7 +41077,7 @@
       "selector": ".nav-actions",
       "context": "",
       "source": "src/styles.css",
-      "line": 1750
+      "line": 1754
     },
     {
       "property": "color",
@@ -41002,7 +41085,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "background",
@@ -41010,7 +41093,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "border-radius",
@@ -41018,7 +41101,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "padding",
@@ -41026,7 +41109,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "font-size",
@@ -41034,7 +41117,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "line-height",
@@ -41042,7 +41125,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "text-align",
@@ -41050,7 +41133,7 @@
       "selector": ".demo-indicator",
       "context": "",
       "source": "src/styles.css",
-      "line": 1751
+      "line": 1755
     },
     {
       "property": "display",
@@ -41058,7 +41141,7 @@
       "selector": ".demo-label-mobile",
       "context": "",
       "source": "src/styles.css",
-      "line": 1752
+      "line": 1756
     },
     {
       "property": "gap",
@@ -41066,7 +41149,7 @@
       "selector": ".nav-actions",
       "context": "@media (max-width:520px)",
       "source": "src/styles.css",
-      "line": 1753
+      "line": 1757
     },
     {
       "property": "display",
@@ -41074,7 +41157,7 @@
       "selector": ".demo-label-full",
       "context": "@media (max-width:520px)",
       "source": "src/styles.css",
-      "line": 1753
+      "line": 1757
     },
     {
       "property": "display",
@@ -41082,7 +41165,47 @@
       "selector": ".demo-label-mobile",
       "context": "@media (max-width:520px)",
       "source": "src/styles.css",
-      "line": 1753
+      "line": 1757
+    },
+    {
+      "property": "display",
+      "value": "flex",
+      "selector": ".assistant-timeout-action",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1759
+    },
+    {
+      "property": "justify-content",
+      "value": "center",
+      "selector": ".assistant-timeout-action",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1759
+    },
+    {
+      "property": "margin-block",
+      "value": "var(--space-component-24)",
+      "selector": ".assistant-timeout-action",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1759
+    },
+    {
+      "property": "animation",
+      "value": "proposal-content-reveal 360ms cubic-bezier(.22,1,.36,1) both",
+      "selector": ".assistant-timeout-action",
+      "context": "",
+      "source": "src/styles.css",
+      "line": 1759
+    },
+    {
+      "property": "animation",
+      "value": "none",
+      "selector": ".assistant-timeout-action",
+      "context": "@media (prefers-reduced-motion:reduce)",
+      "source": "src/styles.css",
+      "line": 1760
     },
     {
       "property": "--neutral-000",

@@ -128,3 +128,9 @@
 .elk-wire-reveal{fill:none;stroke:white;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100 100;animation:connection-route-reveal 520ms cubic-bezier(.22,1,.36,1) var(--connection-reveal-delay,0ms) both}
 @keyframes connection-route-reveal{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
 @media(prefers-reduced-motion:reduce){.elk-wire-reveal{animation:none;stroke-dashoffset:0}}
+
+/* Keep surrounding content stable while the active panel and ELK settle. */
+.hero .proposal-panels{overflow-anchor:none}
+.hero .proposal-panels[data-switched] :is(.proposal-tools,.proposal-tool,.proposal-tool:before,.proposal-tool *){animation:none}
+.hero .proposal-panels[data-switched] #proposal-panel-tools:not([hidden]){animation:proposal-group-reveal 240ms ease-out both}
+@media(prefers-reduced-motion:reduce){.hero .proposal-panels[data-switched] #proposal-panel-tools:not([hidden]){animation:none}}
