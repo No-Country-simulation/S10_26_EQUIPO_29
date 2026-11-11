@@ -97,6 +97,7 @@ esa decisión no se recalcula con estas etiquetas. La prueba final conserva las 
 | Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | ninguna | desarrollo |
 | Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | ninguna | desarrollo |
 | Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
+| Asistente `detection-2` | Otro modelo de lenguaje (Grok 4.5) sin ver el catálogo ni el banco de ejemplos (11-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después con `LABEL_CRITERIA.md` | ninguna | desarrollo |
 | Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
 | Asistente `test` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas, sin editar; etiquetas puestas después | ninguna | **prueba final** |
 

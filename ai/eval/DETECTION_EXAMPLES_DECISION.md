@@ -5,8 +5,8 @@ y parecidos al del usuario, ¿detecta más las necesidades que el usuario pide c
 palabras de negocio ("registrar", "llevar un historial", "controlar"), sin agregar
 necesidades que nadie pidió?
 
-**Estado:** línea base, banco de ejemplos y regla de decisión listos (11-nov). Faltan
-los casos nuevos y la medición.
+**Estado:** línea base, banco de ejemplos, regla de decisión y casos nuevos listos
+(11-nov). Falta la medición.
 
 ## Por qué
 
@@ -141,10 +141,26 @@ desde servidores cercanos en los casos nuevos. Las corridas con error del provee
 cuentan. Si una condición falla, los ejemplos no se integran y la variante se revierte.
 Nada se ajusta después de ver los resultados.
 
+## Casos nuevos (11-nov)
+
+`detection-2` (`assistant_cases_detection_2.json`), 22 casos.
+
+- **Quién los escribió:** otro modelo de lenguaje (Grok 4.5), distinto del que escribió el
+  banco (para no compartir su forma de redactar) y del que se evalúa, sin ver el catálogo
+  ni el banco.
+- **Filtro con reglas fijadas antes de leer:** las del banco, más dos: sin pedidos con un
+  parecido al banco igual o mayor que el umbral de separación, y sin casi gemelos dentro
+  del conjunto (se queda el primero en el orden de escritura).
+- **Dos tandas:** la primera dejó 6 de 30 (casi todos repetían una categoría) y ningún
+  pedido sin base de datos. Antes de cualquier medición se pidió una segunda tanda con el
+  mensaje aclarado (cada categoría una vez, más pedidos con "organizar", "llevar" o
+  "controlar" en otro sentido). Las dos pasan por el mismo filtro, en orden: 60 → 22.
+- **Etiquetas:** con el criterio; repos aceptables con la misma evidencia que los otros
+  conjuntos. 12 casos con base de datos y 10 sin ella; 8 con permisos por cargo o sede, 5
+  con aprobaciones y 2 con carga rápida lejos (estas 7 necesidades, sin herramienta).
+- **Límite:** el otro modelo reusó algunos negocios de la lista excluida con otro nombre.
+  No afecta la separación del banco, que se mide por parecido y no por nombre.
+
 ## Próximos pasos
 
-1. **Casos nuevos,** escritos sin ver el catálogo ni el banco, con pedidos de "llevar",
-   "controlar", "organizar" y las necesidades poco detectadas de arriba. Los que tengan un
-   pedido del banco en el umbral de separación o por encima se descartan antes de correr.
-   Los conjuntos de esta página solo sirven para comprobar que no hay regresión.
-2. **Medición y decisión** con la regla de arriba, sin cambiarla.
+1. **Medición y decisión** con la regla de arriba, sin cambiarla.
