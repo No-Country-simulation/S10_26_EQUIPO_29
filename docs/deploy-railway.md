@@ -1,115 +1,73 @@
-# Guía de despliegue en Railway (OpenBridge)
+# Despliegue en Railway
 
-Arquitectura de producción:
-- **GitHub + GitHub Actions**: CI/CD (`.github/workflows/ci-deploy-railway.yml`).
-- **Railway**: tres servicios independientes construidos desde la **raíz del repositorio**:
-  1. `frontend` (`frontend/Dockerfile`)
-  2. `backend` (`backend/Dockerfile`)
-  3. `ai` (`ai/Dockerfile`)
-- **Supabase**: PostgreSQL existente (sin cambios de DDL ni reprocesamientos en este despliegue).
+OpenBridge corre en Railway desde la rama `deploy`. La demo local sigue siendo la base; este despliegue se prende cuando hace falta.
 
----
+## Qué hay
 
-## 1. Configuración de servicios en Railway
+| Servicio | URL | Carpeta |
+|---|---|---|
+| Frontend | https://openbridge.up.railway.app | `frontend/` |
+| API del catálogo | https://openbridge-api.up.railway.app | `backend/` |
+| Asistente de IA | https://openbridge-ai.up.railway.app | `ai/` |
 
-Todos los servicios deben conectarse al repositorio `No-Country-simulation/S10_26_EQUIPO_29` (rama `main`) con **Root Directory = `/` (raíz del repositorio)** para acceder a `shared/` y a sus respectivos Dockerfiles.
+Proyecto de Railway `openbridge`, entorno `production`, región US East. Cada servicio vigila la rama `deploy` y solo se redespliega si cambian su carpeta o `shared/`.
 
-| Servicio | Dockerfile | Config-as-Code (opcional) | Puerto interno | Healthcheck | Dominio / HTTPS |
-|---|---|---|---|---|---|
-| `backend` | `backend/Dockerfile` | `backend/railway.toml` | `$PORT` (fallback `8000`) | `/health` (60 s) | Generar dominio público HTTPS en Railway Networking |
-| `ai` | `ai/Dockerfile` | `ai/railway.toml` | `$PORT` (fallback `8001`) | `/health` (300 s) | Generar dominio público HTTPS en Railway Networking |
-| `frontend` | `frontend/Dockerfile` | `frontend/railway.toml` | `$PORT` (fallback `4173`) | `/` (60 s) | Generar dominio público HTTPS en Railway Networking |
+## Reglas de la rama `deploy`
 
-> **Importante:** No crear un `railway.toml` en la raíz del repositorio para evitar colisiones entre los tres servicios. Si usas Config-as-Code en Railway UI, apunta cada servicio a su archivo (`backend/railway.toml`, `ai/railway.toml`, `frontend/railway.toml`).
+1. Solo `main` → `deploy`, con merge. Nunca al revés ni con PR desde `deploy`.
+2. En `deploy` solo se tocan archivos de despliegue (Dockerfiles, `scripts/smoke_test_deploy.py`, esta guía).
+3. Los arreglos de la app van primero a `main`.
+4. Una sola persona actualiza `deploy`.
 
-### Volumen persistente del servicio `ai`
+## Actualizar el despliegue
 
-Configurar un **Volume** en el servicio `ai`:
-- **Mount Path**: `/data/huggingface`
-- **Propósito**: persistir la caché del modelo `google/embeddinggemma-300m` (~1,2 GB) entre despliegues (`HF_HOME=/data/huggingface` ya está definido en `ai/Dockerfile`).
-- **Nota de RAM y réplicas**: `embeddinggemma-300m` en CPU requiere ~1,2 GB de RAM; se recomienda asignar al menos 2 GB de memoria al servicio `ai` en Railway y mantener **1 sola réplica** (los volúmenes de Railway no se comparten entre múltiples réplicas).
+Desde la copia de trabajo que tiene la rama `deploy`:
 
----
+```bash
+git fetch origin
+git merge origin/main -m "chore(ai): integrar main en la rama de despliegue"
+git diff --stat origin/main deploy      # solo archivos de despliegue
+python -m pytest ai/tests -q
+git push
+```
 
-## 2. Variables de entorno por servicio en Railway
+## Después de cada despliegue
 
-### Servicio `backend`
+1. Prueba de humo (no gasta LLM):
 
-| Variable | Valor / Formato | Requerida | Notas |
-|---|---|---|---|
-| `DATABASE_URL` | `postgresql+psycopg://<ROL_LECTOR>.<project_ref>:<PASSWORD>@<POOLER_HOST>:5432/postgres?sslmode=require` | Sí | Usar rol de solo lectura (ver sección Supabase). Nunca credenciales administrativas. |
-| `CORS_ORIGINS` | `https://<dominio-publico-frontend>` | Sí | Sin barra final (`/`). Si hay dominio custom adicional, separar por comas. |
-| `HEALTH_SCORE_ENABLED` | `false` | No | Mantener `false` salvo aprobación explícita de la fórmula v1. |
-| `CATALOG_PAGE_SIZE` | `20` | No | Por defecto `20`. |
-| `CATALOG_MAX_PAGE_SIZE` | `100` | No | Por defecto `100`. |
-| `DB_CONNECT_TIMEOUT` | `5` | No | Segundos. |
-| `DB_STATEMENT_TIMEOUT_MS` | `8000` | No | Milisegundos. |
+```bash
+FRONTEND_PUBLIC_URL=https://openbridge.up.railway.app \
+BACKEND_PUBLIC_URL=https://openbridge-api.up.railway.app \
+AI_PUBLIC_URL=https://openbridge-ai.up.railway.app \
+python scripts/smoke_test_deploy.py
+```
 
-### Servicio `ai`
+2. Pedido de calentamiento (1 llamada a Gemini). El primer pedido después de arrancar el asistente puede pasar del límite de 20 s; los siguientes tardan ~5 s.
 
-| Variable | Valor / Formato | Requerida | Notas |
-|---|---|---|---|
-| `AI_READER_DATABASE_URL` | `postgresql://openbridge_ai_reader.<project_ref>:<PASSWORD>@<POOLER_HOST>:5432/postgres?sslmode=require` | Sí | Percent-encoding en caracteres especiales de la contraseña. |
-| `AI_CATALOG_SOURCE` | `database` | Sí | Lee el catálogo publicado y vectores desde Supabase. |
-| `AI_REQUIRE_DATABASE` | `true` | Sí | Impide caída silenciosa al snapshot local (`files`) si Supabase falla al arrancar. |
-| `AI_CORS_ORIGINS` | `https://<dominio-publico-frontend>` | Sí | Sin barra final (`/`). |
-| `AI_LLM_PROVIDER` | `gemini` | Sí | Proveedor principal. |
-| `AI_LLM_FALLBACK` | `groq-low,claude-haiku` | No | Respaldos en orden; los que no tengan clave se omiten. |
-| `GEMINI_API_KEY` | `<secret>` | Sí | Clave de Google AI Studio. |
-| `GROQ_API_KEY` | `<secret>` | Recomendado | Respaldo `groq-low`. |
-| `ANTHROPIC_API_KEY` | `<secret>` | Opcional | Solo si se usa `claude-haiku`. |
-| `HF_TOKEN` | `<secret>` | Sí (1.er arranque) | Token Read de Hugging Face para descargar `google/embeddinggemma-300m` (modelo con licencia aceptada) hacia `/data/huggingface`. |
-| `HF_HOME` | `/data/huggingface` | Definida en Dockerfile | Persistida mediante el volumen de Railway. |
-| `AI_EMBEDDING_MODEL` | `embeddinggemma` | No | Por defecto `embeddinggemma`. |
-| `AI_CATALOG_RELOAD_MINUTES` | `10` | No | Minutos entre revisiones de nueva publicación en Supabase (`0` = solo al arrancar). |
+```bash
+curl -s -o /dev/null -w "%{http_code} %{time_total}s\n" -X POST https://openbridge-ai.up.railway.app/assistant -H "Content-Type: application/json" -d '{"query":"Una clinica dental quiere cobrar las citas con tarjeta en linea y enviar recordatorios por SMS a sus pacientes."}'
+```
 
-### Servicio `frontend`
+Desde Git Bash en Windows, escribir las preguntas sin tildes ni `ñ`.
 
-> Next.js usa exportación estática (`output: 'export'`). Las variables `NEXT_PUBLIC_*` se incrustan **en tiempo de compilación** (`ARG` en `frontend/Dockerfile`). Si cambian los dominios de `backend` o `ai`, hay que **recompilar/redesplegar** `frontend`.
+## Apagar y prender
 
-| Variable | Valor / Formato | Requerida | Notas |
-|---|---|---|---|
-| `NEXT_PUBLIC_CATALOG_API_BASE_URL` | `https://<dominio-publico-backend>` | Sí | Apunta al servicio `backend` real. |
-| `NEXT_PUBLIC_ASSISTANT_API_BASE_URL` | `https://<dominio-publico-ai>` | Sí | Apunta directamente al servicio `ai` (nunca al `POST /assistant` 503 del `backend`). |
-| `NEXT_PUBLIC_MOCK_MODE` | `false` | Sí | Desactiva datos mock en producción. |
+- **Apagar:** en cada servicio, Deployments → menú ⋮ del despliegue activo → **Remove**. Se conservan la configuración, las variables, los dominios y el volumen del modelo.
+- **Prender:** en cada servicio, Deployments → menú ⋮ del último despliegue → **Redeploy**. Después, prueba de humo y pedido de calentamiento.
 
----
+Costo aproximado: prendido ~0,75 US$/día (casi todo es la RAM del asistente, ~2 GB); apagado, solo el volumen (centavos al mes).
 
-## 3. Supabase y discrepancia de roles documentada
+## Configuración
 
-En el repositorio existe una discrepancia entre dos archivos del backend:
-- **`backend/sql/001_lector_api.sql`** define el rol `openbridge_api_reader` con `SELECT` sobre `public.v_repos_for_ai`, `public.catalog_repositories` (con política RLS) y `ai.ai_repo_enrichment`, `ai.ai_repo_categories`, `ai.ai_integration_ideas`.
-- **`backend/.env.example`** (línea 2) y **`backend/docs/acceso-base-datos.md`** documentan `openbridge_ai_reader.<project_ref>` porque en la verificación de Supabase del 31-oct-2026 solo existían los roles `openbridge_ai_reader`, `openbridge_ai_writer` y `openbridge_data_sync` (el rol `openbridge_api_reader` no estaba creado en la instancia o faltaba aplicar permisos/rotar contraseña).
+La configuración vive en Railway (los `railway.toml` no se usan: Railway ya no permite activar config-as-code en servicios nuevos).
 
-Antes del primer despliegue, el administrador de datos debe confirmar en Supabase (solo lectura, sin usar credenciales administrativas en los servicios):
-1. Qué rol lector tiene `SELECT` vigente sobre `public.catalog_repositories`, `public.v_repos_for_ai` y `ai.*` para `backend` (`openbridge_api_reader` o `openbridge_ai_reader`), y asignar esa credencial a `DATABASE_URL`.
-2. Que `openbridge_ai_reader` tiene `SELECT` sobre `public.v_repos_for_ai`, `ai.ai_repo_enrichment`, `ai.ai_repo_categories`, `ai.ai_processing` y `ai.ai_embeddings` (según `ai/sql/004_procesamiento_ia.sql` y `ai/sql/005_lector_vectores_ia.sql`), y asignar esa credencial a `AI_READER_DATABASE_URL`.
+| Servicio | Construcción | Healthcheck | Memoria máx. | Variables |
+|---|---|---|---|---|
+| frontend | `frontend/Dockerfile` | `/` | 0,5 GB | `NEXT_PUBLIC_CATALOG_API_BASE_URL`, `NEXT_PUBLIC_ASSISTANT_API_BASE_URL`, `NEXT_PUBLIC_MOCK_MODE` |
+| backend | `backend/Dockerfile` | `/health` | 1 GB | `DATABASE_URL` (lector `openbridge_api_reader`), `CORS_ORIGINS` |
+| ai | `ai/Dockerfile`, volumen en `/data/huggingface` | `/health` (300 s) | 3 GB | `AI_READER_DATABASE_URL`, `AI_CATALOG_SOURCE`, `AI_LLM_PROVIDER`, `GEMINI_API_KEY`, `HF_TOKEN`, `AI_CORS_ORIGINS` |
 
----
-
-## 4. GitHub Secrets y Variables para CI/CD
-
-Configurar en **Settings → Secrets and variables → Actions** del repositorio `No-Country-simulation/S10_26_EQUIPO_29`:
-
-### Secrets
-- `RAILWAY_TOKEN`: Project Token de Railway asociado al proyecto y entorno `production`.
-
-### Variables
-- `FRONTEND_PUBLIC_URL`: `https://<dominio-publico-frontend>` (sin barra final).
-- `BACKEND_PUBLIC_URL`: `https://<dominio-publico-backend>` (sin barra final).
-- `AI_PUBLIC_URL`: `https://<dominio-publico-ai>` (sin barra final).
-- `RAILWAY_SERVICE_FRONTEND` *(opcional, default `frontend`)*: nombre exacto del servicio en Railway.
-- `RAILWAY_SERVICE_BACKEND` *(opcional, default `backend`)*: nombre exacto del servicio en Railway.
-- `RAILWAY_SERVICE_AI` *(opcional, default `ai`)*: nombre exacto del servicio en Railway.
-
----
-
-## 5. Flujo del primer despliegue controlado
-
-1. Crear los 3 servicios (`backend`, `ai`, `frontend`) en Railway apuntando al repo y rama `main` con Root Directory `/`.
-2. Montar el volumen `/data/huggingface` en `ai`.
-3. Generar dominios públicos HTTPS para los 3 servicios.
-4. Cargar las variables de entorno en los 3 servicios (usando los dominios reales generados).
-5. Cargar `RAILWAY_TOKEN` y las variables `FRONTEND_PUBLIC_URL`, `BACKEND_PUBLIC_URL`, `AI_PUBLIC_URL` en GitHub Actions.
-6. Mergear el PR hacia `main` (o ejecutar `workflow_dispatch` en `main` con `deploy=true`).
-7. Verificar que `smoke-tests` pase en verde (o ejecutar manualmente `python scripts/smoke_test_deploy.py`).
+- Las URLs `NEXT_PUBLIC_*` se escriben en el JavaScript al compilar: si cambia un dominio, el frontend se vuelve a construir.
+- `CORS_ORIGINS` y `AI_CORS_ORIGINS` llevan el dominio del frontend sin `/` final.
+- El asistente usa solo Gemini: no hay claves de respaldo configuradas.
+- La actualización diaria de los datos sigue en GitHub Actions; el asistente recoge lo publicado cada 10 minutos sin reiniciar.
