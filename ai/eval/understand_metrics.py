@@ -1,14 +1,14 @@
 """Métricas del paso de entender contra los casos del asistente.
 
 Compara las necesidades detectadas con las esperadas de cada caso y resume
-por proveedor. Funciones puras: no llaman al modelo.
+por proveedor y por categoría. Funciones puras: no llaman al modelo.
 """
 
 from collections import defaultdict
 from dataclasses import dataclass
 from statistics import median
 
-from ai.assistant import Understood, evidence_is_literal
+from ai.assistant import Understood, evidence_is_literal, understanding_schema
 from ai.eval.assistant_cases import AssistantCase
 
 QUERY_WORDS = (3, 8)  # largo de consulta que pide el prompt
@@ -82,6 +82,19 @@ def case_outcome(case: AssistantCase, provider: str, run: int,
     )
 
 
+def understood_from_answer(answer: dict) -> Understood | None:
+    """Respuesta de entender guardada en el JSON de un reporte, lista para volver a puntuarla.
+
+    None si esa llamada terminó en error del proveedor.
+    """
+    if answer["error"]:
+        return None
+    data = understanding_schema().model_validate(answer["data"]) if answer["data"] else None
+    return Understood(data=data, problems_first=answer["problems_first"],
+                      problems_final=answer["problems_final"], seconds=answer["seconds"],
+                      input_tokens=answer["input_tokens"], output_tokens=answer["output_tokens"])
+
+
 def consistency(outcomes: list[CaseOutcome]) -> float | None:
     """Parte de los casos en que todas las corridas detectaron lo mismo."""
     by_case = defaultdict(list)
@@ -125,3 +138,22 @@ def summarize(outcomes: list[CaseOutcome]) -> dict:
         "median_output_tokens": median(o.output_tokens for o in ok) if ok else None,
         "waited": sum(o.waited for o in outcomes),
     }
+
+
+def by_category(outcomes: list[CaseOutcome]) -> dict[str, dict[int, tuple[int, int, int]]]:
+    """Por categoría y corrida: (detectadas, esperadas, de más).
+
+    "De más" cuenta los pedidos que no la piden y en los que se detectó. Como en
+    summarize(), no cuentan los errores del proveedor ni los pedidos vagos.
+    """
+    table = defaultdict(lambda: defaultdict(lambda: [0, 0, 0]))
+    for o in outcomes:
+        if o.error is not None or o.vague:
+            continue
+        for category in o.expected:
+            table[category][o.run][1] += 1
+            table[category][o.run][0] += category in o.detected
+        for category in o.invented:
+            table[category][o.run][2] += 1
+    return {category: {run: tuple(counts) for run, counts in runs.items()}
+            for category, runs in table.items()}

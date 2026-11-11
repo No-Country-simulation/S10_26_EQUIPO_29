@@ -4,11 +4,14 @@ Uso, desde la raíz del repo:
     python -m ai.eval.run_understand_eval                            # todos los proveedores del registro, 3 corridas
     python -m ai.eval.run_understand_eval gemini --runs 1            # uno, una corrida
     python -m ai.eval.run_understand_eval gemini --cases validation  # casos de validación
+    python -m ai.eval.run_understand_eval --cases detection --rescore <reporte>.json
 
 Cada proveedor recibe primero una llamada de calentamiento que no se cuenta.
 Si el proveedor pide esperar por límite de uso, se espera y se anota.
 Escribe ai/eval/results/understand-<fecha>-<hora>[-validation][-proveedores].md (reporte)
 y .json (todas las respuestas).
+Con --rescore no llama al modelo: puntúa las respuestas guardadas en el JSON de un reporte
+con las etiquetas actuales de los casos y escribe <reporte>-etiquetas-v<versión>.md.
 """
 
 import argparse
@@ -16,12 +19,13 @@ import json
 import time
 from collections import defaultdict
 from datetime import date
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 from ai.assistant import entender
 from ai.eval.assistant_cases import CASE_FILES, EVAL_DIR, load_assistant_cases
-from ai.eval.understand_metrics import case_outcome, summarize
+from ai.eval.understand_metrics import by_category, case_outcome, summarize, understood_from_answer
 from ai.llm import PROVIDERS, LLMError, LLMRateLimited, LLMTimeout, LLMUnavailable
 
 RESULTS_DIR = EVAL_DIR / "results"
@@ -79,17 +83,45 @@ def num(v):
     return "—" if v is None else f"{v:.0f}"
 
 
-def render_report(providers, summaries, cold, outcomes, answers, cases, runs) -> str:
+def render_categories(providers, outcomes) -> list[str]:
+    """Tabla por categoría: detectadas y de más, una cifra por corrida."""
+    lines = ["## Por categoría", "",
+             "Una cifra por corrida. Detectadas: de las necesidades esperadas de esa "
+             "categoría. De más: pedidos que no la piden y en los que se detectó. Sin "
+             "errores del proveedor ni pedidos vagos.", ""]
+    for p in providers:
+        table = by_category([o for o in outcomes if o.provider == p])
+        runs = sorted({run for counts in table.values() for run in counts})
+        lines += [f"### {p}", "", "| Categoría | Detectadas | De más |", "|---|---|---|"]
+        totals = {run: [0, 0, 0] for run in runs}
+        for category in sorted(table):
+            cells = [table[category].get(run, (0, 0, 0)) for run in runs]
+            for run, counts in zip(runs, cells):
+                totals[run] = [a + b for a, b in zip(totals[run], counts)]
+            lines.append(f"| {category} | " + " · ".join(f"{d}/{e}" for d, e, _ in cells)
+                         + " | " + " · ".join(str(x) for _, _, x in cells) + " |")
+        lines.append("| **Todas** | " + " · ".join(f"{d}/{e}" for d, e, _ in totals.values())
+                     + " | " + " · ".join(str(x) for _, _, x in totals.values()) + " |")
+        lines.append("")
+    return lines
+
+
+def render_report(providers, summaries, cold, outcomes, answers, cases, runs, *,
+                  labels_version: int, rescored_from: str | None = None) -> str:
     def row(label, fmt):
         return f"| {label} | " + " | ".join(fmt(summaries[p]) for p in providers) + " |"
 
+    if rescored_from:
+        origin = (f"Re-puntuado con `--rescore` el {date.today()}: respuestas del modelo "
+                  f"guardadas en `{rescored_from}`, etiquetas actuales de los casos. ")
+    else:
+        origin = (f"Generado con `python -m ai.eval.run_understand_eval` el {date.today()} "
+                  f"a las {time.strftime('%H:%M')}. ")
     lines = [
         "# Evaluación del paso de entender",
         "",
-        f"Generado con `python -m ai.eval.run_understand_eval` el {date.today()} "
-        f"a las {time.strftime('%H:%M')}. "
-        f"{len(cases)} casos × {runs} corridas por proveedor; "
-        "la llamada de calentamiento no se cuenta.",
+        origin + f"{len(cases)} casos × {runs} corridas por proveedor; "
+        f"etiquetas versión {labels_version}; la llamada de calentamiento no se cuenta.",
         "",
         "## Modelos",
         "",
@@ -121,6 +153,7 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs) ->
         "",
         f"Evidencia direccional: {len(cases)} casos; los porcentajes no son estadística firme.",
         "",
+        *render_categories(providers, outcomes),
         "## Por caso",
         "",
         "Una marca por corrida: ✅ exacto · ❌ no exacto · ⚠️ error del proveedor. "
@@ -166,6 +199,25 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs) ->
     return "\n".join(lines)
 
 
+def rescore(report_json: Path, cases_name: str) -> Path:
+    """Puntúa las respuestas guardadas de un reporte con las etiquetas actuales. Sin llamadas."""
+    answers = json.loads(report_json.read_text(encoding="utf-8"))
+    case_set = load_assistant_cases(CASE_FILES[cases_name])
+    by_id = {c.id: c for c in case_set.cases}
+    if {a["case"] for a in answers} != set(by_id):
+        raise SystemExit(f"{report_json.name} no tiene los mismos casos que '{cases_name}'")
+    outcomes = [case_outcome(by_id[a["case"]], a["provider"], a["run"], understood_from_answer(a),
+                             waited=a["waited"], error=a["error"]) for a in answers]
+    providers = list(dict.fromkeys(a["provider"] for a in answers))
+    summaries = {p: summarize([o for o in outcomes if o.provider == p]) for p in providers}
+    report = render_report(providers, summaries, {p: None for p in providers}, outcomes, answers,
+                           case_set.cases, max(a["run"] for a in answers),
+                           labels_version=case_set.version, rescored_from=report_json.name)
+    out = report_json.with_name(f"{report_json.stem}-etiquetas-v{case_set.version}.md")
+    out.write_text(report, encoding="utf-8")
+    return out
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Mide el paso de entender.")
     parser.add_argument("providers", nargs="*",
@@ -173,14 +225,21 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--cases", choices=CASE_FILES, default="base",
                         help="base: todos los casos (por defecto); validation: los casos de validación")
+    parser.add_argument("--rescore", type=Path, metavar="REPORTE_JSON",
+                        help="puntúa las respuestas guardadas de un reporte con las etiquetas "
+                             "actuales, sin llamar al modelo")
     args = parser.parse_args()
+    if args.rescore:
+        print(f"Reporte: {rescore(args.rescore, args.cases)}")
+        return
     unknown = [p for p in args.providers if p not in PROVIDERS]
     if unknown:
         parser.error(f"proveedor desconocido: {', '.join(unknown)}")
     args.providers = args.providers or list(PROVIDERS)
 
     load_dotenv()
-    cases = load_assistant_cases(CASE_FILES[args.cases]).cases
+    case_set = load_assistant_cases(CASE_FILES[args.cases])
+    cases = case_set.cases
     outcomes, answers, cold = [], [], {}
 
     for provider in args.providers:
@@ -228,7 +287,8 @@ def main() -> None:
         name += "-" + "-".join(ran)
     stem = RESULTS_DIR / name
     stem.with_suffix(".md").write_text(
-        render_report(ran, summaries, cold, outcomes, answers, cases, args.runs), encoding="utf-8")
+        render_report(ran, summaries, cold, outcomes, answers, cases, args.runs,
+                      labels_version=case_set.version), encoding="utf-8")
     stem.with_suffix(".json").write_text(
         json.dumps(answers, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Reporte: {stem.with_suffix('.md')}")

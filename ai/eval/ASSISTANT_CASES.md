@@ -239,6 +239,19 @@ propósito. Entonces:
 
 Las necesidades esperadas (capa 1) no cambian con el catálogo.
 
+## Volver a puntuar sin llamar al modelo
+
+Si cambian las etiquetas de un conjunto (no sus pedidos), las respuestas guardadas en el
+JSON de un reporte de entender se puntúan de nuevo con las etiquetas actuales:
+
+```bash
+python -m ai.eval.run_understand_eval --cases detection --rescore ai/eval/results/<reporte>.json
+```
+
+Escribe `<reporte>-etiquetas-v<versión>.md` junto al original. Solo vale si el código del
+paso de entender no cambió desde esa corrida (`ai/assistant.py`, `ai/llm.py`,
+`ai/guardrails.py`, `shared/contracts/categories.json`).
+
 ## Cómo validarlos
 
 ```bash
