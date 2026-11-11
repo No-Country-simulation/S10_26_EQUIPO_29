@@ -43,7 +43,7 @@ export function ToolCard({ tool, onOpen }) {
   </div>
   <div className="tool-card-details">
    <div className="card-tech-summary">
-   <HealthScore score={detail.healthScore}/>
+   <HealthScore score={detail.healthScore} demo={tool.isDemo}/>
    <span className="language-tag" title="Lenguaje principal del repositorio">{tool.language}</span>
    </div>
    <dl className="tool-metrics">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>

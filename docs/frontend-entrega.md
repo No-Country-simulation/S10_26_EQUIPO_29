@@ -253,11 +253,11 @@ Una licencia ausente o `NOASSERTION` **no bloquea** la arquitectura: se muestra 
 
 | Parámetro | Valor |
 | --- | --- |
-| Aviso de espera prolongada | 60 segundos |
+| Aviso de espera prolongada | 15 segundos |
 | Timeout general de `requestAssistant` | 90 segundos |
 | Timeout aplicado por el proveedor HTTP real | 20 segundos |
 
-**Detalle a coordinar:** en una consulta HTTP real, el timeout de 20 segundos ocurre antes del aviso de 60 segundos. No debe documentarse ese aviso como un comportamiento alcanzable de ese recorrido sin ajustar antes los tiempos. Los escenarios de prueba pueden sobrescribir estas duraciones.
+El aviso aparece al superar el presupuesto de 15 segundos documentado por IA en `ai/eval/LLM_DECISION.md`. No cancela la consulta: la petición HTTP real conserva su límite de 20 segundos. Los escenarios de prueba pueden sobrescribir estas duraciones.
 
 ## 10. Errores y seguridad de presentación
 
@@ -291,7 +291,7 @@ Durante el trabajo del asistente el catálogo sale del recorrido visible sin per
 Hooks y módulos relevantes:
 
 - `usePromptLayout` y `useResultReset`: movimiento y tamaño del prompt entre inicio, carga y resultado.
-- `useSmoothPageScroll`: suavizado del desplazamiento general.
+- Desplazamiento general nativo del navegador, sin interpolación ni retardo añadido a la rueda o al trackpad.
 - `useAnimatedCatalog` y `useCatalogBounce`: entradas y elasticidad del catálogo.
 - `PageReveal`: entrada escalonada de elementos.
 - `useDetailReveal`, `coverTransition` y módulos de scroll de modal: transiciones de ficha.

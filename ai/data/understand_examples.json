@@ -1,0 +1,636 @@
+{
+  "version": 1,
+  "note": "Pedidos escritos por otro modelo de lenguaje (GPT-6, 11-nov) sin ver el catálogo ni los conjuntos de evaluación, filtrados con reglas fijas y sin editar. Etiquetas puestas después con ai/eval/LABEL_CRITERIA.md (borrador de un asistente de IA revisado por una persona). Se quitaron los pedidos demasiado parecidos a uno de evaluación: ver ai/eval/DETECTION_EXAMPLES_DECISION.md.",
+  "examples": [
+    {
+      "id": "imprenta-empaques",
+      "query": "Tengo una imprenta que fabrica empaques para pequeños negocios. Quiero poder consultar qué empaques pidió cada cliente y cuándo se entregó cada trabajo. También necesito que las empresas puedan pagar sus anticipos por internet y recibir un aviso cuando el diseño esté listo para su aprobación.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero poder consultar qué empaques pidió cada cliente y cuándo se entregó cada trabajo"
+        },
+        {
+          "category": "payments",
+          "evidence": "las empresas puedan pagar sus anticipos por internet"
+        },
+        {
+          "category": "communication",
+          "evidence": "recibir un aviso cuando el diseño esté listo para su aprobación"
+        }
+      ]
+    },
+    {
+      "id": "distribuidora-semillas",
+      "query": "Soy dueño de una distribuidora de semillas y abonos para agricultores. Necesito saber cuánto hay de cada semilla, qué proveedor la surte y qué ventas están pendientes. Cada vendedor debe ver únicamente los clientes y las existencias de su sucursal. Quiero comparar las ventas de cada local por temporada.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito saber cuánto hay de cada semilla, qué proveedor la surte y qué ventas están pendientes"
+        },
+        {
+          "category": "auth",
+          "evidence": "Cada vendedor debe ver únicamente los clientes y las existencias de su sucursal"
+        },
+        {
+          "category": "analytics",
+          "evidence": "Quiero comparar las ventas de cada local por temporada"
+        }
+      ]
+    },
+    {
+      "id": "lavanderia-hoteles",
+      "query": "Tengo una lavandería que trabaja con hoteles y restaurantes. Quiero consultar qué prendas dejó cada establecimiento, en qué fecha y cuáles ya están listas. Necesito que el sistema me avise cuando un lote esté por retrasarse y que el cliente reciba un mensaje cuando pueda recoger su ropa.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar qué prendas dejó cada establecimiento, en qué fecha y cuáles ya están listas"
+        },
+        {
+          "category": "communication",
+          "evidence": "que el cliente reciba un mensaje cuando pueda recoger su ropa"
+        }
+      ]
+    },
+    {
+      "id": "escuela-conduccion-montacargas",
+      "query": "Dirijo una escuela donde capacitamos a personas para operar montacargas. Necesito ver las clases que ha tomado cada alumno y cuánto le falta para completar su formación. Cada instructor solo debe consultar los alumnos de sus grupos. Los alumnos deben poder pagar sus clases por internet.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito ver las clases que ha tomado cada alumno y cuánto le falta para completar su formación"
+        },
+        {
+          "category": "auth",
+          "evidence": "Cada instructor solo debe consultar los alumnos de sus grupos"
+        },
+        {
+          "category": "payments",
+          "evidence": "Los alumnos deben poder pagar sus clases por internet"
+        }
+      ]
+    },
+    {
+      "id": "alquiler-salones-reunion",
+      "query": "Tengo un negocio que alquila salones para reuniones y capacitaciones empresariales. Quiero revisar qué salones están reservados, quién los separó y cuánto dejó de anticipo. También quiero cobrar ese anticipo en línea y comparar la ocupación de los salones entre meses.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero revisar qué salones están reservados, quién los separó y cuánto dejó de anticipo"
+        },
+        {
+          "category": "payments",
+          "evidence": "quiero cobrar ese anticipo en línea"
+        },
+        {
+          "category": "analytics",
+          "evidence": "comparar la ocupación de los salones entre meses"
+        }
+      ]
+    },
+    {
+      "id": "chocolateria-mayorista",
+      "query": "Fabrico chocolate artesanal para tiendas y restaurantes. Necesito consultar qué lotes preparamos, qué ingredientes usamos y a quién se vendió cada lote. Cuando escriba el nombre de un ingrediente o un cliente, quiero encontrar rápidamente la información relacionada. También quiero calcular cuánto rinde cada lote según los ingredientes utilizados.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito consultar qué lotes preparamos, qué ingredientes usamos y a quién se vendió cada lote"
+        },
+        {
+          "category": "search",
+          "evidence": "Cuando escriba el nombre de un ingrediente o un cliente, quiero encontrar rápidamente la información relacionada"
+        },
+        {
+          "category": "data-processing",
+          "evidence": "quiero calcular cuánto rinde cada lote según los ingredientes utilizados"
+        }
+      ]
+    },
+    {
+      "id": "distribuidora-utiles-escolares",
+      "query": "Manejo una distribuidora de útiles escolares que vende a colegios y papelerías. Necesito saber cuántos cuadernos, colores y otros artículos hay en cada local y cuáles se han vendido. Quiero encontrar un artículo por su nombre o por una descripción aunque no recuerde el código. El personal de cada local solo debe ver las existencias de su propia sede.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito saber cuántos cuadernos, colores y otros artículos hay en cada local y cuáles se han vendido"
+        },
+        {
+          "category": "search",
+          "evidence": "Quiero encontrar un artículo por su nombre o por una descripción aunque no recuerde el código"
+        },
+        {
+          "category": "auth",
+          "evidence": "El personal de cada local solo debe ver las existencias de su propia sede"
+        }
+      ]
+    },
+    {
+      "id": "finca-aguacate",
+      "query": "Tengo una finca donde cultivamos aguacate para vender a compradores nacionales y extranjeros. Quiero consultar la cosecha de cada parcela, las fechas de recolección y las ventas a cada comprador. También necesito comparar el rendimiento de las parcelas entre temporadas. La página debe abrir rápido para los compradores que consultan desde otros países.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar la cosecha de cada parcela, las fechas de recolección y las ventas a cada comprador"
+        },
+        {
+          "category": "analytics",
+          "evidence": "necesito comparar el rendimiento de las parcelas entre temporadas"
+        },
+        {
+          "category": "infrastructure",
+          "evidence": "La página debe abrir rápido para los compradores que consultan desde otros países"
+        }
+      ]
+    },
+    {
+      "id": "instalacion-ventanas-aluminio",
+      "query": "Tengo una empresa que instala ventanas y puertas de aluminio en casas y edificios. Necesito consultar los trabajos que hemos hecho en cada propiedad y qué presupuesto aceptó el cliente. Cuando un presupuesto requiera materiales costosos, quiero que mi encargado lo apruebe antes de programar el trabajo. El cliente debe recibir confirmación de la visita y un aviso cuando vayamos en camino.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito consultar los trabajos que hemos hecho en cada propiedad y qué presupuesto aceptó el cliente"
+        },
+        {
+          "category": "automation",
+          "evidence": "Cuando un presupuesto requiera materiales costosos, quiero que mi encargado lo apruebe antes de programar el trabajo"
+        },
+        {
+          "category": "communication",
+          "evidence": "El cliente debe recibir confirmación de la visita y un aviso cuando vayamos en camino"
+        }
+      ]
+    },
+    {
+      "id": "laboratorio-analisis-agua",
+      "query": "Tengo un laboratorio que analiza la calidad del agua para empresas y fincas. Quiero consultar los resultados de cada muestra y quién solicitó el análisis. Necesito que los informes salgan como documentos descargables junto con las fotos de las muestras. Quiero enviar el resultado al cliente apenas esté revisado.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar los resultados de cada muestra y quién solicitó el análisis"
+        },
+        {
+          "category": "storage",
+          "evidence": "Necesito que los informes salgan como documentos descargables junto con las fotos de las muestras"
+        },
+        {
+          "category": "communication",
+          "evidence": "Quiero enviar el resultado al cliente apenas esté revisado"
+        }
+      ]
+    },
+    {
+      "id": "cooperativa-productores-yuca",
+      "query": "Formo parte de una cooperativa que reúne a pequeños productores de yuca. Quiero consultar cuánto entregó cada productor, en qué fecha y cuánto le corresponde recibir. Cada asociado solo debe ver sus propias entregas y pagos. También necesito comparar las entregas por productor y por cosecha.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar cuánto entregó cada productor, en qué fecha y cuánto le corresponde recibir"
+        },
+        {
+          "category": "auth",
+          "evidence": "Cada asociado solo debe ver sus propias entregas y pagos"
+        },
+        {
+          "category": "analytics",
+          "evidence": "necesito comparar las entregas por productor y por cosecha"
+        }
+      ]
+    },
+    {
+      "id": "escuela-equitacion",
+      "query": "Tengo una escuela de equitación donde damos clases a niños y adultos. Quiero consultar las clases que ha tomado cada alumno, los horarios y la disponibilidad de cada caballo. Los instructores solo deben ver las clases de sus grupos. También quiero mandar recordatorios de clase a las familias.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar las clases que ha tomado cada alumno, los horarios y la disponibilidad de cada caballo"
+        },
+        {
+          "category": "auth",
+          "evidence": "Los instructores solo deben ver las clases de sus grupos"
+        },
+        {
+          "category": "communication",
+          "evidence": "quiero mandar recordatorios de clase a las familias"
+        }
+      ]
+    },
+    {
+      "id": "fabricante-uniformes-seguridad",
+      "query": "Tengo una fábrica de uniformes para empresas de construcción y manufactura. Quiero consultar los pedidos de cada cliente, las tallas solicitadas y los materiales que necesitamos para cada entrega. Necesito comparar cuánto material utilizamos en cada tipo de uniforme. Cuando un pedido especial supere cierta cantidad, debe aprobarlo la persona encargada de producción.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar los pedidos de cada cliente, las tallas solicitadas y los materiales que necesitamos para cada entrega"
+        },
+        {
+          "category": "analytics",
+          "evidence": "Necesito comparar cuánto material utilizamos en cada tipo de uniforme"
+        },
+        {
+          "category": "automation",
+          "evidence": "Cuando un pedido especial supere cierta cantidad, debe aprobarlo la persona encargada de producción"
+        }
+      ]
+    },
+    {
+      "id": "suministros-restaurantes",
+      "query": "Tengo una distribuidora de insumos para restaurantes y hoteles. Necesito consultar los pedidos de cada establecimiento, los precios acordados y los artículos que tienen fecha de vencimiento cercana. Quiero encontrar rápidamente un insumo por su nombre o por el tipo de cocina que lo utiliza. También quiero enviar a cada restaurante la confirmación y la fecha estimada de entrega.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Necesito consultar los pedidos de cada establecimiento, los precios acordados y los artículos que tienen fecha de vencimiento cercana"
+        },
+        {
+          "category": "search",
+          "evidence": "Quiero encontrar rápidamente un insumo por su nombre o por el tipo de cocina que lo utiliza"
+        },
+        {
+          "category": "communication",
+          "evidence": "quiero enviar a cada restaurante la confirmación y la fecha estimada de entrega"
+        }
+      ]
+    },
+    {
+      "id": "mantenimiento-ascensores",
+      "query": "Somos una empresa que realiza mantenimiento de ascensores en edificios y centros comerciales. Quiero consultar los mantenimientos hechos a cada ascensor, las piezas que se cambiaron y la próxima revisión. Cada técnico debe ver solo las órdenes que tiene asignadas. Si un cliente pide un trabajo fuera del contrato, quiero que un supervisor lo apruebe antes de asignarlo.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar los mantenimientos hechos a cada ascensor, las piezas que se cambiaron y la próxima revisión"
+        },
+        {
+          "category": "auth",
+          "evidence": "Cada técnico debe ver solo las órdenes que tiene asignadas"
+        },
+        {
+          "category": "automation",
+          "evidence": "Si un cliente pide un trabajo fuera del contrato, quiero que un supervisor lo apruebe antes de asignarlo"
+        }
+      ]
+    },
+    {
+      "id": "asociacion-ahorro-comunitario",
+      "query": "Coordino una asociación de ahorro comunitario en mi municipio. Quiero consultar los aportes de cada asociado, los préstamos que tiene y las cuotas que ya pagó. Cada asociado debe entrar y ver únicamente sus propios movimientos. Necesito entender cuánto dinero está pendiente de cobrar en el mes.",
+      "needs": [
+        {
+          "category": "database",
+          "evidence": "Quiero consultar los aportes de cada asociado, los préstamos que tiene y las cuotas que ya pagó"
+        },
+        {
+          "category": "auth",
+          "evidence": "Cada asociado debe entrar y ver únicamente sus propios movimientos"
+        },
+        {
+          "category": "analytics",
+          "evidence": "Necesito entender cuánto dinero está pendiente de cobrar en el mes"
+        }
+      ]
+    },
+    {
+      "id": "congresos-regionales",
+      "query": "Soy dueño de una empresa que organiza congresos regionales. Quiero organizar la agenda de cada sala y ajustar los horarios si un expositor se retrasa. Necesito que los asistentes reciban avisos de los cambios y que puedan pagar su entrada en línea.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "Necesito que los asistentes reciban avisos de los cambios"
+        },
+        {
+          "category": "payments",
+          "evidence": "que puedan pagar su entrada en línea"
+        }
+      ]
+    },
+    {
+      "id": "mudanzas-intermunicipales",
+      "query": "Tengo una empresa de mudanzas entre ciudades. Quiero llevar cada camión por la ruta más conveniente y coordinar a los equipos para que lleguen a la misma hora. También necesito que los clientes puedan pagar el servicio antes de la mudanza.",
+      "needs": [
+        {
+          "category": "payments",
+          "evidence": "necesito que los clientes puedan pagar el servicio antes de la mudanza"
+        }
+      ]
+    },
+    {
+      "id": "banquetes-corporativos",
+      "query": "Tengo un negocio de banquetes para empresas y celebraciones grandes. Quiero organizar el montaje de mesas y la distribución del personal según el tamaño de cada evento. También necesito que los cambios de última hora se comuniquen al equipo de cocina y de servicio.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "necesito que los cambios de última hora se comuniquen al equipo de cocina y de servicio"
+        }
+      ]
+    },
+    {
+      "id": "montaje-escenarios",
+      "query": "Somos una empresa que monta escenarios y equipos de iluminación para conciertos. Quiero manejar los horarios de montaje para que los equipos no se estorben y que cada responsable reciba las instrucciones que le corresponden. Necesito coordinar cambios en tiempo real con el personal que está en el lugar.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "que cada responsable reciba las instrucciones que le corresponden"
+        }
+      ]
+    },
+    {
+      "id": "escuela-baile-regional",
+      "query": "Tengo una escuela de baile regional con varios profesores y grupos. Quiero organizar los ensayos sin cruzar salones ni profesores. Las familias deben poder pagar las mensualidades desde la página y recibir avisos cuando se cambie una clase.",
+      "needs": [
+        {
+          "category": "payments",
+          "evidence": "Las familias deben poder pagar las mensualidades desde la página"
+        },
+        {
+          "category": "communication",
+          "evidence": "recibir avisos cuando se cambie una clase"
+        }
+      ]
+    },
+    {
+      "id": "mensajeria-documentos",
+      "query": "Tengo una pequeña empresa que entrega documentos entre oficinas y despachos profesionales. Quiero llevar los sobres por recorridos que reduzcan los tiempos de viaje y avisar a cada cliente cuando su mensajero esté cerca. También quiero que los clientes puedan ver en una pantalla dónde va su envío mientras está en camino.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "avisar a cada cliente cuando su mensajero esté cerca"
+        }
+      ]
+    },
+    {
+      "id": "fabrica-bombones",
+      "query": "Soy fabricante de bombones y chocolates para celebraciones. Quiero controlar la temperatura y los tiempos durante la preparación para que todos los lotes salgan con la misma calidad. También quiero que una ayuda inteligente recomiende ajustes cuando las condiciones se desvíen.",
+      "needs": [
+        {
+          "category": "analytics",
+          "evidence": "Quiero controlar la temperatura y los tiempos durante la preparación para que todos los lotes salgan con la misma calidad"
+        },
+        {
+          "category": "ai",
+          "evidence": "quiero que una ayuda inteligente recomiende ajustes cuando las condiciones se desvíen"
+        }
+      ]
+    },
+    {
+      "id": "escuela-patinaje",
+      "query": "Tengo una escuela de patinaje y organizo encuentros entre clubes. Quiero organizar los cruces y horarios de las competencias sin que coincidan los deportistas. Necesito que los participantes reciban sus horarios y puedan pagar la inscripción.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "Necesito que los participantes reciban sus horarios"
+        },
+        {
+          "category": "payments",
+          "evidence": "puedan pagar la inscripción"
+        }
+      ]
+    },
+    {
+      "id": "alimentacion-rodajes",
+      "query": "Preparo alimentación para equipos de filmación que trabajan en distintas locaciones. Quiero llevar la preparación de muchos menús a la vez y ajustar las cantidades según las restricciones alimentarias de cada equipo. Me serviría que el sistema calcule automáticamente las cantidades de ingredientes.",
+      "needs": [
+        {
+          "category": "data-processing",
+          "evidence": "Me serviría que el sistema calcule automáticamente las cantidades de ingredientes"
+        }
+      ]
+    },
+    {
+      "id": "ceramica-utilitaria",
+      "query": "Tengo un taller de cerámica utilitaria que vende piezas a tiendas y restaurantes. Quiero controlar la cocción para evitar variaciones de temperatura y detectar posibles fallas antes de entregar los pedidos. También quiero que el sistema compare las imágenes de las piezas terminadas con los criterios de calidad que usamos.",
+      "needs": [
+        {
+          "category": "analytics",
+          "evidence": "Quiero controlar la cocción para evitar variaciones de temperatura y detectar posibles fallas antes de entregar los pedidos"
+        },
+        {
+          "category": "ai",
+          "evidence": "quiero que el sistema compare las imágenes de las piezas terminadas con los criterios de calidad que usamos"
+        }
+      ]
+    },
+    {
+      "id": "instalacion-toldos",
+      "query": "Instalo toldos y pérgolas en casas y comercios. Quiero organizar las cuadrillas según el clima y las condiciones de cada obra, y mandar avisos cuando una visita tenga que cambiarse. Los clientes deben poder elegir un nuevo horario sin llamarnos.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "mandar avisos cuando una visita tenga que cambiarse"
+        }
+      ]
+    },
+    {
+      "id": "festival-cine-independiente",
+      "query": "Dirijo un festival de cine independiente. Quiero organizar las proyecciones en varias salas sin choques de horario y publicar la programación para que el público la consulte. También quiero vender las entradas antes del festival.",
+      "needs": [
+        {
+          "category": "cms",
+          "evidence": "publicar la programación para que el público la consulte"
+        },
+        {
+          "category": "payments",
+          "evidence": "quiero vender las entradas antes del festival"
+        }
+      ]
+    },
+    {
+      "id": "transporte-instrumentos",
+      "query": "Tengo una empresa que transporta instrumentos para orquestas y grupos musicales. Quiero llevar cada carga con cuidado y coordinar las horas de recogida y entrega con los músicos. El equipo debe recibir avisos inmediatos cuando cambie el itinerario.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "El equipo debe recibir avisos inmediatos cuando cambie el itinerario"
+        }
+      ]
+    },
+    {
+      "id": "lavadero-automoviles",
+      "query": "Soy dueño de un lavadero de autos. Quiero manejar la fila de vehículos para que los clientes sepan cuánto deben esperar y puedan elegir un turno desde el celular. También quiero cobrar los servicios adicionales sin usar efectivo.",
+      "needs": [
+        {
+          "category": "payments",
+          "evidence": "quiero cobrar los servicios adicionales sin usar efectivo"
+        }
+      ]
+    },
+    {
+      "id": "catering-comida-vegana",
+      "query": "Tengo un servicio de comida vegana para eventos y reuniones. Quiero organizar la preparación por estaciones y repartir las tareas según la experiencia del equipo. Necesito que los cambios en el menú lleguen al instante a cocina y a los meseros.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "Necesito que los cambios en el menú lleguen al instante a cocina y a los meseros"
+        }
+      ]
+    },
+    {
+      "id": "produccion-panela",
+      "query": "Soy productor de panela artesanal y vendo a tiendas de varias ciudades. Quiero controlar la calidad durante la molienda y el calentamiento, y comparar qué ajustes dan un resultado más uniforme. Me interesa entender qué condiciones de producción nos ayudan a reducir las variaciones entre lotes.",
+      "needs": [
+        {
+          "category": "analytics",
+          "evidence": "Quiero controlar la calidad durante la molienda y el calentamiento, y comparar qué ajustes dan un resultado más uniforme"
+        }
+      ]
+    },
+    {
+      "id": "complejo-canchas-padel",
+      "query": "Administro un complejo de canchas de pádel. Quiero organizar torneos con horarios que respeten los descansos de los jugadores y que el público pueda consultar el cuadro de partidos. También quiero cobrar las inscripciones en línea.",
+      "needs": [
+        {
+          "category": "payments",
+          "evidence": "quiero cobrar las inscripciones en línea"
+        }
+      ]
+    },
+    {
+      "id": "recoleccion-aceite-usado",
+      "query": "Tengo una empresa que recoge aceite de cocina usado de restaurantes y comedores. Quiero manejar las rutas de recolección para evitar viajes vacíos y coordinar con los conductores los cambios de última hora. Los restaurantes deben recibir un aviso con la franja de llegada.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "Los restaurantes deben recibir un aviso con la franja de llegada"
+        }
+      ]
+    },
+    {
+      "id": "revestimientos-artesanales",
+      "query": "Tengo un negocio que vende revestimientos artesanales para casas y proyectos de arquitectura. Quiero que los arquitectos encuentren modelos por color, medidas o estilo, incluso cuando describan lo que buscan con otras palabras. Necesito cambiar fotos y descripciones sin pedir ayuda a alguien que desarrolle la página. La página debe cargar rápido en Colombia, Chile y España.",
+      "needs": [
+        {
+          "category": "search",
+          "evidence": "Quiero que los arquitectos encuentren modelos por color, medidas o estilo, incluso cuando describan lo que buscan con otras palabras"
+        },
+        {
+          "category": "cms",
+          "evidence": "Necesito cambiar fotos y descripciones sin pedir ayuda a alguien que desarrolle la página"
+        },
+        {
+          "category": "infrastructure",
+          "evidence": "La página debe cargar rápido en Colombia, Chile y España"
+        }
+      ]
+    },
+    {
+      "id": "asesoria-exportadores",
+      "query": "Tengo una consultora que asesora a pequeños exportadores. Quiero que el sistema responda preguntas frecuentes usando nuestros manuales y documentos, y que indique de cuál documento obtuvo cada respuesta. También necesito que el personal encuentre información aunque no recuerde el título exacto del archivo.",
+      "needs": [
+        {
+          "category": "ai",
+          "evidence": "Quiero que el sistema responda preguntas frecuentes usando nuestros manuales y documentos, y que indique de cuál documento obtuvo cada respuesta"
+        },
+        {
+          "category": "search",
+          "evidence": "que el personal encuentre información aunque no recuerde el título exacto del archivo"
+        }
+      ]
+    },
+    {
+      "id": "portal-precios-mayoristas",
+      "query": "Tengo una empresa que ofrece a pequeños comercios un portal para consultar precios y disponibilidad de mercancía. Quiero que todas las sucursales consulten el mismo servicio y reciban los precios calculados con las reglas de cada cliente. En fechas de alta demanda, las respuestas deben salir rápido aunque muchas personas consulten al mismo tiempo.",
+      "needs": [
+        {
+          "category": "cache",
+          "evidence": "En fechas de alta demanda, las respuestas deben salir rápido aunque muchas personas consulten al mismo tiempo"
+        }
+      ]
+    },
+    {
+      "id": "inscripciones-ferias",
+      "query": "Tengo una empresa que gestiona inscripciones para ferias comerciales. Cuando llegan muchas solicitudes juntas, quiero que los comprobantes y las confirmaciones se preparen sin hacer esperar a la persona que está llenando el formulario. Si hay muchos pedidos al mismo tiempo, los trabajos pendientes deben atenderse en orden y volver a intentarse cuando algo falle.",
+      "needs": [
+        {
+          "category": "messaging",
+          "evidence": "Si hay muchos pedidos al mismo tiempo, los trabajos pendientes deben atenderse en orden y volver a intentarse cuando algo falle"
+        }
+      ]
+    },
+    {
+      "id": "inspeccion-edificios",
+      "query": "Administro una firma que inspecciona edificios y locales comerciales en varias ciudades. Quiero que cada supervisor vea únicamente los informes de su zona y que los inspectores solo puedan modificar los trabajos que tienen asignados. La gerencia debe poder revisar los resultados generales de todas las sedes.",
+      "needs": [
+        {
+          "category": "auth",
+          "evidence": "Quiero que cada supervisor vea únicamente los informes de su zona y que los inspectores solo puedan modificar los trabajos que tienen asignados"
+        },
+        {
+          "category": "analytics",
+          "evidence": "La gerencia debe poder revisar los resultados generales de todas las sedes"
+        }
+      ]
+    },
+    {
+      "id": "importadora-insumos-laboratorio",
+      "query": "Tengo una empresa que importa insumos para laboratorios y universidades. Necesito que toda compra superior a cierto monto sea aprobada por la gerencia antes de enviarse al proveedor. También quiero que quien hizo la solicitud reciba un aviso cuando se acepte o se rechace.",
+      "needs": [
+        {
+          "category": "automation",
+          "evidence": "Necesito que toda compra superior a cierto monto sea aprobada por la gerencia antes de enviarse al proveedor"
+        },
+        {
+          "category": "communication",
+          "evidence": "quiero que quien hizo la solicitud reciba un aviso cuando se acepte o se rechace"
+        }
+      ]
+    },
+    {
+      "id": "mobiliario-exportacion",
+      "query": "Fabricamos mobiliario liviano para hogares y oficinas, y estamos empezando a vender fuera de Latinoamérica. Quiero que las páginas de catálogo y de compra carguen rápido en distintos países y que el servicio no se interrumpa cuando recibamos muchos visitantes. También necesito que el cliente pueda completar su compra sin complicaciones.",
+      "needs": [
+        {
+          "category": "infrastructure",
+          "evidence": "Quiero que las páginas de catálogo y de compra carguen rápido en distintos países y que el servicio no se interrumpa cuando recibamos muchos visitantes"
+        }
+      ]
+    },
+    {
+      "id": "asesoria-seguros-comercios",
+      "query": "Tengo una empresa que asesora a pequeños comercios para elegir seguros. Quiero que el sistema entienda las preguntas habituales de los clientes y redacte respuestas basadas en las condiciones de cada cobertura. Cuando no tenga suficiente información para responder, debe pasar la consulta a una persona del equipo.",
+      "needs": [
+        {
+          "category": "ai",
+          "evidence": "Quiero que el sistema entienda las preguntas habituales de los clientes y redacte respuestas basadas en las condiciones de cada cobertura"
+        },
+        {
+          "category": "communication",
+          "evidence": "debe pasar la consulta a una persona del equipo"
+        }
+      ]
+    },
+    {
+      "id": "red-agricultores-urbanos",
+      "query": "Coordino una red de agricultores urbanos que realiza talleres y jornadas comunitarias. Quiero enviar avisos de cambios de clima y recordatorios de actividades a los participantes por distintos medios. Me gustaría que los mensajes salgan automáticamente en el horario indicado.",
+      "needs": [
+        {
+          "category": "communication",
+          "evidence": "Quiero enviar avisos de cambios de clima y recordatorios de actividades a los participantes por distintos medios"
+        }
+      ]
+    },
+    {
+      "id": "capacitacion-seguridad-industrial",
+      "query": "Soy responsable de una empresa de capacitación en seguridad industrial. El personal necesita encontrar respuestas dentro de muchos manuales, incluso cuando no recuerde el título exacto o use palabras distintas a las del documento. También quiero que los manuales se puedan consultar desde cualquier sede sin tener que enviarlos uno por uno.",
+      "needs": [
+        {
+          "category": "search",
+          "evidence": "El personal necesita encontrar respuestas dentro de muchos manuales, incluso cuando no recuerde el título exacto o use palabras distintas a las del documento"
+        },
+        {
+          "category": "storage",
+          "evidence": "quiero que los manuales se puedan consultar desde cualquier sede sin tener que enviarlos uno por uno"
+        }
+      ]
+    },
+    {
+      "id": "fabrica-empaques-alimentos",
+      "query": "Soy gerente de una empresa que fabrica empaques para alimentos. Quiero que los diseños nuevos pasen por revisión del área comercial y aprobación de producción antes de enviarse al cliente. Si alguien hace un cambio, la siguiente persona que deba revisarlo tiene que recibir un aviso.",
+      "needs": [
+        {
+          "category": "automation",
+          "evidence": "Quiero que los diseños nuevos pasen por revisión del área comercial y aprobación de producción antes de enviarse al cliente"
+        },
+        {
+          "category": "communication",
+          "evidence": "la siguiente persona que deba revisarlo tiene que recibir un aviso"
+        }
+      ]
+    }
+  ]
+}

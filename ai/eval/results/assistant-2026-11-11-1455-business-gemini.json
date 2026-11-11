@@ -1,0 +1,4773 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de historiales",
+          "evidence": "llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de registros médicos",
+          "evidence": "los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios programados",
+          "evidence": "enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.257
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.197
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.194
+        ],
+        [
+          "postgres/postgres",
+          0.181
+        ],
+        [
+          "duckdb/duckdb",
+          0.181
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.319
+        ],
+        [
+          "hashicorp/vault",
+          0.293
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.292
+        ],
+        [
+          "ory/kratos",
+          0.29
+        ],
+        [
+          "zitadel/zitadel",
+          0.264
+        ]
+      ],
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.304
+        ],
+        [
+          "qdrant/qdrant",
+          0.279
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.257
+        ],
+        [
+          "typesense/typesense",
+          0.228
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.201
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.295
+        ],
+        [
+          "knadh/listmonk",
+          0.183
+        ],
+        [
+          "prometheus/alertmanager",
+          0.27
+        ],
+        [
+          "prometheus/prometheus",
+          0.181
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y comunicación para clínica veterinaria",
+      "summary": "Esta propuesta implementa un sistema para la clínica veterinaria que abarca el almacenamiento seguro de historiales médicos, el control de acceso basado en roles para los empleados, un motor de búsqueda rápida para los dueños y un servicio de notificaciones para recordatorios de vacunación.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento y consulta de historiales, y el candidato ofrece bases de datos SQL en Python diseñadas para simplicidad y robustez.",
+          "fit": "serves",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Almacenamiento de historiales de mascotas y dueños",
+          "rationale": "Permite gestionar bases de datos SQL en Python de forma sencilla y robusta para llevar el registro de las mascotas y sus dueños con licencia MIT."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso basado en roles, y el candidato ofrece gestión de identidad y acceso para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Control de acceso para empleados según su cargo",
+          "rationale": "Proporciona gestión de identidad y acceso de código abierto bajo licencia Apache-2.0, permitiendo restringir la información según el cargo de cada empleado."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda rápida de registros médicos, y el candidato ofrece un motor de búsqueda ultrarrápido con API para aplicaciones.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Búsqueda rápida de registros para dueños",
+          "rationale": "Ofrece un motor de búsqueda ultrarrápido con API para que los dueños encuentren rápidamente los registros de vacunación y tratamientos anteriores. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide envío de recordatorios programados, y el candidato ofrece notificaciones push para múltiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Envío de recordatorios a los dueños",
+          "rationale": "Facilita el envío de notificaciones push que funcionan con casi cualquier plataforma para alertar a los dueños cuando se acerque una fecha de vacunación, utilizando la licencia BSD-2-Clause."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Verifica los permisos del empleado antes de consultar la base de datos"
+        },
+        {
+          "from_need": "search",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Consulta los registros indexados desde la base de datos"
+        },
+        {
+          "from_need": "communication",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Obtiene las próximas fechas de vacunación para enviar los recordatorios"
+        }
+      ],
+      "assumptions": [
+        "Se asume que la clínica cuenta con infraestructura para alojar servicios autohospedados.",
+        "Se asume que los dueños acceden a una interfaz web o móvil conectada a los servicios de búsqueda y comunicación."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz de usuario final desarrollada, requiriendo un desarrollo frontend adicional."
+      ]
+    },
+    "response": {
+      "id": "89f435f532ca42b79231f7c880334a6a",
+      "status": "ok",
+      "title": "Sistema de gestión y comunicación para clínica veterinaria",
+      "summary": "Esta propuesta implementa un sistema para la clínica veterinaria que abarca el almacenamiento seguro de historiales médicos, el control de acceso basado en roles para los empleados, un motor de búsqueda rápida para los dueños y un servicio de notificaciones para recordatorios de vacunación.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SQLModel",
+          "role": "Almacenamiento de historiales de mascotas y dueños",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Permite gestionar bases de datos SQL en Python de forma sencilla y robusta para llevar el registro de las mascotas y sus dueños con licencia MIT."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Control de acceso para empleados según su cargo",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Proporciona gestión de identidad y acceso de código abierto bajo licencia Apache-2.0, permitiendo restringir la información según el cargo de cada empleado."
+        },
+        {
+          "key": "c3",
+          "label": "Meilisearch",
+          "role": "Búsqueda rápida de registros para dueños",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Ofrece un motor de búsqueda ultrarrápido con API para que los dueños encuentren rápidamente los registros de vacunación y tratamientos anteriores. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "key": "c4",
+          "label": "Apprise",
+          "role": "Envío de recordatorios a los dueños",
+          "full_name": "caronc/apprise",
+          "rationale": "Facilita el envío de notificaciones push que funcionan con casi cualquier plataforma para alertar a los dueños cuando se acerque una fecha de vacunación, utilizando la licencia BSD-2-Clause."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Verifica los permisos del empleado antes de consultar la base de datos"
+        },
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Consulta los registros indexados desde la base de datos"
+        },
+        {
+          "from_key": "c4",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Obtiene las próximas fechas de vacunación para enviar los recordatorios"
+        }
+      ],
+      "assumptions": [
+        "Se asume que la clínica cuenta con infraestructura para alojar servicios autohospedados.",
+        "Se asume que los dueños acceden a una interfaz web o móvil conectada a los servicios de búsqueda y comunicación."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz de usuario final desarrollada, requiriendo un desarrollo frontend adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:50:51.554588Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-idiomas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "Necesito que cada profesor pueda acceder a sus grupos sin consultar información de otros cursos."
+        },
+        {
+          "category": "ai",
+          "query": "generación de recomendaciones automáticas",
+          "evidence": "Quiero que los estudiantes puedan hacer pruebas de nivel y recibir una recomendación automática del curso más adecuado."
+        },
+        {
+          "category": "analytics",
+          "query": "medición de conversión de usuarios",
+          "evidence": "También quiero medir cuántos estudiantes pasan de una prueba inicial a una inscripción."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.322
+        ],
+        [
+          "hashicorp/vault",
+          0.305
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.299
+        ],
+        [
+          "ory/kratos",
+          0.279
+        ],
+        [
+          "zitadel/zitadel",
+          0.269
+        ]
+      ],
+      "ai": [
+        [
+          "huggingface/transformers",
+          0.317
+        ],
+        [
+          "scikit-learn/scikit-learn",
+          0.3
+        ],
+        [
+          "openai/openai-python",
+          0.277
+        ],
+        [
+          "ollama/ollama",
+          0.267
+        ],
+        [
+          "langchain-ai/langchain",
+          0.264
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.321
+        ],
+        [
+          "plausible/analytics",
+          0.262
+        ],
+        [
+          "PostHog/posthog",
+          0.194
+        ],
+        [
+          "getlago/lago",
+          0.216
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.18
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema open source para gestión de escuela de idiomas",
+      "summary": "Esta propuesta integra herramientas de autenticación para gestionar roles de profesores, machine learning para evaluar niveles y recomendar cursos automáticamente, y analítica web para medir la conversión de estudiantes. El sistema cubre todas las necesidades planteadas por la dirección.",
+      "boxes": [
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso por roles y Keycloak provee gestión de identidad y acceso para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Control de acceso",
+          "rationale": "Keycloak permite administrar la autenticación y el control de acceso por roles para que cada profesor consulte únicamente la información de sus grupos. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide recomendaciones automáticas y scikit-learn provee aprendizaje automático en Python para análisis de datos.",
+          "fit": "serves",
+          "full_name": "scikit-learn/scikit-learn",
+          "label": "Scikit-learn",
+          "role": "Recomendación automática",
+          "rationale": "Scikit-learn ofrece herramientas de machine learning para procesar las pruebas de nivel de los estudiantes y generar una recomendación automática del curso más adecuado. Utiliza licencia BSD-3-Clause y se mantiene activo."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide medición de conversión y Umami provee una plataforma de analítica web y de producto que incluye conversiones.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Medición de conversión",
+          "rationale": "Umami permite medir cuántos estudiantes pasan de una prueba inicial a una inscripción mediante el seguimiento de conversiones y comportamiento. Posee licencia MIT y mantenimiento constante."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "ai",
+          "to_need": "analytics",
+          "protocol": "HTTP API",
+          "description": "Envía eventos de finalización de pruebas de nivel para registrar la conversión hacia la inscripción."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con infraestructura propia o en la nube para alojar las herramientas autohospedadas.",
+        "Se asume que los profesores y estudiantes acceden a través de una aplicación web centralizada."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un módulo específico para la gestión administrativa de pagos o facturación de las inscripciones."
+      ]
+    },
+    "response": {
+      "id": "4457ab6f1b8a4d8fbc322484c6c07021",
+      "status": "ok",
+      "title": "Sistema open source para gestión de escuela de idiomas",
+      "summary": "Esta propuesta integra herramientas de autenticación para gestionar roles de profesores, machine learning para evaluar niveles y recomendar cursos automáticamente, y analítica web para medir la conversión de estudiantes. El sistema cubre todas las necesidades planteadas por la dirección.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Keycloak",
+          "role": "Control de acceso",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak permite administrar la autenticación y el control de acceso por roles para que cada profesor consulte únicamente la información de sus grupos. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Scikit-learn",
+          "role": "Recomendación automática",
+          "full_name": "scikit-learn/scikit-learn",
+          "rationale": "Scikit-learn ofrece herramientas de machine learning para procesar las pruebas de nivel de los estudiantes y generar una recomendación automática del curso más adecuado. Utiliza licencia BSD-3-Clause y se mantiene activo."
+        },
+        {
+          "key": "c3",
+          "label": "Umami",
+          "role": "Medición de conversión",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami permite medir cuántos estudiantes pasan de una prueba inicial a una inscripción mediante el seguimiento de conversiones y comportamiento. Posee licencia MIT y mantenimiento constante."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "HTTP API",
+          "description": "Envía eventos de finalización de pruebas de nivel para registrar la conversión hacia la inscripción."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con infraestructura propia o en la nube para alojar las herramientas autohospedadas.",
+        "Se asume que los profesores y estudiantes acceden a través de una aplicación web centralizada."
+      ],
+      "limitations": [
+        "La propuesta no incluye un módulo específico para la gestión administrativa de pagos o facturación de las inscripciones."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:51:04.007355Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-repuestos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario y existencias",
+          "evidence": "quiero controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de texto",
+          "evidence": "encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pasarela de pagos",
+          "evidence": "las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "optimización de respuestas frecuentes",
+          "evidence": "que los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "hashicorp/vault",
+          0.205
+        ]
+      ],
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.393
+        ],
+        [
+          "qdrant/qdrant",
+          0.34
+        ],
+        [
+          "typesense/typesense",
+          0.337
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.331
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.33
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.356
+        ],
+        [
+          "killbill/killbill",
+          0.354
+        ],
+        [
+          "getlago/lago",
+          0.282
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.23
+        ],
+        [
+          "payloadcms/payload",
+          0.225
+        ]
+      ],
+      "cache": [
+        [
+          "valkey-io/valkey",
+          0.27
+        ],
+        [
+          "redis/redis",
+          0.258
+        ],
+        [
+          "fastapi/fastapi",
+          0.271
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.241
+        ],
+        [
+          "openai/openai-python",
+          0.237
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema Open Source para Tienda de Repuestos de Motos",
+      "summary": "Esta propuesta integra una plataforma de pagos para procesar transacciones por internet, un motor de búsqueda avanzada para localizar repuestos por descripción y características, y una solución de caché para acelerar las consultas frecuentes de los clientes. Queda pendiente el control de existencias por falta de un candidato adecuado para base de datos de inventario en el catálogo.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide controlar las existencias de cada referencia, y el candidato más cercano gestiona secretos y cifrado.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Control de existencias",
+          "rationale": "La herramienta hashicorp/vault se enfoca en la gestión de secretos y cifrado, por lo que no resuelve el control de inventario de repuestos solicitado."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide encontrar productos por descripción, compatibilidad y características, y el candidato proporciona un motor de búsqueda ultrarrápido con tolerancia a errores y búsqueda difusa.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "rationale": "Permite encontrar repuestos por descripción, compatibilidad y características mediante un motor de búsqueda tolerante a errores y basado en memoria, con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar las ventas por internet antes de preparar cada pedido, y el candidato ofrece una plataforma de pagos componible y de alto rendimiento.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Pasarela de pagos",
+          "rationale": "Permite procesar los cobros de las ventas por internet de forma previa a la preparación de cada pedido, ofreciendo conectividad con múltiples proveedores bajo licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide mostrar rápidamente los productos más consultados con muchos clientes conectados, y el candidato ofrece una base de datos de clave-valor distribuida optimizada para caché.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Caché de alta velocidad",
+          "rationale": "Optimizado para almacenamiento en caché y cargas de trabajo en tiempo real, asegura que los productos más consultados se muestren rápidamente ante alta concurrencia, con licencia BSD-3-Clause y actualización reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "cache",
+          "to_need": "search",
+          "protocol": "HTTP",
+          "description": "El caché consulta resultados frecuentes para evitar sobrecargar el motor de búsqueda."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con una interfaz web o aplicación para integrar la pasarela de pagos y el buscador.",
+        "Se asume que el sistema dispondrá de infraestructura propia para alojar las herramientas autohospedadas."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta en el catálogo para cubrir la necesidad de base de datos e inventario.",
+        "La herramienta HashiCorp Vault no resuelve el control de existencias para la tienda de repuestos."
+      ]
+    },
+    "response": {
+      "id": "393430079a614d3d9b9290d558dbacf6",
+      "status": "ok",
+      "title": "Sistema Open Source para Tienda de Repuestos de Motos",
+      "summary": "Esta propuesta integra una plataforma de pagos para procesar transacciones por internet, un motor de búsqueda avanzada para localizar repuestos por descripción y características, y una solución de caché para acelerar las consultas frecuentes de los clientes. Queda pendiente el control de existencias por falta de un candidato adecuado para base de datos de inventario en el catálogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Permite encontrar repuestos por descripción, compatibilidad y características mediante un motor de búsqueda tolerante a errores y basado en memoria, con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Pasarela de pagos",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Permite procesar los cobros de las ventas por internet de forma previa a la preparación de cada pedido, ofreciendo conectividad con múltiples proveedores bajo licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c3",
+          "label": "Valkey",
+          "role": "Caché de alta velocidad",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Optimizado para almacenamiento en caché y cargas de trabajo en tiempo real, asegura que los productos más consultados se muestren rápidamente ante alta concurrencia, con licencia BSD-3-Clause y actualización reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "HTTP",
+          "description": "El caché consulta resultados frecuentes para evitar sobrecargar el motor de búsqueda."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con una interfaz web o aplicación para integrar la pasarela de pagos y el buscador.",
+        "Se asume que el sistema dispondrá de infraestructura propia para alojar las herramientas autohospedadas."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. La herramienta hashicorp/vault se enfoca en la gestión de secretos y cifrado, por lo que no resuelve el control de inventario de repuestos solicitado.",
+        "No se encontró ninguna herramienta en el catálogo para cubrir la necesidad de base de datos e inventario.",
+        "La herramienta HashiCorp Vault no resuelve el control de existencias para la tienda de repuestos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:51:17.290814Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-turismo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar fotografías, documentos y autorizaciones de cada reserva"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "los clientes puedan pagar por adelantado desde cualquier lugar"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes transaccionales",
+          "evidence": "el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.339
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.335
+        ],
+        [
+          "killbill/killbill",
+          0.245
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ],
+        [
+          "apache/flink",
+          0.206
+        ],
+        [
+          "apache/beam",
+          0.188
+        ]
+      ],
+      "communication": [
+        [
+          "novuhq/novu",
+          0.251
+        ],
+        [
+          "postalserver/postal",
+          0.191
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.195
+        ],
+        [
+          "apache/kafka",
+          0.187
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de Software para Agencia de Turismo",
+      "summary": "Esta propuesta integra herramientas de código abierto para gestionar el almacenamiento de documentos, procesar pagos en línea de forma segura y automatizar el envío de mensajes transaccionales con los detalles del viaje para los clientes.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y documentos y el candidato SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías y documentos de reserva",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar archivos de manera eficiente con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide procesamiento de pagos en línea y el candidato Hyperswitch ofrece una plataforma de pagos open source y componible.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos por adelantado",
+          "rationale": "Hyperswitch permite conectar múltiples proveedores de pago con licencia Apache-2.0 y un mantenimiento activo."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide envío de mensajes transaccionales y el candidato Novu ofrece infraestructura de comunicación open source para notificaciones.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles de reserva",
+          "rationale": "Novu provee infraestructura de comunicación para gestionar notificaciones, aunque su licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "communication",
+          "protocol": "API REST / Webhooks",
+          "description": "Una vez confirmado el pago, se notifica para disparar el mensaje al cliente."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con servidores propios o capacidad en la nube para alojar estas herramientas autohospedadas.",
+        "El sistema requiere módulos adicionales para la gestión de fechas y cupos de excursiones que no forman parte de las necesidades evaluadas."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución específica para la administración de la disponibilidad de fechas y cupos de las excursiones."
+      ]
+    },
+    "response": {
+      "id": "d34ae862f462489582fb1f0fce759647",
+      "status": "ok",
+      "title": "Arquitectura de Software para Agencia de Turismo",
+      "summary": "Esta propuesta integra herramientas de código abierto para gestionar el almacenamiento de documentos, procesar pagos en línea de forma segura y automatizar el envío de mensajes transaccionales con los detalles del viaje para los clientes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías y documentos de reserva",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar archivos de manera eficiente con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos por adelantado",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch permite conectar múltiples proveedores de pago con licencia Apache-2.0 y un mantenimiento activo."
+        },
+        {
+          "key": "c3",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles de reserva",
+          "full_name": "novuhq/novu",
+          "rationale": "Novu provee infraestructura de comunicación para gestionar notificaciones, aunque su licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "API REST / Webhooks",
+          "description": "Una vez confirmado el pago, se notifica para disparar el mensaje al cliente."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con servidores propios o capacidad en la nube para alojar estas herramientas autohospedadas.",
+        "El sistema requiere módulos adicionales para la gestión de fechas y cupos de excursiones que no forman parte de las necesidades evaluadas."
+      ],
+      "limitations": [
+        "La propuesta no incluye una solución específica para la administración de la disponibilidad de fechas y cupos de las excursiones."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:51:29.764429Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "coworking",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "analisis de demanda de espacios",
+          "evidence": "Quiero identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías"
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios de reservas",
+          "evidence": "quiero que los miembros reciban un aviso cuando se acerque su horario reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "analytics": [
+        [
+          "plausible/analytics",
+          0.208
+        ],
+        [
+          "umami-software/umami",
+          0.202
+        ],
+        [
+          "metabase/metabase",
+          0.19
+        ],
+        [
+          "PostHog/posthog",
+          0.188
+        ],
+        [
+          "duckdb/duckdb",
+          0.235
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.268
+        ],
+        [
+          "prometheus/alertmanager",
+          0.243
+        ],
+        [
+          "cert-manager/cert-manager",
+          0.188
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de analitica y avisos para coworking",
+      "summary": "Esta propuesta incluye herramientas de inteligencia de negocios y notificaciones para cubrir las necesidades de analisis de demanda de salas y envio de avisos de reservas. El negocio requerira una solucion adicional para gestionar las reservas y planes de los miembros, ya que no se encontro un candidato especifico para esa funcion en el catalogo.",
+      "boxes": [
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide identificar demanda de salas y horarios vacios; el candidato Metabase ofrece una herramienta de inteligencia de negocios y analitica integrada para trabajar con datos.",
+          "fit": "serves",
+          "full_name": "metabase/metabase",
+          "label": "Metabase",
+          "role": "Analitica de uso de espacios",
+          "rationale": "Permite explorar y visualizar datos sobre el uso de salas para identificar las de mayor demanda y los horarios vacios. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar avisos ante horarios reservados; el candidato Apprise provee notificaciones push que funcionan con multiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Envio de avisos",
+          "rationale": "Facilita el envio de notificaciones y alertas a los miembros cuando se acerque su horario reservado. Utiliza la licencia BSD-2-Clause y se mantiene activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que los datos de reservas se almacenan en una base de datos accesible para Metabase.",
+        "El negocio necesita un sistema de gestion de membresias y reservas que no forma parte de las herramientas evaluadas."
+      ],
+      "other_limitations": [
+        "No se cubren las funciones de control de reservas de salas, puestos de trabajo ni la validacion de planes de los miembros."
+      ]
+    },
+    "response": {
+      "id": "34f026ec273c4dea8bce4dddcc5085e2",
+      "status": "ok",
+      "title": "Sistema de analitica y avisos para coworking",
+      "summary": "Esta propuesta incluye herramientas de inteligencia de negocios y notificaciones para cubrir las necesidades de analisis de demanda de salas y envio de avisos de reservas. El negocio requerira una solucion adicional para gestionar las reservas y planes de los miembros, ya que no se encontro un candidato especifico para esa funcion en el catalogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Metabase",
+          "role": "Analitica de uso de espacios",
+          "full_name": "metabase/metabase",
+          "rationale": "Permite explorar y visualizar datos sobre el uso de salas para identificar las de mayor demanda y los horarios vacios. Su licencia no fue identificada por GitHub y cuenta con actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Apprise",
+          "role": "Envio de avisos",
+          "full_name": "caronc/apprise",
+          "rationale": "Facilita el envio de notificaciones y alertas a los miembros cuando se acerque su horario reservado. Utiliza la licencia BSD-2-Clause y se mantiene activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que los datos de reservas se almacenan en una base de datos accesible para Metabase.",
+        "El negocio necesita un sistema de gestion de membresias y reservas que no forma parte de las herramientas evaluadas."
+      ],
+      "limitations": [
+        "No se cubren las funciones de control de reservas de salas, puestos de trabajo ni la validacion de planes de los miembros."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:51:42.343128Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-restauracion",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "Necesito conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de texto y atributos",
+          "evidence": "Quiero que mis trabajadores puedan consultar los expedientes según el proyecto que tengan asignado. También necesito encontrar piezas por su época, material o procedencia"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.339
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ],
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.388
+        ],
+        [
+          "qdrant/qdrant",
+          0.351
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.335
+        ],
+        [
+          "typesense/typesense",
+          0.328
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.32
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Gestion y Busqueda para Taller de Restauracion",
+      "summary": "Se propone una solucion basada en un sistema de almacenamiento distribuido para conservar de forma segura todas las fotografias, informes y documentos de los muebles, combinada con un motor de busqueda avanzado para localizar las piezas segun sus atributos y proyectos asignados.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar archivos y documentos, y SeaweedFS ofrece un sistema de almacenamiento distribuido para archivos y objetos diseñado para manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografias e informes",
+          "rationale": "Permite conservar de forma eficiente y centralizada todas las fotografias del estado original, los informes de restauración y los documentos de procedencia de cada mueble en un sistema de almacenamiento distribuido con licencia Apache-2.0."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide busqueda avanzada de texto y atributos, y Meilisearch ofrece un motor de busqueda ultrarrápido con soporte para facetas.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Busqueda de piezas y expedientes",
+          "rationale": "Facilita la consulta de expedientes segun el proyecto asignado y permite encontrar piezas de manera agil por su epoca, material o procedencia. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "API REST",
+          "description": "El motor de busqueda indexa los metadatos de los expedientes cuyos archivos originales se encuentran en el sistema de almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el taller cuenta con la infraestructura basica de red para alojar los servicios de almacenamiento y busqueda localmente o en la nube."
+      ],
+      "other_limitations": [
+        "No se incluye una interfaz grafica de gestion de proyectos o flujos de trabajo dedicada, por lo que debera desarrollarse o integrarse una aplicacion que conecte el almacenamiento y el motor de busqueda con los trabajadores del taller."
+      ]
+    },
+    "response": {
+      "id": "09cbf072daad40e9b32a3fc070321cfd",
+      "status": "ok",
+      "title": "Sistema de Gestion y Busqueda para Taller de Restauracion",
+      "summary": "Se propone una solucion basada en un sistema de almacenamiento distribuido para conservar de forma segura todas las fotografias, informes y documentos de los muebles, combinada con un motor de busqueda avanzado para localizar las piezas segun sus atributos y proyectos asignados.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografias e informes",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite conservar de forma eficiente y centralizada todas las fotografias del estado original, los informes de restauración y los documentos de procedencia de cada mueble en un sistema de almacenamiento distribuido con licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "Meilisearch",
+          "role": "Busqueda de piezas y expedientes",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Facilita la consulta de expedientes segun el proyecto asignado y permite encontrar piezas de manera agil por su epoca, material o procedencia. La licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "El motor de busqueda indexa los metadatos de los expedientes cuyos archivos originales se encuentran en el sistema de almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el taller cuenta con la infraestructura basica de red para alojar los servicios de almacenamiento y busqueda localmente o en la nube."
+      ],
+      "limitations": [
+        "No se incluye una interfaz grafica de gestion de proyectos o flujos de trabajo dedicada, por lo que debera desarrollarse o integrarse una aplicacion que conecte el almacenamiento y el motor de busqueda con los trabajadores del taller."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:51:55.458119Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "academia-musica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y recuperacion de archivos multimedia",
+          "evidence": "Necesito que los alumnos puedan consultar las partituras y grabaciones correspondientes a sus clases"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "Quiero que cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de uso y popularidad de contenidos",
+          "evidence": "También quiero saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.261
+        ],
+        [
+          "rustfs/rustfs",
+          0.258
+        ],
+        [
+          "hashicorp/vault",
+          0.189
+        ],
+        [
+          "valkey-io/valkey",
+          0.187
+        ],
+        [
+          "pgvector/pgvector",
+          0.181
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.319
+        ],
+        [
+          "hashicorp/vault",
+          0.293
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.292
+        ],
+        [
+          "ory/kratos",
+          0.29
+        ],
+        [
+          "zitadel/zitadel",
+          0.264
+        ]
+      ],
+      "analytics": [
+        [
+          "plausible/analytics",
+          0.306
+        ],
+        [
+          "umami-software/umami",
+          0.298
+        ],
+        [
+          "metabase/metabase",
+          0.228
+        ],
+        [
+          "PostHog/posthog",
+          0.226
+        ],
+        [
+          "withastro/astro",
+          0.273
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y analítica para academia musical",
+      "summary": "Esta propuesta incluye almacenamiento distribuido para partituras y grabaciones, un sistema de identidad y acceso para los profesores y una plataforma de analítica para medir la popularidad de cursos y materiales. Quedan sin resolver la publicación inicial de información general de cursos y la interfaz web para los alumnos.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento y recuperacion de archivos multimedia y el candidato ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacena las partituras y grabaciones",
+          "rationale": "Permite guardar y recuperar los archivos multimedia necesarios para que los alumnos consulten sus clases de música mediante un sistema de almacenamiento distribuido bajo licencia Apache-2.0."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso basado en roles y el candidato ofrece gestión moderna de identidad y accesos.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestiona roles y permisos de profesores",
+          "rationale": "Facilita la autenticación y el control de acceso para asegurar que cada profesor pueda actualizar únicamente los materiales de sus propios grupos, utilizando la licencia Apache-2.0."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analisis de uso y popularidad de contenidos y el candidato ofrece una plataforma completa de analítica web y de productos.",
+          "fit": "serves",
+          "full_name": "PostHog/posthog",
+          "label": "PostHog",
+          "role": "Analiza las consultas de cursos y materiales",
+          "rationale": "Permite conocer cuáles son los cursos y materiales que reciben más consultas mediante sus herramientas de analítica y producto. Su licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la academia cuenta con infraestructura propia para hospedar los servicios open source seleccionados.",
+        "Se requiere el desarrollo de una interfaz web o aplicación para conectar el almacenamiento, la autenticación y la analítica con los usuarios finales."
+      ],
+      "other_limitations": [
+        "No se cubren las necesidades de publicación de información estática sobre horarios y profesores, ya que no se encontraron candidatos específicos para ese fin."
+      ]
+    },
+    "response": {
+      "id": "d5f669dc70684ce0a39533a580d7b35e",
+      "status": "ok",
+      "title": "Sistema de gestión y analítica para academia musical",
+      "summary": "Esta propuesta incluye almacenamiento distribuido para partituras y grabaciones, un sistema de identidad y acceso para los profesores y una plataforma de analítica para medir la popularidad de cursos y materiales. Quedan sin resolver la publicación inicial de información general de cursos y la interfaz web para los alumnos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacena las partituras y grabaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite guardar y recuperar los archivos multimedia necesarios para que los alumnos consulten sus clases de música mediante un sistema de almacenamiento distribuido bajo licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestiona roles y permisos de profesores",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Facilita la autenticación y el control de acceso para asegurar que cada profesor pueda actualizar únicamente los materiales de sus propios grupos, utilizando la licencia Apache-2.0."
+        },
+        {
+          "key": "c3",
+          "label": "PostHog",
+          "role": "Analiza las consultas de cursos y materiales",
+          "full_name": "PostHog/posthog",
+          "rationale": "Permite conocer cuáles son los cursos y materiales que reciben más consultas mediante sus herramientas de analítica y producto. Su licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la academia cuenta con infraestructura propia para hospedar los servicios open source seleccionados.",
+        "Se requiere el desarrollo de una interfaz web o aplicación para conectar el almacenamiento, la autenticación y la analítica con los usuarios finales."
+      ],
+      "limitations": [
+        "No se cubren las necesidades de publicación de información estática sobre horarios y profesores, ya que no se encontraron candidatos específicos para ese fin."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:52:08.629072Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "alquiler-equipos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de disponibilidad de inventario",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento y gestión de archivos y contratos",
+          "evidence": "conservar los contratos firmados y las fotografías del estado de cada equipo antes y después de cada alquiler"
+        },
+        {
+          "category": "ai",
+          "query": "procesamiento y análisis automatizado de imágenes",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes respecto a las iniciales"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "grafana/grafana",
+          0.195
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.341
+        ],
+        [
+          "rustfs/rustfs",
+          0.334
+        ],
+        [
+          "hashicorp/vault",
+          0.336
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.261
+        ],
+        [
+          "pnpm/pnpm",
+          0.256
+        ]
+      ],
+      "ai": [
+        [
+          "huggingface/transformers",
+          0.275
+        ],
+        [
+          "huggingface/datasets",
+          0.262
+        ],
+        [
+          "scikit-learn/scikit-learn",
+          0.248
+        ],
+        [
+          "pytorch/pytorch",
+          0.246
+        ],
+        [
+          "tensorflow/tensorflow",
+          0.238
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para control y gestión de equipos audiovisuales",
+      "summary": "La propuesta integra herramientas de visualización, almacenamiento y aprendizaje automático para gestionar los contratos, el inventario y la generación automatizada de informes de daños a partir de fotografías. Quedan sin cubrir las funciones específicas de asignación y consulta de alquileres por empleado.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide control de disponibilidad de inventario y Grafana ofrece visualización y tableros basados en métricas y datos de múltiples fuentes.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Grafana",
+          "role": "Visualización y monitoreo de datos",
+          "rationale": "Grafana es una plataforma de visualización y análisis de datos que permite crear tableros, pero no gestiona directamente bases de datos transaccionales para controlar inventarios ni alquileres."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar contratos firmados y fotografías, y SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar archivos y objetos con alta eficiencia.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de contratos y fotografías",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido eficiente para gestionar archivos y objetos con acceso rápido a disco, ideal para conservar los contratos firmados y las fotografías del estado de cada equipo."
+        },
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide generar automáticamente un informe de daños comparando fotografías y Transformers ofrece un marco de definición de modelos para aprendizaje automático en visión y modelos multimodales.",
+          "fit": "serves",
+          "full_name": "huggingface/transformers",
+          "label": "Transformers",
+          "role": "Análisis automatizado de imágenes para informes de daños",
+          "rationale": "Transformers es un marco de definición de modelos de aprendizaje automático para visión y modelos multimodales, apto para procesar las fotografías iniciales y de devolución y detectar diferencias importantes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "ai",
+          "to_need": "storage",
+          "protocol": "API HTTP",
+          "description": "El sistema de inteligencia artificial consulta las fotografías iniciales y de devolución almacenadas para realizar el análisis comparativo."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal técnico para integrar los modelos de visión artificial con el sistema de almacenamiento.",
+        "El negocio requiere una interfaz de usuario personalizada para que los empleados consulten sus alquileres asignados, ya que no hay una herramienta específica para ello."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución específica para que cada empleado consulte los alquileres que tiene asignados."
+      ]
+    },
+    "response": {
+      "id": "00f9e9d979eb43e0905b12db300002b5",
+      "status": "ok",
+      "title": "Sistema para control y gestión de equipos audiovisuales",
+      "summary": "La propuesta integra herramientas de visualización, almacenamiento y aprendizaje automático para gestionar los contratos, el inventario y la generación automatizada de informes de daños a partir de fotografías. Quedan sin cubrir las funciones específicas de asignación y consulta de alquileres por empleado.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de contratos y fotografías",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido eficiente para gestionar archivos y objetos con acceso rápido a disco, ideal para conservar los contratos firmados y las fotografías del estado de cada equipo."
+        },
+        {
+          "key": "c2",
+          "label": "Transformers",
+          "role": "Análisis automatizado de imágenes para informes de daños",
+          "full_name": "huggingface/transformers",
+          "rationale": "Transformers es un marco de definición de modelos de aprendizaje automático para visión y modelos multimodales, apto para procesar las fotografías iniciales y de devolución y detectar diferencias importantes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API HTTP",
+          "description": "El sistema de inteligencia artificial consulta las fotografías iniciales y de devolución almacenadas para realizar el análisis comparativo."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal técnico para integrar los modelos de visión artificial con el sistema de almacenamiento.",
+        "El negocio requiere una interfaz de usuario personalizada para que los empleados consulten sus alquileres asignados, ya que no hay una herramienta específica para ello."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Grafana es una plataforma de visualización y análisis de datos que permite crear tableros, pero no gestiona directamente bases de datos transaccionales para controlar inventarios ni alquileres.",
+        "La propuesta no incluye una solución específica para que cada empleado consulte los alquileres que tiene asignados."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:52:21.114530Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de texto en registros",
+          "evidence": "los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones programadas",
+          "evidence": "enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.288
+        ],
+        [
+          "postgres/postgres",
+          0.226
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.225
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.212
+        ],
+        [
+          "duckdb/duckdb",
+          0.209
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.322
+        ],
+        [
+          "hashicorp/vault",
+          0.305
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.299
+        ],
+        [
+          "ory/kratos",
+          0.279
+        ],
+        [
+          "zitadel/zitadel",
+          0.269
+        ]
+      ],
+      "search": [
+        [
+          "BurntSushi/ripgrep",
+          0.382
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.361
+        ],
+        [
+          "typesense/typesense",
+          0.333
+        ],
+        [
+          "qdrant/qdrant",
+          0.312
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.308
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.39
+        ],
+        [
+          "novuhq/novu",
+          0.28
+        ],
+        [
+          "knadh/listmonk",
+          0.19
+        ],
+        [
+          "prometheus/alertmanager",
+          0.297
+        ],
+        [
+          "prometheus/prometheus",
+          0.188
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema integral open source para clínica veterinaria",
+      "summary": "Esta propuesta despliega una solución para la gestión clínica mediante una base de datos relacional para los historiales, un sistema de gestión de identidades y accesos para los roles del personal, un motor de búsqueda rápida para los registros médicos y una plataforma de infraestructura de comunicación para el envío de recordatorios de vacunación.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento y consulta de registros, y postgres/postgres ofrece un sistema de gestión de base de datos relacional robusto para almacenar la información.",
+          "fit": "serves",
+          "full_name": "postgres/postgres",
+          "label": "PostgreSQL",
+          "role": "Almacena los historiales de mascotas, dueños y tratamientos",
+          "rationale": "Permite llevar un historial de las mascotas y sus dueños mediante un almacenamiento seguro y confiable. Su licencia no fue identificada por GitHub. Se mantiene activamente con cambios recientes."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso por roles, y keycloak/keycloak ofrece gestión de identidad y acceso para aplicaciones y servicios con soporte para roles y permisos.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y permisos según el cargo de cada empleado",
+          "rationale": "Garantiza que cada empleado pueda consultar únicamente la información que le corresponde según su cargo mediante un control de acceso centralizado. Utiliza licencia Apache-2.0 y cuenta con alta adopción y actividad reciente."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide búsqueda de texto en registros, y meilisearch/meilisearch ofrece un motor de búsqueda rápido para encontrar información en aplicaciones.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Permite la búsqueda rápida de registros médicos",
+          "rationale": "Facilita que los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas gracias a su motor de búsqueda veloz. Su licencia no fue identificada por GitHub y recibe mantenimiento continuo."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide envío de notificaciones programadas, y novuhq/novu ofrece una infraestructura de comunicación open-source para gestionar y enviar notificaciones y correos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Envía notificaciones automatizadas a los clientes",
+          "rationale": "Permite enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación utilizando su infraestructura de comunicación. Su licencia no fue identificada por GitHub y presenta actualizaciones recientes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "database",
+          "protocol": "API REST / SQL",
+          "description": "El motor de búsqueda consulta los índices sincronizados con la base de datos para mostrar los historiales."
+        },
+        {
+          "from_need": "communication",
+          "to_need": "database",
+          "protocol": "API REST",
+          "description": "El sistema de comunicación obtiene los datos de contacto y las próximas fechas de vacunación desde la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la clínica cuenta con personal técnico capaz de desplegar y mantener infraestructura basada en contenedores.",
+        "Se asume que los empleados accederán a través de una aplicación web centralizada que se integrará con el sistema de autenticación."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz de usuario final desarrollada, por lo que deberá integrarse con un frontend propio para la clínica."
+      ]
+    },
+    "response": {
+      "id": "3f45a91686074662a7181b59c2b9ab95",
+      "status": "ok",
+      "title": "Sistema integral open source para clínica veterinaria",
+      "summary": "Esta propuesta despliega una solución para la gestión clínica mediante una base de datos relacional para los historiales, un sistema de gestión de identidades y accesos para los roles del personal, un motor de búsqueda rápida para los registros médicos y una plataforma de infraestructura de comunicación para el envío de recordatorios de vacunación.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "PostgreSQL",
+          "role": "Almacena los historiales de mascotas, dueños y tratamientos",
+          "full_name": "postgres/postgres",
+          "rationale": "Permite llevar un historial de las mascotas y sus dueños mediante un almacenamiento seguro y confiable. Su licencia no fue identificada por GitHub. Se mantiene activamente con cambios recientes."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y permisos según el cargo de cada empleado",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Garantiza que cada empleado pueda consultar únicamente la información que le corresponde según su cargo mediante un control de acceso centralizado. Utiliza licencia Apache-2.0 y cuenta con alta adopción y actividad reciente."
+        },
+        {
+          "key": "c3",
+          "label": "Meilisearch",
+          "role": "Permite la búsqueda rápida de registros médicos",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Facilita que los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas gracias a su motor de búsqueda veloz. Su licencia no fue identificada por GitHub y recibe mantenimiento continuo."
+        },
+        {
+          "key": "c4",
+          "label": "Novu",
+          "role": "Envía notificaciones automatizadas a los clientes",
+          "full_name": "novuhq/novu",
+          "rationale": "Permite enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación utilizando su infraestructura de comunicación. Su licencia no fue identificada por GitHub y presenta actualizaciones recientes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "API REST / SQL",
+          "description": "El motor de búsqueda consulta los índices sincronizados con la base de datos para mostrar los historiales."
+        },
+        {
+          "from_key": "c4",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "El sistema de comunicación obtiene los datos de contacto y las próximas fechas de vacunación desde la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la clínica cuenta con personal técnico capaz de desplegar y mantener infraestructura basada en contenedores.",
+        "Se asume que los empleados accederán a través de una aplicación web centralizada que se integrará con el sistema de autenticación."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz de usuario final desarrollada, por lo que deberá integrarse con un frontend propio para la clínica."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:52:34.256236Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-idiomas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos",
+          "evidence": "organizar las inscripciones y los datos de mis estudiantes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "cada profesor pueda acceder a sus grupos sin consultar información de otros cursos"
+        },
+        {
+          "category": "ai",
+          "query": "recomendaciones automáticas con inteligencia artificial",
+          "evidence": "recibir una recomendación automática del curso más adecuado"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de conversión de usuarios",
+          "evidence": "medir cuántos estudiantes pasan de una prueba inicial a una inscripción"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.373
+        ],
+        [
+          "duckdb/duckdb",
+          0.291
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.251
+        ],
+        [
+          "MariaDB/server",
+          0.247
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.244
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.322
+        ],
+        [
+          "hashicorp/vault",
+          0.305
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.299
+        ],
+        [
+          "ory/kratos",
+          0.279
+        ],
+        [
+          "zitadel/zitadel",
+          0.269
+        ]
+      ],
+      "ai": [
+        [
+          "huggingface/datasets",
+          0.331
+        ],
+        [
+          "ollama/ollama",
+          0.33
+        ],
+        [
+          "huggingface/transformers",
+          0.327
+        ],
+        [
+          "run-llama/llama_index",
+          0.302
+        ],
+        [
+          "tensorflow/tensorflow",
+          0.301
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.41
+        ],
+        [
+          "plausible/analytics",
+          0.375
+        ],
+        [
+          "PostHog/posthog",
+          0.303
+        ],
+        [
+          "metabase/metabase",
+          0.252
+        ],
+        [
+          "dbt-labs/dbt",
+          0.277
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema integral para la gestión de escuela de idiomas",
+      "summary": "Esta propuesta organiza las inscripciones, el control de acceso por roles y las pruebas de nivel de los estudiantes mediante herramientas de base de datos relacional, gestión de identidad, modelos de lenguaje y analítica de conversión.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "Pide almacenamiento y consulta de datos para organizar inscripciones y datos de estudiantes, y MariaDB server ofrece un sistema de bases de datos relacionales.",
+          "fit": "serves",
+          "full_name": "MariaDB/server",
+          "label": "MariaDB",
+          "role": "Almacena las inscripciones y los datos de los estudiantes.",
+          "rationale": "MariaDB server es una base de datos relacional robusta ideal para organizar las inscripciones y los datos de sus estudiantes de forma estructurada."
+        },
+        {
+          "need": "auth",
+          "fit_check": "Pide control de acceso por roles para que cada profesor acceda solo a sus grupos, y Keycloak ofrece gestión de identidad y acceso para aplicaciones.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y los roles de profesores y estudiantes.",
+          "rationale": "Keycloak provee control de acceso y gestión de identidad para asegurar que cada profesor pueda acceder a sus grupos sin consultar información de otros cursos."
+        },
+        {
+          "need": "ai",
+          "fit_check": "Pide recomendaciones automáticas con IA para sugerir el curso adecuado, y Ollama permite ejecutar modelos de lenguaje para generar respuestas inteligentes.",
+          "fit": "serves",
+          "full_name": "ollama/ollama",
+          "label": "Ollama",
+          "role": "Ejecuta el modelo de IA para recomendar el curso más adecuado tras la prueba.",
+          "rationale": "Ollama permite correr modelos de lenguaje de forma local para procesar las pruebas de nivel y entregar una recomendación automática del curso más adecuado."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "Pide analítica de conversión de usuarios para medir el paso de prueba a inscripción, y Umami ofrece una plataforma de analítica enfocada en conversiones y comportamiento.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Mide cuántos estudiantes pasan de una prueba inicial a una inscripción.",
+          "rationale": "Umami es una plataforma de analítica web y de productos que permite registrar conversiones y comportamiento para medir cuántos estudiantes pasan de una prueba inicial a una inscripción."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "ai",
+          "to_need": "database",
+          "protocol": "SQL",
+          "description": "Consulta el historial y los resultados de las pruebas de nivel para generar la recomendación."
+        },
+        {
+          "from_need": "analytics",
+          "to_need": "database",
+          "protocol": "API",
+          "description": "Rastrea los eventos de conversión desde la base de datos de inscripciones."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con un servidor propio o capacidad en la nube para autohojear estas herramientas de código abierto.",
+        "Se asume que la interfaz de la escuela se encargará de conectar la autenticación de Keycloak con los permisos de visualización por curso en la base de datos."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una interfaz gráfica de usuario específica para la administración de la escuela, por lo que requerirá desarrollo propio o integración adicional."
+      ]
+    },
+    "response": {
+      "id": "dbecc678bbf549499db62495e4290304",
+      "status": "ok",
+      "title": "Sistema integral para la gestión de escuela de idiomas",
+      "summary": "Esta propuesta organiza las inscripciones, el control de acceso por roles y las pruebas de nivel de los estudiantes mediante herramientas de base de datos relacional, gestión de identidad, modelos de lenguaje y analítica de conversión.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "MariaDB",
+          "role": "Almacena las inscripciones y los datos de los estudiantes.",
+          "full_name": "MariaDB/server",
+          "rationale": "MariaDB server es una base de datos relacional robusta ideal para organizar las inscripciones y los datos de sus estudiantes de forma estructurada."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y los roles de profesores y estudiantes.",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak provee control de acceso y gestión de identidad para asegurar que cada profesor pueda acceder a sus grupos sin consultar información de otros cursos."
+        },
+        {
+          "key": "c3",
+          "label": "Ollama",
+          "role": "Ejecuta el modelo de IA para recomendar el curso más adecuado tras la prueba.",
+          "full_name": "ollama/ollama",
+          "rationale": "Ollama permite correr modelos de lenguaje de forma local para procesar las pruebas de nivel y entregar una recomendación automática del curso más adecuado."
+        },
+        {
+          "key": "c4",
+          "label": "Umami",
+          "role": "Mide cuántos estudiantes pasan de una prueba inicial a una inscripción.",
+          "full_name": "umami-software/umami",
+          "rationale": "Umami es una plataforma de analítica web y de productos que permite registrar conversiones y comportamiento para medir cuántos estudiantes pasan de una prueba inicial a una inscripción."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "SQL",
+          "description": "Consulta el historial y los resultados de las pruebas de nivel para generar la recomendación."
+        },
+        {
+          "from_key": "c4",
+          "to_key": "c1",
+          "protocol": "API",
+          "description": "Rastrea los eventos de conversión desde la base de datos de inscripciones."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con un servidor propio o capacidad en la nube para autohojear estas herramientas de código abierto.",
+        "Se asume que la interfaz de la escuela se encargará de conectar la autenticación de Keycloak con los permisos de visualización por curso en la base de datos."
+      ],
+      "limitations": [
+        "La propuesta no incluye una interfaz gráfica de usuario específica para la administración de la escuela, por lo que requerirá desarrollo propio o integración adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:52:47.529586Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-repuestos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario y existencias",
+          "evidence": "quiero controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de productos",
+          "evidence": "Necesito encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "Quiero que las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento en caché para alto tráfico",
+          "evidence": "necesito que los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "hashicorp/vault",
+          0.205
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.326
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.323
+        ],
+        [
+          "typesense/typesense",
+          0.292
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.277
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.271
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.335
+        ],
+        [
+          "killbill/killbill",
+          0.245
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ],
+        [
+          "apache/flink",
+          0.206
+        ],
+        [
+          "apache/beam",
+          0.188
+        ]
+      ],
+      "cache": [
+        [
+          "valkey-io/valkey",
+          0.428
+        ],
+        [
+          "redis/redis",
+          0.426
+        ],
+        [
+          "nginx/nginx",
+          0.386
+        ],
+        [
+          "etcd-io/etcd",
+          0.31
+        ],
+        [
+          "apache/kafka",
+          0.308
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de software para tienda de repuestos de motocicletas",
+      "summary": "La propuesta integra un motor de búsqueda avanzado para descripciones y compatibilidades, una plataforma de pagos para procesar cobros en línea antes de preparar los pedidos, y un sistema de caché de alta velocidad para mostrar los productos más consultados bajo tráfico elevado. La gestión específica de inventario de repuestos requiere herramientas adicionales de base de datos no cubiertas por los candidatos principales.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide controlar las existencias de cada referencia, pero el candidato ofrece gestión de secretos y cifrado.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Gestión de secretos y cifrado",
+          "rationale": "El candidato gestiona secretos corporativos y cifrado, lo cual no resuelve el control de inventario y existencias de repuestos para motocicletas solicitado."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide encontrar productos por descripción, compatibilidad y características sin el nombre exacto, y el candidato ofrece un motor de búsqueda rápida con tolerancia a errores y búsqueda difusa.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "rationale": "Resuelve la búsqueda de productos por su descripción, compatibilidad y características mediante un motor de búsqueda en memoria rápido y tolerante a errores, facilitando encontrar referencias sin conocer el nombre exacto. Cuenta con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar las ventas por internet antes de preparar cada pedido, y el candidato ofrece una plataforma de pagos componible y de código abierto.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos en línea",
+          "rationale": "Permite cobrar las ventas por internet de forma previa a la preparación de cada pedido conectándose a múltiples proveedores de pago. Posee licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide mostrar rápidamente los productos más consultados con alto tráfico, y el candidato ofrece una base de datos de clave-valor optimizada para caché y cargas de trabajo en tiempo real.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Almacenamiento en caché para alto tráfico",
+          "rationale": "Garantiza que los productos más consultados se muestren rápidamente a pesar de la concurrencia de muchos clientes conectados, funcionando como una base de datos en memoria optimizada para caché. Su licencia es BSD-3-Clause y presenta desarrollo activo."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "cache",
+          "protocol": "HTTP/REST",
+          "description": "El sistema de búsqueda consulta la caché para acelerar la visualización de productos populares."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con un sistema de comercio electrónico web donde los clientes consultan el catálogo y realizan los pagos.",
+        "Se necesita un sistema relacional o de inventario tradicional para registrar el stock físico de las piezas, aspecto que no fue cubierto por los candidatos de bases de datos disponibles."
+      ],
+      "other_limitations": [
+        "No se incluye una herramienta específica para el control de inventario y existencias de repuestos.",
+        "Se omitió el uso de Elasticsearch, ya que no se encontraba entre los candidatos de la necesidad de búsqueda."
+      ]
+    },
+    "response": {
+      "id": "76a2a3e30019435d9f9bdefe8c565697",
+      "status": "ok",
+      "title": "Arquitectura de software para tienda de repuestos de motocicletas",
+      "summary": "La propuesta integra un motor de búsqueda avanzado para descripciones y compatibilidades, una plataforma de pagos para procesar cobros en línea antes de preparar los pedidos, y un sistema de caché de alta velocidad para mostrar los productos más consultados bajo tráfico elevado. La gestión específica de inventario de repuestos requiere herramientas adicionales de base de datos no cubiertas por los candidatos principales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Resuelve la búsqueda de productos por su descripción, compatibilidad y características mediante un motor de búsqueda en memoria rápido y tolerante a errores, facilitando encontrar referencias sin conocer el nombre exacto. Cuenta con licencia GPL-3.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos en línea",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Permite cobrar las ventas por internet de forma previa a la preparación de cada pedido conectándose a múltiples proveedores de pago. Posee licencia Apache-2.0 y mantenimiento activo."
+        },
+        {
+          "key": "c3",
+          "label": "Valkey",
+          "role": "Almacenamiento en caché para alto tráfico",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Garantiza que los productos más consultados se muestren rápidamente a pesar de la concurrencia de muchos clientes conectados, funcionando como una base de datos en memoria optimizada para caché. Su licencia es BSD-3-Clause y presenta desarrollo activo."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "HTTP/REST",
+          "description": "El sistema de búsqueda consulta la caché para acelerar la visualización de productos populares."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda cuenta con un sistema de comercio electrónico web donde los clientes consultan el catálogo y realizan los pagos.",
+        "Se necesita un sistema relacional o de inventario tradicional para registrar el stock físico de las piezas, aspecto que no fue cubierto por los candidatos de bases de datos disponibles."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. El candidato gestiona secretos corporativos y cifrado, lo cual no resuelve el control de inventario y existencias de repuestos para motocicletas solicitado.",
+        "No se incluye una herramienta específica para el control de inventario y existencias de repuestos.",
+        "Se omitió el uso de Elasticsearch, ya que no se encontraba entre los candidatos de la necesidad de búsqueda."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:53:01.193701Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-turismo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "Necesito guardar fotografías, documentos y autorizaciones de cada reserva."
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos en linea",
+          "evidence": "Quiero que los clientes puedan pagar por adelantado desde cualquier lugar."
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes a clientes",
+          "evidence": "Cuando se confirme una reserva, quiero que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.339
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.303
+        ],
+        [
+          "killbill/killbill",
+          0.267
+        ],
+        [
+          "getlago/lago",
+          0.266
+        ],
+        [
+          "cli/cli",
+          0.207
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.203
+        ]
+      ],
+      "communication": [
+        [
+          "novuhq/novu",
+          0.25
+        ],
+        [
+          "knadh/listmonk",
+          0.238
+        ],
+        [
+          "postalserver/postal",
+          0.231
+        ],
+        [
+          "caronc/apprise",
+          0.22
+        ],
+        [
+          "prometheus/alertmanager",
+          0.239
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para agencia de turismo y reservas",
+      "summary": "Esta propuesta integra almacenamiento distribuido para guardar los documentos de cada reserva, una plataforma de pagos para procesar transacciones por adelantado y un sistema de comunicación para enviar notificaciones a los clientes.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide guardar fotografías, documentos y autorizaciones, y SeaweedFS es un sistema de almacenamiento distribuido para objetos y archivos diseñado para manejar miles de millones de fichas.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías, documentos y autorizaciones de reservas",
+          "rationale": "SeaweedFS permite almacenar los documentos y fotografías de cada reserva de manera eficiente con acceso rápido a disco."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide que los clientes paguen por adelantado desde cualquier lugar, y Hyperswitch es una plataforma de pagos abierta y componible que conecta múltiples proveedores.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Plataforma para procesar pagos por adelantado",
+          "rationale": "Hyperswitch habilita la conectividad con múltiples proveedores de pago para que los clientes puedan pagar por adelantado desde cualquier lugar."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar un mensaje con los detalles del viaje al confirmar una reserva, y Novu es una infraestructura de comunicación open source para notificaciones multicanal.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles del viaje y documentos",
+          "rationale": "Novu gestiona la infraestructura de comunicación para enviar mensajes a los clientes cuando se confirme una reserva. Su licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "communication",
+          "protocol": "API REST",
+          "description": "Notifica a la comunicación cuando se completa el pago para disparar el mensaje de confirmación."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con un backend propio para gestionar el calendario de excursiones, las fechas y los cupos disponibles.",
+        "Se asume que el sistema dispondrá de conectividad a internet para procesar los pagos y enviar las notificaciones en tiempo real."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un módulo específico para la gestión de calendarios y control de cupos de las excursiones."
+      ]
+    },
+    "response": {
+      "id": "da5a07fd3e794a179ab413b3b6724b5f",
+      "status": "ok",
+      "title": "Sistema de gestión para agencia de turismo y reservas",
+      "summary": "Esta propuesta integra almacenamiento distribuido para guardar los documentos de cada reserva, una plataforma de pagos para procesar transacciones por adelantado y un sistema de comunicación para enviar notificaciones a los clientes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías, documentos y autorizaciones de reservas",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS permite almacenar los documentos y fotografías de cada reserva de manera eficiente con acceso rápido a disco."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Plataforma para procesar pagos por adelantado",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch habilita la conectividad con múltiples proveedores de pago para que los clientes puedan pagar por adelantado desde cualquier lugar."
+        },
+        {
+          "key": "c3",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles del viaje y documentos",
+          "full_name": "novuhq/novu",
+          "rationale": "Novu gestiona la infraestructura de comunicación para enviar mensajes a los clientes cuando se confirme una reserva. Su licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "API REST",
+          "description": "Notifica a la comunicación cuando se completa el pago para disparar el mensaje de confirmación."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con un backend propio para gestionar el calendario de excursiones, las fechas y los cupos disponibles.",
+        "Se asume que el sistema dispondrá de conectividad a internet para procesar los pagos y enviar las notificaciones en tiempo real."
+      ],
+      "limitations": [
+        "La propuesta no incluye un módulo específico para la gestión de calendarios y control de cupos de las excursiones."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:53:13.457506Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "coworking",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de reservas de espacios y planes",
+          "evidence": "controlar las reservas de salas y puestos de trabajo. Necesito que los miembros puedan reservar únicamente los espacios incluidos en su plan"
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de demanda y ocupacion de espacios",
+          "evidence": "identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías"
+        },
+        {
+          "category": "messaging",
+          "query": "automatizacion y confirmacion de reservas",
+          "evidence": "las reservas se confirmen automáticamente"
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios de horarios reservados",
+          "evidence": "los miembros reciban un aviso cuando se acerque su horario reservado"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "getlago/lago",
+          0.249
+        ],
+        [
+          "hashicorp/vault",
+          0.243
+        ],
+        [
+          "keycloak/keycloak",
+          0.211
+        ],
+        [
+          "opencontainers/runc",
+          0.201
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.198
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.203
+        ],
+        [
+          "plausible/analytics",
+          0.201
+        ],
+        [
+          "PostHog/posthog",
+          0.198
+        ],
+        [
+          "metabase/metabase",
+          0.185
+        ],
+        [
+          "getlago/lago",
+          0.228
+        ]
+      ],
+      "messaging": [
+        [
+          "cert-manager/cert-manager",
+          0.304
+        ],
+        [
+          "ansible/ansible",
+          0.266
+        ],
+        [
+          "getlago/lago",
+          0.252
+        ],
+        [
+          "microsoft/playwright",
+          0.23
+        ],
+        [
+          "psf/black",
+          0.229
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.275
+        ],
+        [
+          "prometheus/alertmanager",
+          0.253
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Gestion y Reservas para Espacio de Coworking",
+      "summary": "Esta propuesta organiza el control de reservas de salas, gestion de planes, analisis de demanda y envio de avisos automatizados utilizando herramientas de codigo abierto. Quedan sin resolver directamente la confirmacion automatica de reservas mediante una herramienta de mensajeria y la base de datos central de disponibilidad de puestos, ya que no se encontraron candidatos exactos para esas funciones especificas.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide control de reservas y planes, y el candidato gestiona consumo, suscripciones y precios.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "getlago/lago",
+          "role": "Gestion de suscripciones y consumo de planes",
+          "rationale": "La herramienta ofrece gestion de suscripciones y seguimiento de consumo, lo cual se relaciona con los planes de los miembros pero no provee el motor de reservas de salas requerido."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide identificar demanda y horarios vacios, y el candidato ofrece analisis de producto y trafico web.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "umami-software/umami",
+          "role": "Analitica de uso y trafico del espacio",
+          "rationale": "Permite registrar el comportamiento y la actividad en la plataforma de reservas para identificar las salas con mayor demanda y los momentos de menor ocupacion de forma privada."
+        },
+        {
+          "need": "messaging",
+          "fit_check": "La necesidad pide confirmacion automatica de reservas, y el candidato realiza automatizacion de tecnologias de la informacion y despliegues.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "ansible/ansible",
+          "role": "Automatizacion de tareas de sistemas",
+          "rationale": "Aunque es una plataforma de automatizacion, esta orientada a infraestructura y despliegues de sistemas, por lo que no realiza la confirmacion automatica de reservas de espacios."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide enviar avisos ante horarios reservados, y el candidato provee notificaciones push compatibles con multiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "caronc/apprise",
+          "role": "Envio de alertas y avisos a los miembros",
+          "rationale": "Permite enviar notificaciones push y alertas para que los miembros reciban un aviso cuando se acerque su horario reservado."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "analytics",
+          "to_need": "communication",
+          "protocol": "API HTTP",
+          "description": "Envia datos de uso para disparar notificaciones basadas en la demanda."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el espacio de coworking cuenta con una infraestructura web propia para integrar las herramientas seleccionadas.",
+        "El usuario necesita un motor central de base de datos para almacenar el calendario de disponibilidad que actualmente no cuenta con un candidato dedicado."
+      ],
+      "other_limitations": [
+        "No se encontro una herramienta dedicada para el control directo de reservas de salas y puestos de trabajo.",
+        "La herramienta de analitica seleccionada requiere adaptacion para procesar datos especificos de reservas fisicas en lugar de trafico web."
+      ]
+    },
+    "response": {
+      "id": "d5efc720f78747f989c5449289b0a2db",
+      "status": "ok",
+      "title": "Sistema de Gestion y Reservas para Espacio de Coworking",
+      "summary": "Esta propuesta organiza el control de reservas de salas, gestion de planes, analisis de demanda y envio de avisos automatizados utilizando herramientas de codigo abierto. Quedan sin resolver directamente la confirmacion automatica de reservas mediante una herramienta de mensajeria y la base de datos central de disponibilidad de puestos, ya que no se encontraron candidatos exactos para esas funciones especificas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "umami-software/umami",
+          "role": "Analitica de uso y trafico del espacio",
+          "full_name": "umami-software/umami",
+          "rationale": "Permite registrar el comportamiento y la actividad en la plataforma de reservas para identificar las salas con mayor demanda y los momentos de menor ocupacion de forma privada."
+        },
+        {
+          "key": "c2",
+          "label": "caronc/apprise",
+          "role": "Envio de alertas y avisos a los miembros",
+          "full_name": "caronc/apprise",
+          "rationale": "Permite enviar notificaciones push y alertas para que los miembros reciban un aviso cuando se acerque su horario reservado."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API HTTP",
+          "description": "Envia datos de uso para disparar notificaciones basadas en la demanda."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el espacio de coworking cuenta con una infraestructura web propia para integrar las herramientas seleccionadas.",
+        "El usuario necesita un motor central de base de datos para almacenar el calendario de disponibilidad que actualmente no cuenta con un candidato dedicado."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. La herramienta ofrece gestion de suscripciones y seguimiento de consumo, lo cual se relaciona con los planes de los miembros pero no provee el motor de reservas de salas requerido.",
+        "Mensajería: ninguna de las herramientas encontradas encaja. Aunque es una plataforma de automatizacion, esta orientada a infraestructura y despliegues de sistemas, por lo que no realiza la confirmacion automatica de reservas de espacios.",
+        "No se encontro una herramienta dedicada para el control directo de reservas de salas y puestos de trabajo.",
+        "La herramienta de analitica seleccionada requiere adaptacion para procesar datos especificos de reservas fisicas en lugar de trafico web."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:53:26.589288Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-restauracion",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y gestión de archivos y fotografías",
+          "evidence": "Necesito conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble."
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de texto y metadatos",
+          "evidence": "También necesito encontrar piezas por su época, material o procedencia."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "rustfs/rustfs",
+          0.327
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.327
+        ],
+        [
+          "hashicorp/vault",
+          0.304
+        ],
+        [
+          "pnpm/pnpm",
+          0.254
+        ],
+        [
+          "helm/helm",
+          0.246
+        ]
+      ],
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.401
+        ],
+        [
+          "qdrant/qdrant",
+          0.345
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.336
+        ],
+        [
+          "typesense/typesense",
+          0.334
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.334
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y búsqueda para taller de restauración",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido para conservar expedientes, fotografías e informes de los muebles, complementado con un motor de búsqueda rápida para localizar piezas por época, material o procedencia. Ambas herramientas ofrecen un mantenimiento activo y licencias abiertas para garantizar la operación del taller.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide conservar fotografías, informes y documentos, y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos capaz de manejar miles de millones de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacén de expedientes y archivos",
+          "rationale": "Resuelve la conservación de fotografías del estado original, informes de restauración y documentos de procedencia mediante un sistema de almacenamiento distribuido para objetos y archivos bajo licencia Apache-2.0."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide encontrar piezas por su época, material o procedencia, y Meilisearch ofrece un motor de búsqueda rápida con soporte para facetas y búsqueda híbrida.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Motor de búsqueda de piezas",
+          "rationale": "Permite encontrar las piezas según su época, material o procedencia mediante un motor de búsqueda ultrarrápido con API para aplicaciones. La licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda indexa los metadatos de los expedientes almacenados para facilitar la localización de las piezas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el taller cuenta con una interfaz o aplicación desarrollada internamente que conecta el motor de búsqueda con el sistema de almacenamiento y permite a los trabajadores consultar los expedientes según sus proyectos asignados."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución nativa para la gestión específica de proyectos o asignación de tareas a los trabajadores del taller."
+      ]
+    },
+    "response": {
+      "id": "700c2cf150d14edfacca1a62a30e9d10",
+      "status": "ok",
+      "title": "Sistema de gestión y búsqueda para taller de restauración",
+      "summary": "La propuesta implementa un sistema de almacenamiento distribuido para conservar expedientes, fotografías e informes de los muebles, complementado con un motor de búsqueda rápida para localizar piezas por época, material o procedencia. Ambas herramientas ofrecen un mantenimiento activo y licencias abiertas para garantizar la operación del taller.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacén de expedientes y archivos",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Resuelve la conservación de fotografías del estado original, informes de restauración y documentos de procedencia mediante un sistema de almacenamiento distribuido para objetos y archivos bajo licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "Meilisearch",
+          "role": "Motor de búsqueda de piezas",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Permite encontrar las piezas según su época, material o procedencia mediante un motor de búsqueda ultrarrápido con API para aplicaciones. La licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda indexa los metadatos de los expedientes almacenados para facilitar la localización de las piezas."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el taller cuenta con una interfaz o aplicación desarrollada internamente que conecta el motor de búsqueda con el sistema de almacenamiento y permite a los trabajadores consultar los expedientes según sus proyectos asignados."
+      ],
+      "limitations": [
+        "La propuesta no incluye una solución nativa para la gestión específica de proyectos o asignación de tareas a los trabajadores del taller."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:53:39.082381Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "academia-musica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "los alumnos puedan consultar las partituras y grabaciones correspondientes a sus clases"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos de usuario",
+          "evidence": "cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de uso y consultas",
+          "evidence": "saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.339
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.364
+        ],
+        [
+          "hashicorp/vault",
+          0.361
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.331
+        ],
+        [
+          "zitadel/zitadel",
+          0.322
+        ],
+        [
+          "ory/kratos",
+          0.31
+        ]
+      ],
+      "analytics": [
+        [
+          "plausible/analytics",
+          0.406
+        ],
+        [
+          "umami-software/umami",
+          0.39
+        ],
+        [
+          "metabase/metabase",
+          0.37
+        ],
+        [
+          "PostHog/posthog",
+          0.357
+        ],
+        [
+          "duckdb/duckdb",
+          0.405
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y analítica para academia de música",
+      "summary": "Esta propuesta implementa un sistema para la academia de música utilizando almacenamiento distribuido para partituras y grabaciones, gestión de identidad y accesos para profesores y alumnos, y una herramienta de inteligencia de negocios para analizar el uso de los cursos.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y documentos y el candidato SeaweedFS ofrece un sistema de almacenamiento distribuido para S3 y sistemas de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacena las partituras y grabaciones de las clases de la academia.",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para conservar y servir las grabaciones y partituras que consultan los alumnos."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso y permisos de usuario y el candidato Keycloak ofrece gestión de identidad y accesos para aplicaciones modernas.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Controla los roles y permisos para que los profesores actualicen solo sus grupos.",
+          "rationale": "Keycloak proporciona gestión de identidad y acceso de código abierto, permitiendo configurar permisos específicos para que cada profesor actualice únicamente los materiales de sus propios grupos."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analítica de uso y consultas y el candidato Metabase ofrece una herramienta de inteligencia de negocios y analítica incrustada.",
+          "fit": "serves",
+          "full_name": "metabase/metabase",
+          "label": "Metabase",
+          "role": "Analiza cuáles son los cursos y materiales que reciben más consultas.",
+          "rationale": "Metabase es una herramienta de inteligencia de negocios de código abierto cuya licencia no fue identificada por GitHub; permite trabajar fácilmente con datos para conocer las métricas de consulta sobre cursos y materiales."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "HTTPS",
+          "description": "Valida la identidad y permisos del profesor antes de permitirle subir o actualizar archivos en el almacenamiento."
+        },
+        {
+          "from_need": "analytics",
+          "to_need": "storage",
+          "protocol": "SQL / API",
+          "description": "Consulta registros de acceso y descargas de materiales para calcular cuáles son los más consultados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la academia cuenta con una aplicación web o plataforma central que integra el inicio de sesión, el acceso a archivos y la visualización de métricas.",
+        "Se asume que las consultas a los cursos y materiales generan registros que pueden ser consultados mediante una base de datos analítica."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una solución dedicada para la publicación inicial de la información general sobre cursos, profesores y horarios disponibles.",
+        "No se han evaluado bases de datos transaccionales dedicadas para el registro de inscripciones de alumnos."
+      ]
+    },
+    "response": {
+      "id": "93f2b098585a4c7d9135a0505bcce4e4",
+      "status": "ok",
+      "title": "Sistema de gestión y analítica para academia de música",
+      "summary": "Esta propuesta implementa un sistema para la academia de música utilizando almacenamiento distribuido para partituras y grabaciones, gestión de identidad y accesos para profesores y alumnos, y una herramienta de inteligencia de negocios para analizar el uso de los cursos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacena las partituras y grabaciones de las clases de la academia.",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar miles de millones de archivos con acceso rápido a disco, ideal para conservar y servir las grabaciones y partituras que consultan los alumnos."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Controla los roles y permisos para que los profesores actualicen solo sus grupos.",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak proporciona gestión de identidad y acceso de código abierto, permitiendo configurar permisos específicos para que cada profesor actualice únicamente los materiales de sus propios grupos."
+        },
+        {
+          "key": "c3",
+          "label": "Metabase",
+          "role": "Analiza cuáles son los cursos y materiales que reciben más consultas.",
+          "full_name": "metabase/metabase",
+          "rationale": "Metabase es una herramienta de inteligencia de negocios de código abierto cuya licencia no fue identificada por GitHub; permite trabajar fácilmente con datos para conocer las métricas de consulta sobre cursos y materiales."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Valida la identidad y permisos del profesor antes de permitirle subir o actualizar archivos en el almacenamiento."
+        },
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "SQL / API",
+          "description": "Consulta registros de acceso y descargas de materiales para calcular cuáles son los más consultados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la academia cuenta con una aplicación web o plataforma central que integra el inicio de sesión, el acceso a archivos y la visualización de métricas.",
+        "Se asume que las consultas a los cursos y materiales generan registros que pueden ser consultados mediante una base de datos analítica."
+      ],
+      "limitations": [
+        "La propuesta no incluye una solución dedicada para la publicación inicial de la información general sobre cursos, profesores y horarios disponibles.",
+        "No se han evaluado bases de datos transaccionales dedicadas para el registro de inscripciones de alumnos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:53:52.072990Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "alquiler-equipos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario y contratos",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados. Necesito conservar los contratos firmados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de fotografias de equipos",
+          "evidence": "fotografías del estado de cada equipo antes y después de cada alquiler"
+        },
+        {
+          "category": "ai",
+          "query": "analisis visual de fotografias",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "containerd/containerd",
+          0.222
+        ],
+        [
+          "hashicorp/vault",
+          0.214
+        ],
+        [
+          "git/git",
+          0.198
+        ],
+        [
+          "kubernetes/kubernetes",
+          0.197
+        ],
+        [
+          "opencontainers/runc",
+          0.196
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.243
+        ],
+        [
+          "rustfs/rustfs",
+          0.216
+        ],
+        [
+          "etcd-io/etcd",
+          0.235
+        ],
+        [
+          "valkey-io/valkey",
+          0.206
+        ],
+        [
+          "fluxcd/flux2",
+          0.198
+        ]
+      ],
+      "ai": [
+        [
+          "huggingface/transformers",
+          0.194
+        ],
+        [
+          "PostHog/posthog",
+          0.22
+        ],
+        [
+          "plausible/analytics",
+          0.212
+        ],
+        [
+          "eslint/eslint",
+          0.192
+        ],
+        [
+          "grafana/grafana",
+          0.187
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema para control de alquileres y equipos audiovisuales",
+      "summary": "Propuesta de arquitectura open source para la gestión de un negocio de alquiler de equipos audiovisuales. Permite almacenar archivos y el inventario del negocio, y cuenta con un marco de aprendizaje automático para abordar el análisis visual de las fotografías en busca de diferencias.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide control de inventario y contratos, pero los candidatos disponibles ofrecen gestión de contenedores, secretos o control de código fuente.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Control de inventario y contratos",
+          "rationale": "No se encontraron candidatos que realicen directamente la función de base de datos para control de inventarios o almacenamiento de contratos."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de fotografías de equipos y el candidato SeaweedFS es un sistema de almacenamiento distribuido diseñado para manejar archivos y blobs.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías",
+          "rationale": "Es un sistema de almacenamiento distribuido para archivos y objetos con licencia Apache-2.0, ideal para conservar las fotografías del estado de cada equipo antes y después de cada alquiler."
+        },
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide análisis visual de fotografías para generar informes de daños, y el candidato Transformers provee un marco para modelos de aprendizaje automático orientados a visión y modelos multimodales.",
+          "fit": "serves",
+          "full_name": "huggingface/transformers",
+          "label": "Transformers",
+          "role": "Análisis visual de fotografías",
+          "rationale": "Ofrece un marco de definición de modelos para aprendizaje automático en visión y modelos multimodales, bajo licencia Apache-2.0, para identificar diferencias entre las fotografías."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "storage",
+          "to_need": "ai",
+          "protocol": "API HTTP",
+          "description": "Envía las fotografías iniciales y de devolución para el análisis visual."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la consulta de alquileres asignados por empleado se resolverá a través de una aplicación de gestión o interfaz desarrollada a medida que se conecte con los componentes seleccionados.",
+        "Se asume que la generación automática del informe de daños se programará integrando la lógica de negocio con el modelo de visión artificial."
+      ],
+      "other_limitations": [
+        "No se dispone de un candidato de base de datos adecuado para el control de inventario y contratos en los resultados de búsqueda.",
+        "El candidato rustfs/rustfs no fue elegido ya que seaweedfs/seaweedfs fue seleccionado prioritariamente para el almacenamiento de archivos."
+      ]
+    },
+    "response": {
+      "id": "ec784f241ee34b6a9331c82a3cf59aa1",
+      "status": "ok",
+      "title": "Sistema para control de alquileres y equipos audiovisuales",
+      "summary": "Propuesta de arquitectura open source para la gestión de un negocio de alquiler de equipos audiovisuales. Permite almacenar archivos y el inventario del negocio, y cuenta con un marco de aprendizaje automático para abordar el análisis visual de las fotografías en busca de diferencias.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Es un sistema de almacenamiento distribuido para archivos y objetos con licencia Apache-2.0, ideal para conservar las fotografías del estado de cada equipo antes y después de cada alquiler."
+        },
+        {
+          "key": "c2",
+          "label": "Transformers",
+          "role": "Análisis visual de fotografías",
+          "full_name": "huggingface/transformers",
+          "rationale": "Ofrece un marco de definición de modelos para aprendizaje automático en visión y modelos multimodales, bajo licencia Apache-2.0, para identificar diferencias entre las fotografías."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "API HTTP",
+          "description": "Envía las fotografías iniciales y de devolución para el análisis visual."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la consulta de alquileres asignados por empleado se resolverá a través de una aplicación de gestión o interfaz desarrollada a medida que se conecte con los componentes seleccionados.",
+        "Se asume que la generación automática del informe de daños se programará integrando la lógica de negocio con el modelo de visión artificial."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. No se encontraron candidatos que realicen directamente la función de base de datos para control de inventarios o almacenamiento de contratos.",
+        "No se dispone de un candidato de base de datos adecuado para el control de inventario y contratos en los resultados de búsqueda.",
+        "El candidato rustfs/rustfs no fue elegido ya que seaweedfs/seaweedfs fue seleccionado prioritariamente para el almacenamiento de archivos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:54:04.472993Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "clinica-veterinaria",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros estructurados",
+          "evidence": "quiero llevar un historial de las mascotas y sus dueños"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "Necesito que cada empleado pueda consultar únicamente la información que le corresponde según su cargo"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda rápida de registros y documentos",
+          "evidence": "Quiero que los dueños puedan encontrar rápidamente los registros de vacunación y tratamientos anteriores de sus mascotas"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones y recordatorios",
+          "evidence": "necesito enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.334
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.296
+        ],
+        [
+          "duckdb/duckdb",
+          0.288
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.286
+        ],
+        [
+          "postgres/postgres",
+          0.271
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.319
+        ],
+        [
+          "hashicorp/vault",
+          0.293
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.292
+        ],
+        [
+          "ory/kratos",
+          0.29
+        ],
+        [
+          "zitadel/zitadel",
+          0.264
+        ]
+      ],
+      "search": [
+        [
+          "meilisearch/meilisearch",
+          0.384
+        ],
+        [
+          "qdrant/qdrant",
+          0.334
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.33
+        ],
+        [
+          "typesense/typesense",
+          0.314
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.306
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.419
+        ],
+        [
+          "novuhq/novu",
+          0.307
+        ],
+        [
+          "knadh/listmonk",
+          0.223
+        ],
+        [
+          "prometheus/alertmanager",
+          0.327
+        ],
+        [
+          "TryGhost/Ghost",
+          0.19
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para clínica veterinaria",
+      "summary": "Esta propuesta organiza el historial de las mascotas y sus dueños mediante una base de datos robusta, gestiona el acceso de los empleados según su cargo, permite búsquedas rápidas en los registros médicos y automatiza el envío de recordatorios de vacunación.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "Se requiere almacenamiento y consulta de registros estructurados y el candidato ofrece SQL databases in Python, designed for simplicity, compatibility, and robustness.",
+          "fit": "serves",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Almacena los historiales de mascotas y dueños",
+          "rationale": "Permite gestionar bases de datos SQL en Python de forma sencilla y robusta para llevar el historial de las mascotas y sus dueños con licencia MIT."
+        },
+        {
+          "need": "auth",
+          "fit_check": "Se requiere control de acceso basado en roles y el candidato ofrece Open Source Identity and Access Management For Modern Applications and Services.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Controla el acceso de los empleados según su cargo",
+          "rationale": "Proporciona gestión de identidad y acceso de código abierto bajo licencia Apache-2.0, permitiendo que cada empleado consulte únicamente la información correspondiente a su cargo."
+        },
+        {
+          "need": "search",
+          "fit_check": "Se requiere búsqueda rápida de registros y documentos y el candidato ofrece A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Facilita la búsqueda rápida de registros médicos",
+          "rationale": "Ofrece un motor de búsqueda ultrarrápido con API para que los dueños encuentren rápidamente los registros de vacunación y tratamientos anteriores. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "need": "communication",
+          "fit_check": "Se requiere envío de notificaciones y recordatorios y el candidato offers The open-source communication infrastructure for agents and products.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Envía notificaciones y recordatorios de vacunación",
+          "rationale": "Proporciona infraestructura de comunicación de código abierto para enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales y roles de los empleados antes de permitir consultas en la base de datos."
+        },
+        {
+          "from_need": "search",
+          "to_need": "database",
+          "protocol": "API REST",
+          "description": "Consulta y sincroniza los registros de vacunación y tratamientos desde el almacenamiento."
+        },
+        {
+          "from_need": "communication",
+          "to_need": "database",
+          "protocol": "API REST",
+          "description": "Consulta las fechas próximas de vacunación para disparar los recordatorios a los dueños."
+        }
+      ],
+      "assumptions": [
+        "La clínica cuenta con personal técnico capaz de desplegar y mantener servicios basados en contenedores y Python.",
+        "Los clientes dispondrán de una interfaz web o móvil conectada a estos servicios para consultar los historiales y recibir avisos."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "a0562a40e47145f4bac4bb7db4fbecfc",
+      "status": "ok",
+      "title": "Sistema de gestión para clínica veterinaria",
+      "summary": "Esta propuesta organiza el historial de las mascotas y sus dueños mediante una base de datos robusta, gestiona el acceso de los empleados según su cargo, permite búsquedas rápidas en los registros médicos y automatiza el envío de recordatorios de vacunación.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SQLModel",
+          "role": "Almacena los historiales de mascotas y dueños",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Permite gestionar bases de datos SQL en Python de forma sencilla y robusta para llevar el historial de las mascotas y sus dueños con licencia MIT."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Controla el acceso de los empleados según su cargo",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Proporciona gestión de identidad y acceso de código abierto bajo licencia Apache-2.0, permitiendo que cada empleado consulte únicamente la información correspondiente a su cargo."
+        },
+        {
+          "key": "c3",
+          "label": "Meilisearch",
+          "role": "Facilita la búsqueda rápida de registros médicos",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Ofrece un motor de búsqueda ultrarrápido con API para que los dueños encuentren rápidamente los registros de vacunación y tratamientos anteriores. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "key": "c4",
+          "label": "Novu",
+          "role": "Envía notificaciones y recordatorios de vacunación",
+          "full_name": "novuhq/novu",
+          "rationale": "Proporciona infraestructura de comunicación de código abierto para enviar un recordatorio a los dueños cuando se acerque una fecha de vacunación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Valida las credenciales y roles de los empleados antes de permitir consultas en la base de datos."
+        },
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "Consulta y sincroniza los registros de vacunación y tratamientos desde el almacenamiento."
+        },
+        {
+          "from_key": "c4",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "Consulta las fechas próximas de vacunación para disparar los recordatorios a los dueños."
+        }
+      ],
+      "assumptions": [
+        "La clínica cuenta con personal técnico capaz de desplegar y mantener servicios basados en contenedores y Python.",
+        "Los clientes dispondrán de una interfaz web o móvil conectada a estos servicios para consultar los historiales y recibir avisos."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:54:17.892014Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-idiomas",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de datos de estudiantes",
+          "evidence": "organizar las inscripciones y los datos de mis estudiantes"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles para profesores",
+          "evidence": "cada profesor pueda acceder a sus grupos sin consultar información de otros cursos"
+        },
+        {
+          "category": "ai",
+          "query": "recomendación automática basada en análisis",
+          "evidence": "recibir una recomendación automática del curso más adecuado"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de conversión de pruebas a inscripciones",
+          "evidence": "medir cuántos estudiantes pasan de una prueba inicial a una inscripción"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.329
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.227
+        ],
+        [
+          "duckdb/duckdb",
+          0.224
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.212
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.194
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.255
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.244
+        ],
+        [
+          "hashicorp/vault",
+          0.237
+        ],
+        [
+          "ory/kratos",
+          0.217
+        ],
+        [
+          "zitadel/zitadel",
+          0.217
+        ]
+      ],
+      "ai": [
+        [
+          "scikit-learn/scikit-learn",
+          0.331
+        ],
+        [
+          "huggingface/transformers",
+          0.297
+        ],
+        [
+          "huggingface/datasets",
+          0.247
+        ],
+        [
+          "tensorflow/tensorflow",
+          0.245
+        ],
+        [
+          "pytorch/pytorch",
+          0.234
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.202
+        ],
+        [
+          "jestjs/jest",
+          0.237
+        ],
+        [
+          "testing-library/react-testing-library",
+          0.187
+        ],
+        [
+          "cypress-io/cypress",
+          0.187
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y analítica para escuela de idiomas",
+      "summary": "La propuesta integra herramientas de código abierto para gestionar la base de datos de estudiantes, controlar el acceso de los profesores por roles, procesar recomendaciones automáticas y medir la conversión de las pruebas iniciales a inscripciones.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "Pide almacenamiento y consulta de datos de estudiantes, y fastapi/sqlmodel ofrece bases de datos SQL en Python diseñadas para simplicidad y robustez.",
+          "fit": "serves",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Almacena los datos de estudiantes, inscripciones y grupos.",
+          "rationale": "Permite organizar las inscripciones y los datos de los estudiantes mediante bases de datos SQL en Python con licencia MIT y mantenimiento activo."
+        },
+        {
+          "need": "auth",
+          "fit_check": "Pide control de acceso por roles para profesores, y keycloak/keycloak ofrece gestión de identidad y acceso para aplicaciones.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y los permisos de acceso de los profesores.",
+          "rationale": "Permite que cada profesor acceda únicamente a sus grupos y restringe la consulta de información de otros cursos mediante control de identidad bajo licencia Apache-2.0."
+        },
+        {
+          "need": "ai",
+          "fit_check": "Pide recomendación automática basada en análisis, y scikit-learn/scikit-learn ofrece aprendizaje automático en Python para análisis de datos.",
+          "fit": "serves",
+          "full_name": "scikit-learn/scikit-learn",
+          "label": "Scikit-learn",
+          "role": "Procesa las pruebas de nivel para generar una recomendación automática del curso adecuado.",
+          "rationale": "Utiliza algoritmos de aprendizaje automático en Python para analizar los resultados de las pruebas de nivel y entregar la recomendación solicitada, con licencia BSD-3-Clause."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "Pide medición de conversión de pruebas a inscripciones, y umami-software/umami ofrece una plataforma de analítica web y de productos con seguimiento de conversiones.",
+          "fit": "serves",
+          "full_name": "umami-software/umami",
+          "label": "Umami",
+          "role": "Mide cuántos estudiantes pasan de la prueba inicial a la inscripción.",
+          "rationale": "Permite realizar un seguimiento de las conversiones de manera respetuosa con la privacidad, bajo licencia MIT y con actividad reciente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "ai",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Envía los resultados del análisis de nivel para asociarlos al perfil del estudiante."
+        },
+        {
+          "from_need": "analytics",
+          "to_need": "database",
+          "protocol": "HTTPS",
+          "description": "Consulta los registros de pruebas e inscripciones para calcular la tasa de conversión."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con infraestructura propia para alojar las aplicaciones autohospedadas.",
+        "Se asume que la interfaz de usuario se desarrollará externamente conectándose a estas herramientas."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "1f2dc9ceb828445a848fd70e801879da",
+      "status": "ok",
+      "title": "Sistema de gestión y analítica para escuela de idiomas",
+      "summary": "La propuesta integra herramientas de código abierto para gestionar la base de datos de estudiantes, controlar el acceso de los profesores por roles, procesar recomendaciones automáticas y medir la conversión de las pruebas iniciales a inscripciones.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SQLModel",
+          "role": "Almacena los datos de estudiantes, inscripciones y grupos.",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Permite organizar las inscripciones y los datos de los estudiantes mediante bases de datos SQL en Python con licencia MIT y mantenimiento activo."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Gestiona la autenticación y los permisos de acceso de los profesores.",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Permite que cada profesor acceda únicamente a sus grupos y restringe la consulta de información de otros cursos mediante control de identidad bajo licencia Apache-2.0."
+        },
+        {
+          "key": "c3",
+          "label": "Scikit-learn",
+          "role": "Procesa las pruebas de nivel para generar una recomendación automática del curso adecuado.",
+          "full_name": "scikit-learn/scikit-learn",
+          "rationale": "Utiliza algoritmos de aprendizaje automático en Python para analizar los resultados de las pruebas de nivel y entregar la recomendación solicitada, con licencia BSD-3-Clause."
+        },
+        {
+          "key": "c4",
+          "label": "Umami",
+          "role": "Mide cuántos estudiantes pasan de la prueba inicial a la inscripción.",
+          "full_name": "umami-software/umami",
+          "rationale": "Permite realizar un seguimiento de las conversiones de manera respetuosa con la privacidad, bajo licencia MIT y con actividad reciente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c3",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Envía los resultados del análisis de nivel para asociarlos al perfil del estudiante."
+        },
+        {
+          "from_key": "c4",
+          "to_key": "c1",
+          "protocol": "HTTPS",
+          "description": "Consulta los registros de pruebas e inscripciones para calcular la tasa de conversión."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la escuela cuenta con infraestructura propia para alojar las aplicaciones autohospedadas.",
+        "Se asume que la interfaz de usuario se desarrollará externamente conectándose a estas herramientas."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:54:30.894012Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-repuestos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario y existencias",
+          "evidence": "controlar las existencias de cada referencia"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de productos",
+          "evidence": "encontrar productos por su descripción, compatibilidad y características, incluso cuando no conozco el nombre exacto"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "las ventas por internet se cobren antes de preparar cada pedido"
+        },
+        {
+          "category": "cache",
+          "query": "optimización de consultas frecuentes",
+          "evidence": "los productos más consultados se muestren rápidamente aunque haya muchos clientes conectados"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "hashicorp/vault",
+          0.205
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.326
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.323
+        ],
+        [
+          "typesense/typesense",
+          0.292
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.277
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.271
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.335
+        ],
+        [
+          "killbill/killbill",
+          0.245
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ],
+        [
+          "apache/flink",
+          0.206
+        ],
+        [
+          "apache/beam",
+          0.188
+        ]
+      ],
+      "cache": [
+        [
+          "redis/redis",
+          0.262
+        ],
+        [
+          "valkey-io/valkey",
+          0.254
+        ],
+        [
+          "typesense/typesense",
+          0.298
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.29
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.29
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema Open Source para Tienda de Repuestos",
+      "summary": "Esta propuesta integra herramientas para la gestión de búsqueda avanzada de productos, procesamiento de pagos previos y optimización de caché para consultas frecuentes en una tienda de repuestos. Quedó pendiente una solución específica para el control de inventario debido a la falta de candidatos adecuados en esa categoría.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide controlar las existencias de cada referencia, pero el candidato más cercano gestiona secretos y cifrado.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "Bases de datos",
+          "role": "Gestión de secretos",
+          "rationale": "El candidato disponible se enfoca en la gestión de secretos y control de accesos privilegiados, por lo que no resuelve directamente el control de inventario de repuestos solicitado."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide encontrar productos por descripción y compatibilidad, y el candidato ofrece un motor de búsqueda rápida, tolerante a errores y en memoria.",
+          "fit": "serves",
+          "full_name": "typesense/typesense",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "rationale": "Es un motor de búsqueda en memoria tolerante a fallos que permite encontrar productos rápidamente mediante descripciones y características. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide cobrar ventas por internet antes de preparar cada pedido, y el candidato ofrece una plataforma de pagos componible y de código abierto.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos en línea",
+          "rationale": "Permite gestionar los cobros en línea de forma previa a la preparación de los pedidos. Cuenta con licencia Apache-2.0 y un mantenimiento activo constante."
+        },
+        {
+          "need": "cache",
+          "fit_check": "La necesidad pide mostrar rápidamente los productos más consultados con alta concurrencia, y el candidato ofrece una base de datos distribuida optimizada para caché.",
+          "fit": "serves",
+          "full_name": "valkey-io/valkey",
+          "label": "Valkey",
+          "role": "Caché de consultas frecuentes",
+          "rationale": "Es una base de datos clave-valor distribuida y optimizada para cargas de trabajo en tiempo real y caché. Utiliza licencia BSD-3-Clause y recibe actualizaciones recientes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "cache",
+          "protocol": "HTTP/TCP",
+          "description": "Consulta de catálogos frecuentes cacheados para acelerar la respuesta"
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda operará con un catálogo digital estructurado previamente.",
+        "El procesamiento de pagos requiere integración con pasarelas externas soportadas por la plataforma elegida."
+      ],
+      "other_limitations": [
+        "No se encontró una herramienta de base de datos específica para el control de inventario de repuestos en el catálogo proporcionado."
+      ]
+    },
+    "response": {
+      "id": "3fa9878d9b17486ab86e99255597adac",
+      "status": "ok",
+      "title": "Sistema Open Source para Tienda de Repuestos",
+      "summary": "Esta propuesta integra herramientas para la gestión de búsqueda avanzada de productos, procesamiento de pagos previos y optimización de caché para consultas frecuentes en una tienda de repuestos. Quedó pendiente una solución específica para el control de inventario debido a la falta de candidatos adecuados en esa categoría.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Typesense",
+          "role": "Búsqueda avanzada de productos",
+          "full_name": "typesense/typesense",
+          "rationale": "Es un motor de búsqueda en memoria tolerante a fallos que permite encontrar productos rápidamente mediante descripciones y características. Su licencia es GPL-3.0 y se mantiene activamente."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos en línea",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Permite gestionar los cobros en línea de forma previa a la preparación de los pedidos. Cuenta con licencia Apache-2.0 y un mantenimiento activo constante."
+        },
+        {
+          "key": "c3",
+          "label": "Valkey",
+          "role": "Caché de consultas frecuentes",
+          "full_name": "valkey-io/valkey",
+          "rationale": "Es una base de datos clave-valor distribuida y optimizada para cargas de trabajo en tiempo real y caché. Utiliza licencia BSD-3-Clause y recibe actualizaciones recientes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "HTTP/TCP",
+          "description": "Consulta de catálogos frecuentes cacheados para acelerar la respuesta"
+        }
+      ],
+      "assumptions": [
+        "Se asume que la tienda operará con un catálogo digital estructurado previamente.",
+        "El procesamiento de pagos requiere integración con pasarelas externas soportadas por la plataforma elegida."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. El candidato disponible se enfoca en la gestión de secretos y control de accesos privilegiados, por lo que no resuelve directamente el control de inventario de repuestos solicitado.",
+        "No se encontró una herramienta de base de datos específica para el control de inventario de repuestos en el catálogo proporcionado."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:54:44.206422Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-turismo",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "Necesito guardar fotografías, documentos y autorizaciones de cada reserva."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "Quiero que los clientes puedan pagar por adelantado desde cualquier lugar."
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes y notificaciones",
+          "evidence": "quiero que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.339
+        ],
+        [
+          "rustfs/rustfs",
+          0.315
+        ],
+        [
+          "hashicorp/vault",
+          0.275
+        ],
+        [
+          "etcd-io/etcd",
+          0.264
+        ],
+        [
+          "valkey-io/valkey",
+          0.237
+        ]
+      ],
+      "payments": [
+        [
+          "juspay/hyperswitch",
+          0.335
+        ],
+        [
+          "killbill/killbill",
+          0.245
+        ],
+        [
+          "getlago/lago",
+          0.199
+        ],
+        [
+          "apache/flink",
+          0.206
+        ],
+        [
+          "apache/beam",
+          0.188
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.362
+        ],
+        [
+          "novuhq/novu",
+          0.352
+        ],
+        [
+          "knadh/listmonk",
+          0.233
+        ],
+        [
+          "postalserver/postal",
+          0.229
+        ],
+        [
+          "prometheus/alertmanager",
+          0.257
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de sistema open source para agencia de turismo",
+      "summary": "La propuesta implementa un sistema para la agencia de turismo utilizando SeaweedFS para el almacenamiento de archivos y documentos, Hyperswitch para el procesamiento de pagos en línea y Novu como infraestructura de comunicación para enviar los detalles del viaje a los clientes.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y documentos, y SeaweedFS es un sistema de almacenamiento distribuido para objetos y sistemas de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías, documentos y autorizaciones",
+          "rationale": "SeaweedFS resuelve la necesidad de guardar fotografías, documentos y autorizaciones de cada reserva gracias a su capacidad como sistema de almacenamiento distribuido para objetos y archivos."
+        },
+        {
+          "need": "payments",
+          "fit_check": "La necesidad pide procesamiento de pagos en línea, y Hyperswitch es una plataforma de pagos abierta y componible.",
+          "fit": "serves",
+          "full_name": "juspay/hyperswitch",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos por adelantado",
+          "rationale": "Hyperswitch permite que los clientes puedan pagar por adelantado desde cualquier lugar al ofrecer una plataforma de pagos conectada a múltiples proveedores."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide envío de mensajes y notificaciones, y Novu es una infraestructura de comunicación open source para productos.",
+          "fit": "serves",
+          "full_name": "novuhq/novu",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles de viaje y documentos",
+          "rationale": "Novu cumple con que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios mediante su infraestructura de comunicación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "payments",
+          "to_need": "communication",
+          "protocol": "API REST",
+          "description": "Notifica al sistema de comunicación cuando se confirma una reserva y se procesa el pago."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con una aplicación web o backend principal que coordina las reservas, fechas y cupos de las excursiones.",
+        "Se asume que los documentos necesarios se enlazan o adjuntan desde el almacenamiento hacia la plataforma de comunicación."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "830a5c02e36445e5bc0046e14109acd9",
+      "status": "ok",
+      "title": "Propuesta de sistema open source para agencia de turismo",
+      "summary": "La propuesta implementa un sistema para la agencia de turismo utilizando SeaweedFS para el almacenamiento de archivos y documentos, Hyperswitch para el procesamiento de pagos en línea y Novu como infraestructura de comunicación para enviar los detalles del viaje a los clientes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de fotografías, documentos y autorizaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS resuelve la necesidad de guardar fotografías, documentos y autorizaciones de cada reserva gracias a su capacidad como sistema de almacenamiento distribuido para objetos y archivos."
+        },
+        {
+          "key": "c2",
+          "label": "Hyperswitch",
+          "role": "Procesamiento de pagos por adelantado",
+          "full_name": "juspay/hyperswitch",
+          "rationale": "Hyperswitch permite que los clientes puedan pagar por adelantado desde cualquier lugar al ofrecer una plataforma de pagos conectada a múltiples proveedores."
+        },
+        {
+          "key": "c3",
+          "label": "Novu",
+          "role": "Envío de mensajes con detalles de viaje y documentos",
+          "full_name": "novuhq/novu",
+          "rationale": "Novu cumple con que el cliente reciba un mensaje con los detalles del viaje y los documentos necesarios mediante su infraestructura de comunicación. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "API REST",
+          "description": "Notifica al sistema de comunicación cuando se confirma una reserva y se procesa el pago."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la agencia cuenta con una aplicación web o backend principal que coordina las reservas, fechas y cupos de las excursiones.",
+        "Se asume que los documentos necesarios se enlazan o adjuntan desde el almacenamiento hacia la plataforma de comunicación."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:54:57.126602Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "coworking",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de reservas y planes",
+          "evidence": "controlar las reservas de salas y puestos de trabajo. Necesito que los miembros puedan reservar únicamente los espacios incluidos en su plan."
+        },
+        {
+          "category": "analytics",
+          "query": "analisis de ocupacion y demanda",
+          "evidence": "identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías."
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios de reservas",
+          "evidence": "los miembros reciban un aviso cuando se acerque su horario reservado."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.262
+        ],
+        [
+          "hashicorp/vault",
+          0.291
+        ],
+        [
+          "rustfs/rustfs",
+          0.258
+        ],
+        [
+          "valkey-io/valkey",
+          0.248
+        ],
+        [
+          "redis/redis",
+          0.247
+        ]
+      ],
+      "analytics": [
+        [
+          "umami-software/umami",
+          0.217
+        ],
+        [
+          "PostHog/posthog",
+          0.212
+        ],
+        [
+          "plausible/analytics",
+          0.208
+        ],
+        [
+          "metabase/metabase",
+          0.187
+        ],
+        [
+          "getlago/lago",
+          0.24
+        ]
+      ],
+      "communication": [
+        [
+          "caronc/apprise",
+          0.268
+        ],
+        [
+          "prometheus/alertmanager",
+          0.243
+        ],
+        [
+          "cert-manager/cert-manager",
+          0.188
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema Open Source para la Gestión de Co-working",
+      "summary": "Propuesta para administrar espacios de co-working controlando reservas por planes de membresía, analizando la demanda de salas mediante paneles de inteligencia de negocio y automatizando el envío de avisos a los miembros.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide almacenamiento de reservas y planes; el candidato etcd-io/etcd ofrece un almacén clave-valor distribuido y confiable para datos críticos.",
+          "fit": "serves",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "Almacenamiento de reservas",
+          "rationale": "Permite registrar de manera confiable y distribuida el control de las reservas de salas y puestos de trabajo, manteniendo seguros los datos clave del negocio bajo licencia Apache-2.0."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide análisis de ocupación y demanda; el candidato metabase/metabase provee herramientas de inteligencia empresarial y analítica para trabajar con datos.",
+          "fit": "serves",
+          "full_name": "metabase/metabase",
+          "label": "Metabase",
+          "role": "Análisis de demanda y horarios",
+          "rationale": "Facilita la creación de paneles para identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías a partir de los datos almacenados. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "need": "communication",
+          "fit_check": "La necesidad pide envío de recordatorios de reservas; el candidato caronc/apprise proporciona una API para enviar notificaciones push a múltiples plataformas.",
+          "fit": "serves",
+          "full_name": "caronc/apprise",
+          "label": "Apprise",
+          "role": "Notificaciones de reservas",
+          "rationale": "Permite que los miembros reciban un aviso cuando se acerque su horario reservado mediante alertas configurables. Cuenta con licencia BSD-2-Clause."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "database",
+          "to_need": "analytics",
+          "protocol": "SQL o API",
+          "description": "La base de datos provee el registro de reservas para que la herramienta de analítica procese la ocupación de las salas."
+        },
+        {
+          "from_need": "database",
+          "to_need": "communication",
+          "protocol": "Webhook o API",
+          "description": "El sistema de base de datos notifica los horarios próximos para que el servicio de comunicación envíe el aviso a los miembros."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el sistema del espacio de coworking requiere una interfaz web o aplicación propia para interactuar con estas herramientas abiertas.",
+        "Se asume que la validación de los planes de membresía se implementará en la lógica de la aplicación que conecta la base de datos con las reservas."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye una pasarela de pago nativa para la contratación de planes por parte de los miembros.",
+        "Ninguna de las herramientas por sí sola gestiona reglas complejas de negocio para validar automáticamente los privilegios según el plan sin un desarrollo adicional."
+      ]
+    },
+    "response": {
+      "id": "32c023691a7a45c48a3e63d0a85d6b93",
+      "status": "ok",
+      "title": "Sistema Open Source para la Gestión de Co-working",
+      "summary": "Propuesta para administrar espacios de co-working controlando reservas por planes de membresía, analizando la demanda de salas mediante paneles de inteligencia de negocio y automatizando el envío de avisos a los miembros.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "etcd",
+          "role": "Almacenamiento de reservas",
+          "full_name": "etcd-io/etcd",
+          "rationale": "Permite registrar de manera confiable y distribuida el control de las reservas de salas y puestos de trabajo, manteniendo seguros los datos clave del negocio bajo licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "Metabase",
+          "role": "Análisis de demanda y horarios",
+          "full_name": "metabase/metabase",
+          "rationale": "Facilita la creación de paneles para identificar qué salas tienen mayor demanda y en qué horarios se quedan vacías a partir de los datos almacenados. Su licencia no fue identificada por GitHub."
+        },
+        {
+          "key": "c3",
+          "label": "Apprise",
+          "role": "Notificaciones de reservas",
+          "full_name": "caronc/apprise",
+          "rationale": "Permite que los miembros reciban un aviso cuando se acerque su horario reservado mediante alertas configurables. Cuenta con licencia BSD-2-Clause."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQL o API",
+          "description": "La base de datos provee el registro de reservas para que la herramienta de analítica procese la ocupación de las salas."
+        },
+        {
+          "from_key": "c1",
+          "to_key": "c3",
+          "protocol": "Webhook o API",
+          "description": "El sistema de base de datos notifica los horarios próximos para que el servicio de comunicación envíe el aviso a los miembros."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el sistema del espacio de coworking requiere una interfaz web o aplicación propia para interactuar con estas herramientas abiertas.",
+        "Se asume que la validación de los planes de membresía se implementará en la lógica de la aplicación que conecta la base de datos con las reservas."
+      ],
+      "limitations": [
+        "La propuesta no incluye una pasarela de pago nativa para la contratación de planes por parte de los miembros.",
+        "Ninguna de las herramientas por sí sola gestiona reglas complejas de negocio para validar automáticamente los privilegios según el plan sin un desarrollo adicional."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:55:09.493090Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-restauracion",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento y gestión de archivos y fotografías",
+          "evidence": "Necesito conservar fotografías del estado original, informes de restauración y documentos sobre la procedencia de cada mueble."
+        },
+        {
+          "category": "search",
+          "query": "búsqueda avanzada de registros por atributos",
+          "evidence": "También necesito encontrar piezas por su época, material o procedencia."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "rustfs/rustfs",
+          0.327
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.327
+        ],
+        [
+          "hashicorp/vault",
+          0.304
+        ],
+        [
+          "pnpm/pnpm",
+          0.254
+        ],
+        [
+          "helm/helm",
+          0.246
+        ]
+      ],
+      "search": [
+        [
+          "qdrant/qdrant",
+          0.339
+        ],
+        [
+          "meilisearch/meilisearch",
+          0.328
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.311
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.307
+        ],
+        [
+          "pgvector/pgvector",
+          0.286
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión y búsqueda para taller de restauración",
+      "summary": "Esta propuesta implementa un sistema para documentar expedientes de muebles antiguos con almacenamiento de archivos y un motor de búsqueda avanzada por atributos como época, material o procedencia.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenar archivos y fotografías y SeaweedFS ofrece un sistema de almacenamiento distribuido para objetos y archivos con acceso rápido a discos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento",
+          "rationale": "Permite conservar de forma eficiente las fotografías del estado original, informes de restauración y documentos de procedencia de cada mueble antiguo."
+        },
+        {
+          "need": "search",
+          "fit_check": "La necesidad pide encontrar piezas por atributos y Meilisearch ofrece un motor de búsqueda con soporte para facetas.",
+          "fit": "serves",
+          "full_name": "meilisearch/meilisearch",
+          "label": "Meilisearch",
+          "role": "Búsqueda",
+          "rationale": "Facilita la consulta de expedientes y la búsqueda de piezas por su época, material o procedencia de manera rápida. La licencia no está identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "storage",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda indexa los metadatos y referencias a los documentos y fotografías almacenados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que los trabajadores accederán al sistema a través de una aplicación web o interfaz personalizada conectada a estas herramientas.",
+        "Se asume la necesidad de control de acceso por proyectos para los trabajadores."
+      ],
+      "other_limitations": [
+        "No se incluye una interfaz de usuario visual para la gestión diaria de los proyectos del taller."
+      ]
+    },
+    "response": {
+      "id": "7a168f0ecc6e450c85b3d7356a5f107e",
+      "status": "ok",
+      "title": "Sistema de gestión y búsqueda para taller de restauración",
+      "summary": "Esta propuesta implementa un sistema para documentar expedientes de muebles antiguos con almacenamiento de archivos y un motor de búsqueda avanzada por atributos como época, material o procedencia.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "Permite conservar de forma eficiente las fotografías del estado original, informes de restauración y documentos de procedencia de cada mueble antiguo."
+        },
+        {
+          "key": "c2",
+          "label": "Meilisearch",
+          "role": "Búsqueda",
+          "full_name": "meilisearch/meilisearch",
+          "rationale": "Facilita la consulta de expedientes y la búsqueda de piezas por su época, material o procedencia de manera rápida. La licencia no está identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API REST",
+          "description": "El motor de búsqueda indexa los metadatos y referencias a los documentos y fotografías almacenados."
+        }
+      ],
+      "assumptions": [
+        "Se asume que los trabajadores accederán al sistema a través de una aplicación web o interfaz personalizada conectada a estas herramientas.",
+        "Se asume la necesidad de control de acceso por proyectos para los trabajadores."
+      ],
+      "limitations": [
+        "No se incluye una interfaz de usuario visual para la gestión diaria de los proyectos del taller."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:55:21.379784Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "academia-musica",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de partituras y grabaciones",
+          "evidence": "los alumnos puedan consultar las partituras y grabaciones correspondientes a sus clases"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso para profesores",
+          "evidence": "cada profesor pueda actualizar únicamente los materiales de sus propios grupos"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de cursos y materiales",
+          "evidence": "saber cuáles son los cursos y materiales que reciben más consultas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "storage": [
+        [
+          "rustfs/rustfs",
+          0.248
+        ],
+        [
+          "seaweedfs/seaweedfs",
+          0.242
+        ],
+        [
+          "etcd-io/etcd",
+          0.241
+        ],
+        [
+          "hashicorp/vault",
+          0.236
+        ],
+        [
+          "valkey-io/valkey",
+          0.216
+        ]
+      ],
+      "auth": [
+        [
+          "keycloak/keycloak",
+          0.274
+        ],
+        [
+          "supertokens/supertokens-core",
+          0.256
+        ],
+        [
+          "zitadel/zitadel",
+          0.253
+        ],
+        [
+          "hashicorp/vault",
+          0.244
+        ],
+        [
+          "ory/kratos",
+          0.221
+        ]
+      ],
+      "analytics": [
+        [
+          "plausible/analytics",
+          0.329
+        ],
+        [
+          "umami-software/umami",
+          0.272
+        ],
+        [
+          "PostHog/posthog",
+          0.263
+        ],
+        [
+          "metabase/metabase",
+          0.26
+        ],
+        [
+          "apache/spark",
+          0.273
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Gestión y Consulta para Academia de Música",
+      "summary": "Esta propuesta implementa un sistema para la academia de música que permite almacenar partituras y grabaciones, gestionar la autenticación y permisos de los profesores, y analizar las consultas de cursos y materiales mediante herramientas de código abierto.",
+      "boxes": [
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y el candidato seaweedfs/seaweedfs es un sistema de almacenamiento distribuido para almacenamiento de objetos y sistemas de archivos.",
+          "fit": "serves",
+          "full_name": "seaweedfs/seaweedfs",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de partituras y grabaciones",
+          "rationale": "SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar miles de archivos con acceso rápido a disco, bajo licencia Apache-2.0 y mantenimiento activo. Permite guardar las partituras y grabaciones que los alumnos necesitan consultar."
+        },
+        {
+          "need": "auth",
+          "fit_check": "La necesidad pide control de acceso para profesores y el candidato keycloak/keycloak ofrece gestión de identidad y acceso para aplicaciones.",
+          "fit": "serves",
+          "full_name": "keycloak/keycloak",
+          "label": "Keycloak",
+          "role": "Autenticación y control de acceso",
+          "rationale": "Keycloak gestiona la identidad y el acceso, facilitando la administración de los permisos para que cada profesor pueda actualizar únicamente los materiales de sus propios grupos. Cuenta con licencia Apache-2.0 y actualizaciones recientes."
+        },
+        {
+          "need": "analytics",
+          "fit_check": "La necesidad pide analítica de cursos y materiales y el candidato plausible/analytics ofrece analítica web y de uso respetuosa con la privacidad.",
+          "fit": "serves",
+          "full_name": "plausible/analytics",
+          "label": "Plausible Analytics",
+          "role": "Analítica de consultas",
+          "rationale": "Plausible Analytics provee métricas ligeras y paneles de control bajo licencia AGPL-3.0 con mantenimiento continuo. Ayuda a saber cuáles son los cursos y materiales que reciben más consultas mediante el seguimiento de tráfico web."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "auth",
+          "to_need": "storage",
+          "protocol": "OIDC/HTTPS",
+          "description": "El control de acceso valida la identidad de los profesores antes de permitirles actualizar el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la academia cuenta con una interfaz web propia para que los alumnos consulten los cursos, profesores y horarios.",
+        "Se asume que la aplicación web registrará las interacciones de los usuarios para enviarlas a la plataforma de analítica."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye un módulo específico para la publicación pública de información sobre cursos, profesores y horarios disponibles, el cual deberá desarrollarse de forma personalizada."
+      ]
+    },
+    "response": {
+      "id": "7e5ab583142e4874964940b61eaa8b67",
+      "status": "ok",
+      "title": "Sistema de Gestión y Consulta para Academia de Música",
+      "summary": "Esta propuesta implementa un sistema para la academia de música que permite almacenar partituras y grabaciones, gestionar la autenticación y permisos de los profesores, y analizar las consultas de cursos y materiales mediante herramientas de código abierto.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "SeaweedFS",
+          "role": "Almacenamiento de partituras y grabaciones",
+          "full_name": "seaweedfs/seaweedfs",
+          "rationale": "SeaweedFS ofrece un sistema de almacenamiento distribuido diseñado para manejar miles de archivos con acceso rápido a disco, bajo licencia Apache-2.0 y mantenimiento activo. Permite guardar las partituras y grabaciones que los alumnos necesitan consultar."
+        },
+        {
+          "key": "c2",
+          "label": "Keycloak",
+          "role": "Autenticación y control de acceso",
+          "full_name": "keycloak/keycloak",
+          "rationale": "Keycloak gestiona la identidad y el acceso, facilitando la administración de los permisos para que cada profesor pueda actualizar únicamente los materiales de sus propios grupos. Cuenta con licencia Apache-2.0 y actualizaciones recientes."
+        },
+        {
+          "key": "c3",
+          "label": "Plausible Analytics",
+          "role": "Analítica de consultas",
+          "full_name": "plausible/analytics",
+          "rationale": "Plausible Analytics provee métricas ligeras y paneles de control bajo licencia AGPL-3.0 con mantenimiento continuo. Ayuda a saber cuáles son los cursos y materiales que reciben más consultas mediante el seguimiento de tráfico web."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "OIDC/HTTPS",
+          "description": "El control de acceso valida la identidad de los profesores antes de permitirles actualizar el almacenamiento."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la academia cuenta con una interfaz web propia para que los alumnos consulten los cursos, profesores y horarios.",
+        "Se asume que la aplicación web registrará las interacciones de los usuarios para enviarlas a la plataforma de analítica."
+      ],
+      "limitations": [
+        "La propuesta no incluye un módulo específico para la publicación pública de información sobre cursos, profesores y horarios disponibles, el cual deberá desarrollarse de forma personalizada."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:55:33.976790Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "alquiler-equipos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de equipos y contratos",
+          "evidence": "controlar qué equipos tengo disponibles y cuáles están alquilados. Necesito conservar los contratos firmados"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y fotografías",
+          "evidence": "las fotografías del estado de cada equipo antes y después de cada alquiler"
+        },
+        {
+          "category": "ai",
+          "query": "procesamiento visual y comparación de imágenes",
+          "evidence": "genere automáticamente un informe de daños cuando las fotografías de devolución muestren diferencias importantes respecto a las iniciales"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "ansible/ansible",
+          0.24
+        ],
+        [
+          "git/git",
+          0.223
+        ],
+        [
+          "argoproj/argo-cd",
+          0.219
+        ],
+        [
+          "containerd/containerd",
+          0.212
+        ],
+        [
+          "hashicorp/terraform",
+          0.209
+        ]
+      ],
+      "storage": [
+        [
+          "seaweedfs/seaweedfs",
+          0.313
+        ],
+        [
+          "rustfs/rustfs",
+          0.309
+        ],
+        [
+          "hashicorp/vault",
+          0.243
+        ],
+        [
+          "etcd-io/etcd",
+          0.226
+        ],
+        [
+          "valkey-io/valkey",
+          0.216
+        ]
+      ],
+      "ai": [
+        [
+          "huggingface/transformers",
+          0.217
+        ],
+        [
+          "qdrant/qdrant",
+          0.232
+        ],
+        [
+          "scipy/scipy",
+          0.209
+        ],
+        [
+          "pgvector/pgvector",
+          0.185
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Gestion y Control para Alquiler Audiovisual",
+      "summary": "Esta propuesta integra una base de datos de control de infraestructura, un sistema de almacenamiento distribuido para archivos y un marco de aprendizaje profundo para el procesamiento visual. Quedan sin automatizar de forma nativa la asignacion detallada de empleados y la generacion en texto de los informes de daños.",
+      "boxes": [
+        {
+          "need": "database",
+          "fit_check": "La necesidad pide un control de inventario de equipos y contratos, y el candidato gestiona despliegues y configuraciones de sistemas.",
+          "fit": "only_related",
+          "full_name": null,
+          "label": "ansible/ansible",
+          "role": "Automatizacion de despliegues de infraestructura",
+          "rationale": "Ansible no gestiona bases de datos relacionales ni inventarios de negocio para alquileres, sino que es una plataforma de automatizacion de TI. Se menciona solo de forma relacionada por aparecer en el catalogo para esta necesidad."
+        },
+        {
+          "need": "storage",
+          "fit_check": "La necesidad pide almacenamiento de archivos y fotografias, y el candidato ofrece un sistema de almacenamiento distribuido para objetos y archivos.",
+          "fit": "serves",
+          "full_name": "rustfs/rustfs",
+          "label": "RustFS",
+          "role": "Almacenamiento de fotografias de estado y contratos",
+          "rationale": "RustFS es un sistema de almacenamiento de objetos de alto rendimiento compatible con S3, ideal para guardar de forma segura y accesible las fotografias del estado de cada equipo y los contratos firmados. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "need": "ai",
+          "fit_check": "La necesidad pide procesamiento visual y comparacion de imagenes, y el candidato provee un marco de definicion de modelos para aprendizaje automatico en vision y modelos multimodales.",
+          "fit": "serves",
+          "full_name": "huggingface/transformers",
+          "label": "Transformers",
+          "role": "Procesamiento visual y analisis de fotografias",
+          "rationale": "Hugging Face Transformers incluye marcos de trabajo para modelos de vision y multimodales que permiten analizar las imagenes de los equipos antes y despues de cada alquiler para detectar diferencias. Utiliza licencia Apache-2.0 y se mantiene activamente."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "ai",
+          "to_need": "storage",
+          "protocol": "API HTTP/S3",
+          "description": "El sistema de IA consulta las fotografias iniciales y de devolucion almacenadas en RustFS para realizar la comparacion visual."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal tecnico capaz de integrar servicios mediante APIs.",
+        "El negocio requiere una interfaz web o aplicacion propia que conecte estos componentes con la gestion de empleados y alquileres.",
+        "Se necesita un componente adicional para la logica de negocio de gestion de alquileres y asignacion a empleados."
+      ],
+      "other_limitations": [
+        "No se incluye una base de datos relacional transaccional nativa para llevar el control exacto de disponibilidad de equipos y asignacion a empleados.",
+        "La generacion automatica del informe de daños requiere logica de aplicacion adicional sobre los modelos de IA."
+      ]
+    },
+    "response": {
+      "id": "bfadc206c4de4992a91d88da2cc5524f",
+      "status": "ok",
+      "title": "Sistema de Gestion y Control para Alquiler Audiovisual",
+      "summary": "Esta propuesta integra una base de datos de control de infraestructura, un sistema de almacenamiento distribuido para archivos y un marco de aprendizaje profundo para el procesamiento visual. Quedan sin automatizar de forma nativa la asignacion detallada de empleados y la generacion en texto de los informes de daños.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "RustFS",
+          "role": "Almacenamiento de fotografias de estado y contratos",
+          "full_name": "rustfs/rustfs",
+          "rationale": "RustFS es un sistema de almacenamiento de objetos de alto rendimiento compatible con S3, ideal para guardar de forma segura y accesible las fotografias del estado de cada equipo y los contratos firmados. Cuenta con licencia Apache-2.0 y actividad reciente."
+        },
+        {
+          "key": "c2",
+          "label": "Transformers",
+          "role": "Procesamiento visual y analisis de fotografias",
+          "full_name": "huggingface/transformers",
+          "rationale": "Hugging Face Transformers incluye marcos de trabajo para modelos de vision y multimodales que permiten analizar las imagenes de los equipos antes y despues de cada alquiler para detectar diferencias. Utiliza licencia Apache-2.0 y se mantiene activamente."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API HTTP/S3",
+          "description": "El sistema de IA consulta las fotografias iniciales y de devolucion almacenadas en RustFS para realizar la comparacion visual."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el negocio cuenta con personal tecnico capaz de integrar servicios mediante APIs.",
+        "El negocio requiere una interfaz web o aplicacion propia que conecte estos componentes con la gestion de empleados y alquileres.",
+        "Se necesita un componente adicional para la logica de negocio de gestion de alquileres y asignacion a empleados."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna de las herramientas encontradas encaja. Ansible no gestiona bases de datos relacionales ni inventarios de negocio para alquileres, sino que es una plataforma de automatizacion de TI. Se menciona solo de forma relacionada por aparecer en el catalogo para esta necesidad.",
+        "No se incluye una base de datos relacional transaccional nativa para llevar el control exacto de disponibilidad de equipos y asignacion a empleados.",
+        "La generacion automatica del informe de daños requiere logica de aplicacion adicional sobre los modelos de IA."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-11T19:55:47.072952Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]

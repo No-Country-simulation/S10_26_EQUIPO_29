@@ -58,22 +58,45 @@ function Endpoint({component}){
 }
 export function ProposalTabs({response}){
  const [tab,setTab]=useState('tools');
- const tabs=useRef([]);
+ const tabs=useRef([]),panels=useRef(null),panelHeight=useRef(null),heightMotion=useRef(null);
+ const [connectionsVisited,setConnectionsVisited]=useState(false);
+ const changeTab=key=>{if(key==='connections')setConnectionsVisited(true);setTab(key);};
+ useLayoutEffect(()=>{
+  const host=panels.current,active=host?.querySelector('[role=tabpanel]:not([hidden])');
+  if(!host||!active)return;
+  const measure=()=>{
+   if(active.querySelector('[aria-busy="true"]'))return;
+   const next=active.getBoundingClientRect().height;
+   if(panelHeight.current===next)return;
+   const previous=host.getBoundingClientRect().height;
+   const initial=panelHeight.current===null;
+   panelHeight.current=next;
+   heightMotion.current?.cancel();
+   host.style.height=`${next}px`;
+   if(!initial&&Math.abs(previous-next)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    heightMotion.current=host.animate([{height:`${previous}px`},{height:`${next}px`}],{duration:320,easing:'cubic-bezier(.22,1,.36,1)'});
+   }
+  };
+  measure();
+  const observer=new ResizeObserver(measure);observer.observe(active);
+  return()=>observer.disconnect();
+ },[tab]);
+ useLayoutEffect(()=>()=>heightMotion.current?.cancel(),[]);
  const connections=response.connections??[];
- const select=(index)=>{setTab(index===0?'tools':'connections');tabs.current[index]?.focus();};
+ const select=(index)=>{changeTab(index===0?'tools':'connections');tabs.current[index]?.focus();};
  const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};
  return <div className="proposal-tabs">
   <div className="proposal-toolbar">
   <div role="tablist" data-active={tab} aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
-   {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type="button" role="tab" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>setTab(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
+   {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type="button" role="tab" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>changeTab(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
   </div>
   </div>
-  <div className="proposal-panels">
+  <div className="proposal-panels" ref={panels} data-switched={connectionsVisited||undefined}>
    <section id="proposal-panel-tools" role="tabpanel" aria-labelledby="proposal-tab-tools" hidden={tab!=='tools'} tabIndex={0}>
     <ul className="proposal-tools">{response.components.map((component,index)=><ToolRecommendation key={component.key} component={component} index={index}/>)}</ul>
    </section>
    <section id="proposal-panel-connections" role="tabpanel" aria-labelledby="proposal-tab-connections" hidden={tab!=='connections'} tabIndex={0}>
-    {connections.length===0?<div className="catalog-error proposal-connections-empty"><DotSadFace/><p>¡Lo sentimos! Esta propuesta no incluye ninguna conexión.</p></div>:tab==='connections'&&<ConnectionDiagram components={response.components} connections={connections} Endpoint={Endpoint}/>}
+    {connections.length===0?<div className="catalog-error proposal-connections-empty"><DotSadFace/><p>¡Lo sentimos! Esta propuesta no incluye ninguna conexión.</p></div>:connectionsVisited&&<ConnectionDiagram components={response.components} connections={connections} Endpoint={Endpoint}/>}
    </section>
   </div>
  </div>;

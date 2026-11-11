@@ -1,0 +1,579 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-11-10T09:20:33+00:00",
+  "cases": [
+    {
+      "id": "fabrica-muebles-madera",
+      "query": "Fabrico muebles de madera a medida. Cada pedido tiene que pasar por la aprobación del diseñador antes de empezar a cortar. Quiero organizar el taller para saber en qué etapa está cada mueble y que el cliente pueda ver el avance sin llamar. Además necesito que las fotos de los terminados se guarden de forma ordenada.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"organizar el taller para saber en qué etapa está cada mueble\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"Cada pedido tiene que pasar por la aprobación del diseñador\": flujo de aprobación entre personas (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "storage",
+          "acceptable": [
+            "seaweedfs/seaweedfs",
+            "rustfs/rustfs"
+          ],
+          "note": "\"las fotos de los terminados se guarden de forma ordenada\": guardar archivos. seaweedfs: \"storage system for object storage (S3), file systems\"; rustfs: \"S3-compatible … object storage system\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "centro-estetica",
+      "query": "Tengo un centro de estética con varias cosmetólogas. Quiero que cada una solo maneje su propia agenda y clientes, y poder controlar cuántos tratamientos se hacen por tipo. También necesito enviar mensajes de confirmación y que el sistema me diga cuándo hay huecos libres.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada una solo maneje su propia agenda y clientes\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"controlar cuántos tratamientos se hacen por tipo\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar mensajes de confirmación\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"el sistema me diga cuándo hay huecos libres\": disponibilidad que cambia = datos que se mantienen al día (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "productora-jugos-naturales",
+      "query": "Produzco jugos naturales y los vendo a tiendas y restaurantes. Necesito llevar el control de la producción diaria y de las entregas. Quiero que los pedidos de los clientes se organicen solos por zona y que pueda ver rápido cuánto vendí de cada sabor la semana pasada. Además me gustaría cobrar con transferencia y generar el comprobante.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar el control de la producción diaria y de las entregas\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"los pedidos de los clientes se organicen solos por zona\": que el sistema lo organice solo (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos; ninguno reparte pedidos de un negocio."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"ver rápido cuánto vendí de cada sabor la semana pasada\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"cobrar con transferencia y generar el comprobante\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "consultorio-odontologico",
+      "query": "Tengo un consultorio odontológico con dos dentistas. Quiero que cada uno maneje solo sus pacientes y que pueda organizar el historial de tratamientos de cada persona. Necesito enviar recordatorios de citas y que los pacientes puedan pagar la consulta desde el celular. Me preocupa que todo cargue rápido para quienes están en otras ciudades.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"cada uno maneje solo sus pacientes\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"organizar el historial de tratamientos de cada persona\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"enviar recordatorios de citas\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"los pacientes puedan pagar la consulta desde el celular\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        },
+        {
+          "category": "infrastructure",
+          "acceptable": [],
+          "note": "\"todo cargue rápido para quienes están en otras ciudades\": servir desde servidores cercanos (LABEL_CRITERIA.md: infrastructure). nginx o caddy sirven y cachean desde un servidor propio, no reparten el contenido entre países o ciudades."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "taller-relojes-antiguos",
+      "query": "Tengo un pequeño taller donde restauro relojes de pared y de bolsillo. Necesito organizar los turnos de mis dos técnicos para que no se crucen los trabajos urgentes. También quiero controlar la calidad de cada pieza antes de entregarla al cliente y que se les avise por mensaje cuando el reloj esté listo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que se les avise por mensaje cuando el reloj esté listo\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "escuela-pintura-oleo",
+      "query": "Dirijo una escuela de pintura al óleo para adultos. Quiero manejar el equipo de profesores y asignarles los grupos según su especialidad. Los alumnos deben poder pagar las mensualidades desde su casa y yo necesito ver cuántas personas se inscriben cada mes.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"Los alumnos deben poder pagar las mensualidades desde su casa\": cobro recurrente. killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        },
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana",
+            "metabase/metabase"
+          ],
+          "note": "\"ver cuántas personas se inscriben cada mes\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization; metabase: \"Business Intelligence … tool\", topic dashboard (licencia: el README indica AGPL para la edición Open Source)."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "servicio-limpieza-alfombras",
+      "query": "Ofrezco limpieza de alfombras y cortinas a domicilio en la ciudad. Quiero llevar los pedidos hasta la casa del cliente con un recorrido ordenado. También necesito que cada empleado vea solo las órdenes de su zona y que el sistema avise cuando un trabajo se atrasa.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada empleado vea solo las órdenes de su zona\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el sistema avise cuando un trabajo se atrasa\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "centro-entrenamiento-perros",
+      "query": "Tengo un centro donde adiestramos perros de compañía. Quiero llevar el control de las clases de cada animal y sus progresos. También necesito que los dueños paguen las sesiones mensuales y que solo el entrenador asignado vea la información de su grupo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar el control de las clases de cada animal y sus progresos\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"que los dueños paguen las sesiones mensuales\": cobro recurrente. killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que solo el entrenador asignado vea la información de su grupo\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "servicio-instalacion-cerraduras",
+      "query": "Instalo y cambio cerraduras en casas y locales. Quiero organizar las visitas diarias de mis técnicos. Necesito controlar que cada instalación quede bien hecha antes de cobrar y que el cliente reciba un mensaje cuando el técnico está en camino.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el cliente reciba un mensaje cuando el técnico está en camino\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "taller-orfebreria-plata",
+      "query": "Trabajo la plata y hago joyas a medida. Quiero controlar el inventario de metales preciosos que uso en cada pieza. También necesito que una solicitud de diseño pase por mi aprobación antes de empezar y que los clientes puedan pagar el anticipo en línea.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar el inventario de metales preciosos que uso en cada pieza\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"que una solicitud de diseño pase por mi aprobación antes de empezar\": flujo de aprobación entre personas (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"que los clientes puedan pagar el anticipo en línea\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "productora-quesos-frescos",
+      "query": "Elaboro quesos frescos y madurados en pequeña escala. Quiero organizar la producción semanal según los pedidos. Necesito controlar la temperatura de las cámaras de maduración y que cada empleado de la planta vea solo las tareas de su área.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana"
+          ],
+          "note": "\"controlar la temperatura de las cámaras de maduración\": medir cómo va el proceso (LABEL_CRITERIA.md: analytics). grafana: topics dashboard, data-visualization, monitoring. metabase fuera: inteligencia de negocio sobre tablas, no lecturas de un proceso."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada empleado de la planta vea solo las tareas de su área\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "escuela-cocina-vegetariana",
+      "query": "Doy clases de cocina vegetariana a grupos pequeños. Quiero manejar los cupos de cada taller y las inscripciones. También necesito llevar el historial de recetas que cada alumno ha practicado y que solo el profesor del grupo vea las evaluaciones.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar el historial de recetas que cada alumno ha practicado\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que solo el profesor del grupo vea las evaluaciones\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "distribuidora-vinos-locales",
+      "query": "Distribuyo vinos de productores locales a restaurantes. Quiero organizar las entregas semanales por zona. Necesito controlar que cada caja salga completa y que el sistema avise cuando un restaurante pide más de lo habitual.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el sistema avise cuando un restaurante pide más de lo habitual\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "fabrica-velas-aromaticas-naturales",
+      "query": "Fabrico velas aromáticas con esencias naturales. Quiero organizar los lotes de producción según los aromas más pedidos. Necesito controlar la temperatura de derretido de la cera y que las imágenes del catálogo carguen rápido para compradores de otros países.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "analytics",
+          "acceptable": [
+            "grafana/grafana"
+          ],
+          "note": "\"controlar la temperatura de derretido de la cera\": medir cómo va el proceso (LABEL_CRITERIA.md: analytics). grafana: topics dashboard, data-visualization, monitoring. metabase fuera: inteligencia de negocio sobre tablas, no lecturas de un proceso."
+        },
+        {
+          "category": "infrastructure",
+          "acceptable": [],
+          "note": "\"que las imágenes del catálogo carguen rápido para compradores de otros países\": servir desde servidores cercanos (LABEL_CRITERIA.md: infrastructure). nginx o caddy sirven y cachean desde un servidor propio, no reparten el contenido entre países o ciudades."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "servicio-pintura-casas-interiores",
+      "query": "Pinto casas e interiores por encargo. Quiero manejar el equipo de pintores y asignarles las obras. También necesito que una solicitud de cambio de color pase por mi aprobación y que se cobre el anticipo antes de empezar.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"que una solicitud de cambio de color pase por mi aprobación\": flujo de aprobación entre personas (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"que se cobre el anticipo antes de empezar\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "taller-tapiceria-muebles",
+      "query": "Me dedico a retapizar sillones y sillas. Quiero llevar el registro de las telas usadas en cada trabajo y los costos. También necesito organizar los turnos de los tapiceros y que el cliente reciba un aviso cuando su mueble esté listo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar el registro de las telas usadas en cada trabajo y los costos\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el cliente reciba un aviso cuando su mueble esté listo\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "servicio-jardineria-mantenimiento",
+      "query": "Ofrezco mantenimiento de jardines en residenciales. Quiero llevar los pedidos de poda y riego de cada cliente. También necesito que una solicitud de trabajo extra pase por aprobación del supervisor y que se cobre al final del mes.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"llevar los pedidos de poda y riego de cada cliente\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"que una solicitud de trabajo extra pase por aprobación del supervisor\": flujo de aprobación entre personas (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"que se cobre al final del mes\": cobro recurrente. killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "taller-reparacion-electrodomesticos-pequenos",
+      "query": "Reparo licuadoras, planchas y otros electrodomésticos pequeños. Quiero organizar los turnos de recepción y entrega. Necesito controlar que cada aparato salga funcionando y que el cliente reciba un mensaje cuando esté listo para recoger.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el cliente reciba un mensaje cuando esté listo para recoger\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "centro-pilates-grupal",
+      "query": "Tengo un centro de pilates en grupos reducidos. Quiero manejar los horarios de las clases y los instructores. También necesito controlar la asistencia de cada alumno y que solo el instructor del grupo vea las notas de progreso.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar la asistencia de cada alumno\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que solo el instructor del grupo vea las notas de progreso\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "servicio-limpieza-oficinas-diaria",
+      "query": "Brindo limpieza diaria de oficinas. Quiero organizar las rutas de los equipos de aseo. Necesito que cada supervisor vea solo los edificios de su zona y que el sistema avise si un equipo no marca la entrada a tiempo.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [
+            "keycloak/keycloak",
+            "zitadel/zitadel"
+          ],
+          "note": "\"que cada supervisor vea solo los edificios de su zona\": permisos según el cargo, el grupo o lo asignado. keycloak: \"Identity and Access Management\"; zitadel: topics authentication, authorization."
+        },
+        {
+          "category": "communication",
+          "acceptable": [
+            "novuhq/novu",
+            "caronc/apprise"
+          ],
+          "note": "\"que el sistema avise si un equipo no marca la entrada a tiempo\": aviso a personas, sin canal. novu: topics notifications, email, sms, push-notifications (licencia: el README indica que el núcleo es MIT); apprise: \"Push Notifications\"; el README tiene secciones de SMS, Email y WhatsApp."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Sin necesidad de base de datos: mide si se agrega una de más."
+    },
+    {
+      "id": "taller-pintura-automotriz-chica",
+      "query": "Pinto y repinto vehículos en un taller pequeño. Quiero controlar el inventario de pinturas y diluyentes que uso. También necesito que una cotización pase por mi aprobación antes de empezar el trabajo y que el cliente pague el anticipo en línea.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar el inventario de pinturas y diluyentes que uso\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "automation",
+          "acceptable": [],
+          "note": "\"que una cotización pase por mi aprobación antes de empezar el trabajo\": flujo de aprobación entre personas (LABEL_CRITERIA.md: automation). Casi: airflow, prefect y dagster orquestan procesos de datos y ansible configura servidores; ninguno maneja aprobaciones entre personas."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "juspay/hyperswitch"
+          ],
+          "note": "\"que el cliente pague el anticipo en línea\": pago de una compra, reserva o servicio (no recurrente). hyperswitch: \"composable payments platform\"."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    },
+    {
+      "id": "escuela-circo-infantil",
+      "query": "Enseño malabares y acrobacia básica a niños. Quiero manejar los grupos por edad y nivel. También necesito controlar la asistencia a cada clase y que los padres puedan pagar la mensualidad desde su casa.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "database",
+          "acceptable": [
+            "postgres/postgres",
+            "MariaDB/server",
+            "supabase/supabase"
+          ],
+          "note": "\"controlar la asistencia a cada clase\": registros del negocio (LABEL_CRITERIA.md). postgres: \"official PostgreSQL GIT repository\" (licencia: el README remite a COPYRIGHT, que permite \"use, copy, modify, and distribute this software … without fee\"); MariaDB/server: \"fork of MySQL server\"; supabase: \"dedicated Postgres database\"."
+        },
+        {
+          "category": "payments",
+          "acceptable": [
+            "killbill/killbill",
+            "getlago/lago"
+          ],
+          "note": "\"que los padres puedan pagar la mensualidad desde su casa\": cobro recurrente. killbill: \"Subscription Billing & Payments Platform\"; lago: \"Usage Based Billing\", topics subscriptions, billing."
+        }
+      ],
+      "note": "Escrito por Grok 4.5 sin ver el catálogo ni el banco de ejemplos (11-nov). Pide guardar o consultar datos del negocio."
+    }
+  ]
+}

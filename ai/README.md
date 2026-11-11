@@ -10,25 +10,30 @@ desde la raíz del repo.
 
 ## Estado
 
-**Datos.** La IA lee el snapshot del catálogo real (`data/catalog/`, 100 repos de la vista
-`public.v_repos_for_ai`) con `load_repos()`. Los 20 repos de ejemplo (`data/repos.json`,
+**Datos.** El servicio del asistente lee el catálogo publicado en la base: la vista
+`public.v_repos_for_ai` más las tablas `ai.*` (127 repos). Si la base falla al arrancar, usa la
+copia en archivos (`data/catalog/`, snapshot del 2026-11-10), que es también la que leen las
+evaluaciones con `load_repos()` (ver [Servicio del asistente](#servicio-del-asistente)). Los 20 repos de ejemplo (`data/repos.json`,
 con categorías asignadas a mano) se conservan para pruebas y para repetir la elección del
 modelo de embeddings: `load_repos(source="sample")`.
 
 **Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés),
 devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
 health score y categoría. El texto de cada repo incluye el resumen y los casos de uso que
-genera la IA; umbral de "sin evidencia" 0,23 (detalle en
-[`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md)).
+genera la IA; umbral de "sin evidencia" 0,18 (detalle en
+[`eval/BASELINE_DECISION.md`](eval/BASELINE_DECISION.md)).
 
-**Evaluación de la búsqueda.** Dos golden sets (catálogo real y datos de ejemplo), métricas
-(hit@3, MRR, recall) y umbral de "sin evidencia", con un solo comando. Resultados y
-decisiones en [`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md).
+**Evaluación.** Conjuntos de desarrollo (para decidir) y una prueba final (se corre una vez,
+con la versión elegida), para la búsqueda y para el asistente, cada uno con quién lo escribió y
+para qué se usó. Métricas de búsqueda: hit@3, MRR, recall y umbral de "sin evidencia", con un
+solo comando. Las cifras vigentes, con su versión y denominador, están en
+[`eval/BASELINE_DECISION.md`](eval/BASELINE_DECISION.md); la historia de cada conjunto, en
+[`eval/README.md`](eval/README.md).
 
-**Casos de prueba del asistente.** 18 pedidos de negocio con el status, las necesidades y
-los repos aceptables esperados, escritos contra el snapshot del catálogo real, y 5 casos de
-validación aparte para comprobar reglas nuevas con pedidos que el prompt no vio. Detalle en
-[`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
+**Casos de prueba del asistente.** 19 pedidos de negocio con el status, las necesidades y
+los repos aceptables esperados (`assistant_cases.json`), 10 casos de validación aparte para
+comprobar reglas nuevas con pedidos que el prompt no vio, y los demás conjuntos de desarrollo y
+de prueba final. Detalle en [`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
 
 **Asistente.** `asistir()` responde un pedido en tres pasos: **entender** (modelo de lenguaje:
 necesidades o preguntas), **buscar** (embeddings, una búsqueda por necesidad: primero los repos
@@ -50,19 +55,19 @@ ataques; los pedidos corteses sin forma de orden todavía pasan. Detalle y lími
 razonamiento bajo. Criterios, comparación y descartados en
 [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
 
-**Enriquecimiento del catálogo.** Los 100 repos tienen categorías (1 a 3 de
+**Enriquecimiento del catálogo.** Los 127 repos tienen categorías (1 a 3 de
 `categories.json`, la primera es la principal), un resumen en español (`summary_es`, hasta
 250 caracteres) y casos de uso (0 a 4, cada uno respaldado por una cita del README que el
-código comprueba). Los genera Gemini 3.5 Flash-Lite; se guardan en
+código comprueba). Los genera Gemini 3.5 Flash-Lite (prompt v5); se guardan en
 `data/catalog/enrichment.json` y en las tablas `ai.*`. Ver
 [Enriquecimiento del catálogo](#enriquecimiento-del-catálogo); elección del modelo en
 [`eval/ENRICH_DECISION.md`](eval/ENRICH_DECISION.md).
 
-**Ideas de integración.** 40 de los 100 repos tienen de 1 a 3 ideas (46 en total: `sdk`,
+**Ideas de integración.** 58 de los 127 repos tienen de 1 a 3 ideas (78 en total: `sdk`,
 `docker`, `rest_api`), cada una con una cita del README que el código comprueba y, cuando el
-README lo trae, un snippet copiado tal cual. Los otros 60 quedan sin ideas: la mayoría son
-herramientas de desarrollo, frameworks e infraestructura que no se conectan a una
-Se guardan en `data/catalog/ideas.json` y en `ai.ai_integration_ideas`. Verss
+README lo trae, un snippet copiado tal cual. Los otros 69 quedan sin ideas: la mayoría son
+herramientas de desarrollo, frameworks e infraestructura que no se conectan a una aplicación.
+Se guardan en `data/catalog/ideas.json` y en `ai.ai_integration_ideas`. Ver
 [Ideas de integración](#ideas-de-integración); método, números y límites en
 [`eval/IDEAS_DECISION.md`](eval/IDEAS_DECISION.md).
 
@@ -225,7 +230,7 @@ python -m uvicorn ai.service.app:create_app --factory --port 8001
 
 Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
 dónde salió el catálogo y la cadena de proveedores
-(`listo: 100 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
+(`listo: 127 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
 hasta terminar. Con la base, revisa cada `AI_CATALOG_RELOAD_MINUTES` minutos (10 por defecto;
 0 = solo al arrancar) si se publicó algo nuevo y, si es así, recarga el catálogo sin reiniciar:
 un pedido en curso termina con el anterior. Si la revisión o la recarga fallan, sigue con el que
@@ -561,33 +566,3 @@ Nota: Pydantic normaliza `homepage` (por ejemplo, agrega `/` al final del domini
 ## Por acordar
 
 - Fórmula y rango de `health_score` (lo calcula la ingesta).
-
-
-## Escritura y revisión de ideas (PR #72)
-
-**Escribir en la base:**
-
-    python -m ai.scripts.write_ideas             # revisar que sea válido
-    python -m ai.scripts.write_ideas --escribir
-
-Es una sola transacción (todo o nada) y repetible. Solo reemplaza las ideas regenerables
-(`generated_by = 'llm'` y `reviewed_at` nulo) de los repos del archivo. Las revisadas o
-escritas por una persona nunca se tocan y ocupan cupo: como máximo 3 ideas por repo y una por
-tipo, contando las revisadas. Si el README de una idea revisada cambió desde que se revisó,
-el informe la muestra para revisarla de nuevo, sin tocarla.
-
-**Aprobar ideas revisadas:** una persona lee la idea en la ficha o en `ideas.json` y, si está
-bien sin cambios, la aprueba:
-
-    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> …             # comprueba
-    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> … --escribir  # marca
-
-Pone `reviewed_at`; desde ahí la regeneración no la toca. La tabla no guarda quién la revisó.
-Verificación después de escribir: `ai/sql/consultas/ideas_ia.sql` y `huerfanos_ia.sql`.
-
-**Qué lee la API del catálogo:** todas las columnas de `ai.ai_integration_ideas` (las del
-contrato `IntegrationIdea` más `github_id` para unir; `full_name` lo pone la API), ordenadas
-por `id`, como máximo 3 por repo, y nada de los repos archivados. El rol de lectura de la API
-necesita `USAGE` en el esquema `ai` y `SELECT` sobre `ai.ai_repo_enrichment`,
-`ai.ai_repo_categories` y `ai.ai_integration_ideas` (no sobre `ai.ai_embeddings`, que es
-interna de la IA).

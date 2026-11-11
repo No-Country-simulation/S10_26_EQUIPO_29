@@ -15,7 +15,7 @@ test('watermark error does not disable a valid logo or palette',()=>{
  assert.equal(identity.fallback,false);assert.equal(identity.logo,'/logo.svg');assert.equal(identity.watermark,null);assert.equal(identity.wordmark,true);assert.equal(identity.palette.start,'#152a21');
 });
 test('logo failure persists across subsequent resolutions and preserves visible name',()=>{
- const before=resolveBrand(tool);assert.equal(before.wordmark,true);
+ const before=resolveBrand(tool);assert.equal(before.wordmark,false);assert.equal(brandRegistry[tool.full_name].displayName,'Lago');
  markBrandFailed(before.logo);
  assert.equal(resolveBrand(tool).fallback,true);assert.equal(resolveBrand(tool).wordmark,false);
 });

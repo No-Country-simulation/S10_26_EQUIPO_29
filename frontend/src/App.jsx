@@ -1,7 +1,7 @@
+import {mockMode} from './data/mockMode.mjs';
 import {flushSync} from 'react-dom';
 import {useSessionAccent} from './useSessionAccent';
 import {ArrowUp} from 'lucide-react';
-import {useSmoothPageScroll} from './useSmoothPageScroll';
 import {useWorkspaceView} from './useWorkspaceView';
 import {reloadHome} from './reloadHome.mjs';
 import {SectionNavigation} from './SectionNavigation';
@@ -21,7 +21,6 @@ export function App({useFlow=useAssistantFlow}){
  const flow=useFlow(isDetail);
  const {expanded,phase}=flow;
  const workspace=useWorkspaceView(flow.pending||Boolean(flow.error),isDetail);
- useSmoothPageScroll(isDetail);
  const resetting=useRef(false);
  async function resetArchitecture(){
   if(resetting.current)return;
@@ -30,22 +29,12 @@ export function App({useFlow=useAssistantFlow}){
   const commit=()=>{flushSync(reset);window.scrollTo({top:0,behavior:'instant'});};
   if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){commit();focus();return;}
   resetting.current=true;
-  const form=flow.input.current?.closest('form');
-  const action=form?.parentElement.querySelector('.composer-new-architecture');
-  let centerMotion,buttonMotion;
-  if(form&&action){
-   const bounds=form.getBoundingClientRect();
-   const width=Math.min(756,document.documentElement.clientWidth-(innerWidth<=640?24:48));
-   const left=(document.documentElement.clientWidth-width)/2;
-   centerMotion=form.animate([
-    {translate:'0px 0px',width:`${bounds.width}px`,marginRight:'0px',flex:'none'},
-    {translate:`${left-bounds.left}px 0px`,width:`${width}px`,marginRight:`${bounds.width-width}px`,flex:'none'}
-   ],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
-   buttonMotion=action.animate([{opacity:1},{opacity:0}],{duration:140,fill:'forwards'});
-   await centerMotion.finished.catch(()=>{});
-  }
-  document.documentElement.dataset.architectureReset='true';
-  const transition=document.startViewTransition(()=>{centerMotion?.cancel();buttonMotion?.cancel();commit();});
+  document.documentElement.dataset.architectureReset='leaving';
+  // Separate snapshots exit and enter in place, without interpolating the dock position.
+  const transition=document.startViewTransition(()=>{
+   document.documentElement.dataset.architectureReset='entering';
+   commit();
+  });
   transition.finished.catch(()=>{}).finally(()=>{
    delete document.documentElement.dataset.architectureReset;
    resetting.current=false;
@@ -53,7 +42,7 @@ export function App({useFlow=useAssistantFlow}){
   });
  }
 
- return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><SectionNavigation paused={isDetail} workspace={workspace}/></div></header>
+ return <><a href="#asistente" className="skip" inert={isDetail?true:undefined}>Ir al contenido</a><header inert={isDetail?true:undefined} aria-hidden={isDetail}><div className="nav wrap"><a className="brand" href="/" onClick={reloadHome}><img className="openbridge-logo" src="/assets/brands/openbridge.svg" alt="OpenBridge"/></a><div className="nav-actions">{mockMode()&&<span className="demo-indicator" aria-label="Demo con datos de prueba" title="Esta versión utiliza datos y respuestas de ejemplo."><span className="demo-label-full" aria-hidden="true">Demo con datos de prueba</span><span className="demo-label-mobile" aria-hidden="true">Demo</span></span>}<SectionNavigation paused={isDetail} workspace={workspace}/></div></div></header>
  <main inert={isDetail?true:undefined} aria-hidden={isDetail} id="landing-view" data-has-proposal={expanded} data-surface-mode={workspace.mode}><div ref={workspace.assistantRef} className="assistant-surface" inert={workspace.covered?true:undefined}><Assistant flow={{...flow,newArchitecture:resetArchitecture}} workspace={workspace.active}/></div>
  <div ref={workspace.catalogRef} hidden={workspace.mode==='locked'} className="catalog-surface"><Catalog onOpen={openTool} phase={phase}/></div>{workspace.offer&&!isDetail&&<button ref={workspace.buttonRef} type="button" className="ui-button ui-button--primary catalog-access" onClick={()=>workspace.openCatalog()}><span>Ver catálogo</span><ArrowUp size={16} aria-hidden="true"/></button>}</main>{isDetail&&<ToolModal id={navigation.id} onClose={navigation.back}/>}<ElasticScrollbar/></>;
 }

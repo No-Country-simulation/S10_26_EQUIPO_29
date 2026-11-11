@@ -22,9 +22,9 @@ test('catalog preserves HTTP status for missing detail',async()=>{
  await assert.rejects(client.detail('owner/repo',[]),{status:404});
 });
 
- test('normal requests warn only after sixty seconds and time out later',async()=>{
+ test('normal requests warn after the fifteen-second AI budget and time out later',async()=>{
  const {assistantRequestTiming}=await import('../src/data/assistantRequest.mjs');
  const {assistantScenarioOptions}=await import('../src/mocks/assistant-scenarios.mjs');
- assert.equal(assistantRequestTiming.slowMs,60000);assert.equal(assistantRequestTiming.timeoutMs,90000);
- for(const scenario of ['ok','slow','timeout'])assert.equal(assistantScenarioOptions(scenario,[]).slowMs,60000);
+ assert.equal(assistantRequestTiming.slowMs,15000);assert.equal(assistantRequestTiming.timeoutMs,90000);
+ for(const scenario of ['ok','slow','timeout'])assert.equal(assistantScenarioOptions(scenario,[]).slowMs,15000);
  });
