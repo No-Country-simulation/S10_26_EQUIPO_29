@@ -210,6 +210,11 @@ def summarize(outcomes: list[FlowOutcome]) -> dict:
         "declined_ok": ratio(sum(n.chosen is None for n in unavailable), len(unavailable)),
         # Mismo denominador con cualquier número de candidatos: sirven para comparar k.
         "chose_ok_all": ratio(sum(n.chosen_ok for n in tool_needs), len(tool_needs)),
+        # Como lo ve el usuario: sobre todas las necesidades esperadas, también las no detectadas.
+        "user_ok": ratio(sum(n.chosen_ok for n in needs if n.wants_tool),
+                         sum(n.wants_tool for n in needs)),
+        "user_declined": ratio(sum(n.detected and n.chosen is None for n in needs if not n.wants_tool),
+                               sum(not n.wants_tool for n in needs)),
         "declined_no_tool": ratio(sum(n.chosen is None for n in no_tool_needs),
                                   len(no_tool_needs)),
         "first_rank": ratio(sum(n.chosen_rank == 1 for n in chosen), len(chosen)),

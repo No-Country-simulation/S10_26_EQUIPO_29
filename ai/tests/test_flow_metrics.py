@@ -1,5 +1,7 @@
 """Tests de las métricas del flujo completo (sin red)."""
 
+from dataclasses import replace
+
 from ai import assistant
 from ai.assistant import Assisted, LLMResult
 from ai.catalog import load_repos
@@ -153,3 +155,19 @@ def test_acierto_de_punta_a_punta_no_depende_de_k():
 def test_solo_relacionado_cuenta_como_abstencion():
     run = assisted(found("helm/helm"), "helm/helm", fit="only_related")
     assert flow_outcome(CASE, "fake", 1, run).needs[0].chosen is None
+
+
+def test_como_lo_ve_el_usuario_cuenta_las_no_detectadas():
+    run = flow_outcome(CASE, "fake", 1, assisted(found("jaegertracing/jaeger"), "jaegertracing/jaeger"))
+    need = run.needs[0]
+    missed = replace(run, needs=[replace(need, detected=False, chosen=None, chosen_ok=False)])
+    s = summarize([run, missed])
+    assert s["chose_ok_all"] == 1.0      # solo las detectadas
+    assert s["user_ok"] == 0.5           # la no detectada cuenta como fallo
+
+    no_tool = replace(need, wants_tool=False, chosen=None, chosen_ok=False)
+    told = replace(run, needs=[no_tool])
+    unseen = replace(run, needs=[replace(no_tool, detected=False)])
+    s = summarize([told, unseen])
+    assert s["declined_no_tool"] == 1.0  # solo las detectadas
+    assert s["user_declined"] == 0.5     # el usuario no se entera de la no detectada

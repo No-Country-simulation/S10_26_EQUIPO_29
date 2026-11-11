@@ -106,6 +106,8 @@ def render_runs(providers, outcomes, runs) -> list[str]:
                ("Eligió un aceptable (donde había)", "chose_ok", pct),
                ("Se abstuvo (donde no había)", "declined_ok", pct),
                ("Acierto de punta a punta", "chose_ok_all", pct),
+               ("Recibe una herramienta aceptable, como lo ve el usuario", "user_ok", pct),
+               ("Se abstuvo, como lo ve el usuario", "user_declined", pct),
                ("Textos del modelo que hablan del catálogo", "catalog_claims", str)]
     lines = ["## Por corrida", "",
              "Una diferencia entre versiones menor que el rango entre corridas no se puede "
@@ -167,6 +169,8 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
         row("Se abstuvo (donde no había)", lambda s: pct(s["declined_ok"])),
         row("Acierto de punta a punta (comparable entre k)", lambda s: pct(s["chose_ok_all"])),
         row("Sin caja donde el caso no tiene herramientas", lambda s: pct(s["declined_no_tool"])),
+        row("Recibe una herramienta aceptable, como lo ve el usuario", lambda s: pct(s["user_ok"])),
+        row("Se abstuvo, como lo ve el usuario", lambda s: pct(s["user_declined"])),
         row("Eligió el primer candidato", lambda s: pct(s["first_rank"])),
         row("Consistencia entre corridas", lambda s: pct(s["consistency"])),
         row("Entender válido al 1.er intento", lambda s: pct(s["understand_first_ok"])),

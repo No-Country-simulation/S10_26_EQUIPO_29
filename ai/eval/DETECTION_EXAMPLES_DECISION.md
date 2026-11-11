@@ -5,9 +5,8 @@ y parecidos al del usuario, ¿detecta más las necesidades que el usuario pide c
 palabras de negocio ("registrar", "llevar un historial", "controlar"), sin agregar
 necesidades que nadie pidió?
 
-**Estado:** línea base medida y banco de ejemplos listo (11-nov). Faltan la variante en
-el paso de entender, la regla de decisión (escrita antes de medir) y la medición con
-casos nuevos.
+**Estado:** línea base, banco de ejemplos y regla de decisión listos (11-nov). Faltan
+los casos nuevos y la medición.
 
 ## Por qué
 
@@ -108,13 +107,44 @@ pedido, como "pedidos parecidos ya resueltos": el texto y cada necesidad con su 
 y la frase que la justifica. Siempre 3, sin parecido mínimo. Los vectores del banco se
 calculan la primera vez que se piden ejemplos.
 
+## Regla de decisión (fijada antes de medir)
+
+**Versiones:** antes = el commit que agrega el banco sin usarlo; después = el commit que
+lo usa en el paso de entender. Se corren una detrás de la otra, el mismo día, con Gemini
+y 3 corridas. Una cifra por corrida.
+
+**Mediciones:**
+
+| Qué | Conjuntos | Para qué |
+|---|---|---|
+| Solo entender | casos nuevos | la decisión |
+| Solo entender | los 7 de desarrollo | sin regresión en la detección |
+| Asistente completo | casos nuevos y `abstention` | sin regresión en lo que recibe el usuario |
+
+**Los ejemplos se integran si se cumple todo:**
+
+1. **Detecta más bases de datos en los casos nuevos:** la peor corrida de después supera
+   a la mejor de antes.
+2. **Sin bases de datos de más en los casos nuevos:** en los pedidos sin base de datos,
+   el máximo de después no supera al máximo de antes en más de 1 pedido.
+3. **Sin regresión en cada uno de los 7 conjuntos de desarrollo:** necesidades
+   detectadas, la mejor corrida de después llega al menos a la peor de antes; necesidades
+   de más, el máximo de después no supera al máximo de antes en más de 1.
+4. **Sin regresión para el usuario** (asistente completo, casos nuevos y `abstention`):
+   "recibe una herramienta aceptable" y "se abstuvo", las dos como lo ve el usuario
+   (sobre todas las necesidades esperadas, también las no detectadas): la mejor corrida
+   de después llega al menos a la peor de antes.
+5. **Costo:** la mediana del pedido completo sigue dentro del presupuesto de 15 s.
+
+Solo como dato: tokens de entrada; detección de permisos por sede, aprobaciones y servir
+desde servidores cercanos en los casos nuevos. Las corridas con error del proveedor no
+cuentan. Si una condición falla, los ejemplos no se integran y la variante se revierte.
+Nada se ajusta después de ver los resultados.
+
 ## Próximos pasos
 
-1. **Variante:** los ejemplos en el paso de entender, en un commit aparte del banco.
-2. **Regla de decisión,** escrita aquí antes de medir la variante: cuánto tiene que subir
-   la detección, cuánto margen de necesidades de más se acepta por conjunto, y sin
-   regresión en la elección ni en la abstención del asistente completo.
-3. **Casos nuevos,** escritos sin ver el catálogo ni el banco, con pedidos de "llevar",
+1. **Casos nuevos,** escritos sin ver el catálogo ni el banco, con pedidos de "llevar",
    "controlar", "organizar" y las necesidades poco detectadas de arriba. Los que tengan un
    pedido del banco en el umbral de separación o por encima se descartan antes de correr.
    Los conjuntos de esta página solo sirven para comprobar que no hay regresión.
+2. **Medición y decisión** con la regla de arriba, sin cambiarla.
