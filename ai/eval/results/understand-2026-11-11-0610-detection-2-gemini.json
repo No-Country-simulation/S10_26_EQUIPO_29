@@ -1,0 +1,1789 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "fabrica-muebles-madera",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "automation",
+          "query": "flujo de aprobacion de tareas",
+          "evidence": "Cada pedido tiene que pasar por la aprobación del diseñador antes de empezar a cortar."
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento y organizacion de archivos",
+          "evidence": "necesito que las fotos de los terminados se guarden de forma ordenada."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.5,
+    "input_tokens": 2600,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "centro-estetica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "control y conteo de tratamientos realizados",
+          "evidence": "poder controlar cuántos tratamientos se hacen por tipo"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes de confirmación",
+          "evidence": "necesito enviar mensajes de confirmación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2464,
+    "output_tokens": 61,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "productora-jugos-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de producción diaria y entregas",
+          "evidence": "Necesito llevar el control de la producción diaria y de las entregas."
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas por sabor",
+          "evidence": "pueda ver rápido cuánto vendí de cada sabor la semana pasada."
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros y comprobantes",
+          "evidence": "cobrar con transferencia y generar el comprobante."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2568,
+    "output_tokens": 162,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "consultorio-odontologico",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de permisos por roles",
+          "evidence": "Quiero que cada uno maneje solo sus pacientes"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de historiales medicos",
+          "evidence": "organizar el historial de tratamientos de cada persona"
+        },
+        {
+          "category": "communication",
+          "query": "envio de recordatorios de citas",
+          "evidence": "Necesito enviar recordatorios de citas"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea",
+          "evidence": "que los pacientes puedan pagar la consulta desde el celular"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento en cache para velocidad",
+          "evidence": "Me preocupa que todo cargue rápido para quienes están en otras ciudades"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.42,
+    "input_tokens": 2466,
+    "output_tokens": 147,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-relojes-antiguos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de mensajes de aviso a clientes",
+          "evidence": "que se les avise por mensaje cuando el reloj esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2494,
+    "output_tokens": 40,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-pintura-oleo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros y mensualidades",
+          "evidence": "Los alumnos deben poder pagar las mensualidades desde su casa"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de inscripciones mensuales",
+          "evidence": "necesito ver cuántas personas se inscriben cada mes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2529,
+    "output_tokens": 114,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "servicio-limpieza-alfombras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "aviso de retraso de tareas",
+          "evidence": "el sistema avise cuando un trabajo se atrasa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.92,
+    "input_tokens": 2449,
+    "output_tokens": 37,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "centro-entrenamiento-perros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de clases y progresos",
+          "evidence": "Quiero llevar el control de las clases de cada animal y sus progresos"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de sesiones mensuales",
+          "evidence": "que los dueños paguen las sesiones mensuales"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y grupos",
+          "evidence": "solo el entrenador asignado vea la información de su grupo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2530,
+    "output_tokens": 158,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "servicio-instalacion-cerraduras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros a clientes",
+          "evidence": "controlar que cada instalación quede bien hecha antes de cobrar"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes de aviso",
+          "evidence": "el cliente reciba un mensaje cuando el técnico está en camino"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.31,
+    "input_tokens": 2589,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-orfebreria-plata",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de materiales",
+          "evidence": "Quiero controlar el inventario de metales preciosos que uso en cada pieza."
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos en linea",
+          "evidence": "los clientes puedan pagar el anticipo en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2587,
+    "output_tokens": 114,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "productora-quesos-frescos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y areas",
+          "evidence": "que cada empleado de la planta vea solo las tareas de su área"
+        },
+        {
+          "category": "analytics",
+          "query": "control de temperatura en cámaras",
+          "evidence": "controlar la temperatura de las cámaras de maduración"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 2524,
+    "output_tokens": 79,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-cocina-vegetariana",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de talleres y alumnos",
+          "evidence": "Quiero manejar los cupos de cada taller y las inscripciones. También necesito llevar el historial de recetas que cada alumno ha practicado"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "solo el profesor del grupo vea las evaluaciones"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2491,
+    "output_tokens": 89,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "distribuidora-vinos-locales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones de alertas de consumo",
+          "evidence": "el sistema avise cuando un restaurante pide más de lo habitual"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2550,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "fabrica-velas-aromaticas-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "las imágenes del catálogo carguen rápido"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2577,
+    "output_tokens": 42,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "servicio-pintura-casas-interiores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de anticipos en linea",
+          "evidence": "que se cobre el anticipo antes de empezar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2585,
+    "output_tokens": 36,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-tapiceria-muebles",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario y costos",
+          "evidence": "llevar el registro de las telas usadas en cada trabajo y los costos"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos de estado",
+          "evidence": "el cliente reciba un aviso cuando su mueble esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2539,
+    "output_tokens": 116,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "servicio-jardineria-mantenimiento",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de pedidos de servicios",
+          "evidence": "Quiero llevar los pedidos de poda y riego de cada cliente."
+        },
+        {
+          "category": "automation",
+          "query": "flujo de aprobación de solicitudes de trabajo",
+          "evidence": "necesito que una solicitud de trabajo extra pase por aprobación del supervisor"
+        },
+        {
+          "category": "payments",
+          "query": "cobro recurrente al final del mes",
+          "evidence": "que se cobre al final del mes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2587,
+    "output_tokens": 164,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-reparacion-electrodomesticos-pequenos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "el cliente reciba un mensaje cuando esté listo para recoger"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2427,
+    "output_tokens": 67,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "centro-pilates-grupal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión y consulta de asistencia",
+          "evidence": "controlar la asistencia de cada alumno"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "solo el instructor del grupo vea las notas de progreso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2522,
+    "output_tokens": 106,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "servicio-limpieza-oficinas-diaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso basado en zonas",
+          "evidence": "Necesito que cada supervisor vea solo los edificios de su zona"
+        },
+        {
+          "category": "communication",
+          "query": "envio de alertas automaticas por retrasos",
+          "evidence": "el sistema avise si un equipo no marca la entrada a tiempo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2476,
+    "output_tokens": 84,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "taller-pintura-automotriz-chica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de insumos",
+          "evidence": "Quiero controlar el inventario de pinturas y diluyentes que uso"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y anticipos en línea",
+          "evidence": "que el cliente pague el anticipo en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2509,
+    "output_tokens": 67,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "escuela-circo-infantil",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de grupos y asistencia",
+          "evidence": "Quiero manejar los grupos por edad y nivel. También necesito controlar la asistencia a cada clase"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y pagos en linea",
+          "evidence": "que los padres puedan pagar la mensualidad desde su casa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2521,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "fabrica-muebles-madera",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "automation",
+          "query": "flujo de aprobacion de ordenes",
+          "evidence": "Cada pedido tiene que pasar por la aprobación del diseñador antes de empezar a cortar."
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento y organizacion de archivos",
+          "evidence": "Además necesito que las fotos de los terminados se guarden de forma ordenada."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2600,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "centro-estetica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "control y conteo de tratamientos realizados",
+          "evidence": "poder controlar cuántos tratamientos se hacen por tipo"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes de confirmación",
+          "evidence": "necesito enviar mensajes de confirmación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2464,
+    "output_tokens": 61,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "productora-jugos-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "análisis de ventas y producción",
+          "evidence": "quiero ver rápido cuánto vendí de cada sabor la semana pasada"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y emisión de comprobantes",
+          "evidence": "cobrar con transferencia y generar el comprobante"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2568,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "consultorio-odontologico",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de permisos y roles",
+          "evidence": "Quiero que cada uno maneje solo sus pacientes"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de registros",
+          "evidence": "organizar el historial de tratamientos de cada persona"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones y recordatorios",
+          "evidence": "Necesito enviar recordatorios de citas"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en línea",
+          "evidence": "que los pacientes puedan pagar la consulta desde el celular"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.41,
+    "input_tokens": 2466,
+    "output_tokens": 198,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-relojes-antiguos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de notificaciones a clientes",
+          "evidence": "que se les avise por mensaje cuando el reloj esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2494,
+    "output_tokens": 39,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-pintura-oleo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "Los alumnos deben poder pagar las mensualidades desde su casa"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica y métricas de negocio",
+          "evidence": "necesito ver cuántas personas se inscriben cada mes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2529,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "servicio-limpieza-alfombras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de notificaciones de retrasos",
+          "evidence": "el sistema avise cuando un trabajo se atrasa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.09,
+    "input_tokens": 2449,
+    "output_tokens": 38,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "centro-entrenamiento-perros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y control de clases",
+          "evidence": "Quiero llevar el control de las clases de cada animal y sus progresos"
+        },
+        {
+          "category": "payments",
+          "query": "cobros recurrentes en línea",
+          "evidence": "que los dueños paguen las sesiones mensuales"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles y grupos",
+          "evidence": "solo el entrenador asignado vea la información de su grupo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2530,
+    "output_tokens": 158,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "servicio-instalacion-cerraduras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobrar por servicios realizados",
+          "evidence": "antes de cobrar"
+        },
+        {
+          "category": "communication",
+          "query": "envío de mensajes en camino",
+          "evidence": "que el cliente reciba un mensaje cuando el técnico está en camino"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.95,
+    "input_tokens": 2589,
+    "output_tokens": 57,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-orfebreria-plata",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de metales",
+          "evidence": "Quiero controlar el inventario de metales preciosos que uso en cada pieza."
+        },
+        {
+          "category": "payments",
+          "query": "cobros de anticipos en línea",
+          "evidence": "que los clientes puedan pagar el anticipo en línea."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.0,
+    "input_tokens": 2587,
+    "output_tokens": 97,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "productora-quesos-frescos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por rol",
+          "evidence": "que cada empleado de la planta vea solo las tareas de su área"
+        },
+        {
+          "category": "analytics",
+          "query": "seguimiento de variables de temperatura y producción",
+          "evidence": "controlar la temperatura de las cámaras de maduración"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2524,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-cocina-vegetariana",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inscripciones y recetas",
+          "evidence": "Quiero manejar los cupos de cada taller y las inscripciones. También necesito llevar el historial de recetas que cada alumno ha practicado"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "solo el profesor del grupo vea las evaluaciones"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2491,
+    "output_tokens": 123,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "distribuidora-vinos-locales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones de alertas comerciales",
+          "evidence": "el sistema avise cuando un restaurante pide más de lo habitual"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2550,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "fabrica-velas-aromaticas-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "control de variables de temperatura y producción",
+          "evidence": "Necesito controlar la temperatura de derretido de la cera"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento y distribución de imágenes",
+          "evidence": "que las imágenes del catálogo carguen rápido para compradores de otros países"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.11,
+    "input_tokens": 2577,
+    "output_tokens": 118,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "servicio-pintura-casas-interiores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de anticipos en linea",
+          "evidence": "que se cobre el anticipo antes de empezar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2585,
+    "output_tokens": 65,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-tapiceria-muebles",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario y costos",
+          "evidence": "llevar el registro de las telas usadas en cada trabajo y los costos"
+        },
+        {
+          "category": "communication",
+          "query": "envio de avisos de estado",
+          "evidence": "que el cliente reciba un aviso cuando su mueble esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2539,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "servicio-jardineria-mantenimiento",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento y consulta de pedidos de servicios",
+          "evidence": "Quiero llevar los pedidos de poda y riego de cada cliente."
+        },
+        {
+          "category": "automation",
+          "query": "flujo de aprobación de solicitudes de trabajo",
+          "evidence": "También necesito que una solicitud de trabajo extra pase por aprobación del supervisor"
+        },
+        {
+          "category": "payments",
+          "query": "cobros recurrentes al final del mes",
+          "evidence": "y que se cobre al final del mes."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.42,
+    "input_tokens": 2587,
+    "output_tokens": 164,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-reparacion-electrodomesticos-pequenos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones a clientes",
+          "evidence": "que el cliente reciba un mensaje cuando esté listo para recoger"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.01,
+    "input_tokens": 2427,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "centro-pilates-grupal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de horarios y asistencia de alumnos",
+          "evidence": "Quiero manejar los horarios de las clases y los instructores. También necesito controlar la asistencia de cada alumno"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles e instructores",
+          "evidence": "solo el instructor del grupo vea las notas de progreso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.29,
+    "input_tokens": 2522,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "servicio-limpieza-oficinas-diaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de accesos basado en zonas",
+          "evidence": "que cada supervisor vea solo los edificios de su zona"
+        },
+        {
+          "category": "communication",
+          "query": "envío de alertas por retrasos",
+          "evidence": "el sistema avise si un equipo no marca la entrada a tiempo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2476,
+    "output_tokens": 114,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "taller-pintura-automotriz-chica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de insumos",
+          "evidence": "Quiero controlar el inventario de pinturas y diluyentes que uso"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y anticipos en linea",
+          "evidence": "el cliente pague el anticipo en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 2509,
+    "output_tokens": 80,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "escuela-circo-infantil",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y consulta de asistencia",
+          "evidence": "controlar la asistencia a cada clase"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en línea",
+          "evidence": "que los padres puedan pagar la mensualidad desde su casa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.39,
+    "input_tokens": 2521,
+    "output_tokens": 107,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "fabrica-muebles-madera",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "automation",
+          "query": "flujo de aprobacion de ordenes",
+          "evidence": "Cada pedido tiene que pasar por la aprobación del diseñador antes de empezar a cortar."
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento y organizacion de archivos de imagen",
+          "evidence": "Además necesito que las fotos de los terminados se guarden de forma ordenada."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.38,
+    "input_tokens": 2600,
+    "output_tokens": 127,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "centro-estetica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de roles y permisos de usuarios",
+          "evidence": "Quiero que cada una solo maneje su propia agenda y clientes"
+        },
+        {
+          "category": "analytics",
+          "query": "analitica de uso y negocio",
+          "evidence": "poder controlar cuántos tratamientos se hacen por tipo"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes transaccionales",
+          "evidence": "enviar mensajes de confirmación"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.15,
+    "input_tokens": 2464,
+    "output_tokens": 89,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "productora-jugos-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "análisis de ventas y producción",
+          "evidence": "puedo ver rápido cuánto vendí de cada sabor la semana pasada"
+        },
+        {
+          "category": "payments",
+          "query": "cobros y procesamiento de pagos",
+          "evidence": "cobrar con transferencia y generar el comprobante"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2568,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "consultorio-odontologico",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de permisos y roles",
+          "evidence": "Quiero que cada uno maneje solo sus pacientes"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de registros médicos",
+          "evidence": "organizar el historial de tratamientos de cada persona"
+        },
+        {
+          "category": "communication",
+          "query": "envío de recordatorios automáticos",
+          "evidence": "Necesito enviar recordatorios de citas"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "los pacientes puedan pagar la consulta desde el celular"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.3,
+    "input_tokens": 2466,
+    "output_tokens": 195,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-relojes-antiguos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de avisos por mensaje",
+          "evidence": "se les avise por mensaje cuando el reloj esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2494,
+    "output_tokens": 67,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-pintura-oleo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en línea",
+          "evidence": "Los alumnos deben poder pagar las mensualidades desde su casa"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de inscripciones y negocio",
+          "evidence": "necesito ver cuántas personas se inscriben cada mes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.96,
+    "input_tokens": 2529,
+    "output_tokens": 66,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "servicio-limpieza-alfombras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de permisos por zonas",
+          "evidence": "cada empleado vea solo las órdenes de su zona"
+        },
+        {
+          "category": "communication",
+          "query": "envío de avisos por retrasos",
+          "evidence": "el sistema avise cuando un trabajo se atrasa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.09,
+    "input_tokens": 2449,
+    "output_tokens": 110,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "centro-entrenamiento-perros",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro y control de historiales",
+          "evidence": "Quiero llevar el control de las clases de cada animal y sus progresos"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de mensualidades en línea",
+          "evidence": "que los dueños paguen las sesiones mensuales"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso por roles",
+          "evidence": "solo el entrenador asignado vea la información de su grupo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2530,
+    "output_tokens": 158,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "servicio-instalacion-cerraduras",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de servicios por instalacion",
+          "evidence": "antes de cobrar"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes en camino",
+          "evidence": "el cliente reciba un mensaje cuando el tecnico esta en camino"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.91,
+    "input_tokens": 2589,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-orfebreria-plata",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario de materiales",
+          "evidence": "Quiero controlar el inventario de metales preciosos que uso en cada pieza."
+        },
+        {
+          "category": "automation",
+          "query": "flujo de aprobacion de solicitudes",
+          "evidence": "necesito que una solicitud de diseño pase por mi aprobación antes de empezar"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos en linea",
+          "evidence": "que los clientes puedan pagar el anticipo en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2587,
+    "output_tokens": 165,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "productora-quesos-frescos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de permisos y roles de usuario",
+          "evidence": "que cada empleado de la planta vea solo las tareas de su área"
+        },
+        {
+          "category": "analytics",
+          "query": "control y monitoreo de variables de producción",
+          "evidence": "Necesito controlar la temperatura de las cámaras de maduración"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2524,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-cocina-vegetariana",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de registros de inscripciones y recetarios",
+          "evidence": "Quiero manejar los cupos de cada taller y las inscripciones. También necesito llevar el historial de recetas que cada alumno ha practicado"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso basado en roles",
+          "evidence": "solo el profesor del grupo vea las evaluaciones"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2491,
+    "output_tokens": 129,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "distribuidora-vinos-locales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de notificaciones de alertas",
+          "evidence": "que el sistema avise cuando un restaurante pide más de lo habitual"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 2550,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "fabrica-velas-aromaticas-naturales",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "analytics",
+          "query": "control de variables de produccion por lotes",
+          "evidence": "Quiero organizar los lotes de producción según los aromas más pedidos. Necesito controlar la temperatura de derretido de la cera"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia para catalogo",
+          "evidence": "que las imágenes del catálogo carguen rápido para compradores de otros países"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2577,
+    "output_tokens": 103,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "servicio-pintura-casas-interiores",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "automation",
+          "query": "aprobacion de solicitudes de cambio",
+          "evidence": "necesito que una solicitud de cambio de color pase por mi aprobación"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de anticipos en linea",
+          "evidence": "se cobre el anticipo antes de empezar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2585,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-tapiceria-muebles",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "registro de inventario y costos de producción",
+          "evidence": "llevar el registro de las telas usadas en cada trabajo y los costos"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones automáticas al cliente",
+          "evidence": "el cliente reciba un aviso cuando su mueble esté listo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.11,
+    "input_tokens": 2539,
+    "output_tokens": 120,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "servicio-jardineria-mantenimiento",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de clientes y servicios",
+          "evidence": "Quiero llevar los pedidos de poda y riego de cada cliente."
+        },
+        {
+          "category": "automation",
+          "query": "flujo de aprobación de tareas adicionales",
+          "evidence": "También necesito que una solicitud de trabajo extra pase por aprobación del supervisor"
+        },
+        {
+          "category": "payments",
+          "query": "cobro recurrente mensual de servicios",
+          "evidence": "y que se cobre al final del mes."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.28,
+    "input_tokens": 2587,
+    "output_tokens": 162,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-reparacion-electrodomesticos-pequenos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envio de mensajes de notificacion",
+          "evidence": "que el cliente reciba un mensaje cuando esté listo para recoger"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2427,
+    "output_tokens": 39,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "centro-pilates-grupal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión y consulta de horarios y asistencia",
+          "evidence": "Quiero manejar los horarios de las clases y los instructores. También necesito controlar la asistencia de cada alumno"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por roles",
+          "evidence": "que solo el instructor del grupo vea las notas de progreso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.21,
+    "input_tokens": 2522,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "servicio-limpieza-oficinas-diaria",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "control de acceso basado en zonas",
+          "evidence": "que cada supervisor vea solo los edificios de su zona"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones y alertas",
+          "evidence": "el sistema avise si un equipo no marca la entrada a tiempo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2476,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "taller-pintura-automotriz-chica",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "control de inventario de materiales",
+          "evidence": "Quiero controlar el inventario de pinturas y diluyentes que uso."
+        },
+        {
+          "category": "payments",
+          "query": "cobros y anticipos en linea",
+          "evidence": "que el cliente pague el anticipo en línea"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 2509,
+    "output_tokens": 67,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "escuela-circo-infantil",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobros y mensualidades por internet",
+          "evidence": "que los padres puedan pagar la mensualidad desde su casa"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 2521,
+    "output_tokens": 38,
+    "waited": 0.0
+  }
+]

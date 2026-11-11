@@ -5,8 +5,7 @@ y parecidos al del usuario, ¿detecta más las necesidades que el usuario pide c
 palabras de negocio ("registrar", "llevar un historial", "controlar"), sin agregar
 necesidades que nadie pidió?
 
-**Estado:** línea base, banco de ejemplos, regla de decisión y casos nuevos listos
-(11-nov). Falta la medición.
+**Estado:** medida e **integrada** (11-nov). Las cinco condiciones de la regla se cumplen.
 
 ## Por qué
 
@@ -161,6 +160,90 @@ Nada se ajusta después de ver los resultados.
 - **Límite:** el otro modelo reusó algunos negocios de la lista excluida con otro nombre.
   No afecta la separación del banco, que se mide por parecido y no por nombre.
 
-## Próximos pasos
+## Resultados (11-nov)
 
-1. **Medición y decisión** con la regla de arriba, sin cambiarla.
+Antes = el commit que agrega el banco sin usarlo; después = el commit que lo usa en
+entender. Gemini 3.5 Flash-Lite, 3 corridas, una cifra por corrida, el mismo día.
+Cifras de desarrollo: no se publican como rendimiento.
+
+### Casos nuevos (`detection-2`, solo entender)
+
+| | Antes | Después |
+|---|---|---|
+| Base de datos detectada | 2 · 2 · 4 de 12 | **10 · 9 · 8 de 12** |
+| Base de datos de más (10 pedidos sin ella) | 0 · 1 · 0 | 0 · 0 · 0 |
+| Todas las necesidades detectadas | 26 · 28 · 30 de 52 | 41 · 41 · 44 de 52 |
+| Necesidades de más | 4 · 6 · 4 | 3 · 2 · 2 |
+| Dato: permisos por cargo o sede | 3 · 4 · 5 de 8 | 6 · 6 · 8 de 8 |
+| Dato: automatización (5 aprobaciones y 1 reparto automático) | 1 · 1 · 0 de 6 | 2 · 2 · 4 de 6 |
+| Dato: carga rápida lejos | 0 · 0 · 0 de 2 | 0 · 0 · 0 de 2 |
+
+Antes, en 2 pedidos entender no detectó nada y pidió aclaración (5 de 6 llamadas);
+después, ninguno.
+
+### Conjuntos de desarrollo (solo entender)
+
+| Conjunto | Detectadas, antes | Detectadas, después | De más, antes | De más, después |
+|---|---|---|---|---|
+| `base` | 37 · 37 · 36 de 40 | 37 · 37 · 37 | 5 · 4 · 4 | 5 · 4 · 4 |
+| `validation` | 19 · 21 · 21 de 23 | 19 · 21 · 21 | 1 · 1 · 1 | 1 · 1 · 1 |
+| `holdout` | 19 · 19 · 19 de 23 | 21 · 21 · 20 | 1 · 3 · 1 | 1 · 1 · 1 |
+| `business` | 24 · 22 · 21 de 32 | 26 · 27 · 26 | 0 · 0 · 0 | 0 · 1 · 1 |
+| `abstention` | 13 · 13 · 13 de 17 | 14 · 15 · 14 | 1 · 1 · 1 | 1 · 1 · 1 |
+| `records` | 45 · 43 · 42 de 50 | 47 · 45 · 46 | 0 · 0 · 0 | 0 · 1 · 0 |
+| `detection` | 69 · 68 · 67 de 74 | 71 · 70 · 71 | 2 · 3 · 3 | 2 · 1 · 1 |
+
+Base de datos: `business` 2 · 1 · 0 → 5 · 6 · 5 de 7; `records` 11 · 10 · 10 → 12 · 12 · 12
+de 12; `detection` 12 · 12 · 12 → 14 · 14 · 14 de 14; los demás igual (en `holdout`,
+3 · 3 · 3 → 3 · 3 · 2 de 4). Base de datos de más: 0 en los 7 conjuntos, antes y después.
+
+### Asistente completo
+
+| | Antes | Después |
+|---|---|---|
+| `detection-2`: recibe una herramienta aceptable (usuario) | 50 · 56 · 48 % | 64 · 64 · 64 % |
+| `detection-2`: se abstuvo (usuario) | 0 · 0 · 0 % | 12 · 12 · 0 % |
+| `abstention`: recibe una herramienta aceptable (usuario) | 89 · 89 · 89 % | 89 · 89 · 89 % |
+| `abstention`: se abstuvo (usuario) | 50 · 50 · 62 % | 50 · 50 · 38 % |
+| Mediana por pedido (`detection-2` / `abstention`) | 3,6 s / 4,0 s | 4,1 s / 4,2 s |
+| Pedidos sobre 15 s | 0 | 0 |
+
+Tokens de entrada de entender (mediana): unos 2.140 → 2.540 (+19 %). Errores del
+proveedor: 1 antes (tiempo agotado), 0 después. Después, en `detection-2`, una respuesta
+no se generó porque el filtro de salida marcó que copiaba las reglas (generar no cambió).
+
+### Regla
+
+| Condición | Resultado |
+|---|---|
+| 1. Más bases de datos en los casos nuevos (peor después > mejor antes) | 8 > 4: **cumple** |
+| 2. Bases de datos de más en los casos nuevos (máximo + 1) | 0 frente a 1: **cumple** |
+| 3. Sin regresión en los 7 conjuntos | detectadas, la mejor de después ≥ la peor de antes en los 7; de más, dentro del margen en los 7 (`business` y `records` justo en +1): **cumple** |
+| 4. Sin regresión para el usuario | `detection-2` 64 ≥ 48 y 12 ≥ 0; `abstention` 89 ≥ 89 y 50 ≥ 50: **cumple** |
+| 5. Mediana dentro de 15 s | 4,1 y 4,2 s: **cumple** |
+
+**Decisión: los ejemplos parecidos se integran.**
+
+### Límites
+
+- Cifras de desarrollo sobre 22 casos nuevos y 3 corridas. Antes de publicar el
+  rendimiento del asistente con este cambio hace falta una prueba final nueva.
+- Los casos nuevos los escribió un solo modelo, con plantillas parecidas entre sí; la
+  regla de casi gemelos sacó las más repetidas, no todas.
+- "Servir desde servidores cercanos" sigue sin detectarse (0 de 6 en los dos conjuntos que
+  la tienen): se lee como almacenamiento.
+- La abstención como la ve el usuario en `abstention` cumple justo en el límite; una
+  corrida bajó a 38 %. Sube en `detection-2` porque ahora se detectan aprobaciones que
+  antes no se veían.
+- `business` y `records` llegan justo al margen de necesidades de más (+1).
+- Cuesta unos 400 tokens de entrada más por pedido en entender y medio segundo más en la
+  mediana del pedido completo.
+
+Reportes: antes `results/understand-2026-11-11-0510-detection-2-gemini.md`,
+`…-0515-gemini.md` (`base`), `…-0518-validation-…`, `…-0521-holdout-…`, `…-0523-business-…`,
+`…-0525-abstention-…`, `…-0529-records-…`, `…-0536-detection-…`,
+`results/assistant-2026-11-11-0551-detection-2-gemini.md` y `…-0559-abstention-…`;
+después `results/understand-2026-11-11-0610-detection-2-gemini.md`, `…-0616-gemini.md`,
+`…-0619-validation-…`, `…-0623-holdout-…`, `…-0625-business-…`, `…-0628-abstention-…`,
+`…-0632-records-…`, `…-0640-detection-…`,
+`results/assistant-2026-11-11-0658-detection-2-gemini.md` y `…-0704-abstention-…`.
