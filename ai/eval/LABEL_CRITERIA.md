@@ -55,7 +55,9 @@ conserva las etiquetas con las que se midió.
   "organizar los datos de cada invitado" sí.
 - **Agendar:** que el cliente reserve o que una reserva se confirme es la app; que el
   sistema programe solo una visita, una revisión o una tarea → `automation`; el aviso a
-  la persona → `communication`.
+  la persona → `communication`. Planificar horarios, turnos, rutas o cuadrillas lo hace
+  la persona con la app; es `automation` solo si el pedido dice que el sistema lo decide
+  o lo asigna solo.
 - **Permisos por rol, sede o asignación** → `auth`. Si además pide ver o llevar datos del
   negocio ("cada sede ve su propio inventario"), también `database`.
 - **Aprobaciones entre personas** → `automation`. Si además dice que la solicitud se
