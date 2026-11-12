@@ -1,13 +1,14 @@
 """Servicio HTTP del asistente: POST /assistant y GET /health.
 
 Valida la pregunta con el contrato, llama a asistir() y traduce los errores a
-ErrorResponse. Lo pesado (modelo de embeddings e índice del catálogo) se carga
-una vez al arrancar, antes de aceptar pedidos.
+ErrorResponse. Lo pesado (modelo de embeddings, vectores del banco de ejemplos e índice
+del catálogo) se carga una vez al arrancar, antes de aceptar pedidos.
 
 El catálogo sale de lo publicado en la base (AI_CATALOG_SOURCE=database, por defecto) o de
 los archivos (files). Si la base falla al arrancar, usa los archivos y GET /health lo dice.
 Con la base, revisa cada AI_CATALOG_RELOAD_MINUTES minutos si se publicó algo nuevo y, si es
-así, recarga el catálogo sin reiniciar.
+así, recarga el catálogo sin reiniciar. Cada WARM_MINUTES minutos hace un cálculo corto con el
+modelo, sin LLM, para que el primer pedido después de un rato sin uso no espere.
 
 Arranque, desde la raíz del repo:
     uvicorn ai.service.app:create_app --factory --port 8001
@@ -38,6 +39,12 @@ from shared.contracts.assistant import (AssistantRequest, AssistantResponse, Err
                                         ErrorResponse)
 
 log = logging.getLogger("ai.service")
+
+# Tras un rato largo sin pedidos, el sistema saca de la memoria partes del modelo y el primer
+# pedido las tenía que volver a leer del disco (en Railway, ~15 s: se acababa su tiempo antes de
+# llamar al LLM). Un cálculo corto cada pocos minutos las mantiene en memoria.
+WARM_MINUTES = 5
+WARM_TEXT = "Una tienda quiere cobrar en línea y enviar correos a sus clientes."
 
 
 @dataclass(frozen=True)
@@ -86,23 +93,39 @@ def read_catalog(settings: Settings
 
 
 def load_catalog(settings: Settings) -> Catalog:
-    """Catálogo, modelo de embeddings e índice. Tarda unos segundos."""
+    """Catálogo, modelo de embeddings, banco de ejemplos e índice. Tarda unos segundos.
+
+    En las recargas del catálogo, el modelo y el banco ya están en memoria: no se recalculan.
+    """
     from ai import embeddings           # importa torch: solo al arrancar el servicio
+    from ai import examples
     from ai.search import SearchIndex
 
     repos, stored, source, taken, reason = read_catalog(settings)
     start = time.perf_counter()
     embeddings.preload()                # las preguntas lo necesitan aunque no haya nada que calcular
     loaded = time.perf_counter()
+    examples.preload()                  # si no, el primer pedido lo calcula dentro de su presupuesto
+    ready = time.perf_counter()
     index = SearchIndex.from_repos(repos, stored=stored)
-    log.warning("modelo cargado en %.1f s; vectores: %d guardados, %d calculados (%.1f s)",
-                loaded - start, index.reused, index.computed, time.perf_counter() - loaded)
+    log.warning("modelo cargado en %.1f s; ejemplos de entender en %.1f s; "
+                "vectores: %d guardados, %d calculados (%.1f s)",
+                loaded - start, ready - loaded, index.reused, index.computed,
+                time.perf_counter() - ready)
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
                    repos=len(index.repos), embedding_model=spec.name,
                    catalog_taken_at=taken, catalog_source=source,
                    catalog_fallback_reason=reason,
                    vectors_stored=index.reused, vectors_computed=index.computed)
+
+
+def touch_model() -> None:
+    """Un cálculo corto por el mismo camino que un pedido (ejemplos parecidos y búsqueda), sin
+    llamar al LLM. Si tarda más de lo normal, examples.similar() lo deja en el log."""
+    from ai import embeddings, examples
+    examples.similar(WARM_TEXT, 1)
+    embeddings.embed_query(WARM_TEXT)
 
 
 def read_marker() -> tuple:
@@ -191,17 +214,32 @@ async def keep_current(reloader: CatalogReloader, minutes: int) -> None:
         await asyncio.to_thread(reloader.check)
 
 
+async def keep_warm(touch: Callable[[], None], minutes: float) -> None:
+    """Cada `minutes` minutos, `touch` en un hilo para no frenar los pedidos. Si falla, lo
+    registra y lo intenta en la vuelta siguiente: nunca detiene el servicio."""
+    while True:
+        await asyncio.sleep(minutes * 60)
+        try:
+            await asyncio.to_thread(touch)
+        except Exception as e:
+            log.warning("no se pudo hacer el cálculo que mantiene el modelo en memoria: %s", e)
+
+
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
     return JSONResponse(status_code=status, content=body.model_dump())
 
 
 def create_app(load: Callable[[], Catalog] | None = None,
                settings: Settings | None = None,
-               marker: Callable[[], tuple] | None = None) -> FastAPI:
+               marker: Callable[[], tuple] | None = None,
+               warm: Callable[[], None] | None = None,
+               warm_minutes: float = WARM_MINUTES) -> FastAPI:
     """La app del servicio. Sin `settings`, lee el entorno y el archivo .env.
 
     `marker` dice si se publicó algo nuevo. Sin `load` ni `marker` y con el catálogo en la base,
     se revisa la base; con un `load` propio (tests) solo se revisa si se pasa `marker`.
+    `warm` es el cálculo que mantiene el modelo en memoria cada `warm_minutes` minutos: sin
+    `load`, el del modelo real; con un `load` propio (tests), solo si se pasa.
     """
     if settings is None:
         load_dotenv()
@@ -210,6 +248,8 @@ def create_app(load: Callable[[], Catalog] | None = None,
         load = partial(load_catalog, settings)
         if marker is None and settings.catalog_source == "database":
             marker = read_marker
+        if warm is None:
+            warm = touch_model
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -220,11 +260,14 @@ def create_app(load: Callable[[], Catalog] | None = None,
         app.state.reloader.start()
         log.warning("listo: %d repos (%s), proveedores %s", app.state.catalog.repos,
                     app.state.catalog.catalog_source, " → ".join(app.state.providers))
-        task = None
+        tasks = []
         if marker is not None and settings.reload_minutes > 0:
-            task = asyncio.create_task(keep_current(app.state.reloader, settings.reload_minutes))
+            tasks.append(asyncio.create_task(keep_current(app.state.reloader,
+                                                          settings.reload_minutes)))
+        if warm is not None and warm_minutes > 0:
+            tasks.append(asyncio.create_task(keep_warm(warm, warm_minutes)))
         yield
-        if task is not None:
+        for task in tasks:
             task.cancel()
             with suppress(asyncio.CancelledError):
                 await task

@@ -1,15 +1,15 @@
 # Búsqueda del asistente: decisiones y evidencia
 
-**Decisión (6-nov-2026):** la búsqueda usa **EmbeddingGemma-300m**, y el texto de
-cada repo suma el **resumen y los casos de uso que genera la IA**, sin las
-categorías. Umbral de "sin evidencia": **0,23**. La elección del modelo (3-nov) y
-el umbral anterior (0,19, con el texto sin datos de la IA) siguen abajo como
-historia.
+**Estado:** vigente. La búsqueda usa **EmbeddingGemma-300m** (elegido el 3-nov) y el texto de
+cada repo suma el **resumen y los casos de uso que genera la IA**, sin las categorías (6-nov,
+validado con consultas nuevas el 7-nov). Umbral de "sin evidencia": **0,18** desde el 8-nov,
+con el catálogo de 127 repos; reglas y cifras en [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
 
-Medido con el golden set `catalog` v2 (100 consultas) sobre el snapshot del
-catálogo real del 2026-10-29. Cómo repetir la medición: [`README.md`](README.md).
+Las secciones de abajo se midieron con el catálogo de 100 repos: golden set `catalog` v2
+(100 consultas) sobre el snapshot del 2026-10-29. Cómo repetir la medición:
+[`README.md`](README.md).
 
-## Resultados en el catálogo real
+## Resultados en el catálogo real (100 repos)
 
 100 consultas (60 con respuesta y 40 sin respuesta) · 100 repos, todavía sin
 categorías ni resumen en español · CPU. Lo único que cambia entre las dos
@@ -72,21 +72,19 @@ regeneró después, con las categorías actualizadas de los datos de ejemplo, y 
 MRR 0,79; el de Qwen3 conserva la medición del 27-oct. La conclusión no cambia.
 
 - Separa mejor lo que el catálogo no tiene. En el catálogo real sus dos grupos de
-  puntajes se tocan (ver "Umbral"); los de Qwen3 se mezclan casi por completo.
+  puntajes se tocan (ver "Cómo se fija el umbral"); los de Qwen3 se mezclan casi por completo.
 - Unas 3 a 4 veces más rápido y con la mitad de RAM, lo que importa para desplegar.
 - Mejor recall en los dos golden sets.
 - Costo: cada máquina que lo descargue necesita el token (ver `ai/README.md`).
 - Reversible: Qwen3 sigue en el registro (`AI_EMBEDDING_MODEL=qwen3`); cambiar de
   modelo obliga a recalibrar el umbral.
 
-## Umbral de "sin evidencia": 0,19
-
-> Reemplazado el 6-nov por 0,23 al cambiar el texto de los repos (ver "Texto de los repos con los datos de la IA").
+## Cómo se fija el umbral
 
 `min_score` del modelo en `ai/embeddings.py`.
 
-- Si el 1.er resultado de una necesidad puntúa menos de 0,19, el catálogo no
-  tiene una herramienta para ella. Un puntaje igual a 0,19 pasa.
+- Si un candidato puntúa menos que el umbral, no ocupa lugar; si ninguno llega, el
+  catálogo no tiene una herramienta para esa necesidad. Un puntaje igual al umbral pasa.
 - Se aplica **sin filtros**: si una necesidad tiene evidencia pero nada cumple
   los filtros del usuario (por ejemplo, la licencia), la respuesta es una
   limitación ("existe, pero no con esa licencia"), no "sin evidencia".
@@ -108,15 +106,10 @@ el reporte muestra el valor sugerido):
 primera medición (12 consultas): sin ella, una consulta en la que la búsqueda ya
 había fallado bajaba el corte y dejaba pasar consultas sin respuesta.
 
-**Resultado con 0,19:** 0 de 48 consultas resueltas bloqueadas; 18 de 40 sin
-respuesta pasan. Con el valor anterior (0,20) quedaba bloqueada "almacenamiento
-temporal en memoria" (redis, 0,196), una consulta que escribe el asistente a
-partir de un texto de ejemplo de la pantalla.
+### Hallazgo: el umbral solo frena lo que está lejos
 
-### Hallazgo: con el texto actual, el umbral solo frena lo que está lejos
-
-Los puntajes de las consultas con respuesta (0,196 – 0,533) y sin respuesta
-(0,090 – 0,342) se mezclan. El umbral frena pedidos sin nada parecido en el
+Con el catálogo de 100 repos y el texto sin datos de la IA, los puntajes de las consultas
+con respuesta (0,196 – 0,533) y sin respuesta (0,090 – 0,342) se mezclan. El umbral frena pedidos sin nada parecido en el
 catálogo ("contabilidad y nómina de empleados"), pero no los que *suenan*
 parecido a un repo que no los resuelve:
 
@@ -127,19 +120,11 @@ parecido a un repo que no los resuelve:
 | "videollamadas desde el navegador" | playwright, 0,26 | Nombra navegadores (sirve para probar páginas) |
 | "edición sencilla de contenidos periodísticos" | astro, 0,22 | "content-driven websites" (construye el sitio, no el editor) |
 
-El umbral mide cuánto se parecen las palabras, no si el repo resuelve la
-necesidad.
-
-Subir el umbral no es la solución. Para que ninguna de estas consultas pase,
-tendría que estar por encima de 0,342 (vault para "gestión de permisos de
-acceso"). Con ese valor quedarían bloqueadas 25 de las 48 consultas que hoy la
-búsqueda resuelve bien, por ejemplo "almacenamiento temporal en memoria" (redis,
-0,196): el asistente respondería "el catálogo no tiene esto" en más de la mitad
-de los pedidos que sí tienen herramienta.
-
-Para estas consultas, el freno tiene que venir del paso que elige entre los
-candidatos (descartar los que no cumplen la necesidad) y de un texto de los repos
-más preciso, que separe los dos grupos.
+El umbral mide cuánto se parecen las palabras, no si el repo resuelve la necesidad. Subirlo no
+lo arregla: para frenar todas estas consultas tendría que pasar de 0,342, y bloquearía 25 de
+las 48 que la búsqueda resuelve bien. El freno tiene que estar en el paso que elige entre los
+candidatos ([`ABSTENTION_DECISION.md`](ABSTENTION_DECISION.md)) y en un texto de los repos
+más preciso (sección siguiente).
 
 ## Texto de los repos con los datos de la IA (6-nov-2026)
 
@@ -200,13 +185,6 @@ respuesta de más.
 Reportes: `results/search-catalog-validation-embeddinggemma-300m.md` y
 `results/search-catalog-validation-embeddinggemma-300m-texto-base.md`.
 
-## Catálogo de 127 repos (8-nov-2026)
-
-Se mantiene el texto con resumen y casos de uso (111 de 121 aciertos en desarrollo
-frente a 105 sin los datos de la IA) y el umbral pasa a 0,18. Las reglas, las cifras de
-desarrollo y las de la prueba final están en [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
-Las secciones de arriba describen el catálogo de 100 repos.
-
 ## Límites
 
 - **Los números indican una dirección, no son precisos:** 60 consultas con
@@ -221,3 +199,7 @@ Las secciones de arriba describen el catálogo de 100 repos.
   respuesta puede dejar de serlo.
 - **Los tiempos varían entre corridas** según la carga de la máquina; se comparan
   en proporción. La RAM de EmbeddingGemma es una estimación.
+
+---
+
+Versión anterior de este documento: [`SEARCH_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/SEARCH_DECISION.md).

@@ -5,6 +5,8 @@ Para cada pedido se eligen los más parecidos del banco con el modelo de embeddi
 los conjuntos de evaluación: lo comprueba ai/tests/test_examples.py.
 """
 
+import logging
+import time
 from functools import lru_cache
 from pathlib import Path
 
@@ -14,6 +16,10 @@ from pydantic import BaseModel, ConfigDict, Field
 from ai import embeddings
 
 EXAMPLES_FILE = Path(__file__).resolve().parent / "data" / "understand_examples.json"
+# Más que esto, el cálculo fue anormalmente lento (lo normal es ~0,1 s): el log lo dice.
+SLOW_SECONDS = 2.0
+
+log = logging.getLogger("ai.examples")
 
 
 class ExampleNeed(BaseModel):
@@ -43,12 +49,23 @@ def load_bank() -> ExampleBank:
 
 @lru_cache(maxsize=1)
 def _bank_vectors() -> np.ndarray:
-    """Se calculan la primera vez que se piden ejemplos y quedan en memoria."""
+    """Se calculan la primera vez que se piden ejemplos (o con preload) y quedan en memoria."""
     return embeddings.embed_similar([e.query for e in load_bank().examples])
+
+
+def preload() -> None:
+    """Calcula ahora los vectores del banco. El servicio lo hace al arrancar: si no, los paga el
+    primer pedido dentro de su presupuesto de tiempo (unos 4 s en una laptop, varias veces más
+    en un servidor con menos CPU)."""
+    _bank_vectors()
 
 
 def similar(request: str, k: int) -> list[Example]:
     """Los k pedidos del banco más parecidos al pedido, del más parecido al menos."""
+    start = time.perf_counter()
     scores = _bank_vectors() @ embeddings.embed_similar([request])[0]
+    seconds = time.perf_counter() - start
+    if seconds > SLOW_SECONDS:
+        log.warning("vector del pedido calculado en %.1f s (lo normal es ~0,1 s)", seconds)
     order = np.argsort(-scores, kind="stable")[:k]
     return [load_bank().examples[i] for i in order]

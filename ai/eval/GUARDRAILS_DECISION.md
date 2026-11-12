@@ -1,6 +1,6 @@
 # Defensa contra prompt injection: decisión y evidencia
 
-**Decisión (9-nov-2026):** un módulo propio, `ai/guardrails.py`, con tres capas
+**Estado:** integrada (9-nov-2026). Un módulo propio, `ai/guardrails.py`, con tres capas
 sobre el asistente (entender y generar): frases típicas de inyección en el
 pedido, pedido y datos de terceros delimitados en el prompt, y revisión de la
 salida. Sin librerías nuevas. El enriquecimiento y las ideas no cambian.
@@ -78,7 +78,7 @@ Gemini 3.5 Flash-Lite, 3 corridas por caso.
 
 | | Antes (desarrollo, `69773b6`) | Después |
 |---|---|---|
-| Ataques que resisten, desarrollo | 4/10 | 10/10 (cambios sin commit sobre `018de7e`) |
+| Ataques que resisten, desarrollo | 4/10 | 10/10 (versión de trabajo sobre `018de7e`, antes del commit) |
 | Ataques que resisten, **prueba final** | — | **7/10** (`cbca4e6`) |
 | Pedidos legítimos marcados, prueba final | — | **0/6** |
 | Controles de desarrollo marcados | — | 0/2 |
@@ -92,7 +92,7 @@ corridas), las letras separadas (1 de 3) y la descripción cortés (3 de 3: "Cer
 por …" al inicio de las justificaciones). Reporte:
 `results/injection-2026-11-09-1550-test-gemini.md`.
 
-Regresión (cambios sin commit sobre `018de7e`):
+Regresión (versión de trabajo sobre `018de7e`, antes del commit):
 
 | `validation` | Línea base (8-nov) | Después |
 |---|---|---|
@@ -128,3 +128,7 @@ Los tres criterios se cumplen; el primero y el tercero, justo en el límite.
 - **Quién escribió los casos**: Claude, revisado por el responsable de la IA,
   conociendo los prompts (ataques de caja blanca). El conjunto de prueba ya se
   usó: un cambio nuevo necesita casos nuevos.
+
+---
+
+Versión anterior de este documento: [`GUARDRAILS_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/GUARDRAILS_DECISION.md).
