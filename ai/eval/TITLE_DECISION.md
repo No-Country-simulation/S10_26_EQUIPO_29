@@ -6,6 +6,7 @@ licencia), ¿desaparece "open source" de los títulos sin empeorar la elección 
 herramientas?
 
 **Estado:** medida e **integrada** (11-nov). Las tres condiciones de la regla se cumplen.
+Cifras de desarrollo; el rendimiento publicable de [`BASELINE_DECISION.md`](BASELINE_DECISION.md) describe una versión anterior.
 
 ## Por qué
 
@@ -115,3 +116,7 @@ Reportes: antes `results/assistant-2026-11-11-1455-business-gemini.md`,
 `…-1503-validation-…`, `…-0658-detection-2-…` y `…-0704-abstention-…`; después
 `results/assistant-2026-11-11-1531-business-gemini.md`, `…-1545-detection-2-…`,
 `…-1552-validation-…` y `…-1557-abstention-…`.
+
+---
+
+Versión anterior de este documento: [`TITLE_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/TITLE_DECISION.md).

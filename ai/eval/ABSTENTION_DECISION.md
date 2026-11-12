@@ -1,16 +1,19 @@
 # Abstención del asistente: decisión y evidencia
 
-**Decisión (7-nov-2026):** antes de elegir una herramienta, el paso que arma el
+**Estado:** integrada (7-nov-2026). Antes de elegir una herramienta, el paso que arma el
 mapa juzga si el mejor candidato **hace** lo que pide la necesidad
 (`fit: serves`) o solo se relaciona con ella (`only_related`). Con
 `only_related`, el código deja la caja sin herramienta y la necesidad pasa a las
 limitaciones, aunque el modelo haya escrito un nombre.
 
+Se midió con el catálogo de 100 repos (el de 127 llegó el 8-nov). Con 127 repos la abstención
+sigue siendo el punto débil: cifras de desarrollo en [`BASELINE_DECISION.md`](BASELINE_DECISION.md).
+
 ## Por qué
 
 La búsqueda mide parecido de texto: un repo puede superar el umbral sin
 resolver la necesidad (una librería que se conecta a una base de datos no es la
-base de datos). Con el texto de búsqueda actual, el umbral deja pasar 11 de 15
+base de datos). Con el catálogo de 100 repos, el umbral dejaba pasar 11 de 15
 consultas nuevas sin respuesta (`SEARCH_DECISION.md`): el freno tiene que estar
 en el paso que elige. La regla es general: no nombra repos ni categorías y
 sigue valiendo si el catálogo crece.
@@ -54,3 +57,7 @@ Reportes en `results/`: `assistant-2026-11-06-2359-validation-gemini.md` y
 `assistant-2026-11-07-0711-validation-gemini.md` (validación),
 `assistant-2026-11-07-0653-holdout-gemini.md` y
 `assistant-2026-11-07-0730-holdout-gemini.md` (reservados).
+
+---
+
+Versión anterior de este documento: [`ABSTENTION_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/ABSTENTION_DECISION.md).

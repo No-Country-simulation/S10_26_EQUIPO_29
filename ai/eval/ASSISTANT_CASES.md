@@ -4,10 +4,21 @@ Pedidos de negocio fijos con lo que el asistente **debería** responder. Sirven
 para elegir el modelo de lenguaje y para medir el asistente cada vez que cambia.
 Se escriben antes de mirar lo que responde el asistente o la búsqueda.
 
-Archivos: `assistant_cases.json` (los casos de siempre), `assistant_cases_validation.json`,
-`assistant_cases_holdout.json`, `assistant_cases_business.json` y
-`assistant_cases_abstention.json` (ver abajo), y `assistant_cases.py` (esquema y carga).
-Tests: `ai/tests/test_assistant_cases.py`, sin base de datos ni modelo.
+| Conjunto (`--cases`) | Archivo | Casos | Para qué |
+|---|---|---|---|
+| `base` (por defecto) | `assistant_cases.json` | 19 | Mirar fallos y ajustar; 5 marcados para comparar modelos rápido |
+| `validation` | `assistant_cases_validation.json` | 10 | Comprobar reglas nuevas con pedidos que el prompt no vio |
+| `holdout` | `assistant_cases_holdout.json` | 12 | Casos reservados: línea base y versión elegida, una vez |
+| `business` | `assistant_cases_business.json` | 8 | Pedidos de pequeños negocios escritos sin ver el catálogo |
+| `abstention` | `assistant_cases_abstention.json` | 8 | Necesidades parecidas a algo del catálogo pero no cubiertas |
+| `records` | `assistant_cases_records.json` | 16 | Registros, reportes y cálculos sobre datos del negocio |
+| `detection` | `assistant_cases_detection.json` | 25 | Guardar o consultar datos del negocio, con y sin pedirlo |
+| `detection-2` | `assistant_cases_detection_2.json` | 22 | Lo mismo con "llevar", "controlar" u "organizar" |
+| `test` | `assistant_cases_test.json` | 16 | **Prueba final:** se corre una sola vez |
+
+Quién escribió cada conjunto, qué había leído y para qué decisiones se usó: tabla
+"Conjuntos y su historia" en [`README.md`](README.md). Esquema y carga:
+`assistant_cases.py`. Tests: `ai/tests/test_assistant_cases.py`, sin base de datos ni modelo.
 
 ## Qué tiene un caso
 
@@ -47,7 +58,7 @@ Dos capas:
   sin necesidades → `needs_clarification`; con necesidades pero ninguna con
   repos → `no_evidence`; al menos una con repos → `ok`.
 
-## Qué hay (versión 2, 19 casos)
+## Conjunto `base` (versión 3, 19 casos)
 
 | Grupo | Casos | Qué prueba |
 |---|---|---|
@@ -65,7 +76,7 @@ corto: el asistente debería responder de forma coherente a los dos.
 
 ## Casos de validación (10 casos)
 
-Los 18 casos de arriba se usan para mirar fallos y ajustar los prompts: mejorar en ellos no
+Los 19 casos de `base` se usan para mirar fallos y ajustar los prompts: mejorar en ellos no
 prueba que una regla nueva sirva. Para eso hay un archivo aparte,
 `assistant_cases_validation.json`, con el mismo esquema y estas reglas:
 
@@ -83,7 +94,7 @@ parece a lo pedido. Los 5 siguientes prueban las limitaciones: necesidades sin h
 (que deben aparecer una sola vez) y tecnologías que el usuario nombra y no están entre los
 candidatos (el asistente no puede afirmar qué hay en el catálogo completo).
 
-Con el catálogo de 127 repos (versión 4), todas sus necesidades tienen herramienta:
+Con el catálogo de 127 repos (versión 4 del conjunto), todas sus necesidades tienen herramienta:
 ya no miden la abstención.
 
 ```bash
@@ -273,3 +284,7 @@ paso de entender no cambió desde esa corrida (`ai/assistant.py`, `ai/llm.py`,
 ```bash
 python -m pytest ai/tests/test_assistant_cases.py -v
 ```
+
+---
+
+Versión anterior de este documento: [`ASSISTANT_CASES.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/ASSISTANT_CASES.md).

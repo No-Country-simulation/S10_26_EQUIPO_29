@@ -8,10 +8,14 @@ documento.
 **Las reglas de abajo se fijaron antes de medir.** La fecha del commit que las agregó
 es anterior a la de cualquier reporte de esta medición.
 
-**Después de esta línea base:** desde el 10-nov, el asistente prioriza los candidatos de
-la categoría de cada necesidad. Las cifras de este documento describen la versión
-anterior (`ba94ef4`); el cambio y sus cifras están en
-[`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md).
+**Estado:** vigente como fuente de las cifras publicables. Describen la versión de `main` en
+`ba94ef4` (prueba final del 8 y 9-nov). Después se integraron cuatro cambios, medidos solo con
+cifras de desarrollo en sus documentos: la defensa contra prompt injection (9-nov,
+[`GUARDRAILS_DECISION.md`](GUARDRAILS_DECISION.md)), la prioridad por categoría (10-nov,
+[`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md)), los pedidos parecidos como
+ejemplo en entender (11-nov, [`DETECTION_EXAMPLES_DECISION.md`](DETECTION_EXAMPLES_DECISION.md))
+y la regla de los títulos (11-nov, [`TITLE_DECISION.md`](TITLE_DECISION.md)). Publicar el
+rendimiento con esos cambios pide una prueba final nueva, con casos nuevos.
 
 ## Conjuntos y su papel
 
@@ -43,15 +47,6 @@ en `README.md`.
    su denominador (qué casos cuenta y cuáles deja fuera) y la versión medida: commit,
    fecha del snapshot, versión del enriquecimiento, variante de texto y umbral. Las de
    desarrollo se citan como "desarrollo".
-
-## Presupuesto (Gemini, nivel gratuito: 500 llamadas por día)
-
-- Asistente en desarrollo: 43 casos × 2 llamadas × 3 corridas ≈ 260, más calentamiento.
-- Prueba final del asistente: 16 casos × 2 × 3 ≈ 100.
-- La búsqueda no llama al modelo de lenguaje.
-
-Las dos tandas se corren en días distintos de cuota si hace falta, sin cambiar nada
-entre ellas. Una corrida cortada por la cuota se repite entera.
 
 ## Resultados · desarrollo (8-nov)
 
@@ -214,3 +209,7 @@ entera está escrita sin ninguna tilde: no son palabras sueltas.
 
 Reportes: `results/search-catalog-test-embeddinggemma-300m.md`, `…-texto-base.md` y
 `results/assistant-2026-11-09-0833-test-gemini.md`.
+
+---
+
+Versión anterior de este documento: [`BASELINE_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/BASELINE_DECISION.md).
