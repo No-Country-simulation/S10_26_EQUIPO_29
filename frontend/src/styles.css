@@ -1643,7 +1643,7 @@ to{transform:translateY(-110%)}
  margin-bottom:var(--space-component-32);
  border:1px solid rgb(var(--neutral-1100-rgb) / 0.109804);
  border-radius:var(--radius-20);
- background:rgba(17,21,27,.55);
+ background:linear-gradient(90deg,color-mix(in srgb,var(--button-brand) 25%,transparent),transparent),rgba(17,21,27,.55);
  -webkit-backdrop-filter:blur(12px);
  backdrop-filter:blur(12px);
 }
@@ -1672,7 +1672,7 @@ to{transform:translateY(-110%)}
 }
 
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
- .hero .hero-inner.has-architecture-header .architecture-header{background:#11151b}
+ .hero .hero-inner.has-architecture-header .architecture-header{background-color:#11151b}
 }
 
 /* Reset only the assistant surfaces; the live background keeps running. */

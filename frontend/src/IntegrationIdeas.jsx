@@ -9,7 +9,7 @@ export function ReviewBadge({idea}){
  if(!idea.reviewLabel)return null;
  if(!supported)return <span className="integration-review">{idea.reviewLabel}</span>;
  const Icon=Sparkles;
- return <FollowingTooltip text={reviewed?'Esta idea fue revisada por profesionales.':'Esta idea fue generada por IA y aún no ha sido revisada por profesionales.'}>
+ return <FollowingTooltip text={reviewed?'Esta idea fue revisada por profesionales.':'Esta idea fue sugerida por IA.'}>
   {trigger=><button type="button" className="integration-review" data-review={idea.reviewStatus} {...trigger}>{reviewed?<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.5 15 4l3.9.3.8 3.8L22 11l-1.7 3.5.1 3.9-3.7 1.3L14 22.5l-3.6-1.4-3.8.6-1.8-3.4-3.1-2.3 1-3.8L2.5 8.4 6 6.7l2-3.3z"/><path d="m8 12 2.5 2.5L16 9" fill="none" stroke="var(--neutral-100, #101010)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>:<Icon size={13} fill="currentColor" strokeWidth={1.2} aria-hidden="true"/>}{idea.reviewLabel}</button>}
  </FollowingTooltip>;
 }
