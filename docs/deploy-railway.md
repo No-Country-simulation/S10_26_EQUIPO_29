@@ -64,10 +64,11 @@ La configuración vive en Railway (los `railway.toml` no se usan: Railway ya no 
 | Servicio | Construcción | Healthcheck | Memoria máx. | Variables |
 |---|---|---|---|---|
 | frontend | `frontend/Dockerfile` | `/` | 0,5 GB | `NEXT_PUBLIC_CATALOG_API_BASE_URL`, `NEXT_PUBLIC_ASSISTANT_API_BASE_URL`, `NEXT_PUBLIC_MOCK_MODE` |
-| backend | `backend/Dockerfile` | `/health` | 1 GB | `DATABASE_URL` (lector `openbridge_api_reader`), `CORS_ORIGINS` |
+| backend | `backend/Dockerfile` | `/health` | 1 GB | `DATABASE_URL` (lector `openbridge_api_reader`), `CORS_ORIGINS`, `HEALTH_SCORE_ENABLED=true` |
 | ai | `ai/Dockerfile`, volumen en `/data/huggingface` | `/health` (300 s) | 3 GB | `AI_READER_DATABASE_URL`, `AI_CATALOG_SOURCE`, `AI_LLM_PROVIDER`, `GEMINI_API_KEY`, `HF_TOKEN`, `AI_CORS_ORIGINS` |
 
 - Las URLs `NEXT_PUBLIC_*` se escriben en el JavaScript al compilar: si cambia un dominio, el frontend se vuelve a construir.
 - `CORS_ORIGINS` y `AI_CORS_ORIGINS` llevan el dominio del frontend sin `/` final.
+- `HEALTH_SCORE_ENABLED=true` publica el puntaje de salud de cada repositorio; sin ella la API devuelve `null` y las fichas dicen "Sin evaluar".
 - El asistente usa solo Gemini: no hay claves de respaldo configuradas.
 - La actualización diaria de los datos sigue en GitHub Actions; el asistente recoge lo publicado cada 10 minutos sin reiniciar.
