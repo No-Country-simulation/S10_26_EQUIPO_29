@@ -5,6 +5,10 @@ los datos del negocio" cuente como necesidad de base de datos aunque el pedido n
 una base de datos. **Ganó en detección, pero agregó bases de datos que nadie pidió, y por
 la regla fijada antes no se integra.** El asistente queda como estaba.
 
+**Estado:** no integrada (10-nov). Reemplazada por
+[`DETECTION_EXAMPLES_DECISION.md`](DETECTION_EXAMPLES_DECISION.md) (11-nov): ejemplos
+parecidos al pedido en vez de una regla más.
+
 ## Por qué
 
 Con pedidos como "llevar un historial de las mascotas" o "controlar las existencias", el
@@ -61,19 +65,18 @@ Las bases de datos de más aparecen en las 3 corridas en cuatro pedidos: dos dic
 sus etiquetas no cuentan una base de datos; los otros dos son de más claros ("publicar
 información sobre los cursos"; "consultar los encargos asignados").
 
-## Límites y próximos pasos (con casos nuevos)
+## Qué se aprendió (y se aplicó en el reemplazo)
 
-- El criterio de las etiquetas no es uniforme: en los conjuntos más nuevos "registrar
-  datos del negocio" cuenta como base de datos y en los anteriores no siempre. Unificarlo
-  antes de la próxima medición.
-- Los pedidos de `detection` dicen sobre todo "registrar" o "guardar" y ya se detectaban
-  en un 83 %; las formas difíciles ("llevar", "controlar", "organizar") están en
-  `business`. Un conjunto nuevo debería incluirlas.
-- Variantes posibles: un ejemplo negativo más cercano a los casos de más; pedir al
-  usuario que confirme las necesidades dudosas; ejemplos elegidos por parecido con el
-  pedido en vez de fijos.
-- La regla de "no empeorar" en conjuntos sin ningún caso de más (base 0) se rompe con un
-  solo caso: la próxima vez, fijar un margen por conjunto antes de correr.
+- El criterio de las etiquetas no era uniforme: "registrar datos del negocio" contaba como
+  base de datos en unos conjuntos y en otros no. Desde el 11-nov los conjuntos de desarrollo
+  siguen [`LABEL_CRITERIA.md`](LABEL_CRITERIA.md).
+- Los pedidos de `detection` dicen sobre todo "registrar" o "guardar" y ya se detectaban en
+  un 83 %; las formas difíciles ("llevar", "controlar", "organizar") están en `business`. El
+  banco de ejemplos y los casos nuevos del reemplazo se pidieron con esa variedad.
+- Una frase fija no escala: cada tipo de necesidad difícil pediría otra. Ejemplos elegidos
+  por parecido con el pedido crecen con un banco de pedidos etiquetados.
+- Con cero casos de más en la línea base, uno solo parece una regresión: el reemplazo fijó
+  el margen antes de medir.
 
 Reportes: `results/understand-2026-11-10-0234-detection-gemini.md`, `…-0236-business-…`,
 `…-0241-records-…`, `…-0244-validation-…`, `…-0248-holdout-…`, `…-0250-abstention-…`
@@ -81,3 +84,7 @@ Reportes: `results/understand-2026-11-10-0234-detection-gemini.md`, `…-0236-bu
 `…-0333-validation-…`, `…-0337-holdout-…`, `…-0341-abstention-…` (después). Como dato,
 una corrida completa de `detection` con la frase: `results/assistant-2026-11-10-0312-detection-gemini.md`
 (8 de 75 ejecuciones con tiempo agotado de Gemini al generar).
+
+---
+
+Versión anterior de este documento: [`DETECTION_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/DETECTION_DECISION.md).

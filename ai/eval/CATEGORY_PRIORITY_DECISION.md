@@ -1,5 +1,8 @@
 # Prioridad por categoría en los candidatos: decisión y evidencia
 
+**Estado:** integrada (10-nov). Cifras de desarrollo; el rendimiento publicable de
+[`BASELINE_DECISION.md`](BASELINE_DECISION.md) describe la versión anterior (`ba94ef4`).
+
 Qué cambia: para cada necesidad, el asistente busca primero entre los repos cuya
 categoría principal es la de la necesidad. Si esos no llenan los 5 lugares (o no pasan
 el umbral), se completa con la búsqueda abierta. El umbral y el juicio del modelo sobre
@@ -112,3 +115,7 @@ Reportes: `results/assistant-2026-11-10-0011-records-gemini.md`, `…-0017-abste
 `…-0024-holdout-…`, `…-0031-business-…`, `…-0038-validation-…` (antes) y
 `…-0108-records-…`, `…-0114-abstention-…`, `…-0123-holdout-…`, `…-0129-business-…`,
 `…-0136-validation-…` (después).
+
+---
+
+Versión anterior de este documento: [`CATEGORY_PRIORITY_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/CATEGORY_PRIORITY_DECISION.md).
