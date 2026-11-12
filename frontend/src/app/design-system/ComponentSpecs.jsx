@@ -1,7 +1,12 @@
 'use client';
 const anatomy={
  buttons:'Etiqueta, icono opcional, área interactiva, indicador de foco.',
- filters:'Buscador, apertura del panel, categorías, cuatro selectores, limpiar filtros.',
+ filters:'Icono de búsqueda, campo de texto y botón para borrar.',
+ 'filter-toggle':'Icono, etiqueta y contador opcional.',
+ 'filter-select':'Etiqueta, valor seleccionado, indicador y menú de opciones.',
+ 'category-chips':'Etiqueta, superficie de color e indicador de selección.',
+ tags:'Texto y superficie; contador adicional cuando corresponde.',
+ 'status-labels':'Icono, texto, color semántico y tooltip en revisión.',
  pagination:'Anterior, páginas numeradas, separador de rango, siguiente.',
  tooltip:'Disparador, portal, superficie, texto, posición ajustada al viewport.',
  card:'Identidad y owner/repo, categorías, descripción, salud y lenguaje, métricas, acciones.',

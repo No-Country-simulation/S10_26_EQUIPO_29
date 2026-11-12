@@ -43,10 +43,10 @@ export const Catalog=memo(function Catalog({onOpen,phase}){
  },[displayed,pagination.items]);
  usePageReveal([phase,filters,...displayed.map(t=>t.id)].join('|'));
  return ( <div className="catalog-shell"><div className="wrap">
- <section className="catalog" id="catalogo"><div className="section-top"><div><RevealHeading text="Explora más de 1000+ herramientas Open Source"/></div></div>
+ <section className="catalog" id="catalogo"><div className="section-top"><div><RevealHeading text="Encuentra las herramientas para tu próximo proyecto"/></div></div>
  <CatalogFilters state={state} count={filtered.length}/>
  {status==='loading'&&<CatalogSkeleton/>}
- {status==='error'&&<div className="catalog-error" role="alert"><DotSadFace/><p>{interfaceErrors.catalog}</p><button className="ui-button ui-button--secondary" onClick={retry}>{errorActions.retry}</button></div>}
+ {status==='error'&&<div className="catalog-error" role="alert"><DotSadFace variant="unavailable"/><p>{interfaceErrors.catalog}</p><button className="ui-button ui-button--secondary" onClick={retry}>{errorActions.retry}</button></div>}
  {status!=='loading'&&<div ref={gridRef} className="grid catalog-results" tabIndex={-1} aria-label={`Herramientas, página ${pagination.page} de ${pagination.pages}`}>{displayed.map(tool=><ToolCard key={tool.id} tool={tool} onOpen={onOpen}/>)}</div>}
  {status==='ready'&&filtered.length===0&&displayed.length===0&&<div className="catalog-error catalog-empty" role="status"><DotSadFace/><p>No encontramos coincidencias</p><button onClick={clear} className="ui-button ui-button--primary">Ver todas las herramientas</button></div>}
  {status==='ready'&&filtered.length>0&&<>

@@ -15,7 +15,7 @@ function trackBorder(event){
  node.style.setProperty('--glare-x',`${event.clientX-rect.left}px`);
  node.style.setProperty('--glare-y',`${event.clientY-rect.top}px`);
 }
-function ToolRecommendation({component,index=0}){
+export function ToolRecommendation({component,index=0}){
  const [expanded,setExpanded]=useState(false);
  const rationaleId=useId();
  const rationaleRef=useRef(null);
@@ -47,7 +47,7 @@ function ToolRecommendation({component,index=0}){
   </div>
  </li>;
 }
-function Endpoint({component}){
+export function Endpoint({component}){
  const {tools}=useCatalogData();
  const tool=resolveComponentTool(component,tools);
  const identity=useBrandIdentity(tool??{name:component.label});
@@ -56,9 +56,17 @@ function Endpoint({component}){
   {trigger=><button type="button" className="connection-node" onPointerMove={trackBorder} {...trigger} style={{'--node-start':identity.palette.start,'--node-end':identity.palette.end}}><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></button>}
  </FollowingTooltip>;
 }
+export function ProposalTabList({value,onChange,toolsCount=0,connectionsCount=0,prefix='proposal'}){
+ const tabs=useRef([]);
+ const select=index=>{onChange(index===0?'tools':'connections');tabs.current[index]?.focus();};
+ const onKeyDown=event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();select(event.key==='Home'?0:event.key==='End'?1:value==='tools'?1:0);}};
+ return <div className="proposal-toolbar"><div role="tablist" data-active={value} aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
+ {[['tools','Herramientas',toolsCount,Layers3],['connections','Conexiones',connectionsCount,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={prefix+'-tab-'+key} type="button" role="tab" aria-selected={value===key} aria-controls={prefix+'-panel-'+key} tabIndex={value===key?0:-1} onClick={()=>onChange(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
+ </div></div>;
+}
 export function ProposalTabs({response}){
  const [tab,setTab]=useState('tools');
- const tabs=useRef([]),panels=useRef(null),panelHeight=useRef(null),heightMotion=useRef(null);
+ const panels=useRef(null),panelHeight=useRef(null),heightMotion=useRef(null);
  const [connectionsVisited,setConnectionsVisited]=useState(false);
  const changeTab=key=>{if(key==='connections')setConnectionsVisited(true);setTab(key);};
  useLayoutEffect(()=>{
@@ -83,14 +91,8 @@ export function ProposalTabs({response}){
  },[tab]);
  useLayoutEffect(()=>()=>heightMotion.current?.cancel(),[]);
  const connections=response.connections??[];
- const select=(index)=>{changeTab(index===0?'tools':'connections');tabs.current[index]?.focus();};
- const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};
  return <div className="proposal-tabs">
-  <div className="proposal-toolbar">
-  <div role="tablist" data-active={tab} aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
-   {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type="button" role="tab" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>changeTab(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
-  </div>
-  </div>
+  <ProposalTabList value={tab} onChange={changeTab} toolsCount={response.components.length} connectionsCount={connections.length}/>
   <div className="proposal-panels" ref={panels} data-switched={connectionsVisited||undefined}>
    <section id="proposal-panel-tools" role="tabpanel" aria-labelledby="proposal-tab-tools" hidden={tab!=='tools'} tabIndex={0}>
     <ul className="proposal-tools">{response.components.map((component,index)=><ToolRecommendation key={component.key} component={component} index={index}/>)}</ul>

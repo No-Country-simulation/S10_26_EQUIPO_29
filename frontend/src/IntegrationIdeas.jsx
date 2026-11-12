@@ -3,7 +3,7 @@ import {FollowingTooltip} from './FollowingTooltip';
 import {ArrowUpRight,ChevronDown,SignalLow,SignalMedium,SignalHigh,Sparkles} from 'lucide-react';
 import {Snippet} from './Snippet';
 
-function ReviewBadge({idea}){
+export function ReviewBadge({idea}){
  const reviewed=idea.reviewStatus==='reviewed';
  const supported=reviewed||idea.reviewStatus==='suggested';
  if(!idea.reviewLabel)return null;
@@ -14,6 +14,12 @@ function ReviewBadge({idea}){
  </FollowingTooltip>;
 }
 
+export function DifficultyBadge({difficulty}){
+ const level=({'Básica':'low','Intermedia':'medium','Avanzada':'high'})[difficulty];
+ const Icon=({'low':SignalLow,'medium':SignalMedium,'high':SignalHigh})[level];
+ return <span className="integration-difficulty" data-level={level}>{Icon&&<Icon size={16} strokeWidth={2} aria-hidden="true"/>}{difficulty}</span>;
+}
+
 export function IntegrationIdeas({ideas}){
  const [opened,setOpened]=useState(ideas[0]?.id??null);
  const prefix=useId();
@@ -21,8 +27,6 @@ export function IntegrationIdeas({ideas}){
  return <section className="detail-integrations integration-accordion"><h2>Ideas de integración</h2>
   {ideas.map((idea,index)=>{
    const expanded=opened===idea.id;
-   const level=({'Básica':'low','Intermedia':'medium','Avanzada':'high'})[idea.difficulty]??'unknown';
-   const LevelIcon=({low:SignalLow,medium:SignalMedium,high:SignalHigh})[level];
    const panelId=`${prefix}-panel-${index}`,headingId=`${prefix}-heading-${index}`;
    const facts=[['Stack compatible',idea.stack],['Dependencias',idea.dependencies],['Disparadores',idea.triggers]].filter(([,value])=>Array.isArray(value)?value.length:!!value);
    return <article className={'integration'+(expanded?' is-open':'')} key={idea.id}>
@@ -31,7 +35,7 @@ export function IntegrationIdeas({ideas}){
     <h3 className="integration-heading"><button id={headingId} type="button" className="integration-toggle" aria-expanded={expanded} aria-controls={panelId}>
      <span className="integration-title">{idea.title}</span>
      <span className="integration-header-field"><span>Tipo</span><span className="integration-type">{idea.type}</span></span>
-     <span className="integration-header-field"><span>Dificultad</span><span className="integration-difficulty" data-level={level}>{LevelIcon&&<LevelIcon size={16} strokeWidth={2} aria-hidden="true"/>}{idea.difficulty}</span></span>
+     <span className="integration-header-field"><span>Dificultad</span><DifficultyBadge difficulty={idea.difficulty}/></span>
      <ChevronDown size={20} className="integration-chevron" aria-hidden="true"/>
     </button></h3>
     </div>
