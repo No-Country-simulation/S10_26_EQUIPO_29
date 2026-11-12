@@ -7,6 +7,7 @@ herramientas open source, citando solo repos del catálogo.
 
 | Pregunta | Documento | Estado |
 |---|---|---|
+| Resumen para empresas: qué hace, cifras y decisiones (PDF, 10 páginas) | [`docs/documentacion-ia.pdf`](docs/documentacion-ia.pdf) | Estado al 11-nov; cifras de la prueba final del 9-nov |
 | ¿Cómo sabemos que funciona? Cifras publicables, con su versión | [`eval/BASELINE_DECISION.md`](eval/BASELINE_DECISION.md) | Prueba final del 9-nov; los cambios posteriores tienen cifras de desarrollo en sus documentos |
 | ¿Cómo se evalúa? Conjuntos, quién los escribió y para qué se usaron | [`eval/README.md`](eval/README.md) | Vigente |
 | ¿Por qué este modelo de lenguaje? | [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md) | Vigente |
@@ -120,7 +121,7 @@ desde la raíz del repo.
 | `sql/` | Tablas `ai.*` y sus permisos (`001`–`005`); consultas de verificación (`consultas/`) |
 | `data/` | Snapshot del catálogo real (`catalog/`), 20 repos de ejemplo (`repos.json`, `readmes/`), banco de ejemplos de entender (`understand_examples.json`) y datos de ejemplo para las tablas (`seed/`) |
 | `eval/` | Conjuntos, scripts de evaluación y documentos de decisión; `results/` guarda un reporte por corrida |
-| `docs/img/` | Diagramas |
+| `docs/` | Documento de la IA en PDF (`documentacion-ia.pdf`) y diagramas (`img/`) |
 | `tests/` | Tests; `AI_MODEL_TESTS=1` incluye los que usan el modelo real |
 
 ### Puesta en marcha
