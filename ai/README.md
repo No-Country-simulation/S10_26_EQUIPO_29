@@ -236,6 +236,10 @@ tiene y `GET /health` lo dice (`catalog_reload_error`).
   de cada uno y cuánto tardó; `GET /health` lo muestra en `vectors`. Un número de calculados mayor
   que 0 indica que falta publicar (`refresh_ai_data --escribir`). La búsqueda sigue en memoria
   (numpy); buscar en la base con pgvector queda para cuando el catálogo crezca.
+- **Modelo en memoria:** cada 5 minutos el servicio hace un cálculo corto con el modelo, sin LLM.
+  Sin eso, tras un rato largo sin pedidos el sistema saca partes del modelo de la memoria y el
+  primer pedido las tiene que volver a leer del disco (en Railway, ~15 s). Si el vector de un
+  pedido tarda más de 2 s, el log lo dice (`vector del pedido calculado en … s`).
 
 | Ruta | Qué hace |
 |---|---|

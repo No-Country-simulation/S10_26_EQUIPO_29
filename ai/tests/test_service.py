@@ -1,5 +1,8 @@
 """Tests del servicio HTTP del asistente: sin red, sin modelo de embeddings, sin .env."""
 
+import asyncio
+import time
+from contextlib import suppress
 from pathlib import Path
 
 import pytest
@@ -251,6 +254,45 @@ def test_la_marca_no_muestra_el_host_si_falla(monkeypatch):
     with pytest.raises(RuntimeError) as err:
         read_marker()
     assert "no se pudo consultar" in str(err.value) and "servidor-secreto" not in str(err.value)
+
+
+def test_mantener_el_modelo_repite_el_calculo_y_sigue_si_falla(caplog):
+    calls = []
+
+    def touch():
+        calls.append(1)
+        if len(calls) == 1:
+            raise RuntimeError("falla de prueba")
+
+    async def run():
+        task = asyncio.create_task(service_app.keep_warm(touch, minutes=0.0005))  # 0,03 s
+        try:
+            for _ in range(200):
+                if len(calls) >= 2:
+                    break
+                await asyncio.sleep(0.01)
+        finally:
+            task.cancel()
+            with suppress(asyncio.CancelledError):
+                await task
+
+    asyncio.run(run())
+    assert len(calls) >= 2                        # siguió después de la falla
+    assert "falla de prueba" in caplog.text
+
+
+def test_el_arranque_programa_el_calculo_que_mantiene_el_modelo(monkeypatch):
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    calls = []
+    app = create_app(load=fake_catalog, settings=Settings(cors_origins=(FRONTEND,)),
+                     warm=lambda: calls.append(1), warm_minutes=0.0005)
+    with TestClient(app):
+        for _ in range(100):
+            if calls:
+                break
+            time.sleep(0.02)
+    assert calls
 
 
 def test_intervalo_de_recarga_desde_el_entorno(monkeypatch):
