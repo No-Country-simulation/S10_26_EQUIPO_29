@@ -57,6 +57,24 @@ def test_similar_devuelve_los_k_mas_parecidos_en_orden(monkeypatch):
         examples._bank_vectors.cache_clear()
 
 
+def test_preload_calcula_el_banco_una_vez_y_similar_lo_reutiliza(monkeypatch):
+    calls = []                                    # cuántos textos recibe cada llamada al modelo
+
+    def fake_embed(texts):
+        calls.append(len(texts))
+        return np.ones((len(texts), 3))
+
+    monkeypatch.setattr(embeddings, "embed_similar", fake_embed)
+    examples._bank_vectors.cache_clear()
+    try:
+        examples.preload()                        # arranque: el banco completo
+        SIMILAR("un pedido nuevo", 2)             # primer pedido: solo su propio vector
+        examples.preload()                        # una recarga del catálogo: nada nuevo
+        assert calls == [len(BANK), 1]
+    finally:
+        examples._bank_vectors.cache_clear()
+
+
 # --- Con el modelo real (AI_MODEL_TESTS=1) ---
 
 model_tests = pytest.mark.skipif(

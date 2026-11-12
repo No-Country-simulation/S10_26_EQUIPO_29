@@ -228,8 +228,9 @@ nunca del servicio (lo comprueba un test). Se levanta desde la raíz del repo:
 python -m uvicorn ai.service.app:create_app --factory --port 8001
 ```
 
-Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
-dónde salió el catálogo y la cadena de proveedores
+Al arrancar carga el catálogo, el modelo de embeddings, los vectores del banco de ejemplos de
+entender (unos 4 s en una laptop; si no, los pagaría el primer pedido dentro de su presupuesto) y
+el índice, y muestra de dónde salió el catálogo y la cadena de proveedores
 (`listo: 127 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
 hasta terminar. Con la base, revisa cada `AI_CATALOG_RELOAD_MINUTES` minutos (10 por defecto;
 0 = solo al arrancar) si se publicó algo nuevo y, si es así, recarga el catálogo sin reiniciar:
