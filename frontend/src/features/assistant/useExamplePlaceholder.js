@@ -33,6 +33,12 @@ export function useExamplePlaceholder(paused, input) {
   }
   function restart() {
    window.clearTimeout(timeout);
+   if(paused){
+    const example=promptExamples[state.index];
+    state.length=example.length;
+    state.deleting=true;
+    setPlaceholder({text:example,example});
+   }
    if (!paused && visible && !document.hidden && !motion.matches) timeout = window.setTimeout(tick, exampleReadDelay);
   }
   const observer = new IntersectionObserver(([entry]) => {
