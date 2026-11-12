@@ -60,3 +60,16 @@ Sonnet es mejor en todos los criterios, pero por 1 repo en cada uno: por la regl
   Con la misma entrada, un repo pasó de 3 casos de uso a 1. Comparar 4.000 contra 8.000
   caracteres de README no dio diferencias distinguibles del ruido: se eligió 8.000 por razonamiento
   (50 de los 100 README pasan de 4.000 caracteres).
+
+## Límites conocidos
+
+- Entre corridas, Gemini cambia la categoría principal en 1 de cada 16 repos aproximadamente.
+- En la corrida del 6-nov (versión 4 de las reglas, 100 repos), 6 repos tenían una
+  categoría dudosa frente a las notas de
+  `categories.json`: deno y linux con `dev-tools` como principal (deno es un runtime como
+  Node.js; un kernel no es una herramienta de desarrollo), flink y pytorch con `backend`,
+  celery con `backend` y alertmanager con `communication` como secundarias. No se corrigen a
+  mano: un archivo de correcciones no escala. Si hace falta más calidad: generar las
+  categorías con un modelo más capaz o revisar solo los repos que cambian entre dos corridas.
+- La cita prueba que el texto existe en el README, no que respalde el caso de uso (por ejemplo,
+  un título de sección).

@@ -58,6 +58,12 @@ La referencia v2 corrige dos errores de la v1 antes de medir la versión 5: trae
 API REST ("Exposes a Rest API", que la v1 no vio) y pgvector es una extensión de PostgreSQL a
 la que ningún tipo le encaja del todo (`sdk` pasa de requerida a admisible).
 
+## Cobertura actual (127 repos, versión 5)
+
+58 de los 127 repos tienen de 1 a 3 ideas (78 en total: `sdk`, `docker`, `rest_api`); los otros
+69 quedan sin ideas. Contado en `data/catalog/ideas.json` (versión 5 del prompt, `main` en
+`7830fd9`).
+
 ## Corrida completa (100 repos, versión 5)
 
 40 repos con ideas y 60 sin ideas (uno sin llamar al modelo). 46 ideas: 34 `sdk`, 7 `docker`,
