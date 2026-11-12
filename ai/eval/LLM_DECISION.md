@@ -1,11 +1,12 @@
 # Modelo de lenguaje del asistente: decisión y evidencia
 
-**Decisión (3-nov-2026):** el asistente usa **Gemini 3.5 Flash-Lite** como modelo principal y
-**gpt-oss-120b en Groq, con razonamiento bajo** (`groq-low`) como respaldo. Claude Haiku 5.5
-queda en el registro como opción evaluada, no por defecto.
+**Estado:** vigente. Decidido el 3-nov-2026, medido con el catálogo de 100 repos: el asistente
+usa **Gemini 3.5 Flash-Lite** como modelo principal y **gpt-oss-120b en Groq, con razonamiento
+bajo** (`groq-low`) como respaldo. Claude Haiku 5.5 queda tercero en la cadena de respaldo por
+defecto (`groq-low,claude-haiku`) y solo se usa si hay clave: es de pago.
 
-Se cambia con una variable (`AI_LLM_PROVIDER`), sin tocar el código. Cómo configurarlo:
-[`../README.md`](../README.md) → "Modelo de lenguaje".
+Se cambia con variables (`AI_LLM_PROVIDER`, `AI_LLM_FALLBACK`), sin tocar el código. Cómo
+configurarlo: [`../README.md`](../README.md#modelo-de-lenguaje).
 
 ## Qué hace el modelo en el asistente
 
@@ -108,11 +109,11 @@ se trata como respuesta inválida, con reintento.
 - Límite gratuito de Gemini 3.5 Flash-Lite: 500 consultas al modelo por día y 15 por minuto
   (leído en AI Studio). Cada pedido del asistente usa una o dos llamadas, más los reintentos.
 
-## Pendiente para la integración del servicio
+## Pendientes al cerrar esta medición (3-nov)
 
-- **Límite de tiempo total del flujo.** Hoy cada llamada tiene 15 s, pero con reintentos el peor
-  caso teórico es de ~60 s.
-- **Cambio automático al respaldo** cuando el principal falla.
+Ya resueltos en el servicio: el presupuesto de 15 s para todo el pedido y el cambio automático
+al respaldo ([`../README.md`](../README.md#modelo-de-lenguaje)). Los demás:
+
 - **Decisiones de diseño que hoy limitan a los modelos más capaces:** ¿permitir un candidato de
   otra necesidad?, ¿más de una caja por necesidad? Las dos cambian la regla de grounding o el
   contrato con el frontend.
@@ -132,3 +133,7 @@ python -m ai.eval.diagnose_latency gemini claude-compat    # dónde se va el tie
 
 Requiere las claves en `.env`. Groq espera entre pedidos por su límite por minuto: el flujo
 completo tarda unos 15 minutos.
+
+---
+
+Versión anterior de este documento: [`LLM_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/LLM_DECISION.md).

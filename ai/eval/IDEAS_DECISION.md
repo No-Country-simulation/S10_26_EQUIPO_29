@@ -4,6 +4,9 @@ Cómo se generan con el LLM las ideas de integración de la ficha (contrato `Int
 cómo se validaron y qué no resuelven. Código: `ai/ideas.py`, `ai/scripts/generate_ideas.py`.
 Medición: `ai/eval/evaluate_ideas.py` y las referencias `ideas_reference*.json`.
 
+**Estado:** vigente, con la versión 5 del prompt. La validación y la primera corrida completa
+se hicieron con el catálogo de 100 repos; la cobertura con los 127 está en "Cobertura actual".
+
 ## Qué es una idea
 
 Una forma de conectar la herramienta a una aplicación, de uno de cuatro tipos: `sdk`
@@ -64,7 +67,7 @@ la que ningún tipo le encaja del todo (`sdk` pasa de requerida a admisible).
 69 quedan sin ideas. Contado en `data/catalog/ideas.json` (versión 5 del prompt, `main` en
 `7830fd9`).
 
-## Corrida completa (100 repos, versión 5)
+## Primera corrida completa (6-nov, 100 repos, versión 5)
 
 40 repos con ideas y 60 sin ideas (uno sin llamar al modelo). 46 ideas: 34 `sdk`, 7 `docker`,
 5 `rest_api`, 0 `webhook`; 20 con snippet. El código descartó 5 (cita corta 2, tipo repetido
@@ -108,9 +111,13 @@ herramientas conserva su resumen y sus casos de uso.
 
 ## Cómo regenerar y medir
 
-    python -m ai.scripts.generate_ideas                    # los 100 repos → ai/data/catalog/ideas.json
+    python -m ai.scripts.generate_ideas                    # todo el catálogo → ai/data/catalog/ideas.json
     python -m ai.scripts.generate_ideas --repos A/B C/D --out salida.json
     python -m ai.eval.evaluate_ideas CORRIDA1.json CORRIDA2.json --out reporte.md
 
 Si cambian las reglas del prompt, sube `PROMPT_VERSION` en `ai/ideas.py`: el lote regenera
 todo. Para medir una versión nueva sin sesgo hacen falta repos que el prompt no haya visto.
+
+---
+
+Versión anterior de este documento: [`IDEAS_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/IDEAS_DECISION.md).

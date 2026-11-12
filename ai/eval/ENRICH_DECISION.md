@@ -3,6 +3,9 @@
 Qué modelo de lenguaje genera las categorías, el resumen en español y los casos de uso de
 los repos del catálogo. Reporte completo: [`results/enrich-validacion.md`](results/enrich-validacion.md).
 
+**Estado:** vigente. El modelo se eligió con 16 repos de validación cuando el catálogo tenía 100;
+hoy los 127 repos están enriquecidos con la versión 5 de las reglas (`data/catalog/enrichment.json`).
+
 ## Decisión
 
 **Gemini 3.5 Flash-Lite**, el mismo modelo principal del asistente. Gratis y reproducible por
@@ -73,3 +76,7 @@ Sonnet es mejor en todos los criterios, pero por 1 repo en cada uno: por la regl
   categorías con un modelo más capaz o revisar solo los repos que cambian entre dos corridas.
 - La cita prueba que el texto existe en el README, no que respalde el caso de uso (por ejemplo,
   un título de sección).
+
+---
+
+Versión anterior de este documento: [`ENRICH_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/ENRICH_DECISION.md).
