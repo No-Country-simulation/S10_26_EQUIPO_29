@@ -1,8 +1,8 @@
 """Servicio HTTP del asistente: POST /assistant y GET /health.
 
 Valida la pregunta con el contrato, llama a asistir() y traduce los errores a
-ErrorResponse. Lo pesado (modelo de embeddings e índice del catálogo) se carga
-una vez al arrancar, antes de aceptar pedidos.
+ErrorResponse. Lo pesado (modelo de embeddings, vectores del banco de ejemplos e índice
+del catálogo) se carga una vez al arrancar, antes de aceptar pedidos.
 
 El catálogo sale de lo publicado en la base (AI_CATALOG_SOURCE=database, por defecto) o de
 los archivos (files). Si la base falla al arrancar, usa los archivos y GET /health lo dice.
@@ -88,17 +88,25 @@ def read_catalog(settings: Settings
 
 
 def load_catalog(settings: Settings) -> Catalog:
-    """Catálogo, modelo de embeddings e índice. Tarda unos segundos."""
+    """Catálogo, modelo de embeddings, banco de ejemplos e índice. Tarda unos segundos.
+
+    En las recargas del catálogo, el modelo y el banco ya están en memoria: no se recalculan.
+    """
     from ai import embeddings           # importa torch: solo al arrancar el servicio
+    from ai import examples
     from ai.search import SearchIndex
 
     repos, stored, source, taken, reason = read_catalog(settings)
     start = time.perf_counter()
     embeddings.preload()                # las preguntas lo necesitan aunque no haya nada que calcular
     loaded = time.perf_counter()
+    examples.preload()                  # si no, el primer pedido lo calcula dentro de su presupuesto
+    ready = time.perf_counter()
     index = SearchIndex.from_repos(repos, stored=stored)
-    log.warning("modelo cargado en %.1f s; vectores: %d guardados, %d calculados (%.1f s)",
-                loaded - start, index.reused, index.computed, time.perf_counter() - loaded)
+    log.warning("modelo cargado en %.1f s; ejemplos de entender en %.1f s; "
+                "vectores: %d guardados, %d calculados (%.1f s)",
+                loaded - start, ready - loaded, index.reused, index.computed,
+                time.perf_counter() - ready)
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
                    repos=len(index.repos), embedding_model=spec.name,

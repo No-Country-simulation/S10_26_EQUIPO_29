@@ -43,8 +43,15 @@ def load_bank() -> ExampleBank:
 
 @lru_cache(maxsize=1)
 def _bank_vectors() -> np.ndarray:
-    """Se calculan la primera vez que se piden ejemplos y quedan en memoria."""
+    """Se calculan la primera vez que se piden ejemplos (o con preload) y quedan en memoria."""
     return embeddings.embed_similar([e.query for e in load_bank().examples])
+
+
+def preload() -> None:
+    """Calcula ahora los vectores del banco. El servicio lo hace al arrancar: si no, los paga el
+    primer pedido dentro de su presupuesto de tiempo (unos 4 s en una laptop, varias veces más
+    en un servidor con menos CPU)."""
+    _bank_vectors()
 
 
 def similar(request: str, k: int) -> list[Example]:
