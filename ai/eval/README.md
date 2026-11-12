@@ -1,14 +1,14 @@
-# Evaluación de la búsqueda
+# Evaluación de la IA
 
-Mide si la búsqueda semántica (`ai/search.py`) encuentra la herramienta correcta
-para cada necesidad. El asistente busca **una vez por necesidad** y el modelo de
-lenguaje elige entre los primeros resultados: lo que no llega ahí, no se puede
+Cómo se mide la IA: qué conjuntos hay, quién los escribió, qué había leído y para qué se
+usaron, y cómo correr y leer la evaluación de la búsqueda. El asistente completo se mide con
+sus casos de prueba ([`ASSISTANT_CASES.md`](ASSISTANT_CASES.md)). Las cifras vigentes, con su
+versión, están en [`BASELINE_DECISION.md`](BASELINE_DECISION.md); cada decisión, en su
+documento (índice en [`../README.md`](../README.md#documentación)).
+
+La búsqueda importa porque el asistente busca **una vez por necesidad** y el modelo de
+lenguaje elige solo entre los primeros resultados: lo que no llega ahí, no se puede
 recomendar.
-
-Esta evaluación cubre solo la búsqueda. El flujo completo del asistente se mide
-con sus casos de prueba ([`ASSISTANT_CASES.md`](ASSISTANT_CASES.md)). Por qué se
-eligieron el modelo de embeddings y el umbral, con su evidencia:
-[`SEARCH_DECISION.md`](SEARCH_DECISION.md).
 
 ## Estado actual
 
@@ -19,7 +19,6 @@ eligieron el modelo de embeddings y el umbral, con su evidencia:
 | Umbral de "sin evidencia" (`min_score`) | 0,18 (catálogo de 127 repos, 8-nov) |
 | Candidatos del asistente por necesidad | primero los de la categoría principal de la necesidad que pasan el umbral; completa con la búsqueda abierta (10-nov); detalle en [`CATEGORY_PRIORITY_DECISION.md`](CATEGORY_PRIORITY_DECISION.md) |
 | Paso de entender | recibe los 3 pedidos más parecidos del banco de ejemplos (`ai/data/understand_examples.json`), ya resueltos, desde el 11-nov; detalle en [`DETECTION_EXAMPLES_DECISION.md`](DETECTION_EXAMPLES_DECISION.md) |
-| Acierto de la búsqueda (hit@3), prueba final | 41 de 56 consultas (73 %), catálogo de 127 repos; detalle en [`BASELINE_DECISION.md`](BASELINE_DECISION.md) |
 | Golden set | `catalog` v3: 100 consultas (95 con respuesta, 5 sin respuesta), catálogo de 127 repos (snapshot del 2026-11-08) |
 
 Con 127 repos el umbral no frena las consultas sin respuesta (las 14 de desarrollo
@@ -97,6 +96,7 @@ esa decisión no se recalcula con estas etiquetas. La prueba final conserva las 
 | Asistente `holdout` | Asistente de IA, después de leer el catálogo (7-nov) | abstención (7-nov) | desarrollo |
 | Asistente `business` | Otro modelo de lenguaje sin ver el catálogo (8-nov), filtrado con reglas fijas | títulos del asistente (11-nov) | desarrollo |
 | Asistente `abstention` | Asistente de IA conociendo el catálogo de 127, sin haber visto respuestas del asistente con ese catálogo (8-nov) | regresión de los pedidos parecidos en entender y de los títulos (11-nov) | desarrollo |
+| Asistente `records` | Otro modelo de lenguaje sin ver el catálogo (10-nov); etiquetas puestas antes de correr nada | prioridad por categoría (10-nov); regresión de la regla de detección (10-nov) y de los pedidos parecidos en entender (11-nov) | desarrollo |
 | Asistente `detection` | Otro modelo de lenguaje sin ver el catálogo (10-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después | regla de detección de bases de datos (10-nov, no integrada) | desarrollo |
 | Asistente `detection-2` | Otro modelo de lenguaje (Grok 4.5) sin ver el catálogo ni el banco de ejemplos (11-nov), dos tandas filtradas con reglas fijas, sin editar; etiquetas puestas después con `LABEL_CRITERIA.md` | pedidos parecidos en entender (11-nov); títulos del asistente (11-nov) | desarrollo |
 | Búsqueda `catalog-test` | Consultas del paso de entender (Gemini, una corrida, 8-nov) para los pedidos de la prueba final | ninguna | **prueba final** |
@@ -123,7 +123,7 @@ respuesta que la búsqueda no resuelve se listan como fallos de búsqueda.
 ## Medir una mejora del texto de los repos
 
 El reporte de EmbeddingGemma es la línea base para medir cualquier cambio en el
-texto de los repos (por ejemplo, agregar categorías y un resumen en español):
+texto de los repos:
 
 1. Hacer el cambio sin tocar el golden set ni el snapshot.
 2. Correr `python -m ai.eval.run_search_eval`.
@@ -152,3 +152,7 @@ Si cambia el golden set o el snapshot, los números dejan de ser comparables.
    con su `note`. Actualizar `catalog_taken_at` y subir `version` en cada conjunto.
 4. Correr la evaluación. Si el umbral sugerido cambia, actualizar `min_score` en
    `ai/embeddings.py` y `SEARCH_DECISION.md`.
+
+---
+
+Versión anterior de este documento: [`README.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/README.md).

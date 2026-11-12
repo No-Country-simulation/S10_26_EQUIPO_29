@@ -6,6 +6,7 @@ palabras de negocio ("registrar", "llevar un historial", "controlar"), sin agreg
 necesidades que nadie pidió?
 
 **Estado:** medida e **integrada** (11-nov). Las cinco condiciones de la regla se cumplen.
+Cifras de desarrollo; el rendimiento publicable de [`BASELINE_DECISION.md`](BASELINE_DECISION.md) describe una versión anterior.
 
 ## Por qué
 
@@ -247,3 +248,7 @@ después `results/understand-2026-11-11-0610-detection-2-gemini.md`, `…-0616-g
 `…-0619-validation-…`, `…-0623-holdout-…`, `…-0625-business-…`, `…-0628-abstention-…`,
 `…-0632-records-…`, `…-0640-detection-…`,
 `results/assistant-2026-11-11-0658-detection-2-gemini.md` y `…-0704-abstention-…`.
+
+---
+
+Versión anterior de este documento: [`DETECTION_EXAMPLES_DECISION.md` en `7830fd9`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/7830fd98db22e59f2747b9187afdc66fcfb051e3/ai/eval/DETECTION_EXAMPLES_DECISION.md).
