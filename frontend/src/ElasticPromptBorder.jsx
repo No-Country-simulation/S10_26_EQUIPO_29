@@ -1,7 +1,7 @@
 import {memo,useEffect,useRef} from 'react';
 import {borderLightFrame} from './promptBorderGeometry.mjs';
 
-export const ElasticPromptBorder=memo(function ElasticPromptBorder(){
+export const ElasticPromptBorder=memo(function ElasticPromptBorder({idPrefix='prompt'}){
  const root=useRef(null);
  useEffect(()=>{
   const svg=root.current,form=svg.parentElement;
@@ -46,7 +46,7 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder(){
     light.setAttribute('gradientTransform',`translate(${gx} ${gy}) rotate(${angle}) scale(${stretch} 1) translate(${-gx} ${-gy})`);
     paths[1].style.opacity=String(strength);
    }
-   const fade=svg.querySelector('#prompt-reflection-fade');
+   const fade=svg.querySelector('#'+idPrefix+'-reflection-fade');
    const magnitude=Math.min(1,Math.hypot(sideX,side));
    const norm=Math.hypot(sideX,side)||1;
    const dx=sideX/norm,dy=side/norm;
@@ -94,12 +94,12 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder(){
     const steps=Math.ceil(Math.hypot(bx-ax,by-ay)/10);
     for(let i=1;i<steps;i++)points.push([ax+(bx-ax)*i/steps,ay+(by-ay)*i/steps,Math.cos(t),Math.sin(t)]);
    });
-   svg.querySelector('#prompt-reflection-fade').setAttribute('y1',0);
-   svg.querySelector('#prompt-reflection-fade').setAttribute('y2',h);
-   svg.querySelector('#prompt-reflection-mask').setAttribute('width',w+256);
-   svg.querySelector('#prompt-reflection-mask').setAttribute('height',h+256);
-   svg.querySelector('#prompt-reflection-mask rect').setAttribute('width',w+256);
-   svg.querySelector('#prompt-reflection-mask rect').setAttribute('height',h+256);
+   svg.querySelector('#'+idPrefix+'-reflection-fade').setAttribute('y1',0);
+   svg.querySelector('#'+idPrefix+'-reflection-fade').setAttribute('y2',h);
+   svg.querySelector('#'+idPrefix+'-reflection-mask').setAttribute('width',w+256);
+   svg.querySelector('#'+idPrefix+'-reflection-mask').setAttribute('height',h+256);
+   svg.querySelector('#'+idPrefix+'-reflection-mask rect').setAttribute('width',w+256);
+   svg.querySelector('#'+idPrefix+'-reflection-mask rect').setAttribute('height',h+256);
    svg.querySelector('clipPath path').setAttribute('d',`M-128 -128H${w+128}V${h+128}H-128Z M12 0H${w-12}Q${w} 0 ${w} 12V${h-12}Q${w} ${h} ${w-12} ${h}H12Q0 ${h} 0 ${h-12}V12Q0 0 12 0Z`);
    svg.setAttribute('viewBox',`-128 -128 ${w+256} ${h+256}`);paint();
   }
@@ -131,6 +131,6 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder(){
   form.addEventListener('pointerdown',press);form.addEventListener('focusin',focus);form.addEventListener('focusout',blur);
   document.addEventListener('visibilitychange',stop);reduced.addEventListener('change',stop);
   return()=>{disposed=true;cancelAnimationFrame(raf);observer.disconnect();form.removeEventListener('pointerdown',press);form.removeEventListener('focusin',focus);form.removeEventListener('focusout',blur);form.style.removeProperty('translate');['--prompt-glare-x','--prompt-glare-y','--prompt-glare-opacity','--submit-reflection','--submit-reflection-x','--submit-reflection-y'].forEach(key=>form.style.removeProperty(key));document.removeEventListener('pointermove',move);document.removeEventListener('pointerleave',reset);window.removeEventListener('scroll',measure);window.removeEventListener('blur',reset);document.removeEventListener('visibilitychange',stop);reduced.removeEventListener('change',stop);};
- },[]);
- return <svg ref={root} className="elastic-prompt-border" aria-hidden="true"><defs><linearGradient id="prompt-background-light" x1="50%" y1="0%" x2="50%" y2="100%"><stop stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".6"/><stop offset="1" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".15"/></linearGradient><radialGradient id="prompt-edge-light" gradientUnits="userSpaceOnUse" r="85"><stop stopColor="#ffffff"/><stop offset=".14" stopColor="var(--prompt-light-core, #ffffff)"/><stop offset=".30" stopColor="var(--prompt-light-fringe-cool, #edfaff)" stopOpacity=".85"/><stop offset=".62" stopColor="var(--prompt-light-fringe-soft, #f0edff)" stopOpacity=".45"/><stop offset=".84" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".15"/><stop offset="1" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity="0"/></radialGradient><radialGradient id="prompt-edge-spill" href="#prompt-edge-light"><stop stopColor="var(--prompt-spill-cool, #8cdff5)" stopOpacity=".85"/><stop offset=".48" stopColor="var(--prompt-spill-cool, #8cdff5)" stopOpacity=".7"/><stop offset=".76" stopColor="var(--prompt-spill-rose, #e8a9d5)" stopOpacity=".6"/><stop offset="1" stopColor="var(--prompt-spill-rose, #e8a9d5)" stopOpacity="0"/></radialGradient><clipPath id="prompt-foil-exterior" clipPathUnits="userSpaceOnUse"><path clipRule="evenodd"/></clipPath><linearGradient id="prompt-reflection-fade" gradientUnits="userSpaceOnUse" x1="0" x2="0"><stop stopColor="black"/><stop offset=".35" stopColor="black"/><stop offset="1" stopColor="black"/></linearGradient><mask id="prompt-reflection-mask" maskUnits="userSpaceOnUse" x="-128" y="-128" width="100%" height="100%"><rect x="-128" y="-128" fill="url(#prompt-reflection-fade)"/></mask></defs><path className="elastic-edge-base"/><path className="elastic-edge-light" stroke="url(#prompt-edge-light)"/><path className="elastic-edge-reflection" mask="url(#prompt-reflection-mask)" stroke="url(#prompt-edge-spill)" clipPath="url(#prompt-foil-exterior)"/><path className="elastic-edge-reflection elastic-edge-ambient" mask="url(#prompt-reflection-mask)" stroke="url(#prompt-edge-spill)" clipPath="url(#prompt-foil-exterior)"/><path className="elastic-edge-focus"/></svg>;
+ },[idPrefix]);
+ return <svg ref={root} className="elastic-prompt-border" aria-hidden="true"><defs><linearGradient id={idPrefix+'-background-light'} x1="50%" y1="0%" x2="50%" y2="100%"><stop stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".6"/><stop offset="1" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".15"/></linearGradient><radialGradient id={idPrefix+'-edge-light'} gradientUnits="userSpaceOnUse" r="85"><stop stopColor="#ffffff"/><stop offset=".14" stopColor="var(--prompt-light-core, #ffffff)"/><stop offset=".30" stopColor="var(--prompt-light-fringe-cool, #edfaff)" stopOpacity=".85"/><stop offset=".62" stopColor="var(--prompt-light-fringe-soft, #f0edff)" stopOpacity=".45"/><stop offset=".84" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity=".15"/><stop offset="1" stopColor="var(--prompt-light-color, #ffffff)" stopOpacity="0"/></radialGradient><radialGradient id={idPrefix+'-edge-spill'} href={'#'+idPrefix+'-edge-light'}><stop stopColor="var(--prompt-spill-cool, #8cdff5)" stopOpacity=".85"/><stop offset=".48" stopColor="var(--prompt-spill-cool, #8cdff5)" stopOpacity=".7"/><stop offset=".76" stopColor="var(--prompt-spill-rose, #e8a9d5)" stopOpacity=".6"/><stop offset="1" stopColor="var(--prompt-spill-rose, #e8a9d5)" stopOpacity="0"/></radialGradient><clipPath id={idPrefix+'-foil-exterior'} clipPathUnits="userSpaceOnUse"><path clipRule="evenodd"/></clipPath><linearGradient id={idPrefix+'-reflection-fade'} gradientUnits="userSpaceOnUse" x1="0" x2="0"><stop stopColor="black"/><stop offset=".35" stopColor="black"/><stop offset="1" stopColor="black"/></linearGradient><mask id={idPrefix+'-reflection-mask'} maskUnits="userSpaceOnUse" x="-128" y="-128" width="100%" height="100%"><rect x="-128" y="-128" fill={'url(#'+idPrefix+'-reflection-fade)'}/></mask></defs><path className="elastic-edge-base"/><path className="elastic-edge-light" stroke={'url(#'+idPrefix+'-edge-light)'}/><path className="elastic-edge-reflection" mask={'url(#'+idPrefix+'-reflection-mask)'} stroke={'url(#'+idPrefix+'-edge-spill)'} clipPath={'url(#'+idPrefix+'-foil-exterior)'}/><path className="elastic-edge-reflection elastic-edge-ambient" mask={'url(#'+idPrefix+'-reflection-mask)'} stroke={'url(#'+idPrefix+'-edge-spill)'} clipPath={'url(#'+idPrefix+'-foil-exterior)'}/><path className="elastic-edge-focus"/></svg>;
 });

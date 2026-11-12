@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, renameSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -7,6 +8,10 @@ import { spawnSync, spawn } from 'node:child_process';
 
 // Keep runtime dependencies and compiled assets outside cloud-managed Documents.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// Load local Next configuration before building in the temporary runtime.
+// Environment files stay in the checkout, outside published assets.
+const require = createRequire(import.meta.url);
+require('@next/env').loadEnvConfig(root);
 const key = createHash('sha256').update(root).digest('hex').slice(0, 12);
 const runtime = path.join(tmpdir(), `openbridge-preview-${key}`);
 mkdirSync(runtime, { recursive: true });

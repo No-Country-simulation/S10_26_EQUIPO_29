@@ -2,6 +2,8 @@ import {useEffect,useRef,useState,useId} from 'react';
 import {FollowingTooltip} from '../../FollowingTooltip';
 import {connectionGraph,sectionPath,connectionLabelAnchor} from './connectionLayout.mjs';
 
+export function ConnectionProtocol({label,description,ariaLabel}){return <FollowingTooltip text={description}>{trigger=><button type="button" className="connection-route-protocol" aria-label={ariaLabel} {...trigger}>{label}</button>}</FollowingTooltip>;}
+
 export function ConnectionDiagram({components,connections,Endpoint}){
  const root=useRef(null),sequence=useRef(0);
  const lightId=useId().replaceAll(':','');
@@ -58,9 +60,7 @@ export function ConnectionDiagram({components,connections,Endpoint}){
     </g>;
    })}</svg>}
    {components.filter(c=>used.has(c.key)).map(component=>{const node=positions.get(component.key);return <div key={component.key} data-layout-node={component.key} className="elk-node" style={node?{left:node.x,top:node.y}:undefined}><Endpoint component={component}/></div>;})}
-   {layout?.edges.map(edge=>{const label=edge.labels?.[0];const anchor=label&&connectionLabelAnchor(edge,label);return label&&<div className="elk-label" key={edge.id} style={{left:anchor.x,top:anchor.y,width:label.width,transform:'translate(-50%, -50%)'}}><FollowingTooltip text={edge.connection.description}>
-    {trigger=><button type="button" className="connection-route-protocol" aria-label={`${components.find(c=>c.key===edge.sources[0])?.label} hacia ${components.find(c=>c.key===edge.targets[0])?.label}: ${label.text}`} {...trigger}>{label.text}</button>}
-   </FollowingTooltip></div>;})}
+   {layout?.edges.map(edge=>{const label=edge.labels?.[0];const anchor=label&&connectionLabelAnchor(edge,label);return label&&<div className="elk-label" key={edge.id} style={{left:anchor.x,top:anchor.y,width:label.width,transform:'translate(-50%, -50%)'}}><ConnectionProtocol label={label.text} description={edge.connection.description} ariaLabel={`${components.find(c=>c.key===edge.sources[0])?.label} hacia ${components.find(c=>c.key===edge.targets[0])?.label}: ${label.text}`}/></div>;})}
    {failed&&connections.map((c,i)=><p key={i}>{components.find(n=>n.key===c.from_key)?.label} → {components.find(n=>n.key===c.to_key)?.label}{c.protocol?` · ${c.protocol}`:''}{c.description?`: ${c.description}`:''}</p>)}
   </div>
   </div>

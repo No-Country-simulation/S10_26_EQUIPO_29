@@ -990,7 +990,7 @@ to{background-position:100%}
 .prompt-heading-result{font-family:DM Sans Variable,system-ui,sans-serif}
 .assistant-heading-content{justify-content:center;align-items:center;gap:var(--space-component-14);max-width:100%;display:inline-flex}
 .assistant-heading-copy{animation:assistant-copy-in .2s both;display:inline-block}
-.assistant-light-loader{background:conic-gradient(rgb(var(--neutral-000-rgb) / 0.000000) 10%,#39f5 48%,#39f 72%,#8deaff 88%,#effaff 96%,rgb(var(--neutral-000-rgb) / 0.000000));border-radius:var(--radius-50percent);flex:0 0 30px;width:30px;height:30px;animation:assistant-light-turn 1.8s linear infinite;display:none;-webkit-mask:radial-gradient(farthest-side,rgb(var(--neutral-000-rgb) / 0.000000) calc(100% - 3px),var(--neutral-000) calc(100% - 2px));mask:radial-gradient(farthest-side,rgb(var(--neutral-000-rgb) / 0.000000) calc(100% - 3px),var(--neutral-000) calc(100% - 2px))}
+.assistant-light-loader{background:conic-gradient(transparent 10%,#74bdf0 48%,#8cdbea 65%,#b5e7f7 78%,#acbaf0 88%,#b7a0e8 96%,transparent);border-radius:var(--radius-50percent);flex:0 0 .7em;width:.7em;height:.7em;animation:assistant-light-turn .9s linear infinite;display:none;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - .055em),var(--neutral-000) calc(100% - .04em));mask:radial-gradient(farthest-side,transparent calc(100% - .055em),var(--neutral-000) calc(100% - .04em))}
 .is-pending .assistant-light-loader{display:block}
 .submit-symbol.is-pending{opacity:.45}
 .has-request-error .intro-initial,.has-request-error .prompt-heading-initial{opacity:0;pointer-events:none}
@@ -1018,7 +1018,7 @@ to{opacity:1;translate:0}
 .prompt-suggestions.is-hidden{opacity:0;pointer-events:none;grid-template-rows:0fr}
 .prompt-suggestions-clip{min-height:0;overflow:hidden}
 .prompt-suggestions-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-component-12);max-width:804px;margin:auto;padding:var(--space-component-24) var(--space-component-24) 144px}
-.prompt-suggestions-label{grid-column:1/-1;margin:0 0 var(--space-component-4);color:#aeb6c4;font-size:var(--type-size-13);font-weight:var(--type-weight-400);line-height:var(--type-leading-1-5)}
+.prompt-suggestions-label{grid-column:1/-1;margin:0 0 var(--space-component-4);color:var(--neutral-700);text-align:center;font-size:var(--type-size-17);font-weight:var(--type-weight-300);line-height:var(--type-leading-1-6)}
 .prompt-suggestion{text-align:left;color:#d0d5df;background:rgb(255 255 255 / 2%);border:0;border-radius:var(--radius-20);display:grid;grid-template-columns:minmax(0,1fr) 18px;grid-template-rows:auto 1fr;align-content:start;align-items:start;column-gap:var(--space-component-12);row-gap:var(--space-component-10);width:100%;min-width:0;padding:var(--space-component-20) var(--space-component-24);font-size:var(--type-size-14);font-weight:var(--type-weight-400);line-height:var(--type-leading-1-5);position:relative;transition:background-color .24s cubic-bezier(.22,1,.36,1),color .24s cubic-bezier(.22,1,.36,1)}
 .prompt-suggestion-title{font-weight:var(--type-weight-500);line-height:var(--type-leading-1-4)}
 .prompt-suggestion-summary{grid-column:1/-1;color:#aeb6c4;font-size:var(--type-size-13);line-height:var(--type-leading-1-5)}
@@ -1372,7 +1372,7 @@ to{transform:translateY(0)}
 .tool-modal-frame .detail-health h2{margin-bottom:0;font-size:var(--type-size-15)}
 .tool-modal-frame .detail-metrics dl>div{padding:var(--space-component-12) 0;font-size:var(--type-size-14);line-height:var(--type-leading-1-5)}
 .tool-modal-frame .detail-metrics dt{color:#adb1bb}
-@media (max-width:640px){.catalog .section-top h2{font-size:var(--type-size-22)}
+@media (max-width:640px){.catalog .section-top h2{font-size:var(--type-size-22)}.prompt-suggestions-label{font-size:var(--type-size-16)}
 .hero .intro-initial{font-size:var(--type-size-16)}
 .hero .prompt-intro{margin-bottom:var(--space-component-24)}
 .tool-modal-frame .detail-overview{gap:var(--space-component-24)}
@@ -1758,3 +1758,12 @@ html[data-architecture-reset] .prompt-input-wrap,html[data-architecture-reset] .
 
 .assistant-timeout-action{display:flex;justify-content:center;margin-block:var(--space-component-24);animation:proposal-content-reveal 360ms cubic-bezier(.22,1,.36,1) both}
 @media(prefers-reduced-motion:reduce){.assistant-timeout-action{animation:none}}
+
+.assistant-state-face{display:flex;justify-content:center;margin-bottom:0;animation:assistant-copy-in .2s both}
+@media(prefers-reduced-motion:reduce){.assistant-state-face{animation:none}}
+
+/* An expanded disclosure retains the existing white action surface. */
+.filter-button[aria-expanded=true]{--action-bg:var(--neutral-1100);--action-color:var(--neutral-100);--action-border:var(--neutral-1100)}
+@media(forced-colors:active){.filter-button[aria-expanded=true]{outline:2px solid Highlight;outline-offset:3px}}
+
+.hero .hero-inner.has-architecture-header .stack-layers-panel>.architecture-header{margin-top:var(--space-component-32)}

@@ -23,8 +23,25 @@ for(const center of [112,208]){
  }
 }
 dizzyDots.push(...dots.filter(dot=>dot.y>=170));
+// Unavailable services keep the same dotted material and sad mouth.
+const unavailableDots=[];
+for(const center of [112,208]){
+ for(let y=-21;y<=21;y+=6){
+  for(let x=-21;x<=21;x+=6){
+   if(Math.abs(Math.abs(x)-Math.abs(y))<=6)unavailableDots.push({x:center+x,y:120+y});
+  }
+ }
+}
+unavailableDots.push(...dots.filter(dot=>dot.y>=170));
+// A short rounded tongue hangs from the right side of the frown.
+for(let y=207;y<=225;y+=6){
+ for(const x of [200,206,218,224])unavailableDots.push({x,y});
+}
+for(let angle=0;angle<=Math.PI;angle+=Math.PI/7){
+ for(const radius of [6,12])unavailableDots.push({x:212+Math.cos(angle)*radius,y:225+Math.sin(angle)*radius});
+}
 export function DotSadFace({variant='sad'}){
- const points=variant==='dizzy'?dizzyDots:dots;
+ const points=variant==='unavailable'?unavailableDots:variant==='dizzy'?dizzyDots:dots;
  return <svg className="catalog-error-face dot-sad-face" viewBox="0 0 320 320" width="320" height="320" aria-hidden="true" focusable="false">
   <g fill="#b9cadb" opacity=".32">{points.map((dot,i)=><circle key={i} cx={dot.x} cy={dot.y} r="1.8"/>)}</g>
   <g className="dot-face-light">{points.map((dot,i)=><circle key={i} cx={dot.x} cy={dot.y} r="1.8" style={{animationDelay:`${-6+(dot.x-84)/160*1.8+(dot.y-96)/128*.65}s`}}/>)}</g>

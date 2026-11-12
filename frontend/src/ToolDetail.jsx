@@ -50,8 +50,7 @@ export function ToolDetail({id,onBack}){
    <div id="detail-panel-about" role="tabpanel" aria-labelledby="detail-tab-about" hidden={tab!=='about'}>
    <div className="detail-overview"><section>{profile.summary&&<><h2>Acerca de {tool.name}</h2><p className="detail-summary">{profile.summary}</p></>}
 </section>
-   <aside className="detail-metrics" aria-label="Datos técnicos"><div className="detail-health"><h2>Salud del repositorio</h2><HealthScore score={detail.healthScore} demo={tool.isDemo}/></div>
-   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenimiento activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden="true"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>
+   <RepositoryMetrics tool={tool}/></div>
    </div>
    <div id="detail-panel-integrations" role="tabpanel" aria-labelledby="detail-tab-integrations" hidden={tab!=='integrations'}>
    {failed&&<div role="alert"><p>{interfaceErrors.detail}</p><button className="ui-button ui-button--secondary" onClick={()=>setAttempt(n=>n+1)}>{errorActions.retry}</button></div>}
@@ -61,3 +60,6 @@ export function ToolDetail({id,onBack}){
   <footer className="detail-drawer-footer"><div className="detail-actions">{tool.repo && <a className="ui-button ui-button--primary" href={`https://github.com/${tool.repo}`} target="_blank" rel="noopener noreferrer">Repositorio <ArrowUpRight size={16}/></a>}{profile.homepage && <a className="ui-button ui-button--secondary" href={profile.homepage} target="_blank" rel="noopener noreferrer">Sitio web <ArrowUpRight size={16}/></a>}</div></footer>
  </div>;
 }
+
+export function RepositoryMetrics({tool}){const detail=tool;return <aside className="detail-metrics" aria-label="Datos técnicos"><div className="detail-health"><h2>Salud del repositorio</h2><HealthScore score={detail.healthScore} demo={tool.isDemo}/></div>
+   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenimiento activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden="true"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside>;}
