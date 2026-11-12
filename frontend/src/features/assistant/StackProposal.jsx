@@ -3,7 +3,7 @@ import {DotSadFace,DotQuestion} from '../../DotSadFace';
 import {ProposalSkeleton} from './ProposalSkeleton';
 import {ProposalTabs} from './ProposalTabs';
 
-export function StackProposal({expanded,pending,hasResult,slow,response,originalPrompt,onNewArchitecture}){
+export function StackProposal({expanded,pending,hasResult,slow,response,originalPrompt,onNewArchitecture,resultHeader}){
  const ok=response?.status==='ok';
  const questionsRef=useRef(null);
  useLayoutEffect(()=>{
@@ -33,6 +33,7 @@ export function StackProposal({expanded,pending,hasResult,slow,response,original
  {pending&&<ProposalSkeleton/>}
  {hasResult&&ok&&<section className="stack-layers-panel" aria-label="Propuesta de arquitectura">
   <ProposalTabs key={response.id} response={response}/>
+  {resultHeader}
   <ResponseContext response={response} compact/>
   {originalPrompt&&<section className="proposal-original"><h3>Tu idea original</h3><p>{originalPrompt}</p></section>}
  </section>}
@@ -44,6 +45,6 @@ export function StackProposal({expanded,pending,hasResult,slow,response,original
  {originalPrompt&&response?.status!=='needs_clarification'&&<section className="proposal-original"><h3>Tu idea original</h3><p>{originalPrompt}</p></section>}</section>}
  </div></div></div></div>;
 }
-function ResponseContext({response}){
+export function ResponseContext({response}){
  return response&&<div className="proposal-context-open">{[["Supuestos",response.assumptions],["Limitaciones",response.limitations]].map(([title,items])=>items.length>0&&<section key={title} className={title==='Supuestos'?'context-panel context-assumptions':'context-panel context-limitations'}><h3>{title}</h3><ul>{items.map((v,i)=><li key={i} style={{'--item-reveal-delay':`${Math.min(i,6)*40}ms`}}>{v}</li>)}</ul></section>)}</div>;
 }

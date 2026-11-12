@@ -7,6 +7,7 @@ import {promptMotion} from '../../promptPresentation.mjs';
 import {StackProposal} from './StackProposal';
 import {PromptComposer} from './PromptComposer';
 import {WorkingWords} from './WorkingWords';
+import {DotSadFace} from '../../DotSadFace';
 export function Assistant({flow,workspace=false}){
  const host=useRef(null);
  useLayoutEffect(()=>{
@@ -65,13 +66,15 @@ export function Assistant({flow,workspace=false}){
   }
   return()=>animations.forEach(animation=>animation.cancel());
  },[heading,description]);
- return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')+(architectureHeader?' has-architecture-header':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
- <div className="architecture-header">
+ const header=(<div className="architecture-header">
+ {errorCopy?.retry&&!pending&&<div className="assistant-state-face" aria-hidden="true"><DotSadFace variant={['provider_unavailable','connection_error'].includes(error)?'unavailable':'sad'}/></div>}
  <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={headerActive}><RevealHeading as="h1" text="De tu idea a tu stack" gradientWord="stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!headerActive}><span className={'assistant-heading-content'+(pending?' is-pending':'')}><span className="assistant-light-loader" aria-hidden="true"/><span key={heading} className="assistant-heading-copy">{pending?<>Preparando tu <span className="gradient-word"><span className="reveal-letter" data-glow="stack" style={{'--word-play-state':'running'}}>stack</span></span></>:heading}</span></span></h1></div>
  <div className="prompt-intro" role="status" aria-live="polite" aria-atomic="true"><p className="intro intro-initial" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id="prompt-error" className={'intro intro-result'+(pending?' intro-working':'')} aria-hidden={!headerActive}>{pending&&!slow?<WorkingWords/>:<span key={description} className="assistant-heading-copy">{description}</span>}</p></div>
- </div>
+ </div>);
+ return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')+(architectureHeader?' has-architecture-header':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
+ {!architectureHeader&&header}
  {['timeout','provider_unavailable'].includes(error)&&!pending&&<div className="assistant-timeout-action"><button type="button" className="ui-button ui-button--primary" onClick={flow.submit}>{error==='provider_unavailable'?'Volver a intentarlo':'Reintentar'}</button></div>}
- <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt} onNewArchitecture={newArchitecture}/>
+ <StackProposal resultHeader={architectureHeader?header:null} expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt} onNewArchitecture={newArchitecture}/>
 
  <PromptComposer {...flow} workspace={workspace} exampleReveal={exampleReveal}/>
 
