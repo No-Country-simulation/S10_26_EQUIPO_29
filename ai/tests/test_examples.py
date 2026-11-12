@@ -75,6 +75,17 @@ def test_preload_calcula_el_banco_una_vez_y_similar_lo_reutiliza(monkeypatch):
         examples._bank_vectors.cache_clear()
 
 
+def test_similar_avisa_en_el_log_si_el_calculo_es_lento(monkeypatch, caplog):
+    monkeypatch.setattr(embeddings, "embed_similar", lambda texts: np.ones((len(texts), 3)))
+    monkeypatch.setattr(examples, "SLOW_SECONDS", -1.0)   # cualquier tiempo cuenta como lento
+    examples._bank_vectors.cache_clear()
+    try:
+        SIMILAR("un pedido nuevo", 1)
+    finally:
+        examples._bank_vectors.cache_clear()
+    assert "vector del pedido calculado en" in caplog.text
+
+
 # --- Con el modelo real (AI_MODEL_TESTS=1) ---
 
 model_tests = pytest.mark.skipif(
