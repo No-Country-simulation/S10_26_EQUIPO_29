@@ -81,10 +81,14 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder({idPrefix='pr
   function start(){if(!raf)raf=requestAnimationFrame(tick);}
   function reset(){tx=ty=target=0;start();}
   function measure(){
-   const box=form.getBoundingClientRect();rect={left:box.left-x,top:box.top-y,width:box.width,height:box.height};
+   const box=form.getBoundingClientRect();
+   // SVG geometry uses layout pixels; catalog depth scales the entire form visually.
+   const w=form.offsetWidth,h=form.offsetHeight;
+   const scaleX=box.width/w||1,scaleY=box.height/h||1;
+   rect={width:w,height:h};
    const button=form.querySelector('.prompt-submit')?.getBoundingClientRect();
-   buttonBox=button?{x:button.left-box.left,y:button.top-box.top,width:button.width,height:button.height}:null;
-   const w=box.width,h=box.height,r=12;points=[];
+   buttonBox=button?{x:(button.left-box.left)/scaleX,y:(button.top-box.top)/scaleY,width:button.width/scaleX,height:button.height/scaleY}:null;
+   const r=12;points=[];
    // Clockwise rounded contour; outward normals deform only the nearby edge.
    const corners=[[w-r,r,-90],[w-r,h-r,0],[r,h-r,90],[r,r,180]];
    corners.forEach(([ox,oy,angle],index)=>{
@@ -106,7 +110,9 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder({idPrefix='pr
   function move(e){
    if(releasing||form.contains(document.activeElement)||e.pointerType==='touch'||reduced.matches||!fine.matches||document.hidden)return;
    if(!rect)return;
-   cx=e.clientX-rect.left;cy=e.clientY-rect.top;
+   const box=form.getBoundingClientRect();
+   cx=(e.clientX-box.left)*(rect.width/box.width);
+   cy=(e.clientY-box.top)*(rect.height/box.height);
    const outside=Math.hypot(Math.max(0,-cx,cx-rect.width),Math.max(0,-cy,cy-rect.height));
    target=Math.max(0,1-outside/90);
    tx=0;
@@ -123,7 +129,11 @@ export const ElasticPromptBorder=memo(function ElasticPromptBorder({idPrefix='pr
   }
   function press(e){
    if(e.target.tagName!=='TEXTAREA')return;
-   if(rect){cx=e.clientX-rect.left;cy=e.clientY-rect.top;}
+   if(rect){
+    const box=form.getBoundingClientRect();
+    cx=(e.clientX-box.left)*(rect.width/box.width);
+    cy=(e.clientY-box.top)*(rect.height/box.height);
+   }
    if(!form.contains(document.activeElement))return;
   }
   function focus(e){if(!form.contains(e.relatedTarget))activate();}
