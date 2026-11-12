@@ -42,7 +42,7 @@ AI_PUBLIC_URL=https://openbridge-ai.up.railway.app \
 python scripts/smoke_test_deploy.py
 ```
 
-2. Pedido de calentamiento (1 llamada a Gemini). El primer pedido después de arrancar el asistente puede pasar del límite de 20 s; los siguientes tardan ~5 s.
+2. Opcional: un pedido real al asistente (1 llamada a Gemini; ~3–9 s). No hace falta calentarlo: el asistente prepara todo al arrancar y Railway no le manda tráfico hasta que `/health` responde.
 
 ```bash
 curl -s -o /dev/null -w "%{http_code} %{time_total}s\n" -X POST https://openbridge-ai.up.railway.app/assistant -H "Content-Type: application/json" -d '{"query":"Una clinica dental quiere cobrar las citas con tarjeta en linea y enviar recordatorios por SMS a sus pacientes."}'
@@ -53,7 +53,8 @@ Desde Git Bash en Windows, escribir las preguntas sin tildes ni `ñ`.
 ## Apagar y prender
 
 - **Apagar:** en cada servicio, Deployments → menú ⋮ del despliegue activo → **Remove**. Se conservan la configuración, las variables, los dominios y el volumen del modelo.
-- **Prender:** en cada servicio, Deployments → menú ⋮ del último despliegue → **Redeploy**. Después, prueba de humo y pedido de calentamiento.
+- **Prender:** en cada servicio, Deployments → menú ⋮ del último despliegue → **Redeploy**. Después, prueba de humo.
+- **Restart** (menú ⋮ del despliegue activo) reinicia el servicio en su lugar: mientras arranca no responde (502). El asistente tarda ~35 s en arrancar. Un **Redeploy**, en cambio, mantiene el despliegue anterior hasta que el nuevo pasa el healthcheck.
 
 Costo aproximado: prendido ~0,75 US$/día (casi todo es la RAM del asistente, ~2 GB); apagado, solo el volumen (centavos al mes).
 
@@ -65,10 +66,11 @@ La configuración vive en Railway (los `railway.toml` no se usan: Railway ya no 
 |---|---|---|---|---|
 | frontend | `frontend/Dockerfile` | `/` | 0,5 GB | `NEXT_PUBLIC_CATALOG_API_BASE_URL`, `NEXT_PUBLIC_ASSISTANT_API_BASE_URL`, `NEXT_PUBLIC_MOCK_MODE` |
 | backend | `backend/Dockerfile` | `/health` | 1 GB | `DATABASE_URL` (lector `openbridge_api_reader`), `CORS_ORIGINS`, `HEALTH_SCORE_ENABLED=true` |
-| ai | `ai/Dockerfile`, volumen en `/data/huggingface` | `/health` (300 s) | 3 GB | `AI_READER_DATABASE_URL`, `AI_CATALOG_SOURCE`, `AI_LLM_PROVIDER`, `GEMINI_API_KEY`, `HF_TOKEN`, `AI_CORS_ORIGINS` |
+| ai | `ai/Dockerfile` (fija `OMP_NUM_THREADS=4`), volumen en `/data/huggingface` | `/health` (300 s) | 3 GB | `AI_READER_DATABASE_URL`, `AI_CATALOG_SOURCE`, `AI_LLM_PROVIDER`, `GEMINI_API_KEY`, `HF_TOKEN`, `AI_CORS_ORIGINS` |
 
 - Las URLs `NEXT_PUBLIC_*` se escriben en el JavaScript al compilar: si cambia un dominio, el frontend se vuelve a construir.
 - `CORS_ORIGINS` y `AI_CORS_ORIGINS` llevan el dominio del frontend sin `/` final.
 - `HEALTH_SCORE_ENABLED=true` publica el puntaje de salud de cada repositorio; sin ella la API devuelve `null` y las fichas dicen "Sin evaluar".
 - El asistente usa solo Gemini: no hay claves de respaldo configuradas.
+- Al arrancar, el asistente carga el modelo (~14 s) y calcula los vectores del banco de ejemplos (~16 s); el log lo dice (`modelo cargado en … s; ejemplos de entender en … s`). Si el banco pasa del minuto, revisar que `OMP_NUM_THREADS` siga en el Dockerfile: el contenedor ve los 48 núcleos del servidor y su cuota es de 8.
 - La actualización diaria de los datos sigue en GitHub Actions; el asistente recoge lo publicado cada 10 minutos sin reiniciar.
