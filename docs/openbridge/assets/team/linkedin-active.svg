@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="76" viewBox="0 0 220 76" role="img" aria-labelledby="t d">
+<title id="t">LinkedIn · Ver perfil</title><desc id="d">Insignia profesional con borde luminoso que enlaza al perfil LinkedIn del integrante</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263C63"/><stop offset="1" stop-color="#101A2E"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="4"/></filter></defs>
+<rect x="4" y="8" width="212" height="60" rx="15" fill="#8D9DFF" fill-opacity=".29" filter="url(#gl)"/>
+<rect x="4" y="5" width="212" height="66" rx="15" fill="url(#g)" stroke="#91A1FF" stroke-opacity=".95" stroke-width="2"/>
+<circle cx="37" cy="38" r="22" fill="#283C6A" stroke="#91A1FF" stroke-opacity=".78"/>
+<text x="37" y="45" fill="#EBECFF" font-size="23" font-weight="800" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif">in</text>
+<text x="70" y="33" fill="#F8FEFF" font-size="17" font-weight="700" font-family="DejaVu Sans,Arial,sans-serif">LinkedIn</text>
+<text x="70" y="52" fill="#B3BBFF" font-size="10" letter-spacing="1.1" font-weight="700" font-family="DejaVu Sans,Arial,sans-serif">CONECTAR</text>
+</svg>

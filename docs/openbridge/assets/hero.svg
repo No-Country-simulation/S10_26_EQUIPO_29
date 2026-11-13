@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+<title id="title">OpenBridge - Una mejor decisión empieza con una mejor conexión</title>
+<desc id="desc">Portada azul profundo con logotipo oficial de OpenBridge proporcionado por el equipo y una ilustración conceptual de un puente entre repositorios, contexto y arquitectura.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#091226"/><stop offset="0.6" stop-color="#101B36"/><stop offset="1" stop-color="#10172B"/></linearGradient>
+ <linearGradient id="bridge" x1="0" x2="1"><stop stop-color="#8B91FF"/><stop offset=".53" stop-color="#4CDDDC"/><stop offset="1" stop-color="#9BE9E2"/></linearGradient>
+ <radialGradient id="halo"><stop stop-color="#39BFBF" stop-opacity=".21"/><stop offset="1" stop-color="#39BFBF" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="21"/></filter>
+ <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#93B4E0" opacity=".13"/></pattern>
+</defs>
+<rect width="1440" height="520" rx="28" fill="url(#bg)"/>
+<rect x="710" y="0" width="730" height="520" fill="url(#dots)" opacity=".7"/>
+<ellipse cx="1117" cy="240" rx="380" ry="310" fill="url(#halo)"/>
+<rect x="66" y="64" width="250" height="40" rx="20" fill="#5D85A7" fill-opacity=".10" stroke="#77A6CB" stroke-opacity=".32"/>
+<circle cx="91" cy="84" r="5" fill="#60E8D3"/>
+<text x="110" y="90" fill="#CBD9EF" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="1.5">NO COUNTRY  ·  2026</text>
+<g class="openbridge-logo-oficial" transform="translate(65 140) scale(1.22)"><mask id="oblogo-hero" maskUnits="userSpaceOnUse" x="0" y="0" width="474" height="78"><path fill="white" fill-rule="evenodd" d="M437,17L437,59L470,59L470,54L444,54L443,53L443,42L444,41L469,41L469,35L444,35L443,34L443,23L444,22L470,22L470,17ZM343,17L343,59L367,59L376,55L381,49L383,43L383,34L379,24L376,21L366,17ZM350,22L369,23L374,27L376,31L377,40L376,41L376,45L371,52L365,54L350,54L349,53L349,23ZM329,17L329,59L335,59L335,17ZM286,17L286,59L292,59L292,43L293,42L306,43L310,47L317,59L324,59L315,44L312,42L313,40L318,39L323,33L322,23L318,19L312,17ZM292,23L293,22L310,22L313,23L317,28L317,33L311,38L293,38L292,37ZM243,17L243,59L272,59L275,58L279,54L281,47L280,43L276,39L270,37L275,35L279,30L278,22L275,19L270,17ZM249,41L250,40L270,40L274,43L275,48L269,54L250,54L249,53ZM249,23L250,22L267,22L270,23L273,26L273,31L269,35L250,35L249,34ZM133,17L133,59L139,59L139,32L138,31L139,27L141,28L143,32L164,59L171,59L171,17L165,17L165,49L164,50L142,20L139,17ZM93,17L93,59L126,59L126,54L100,54L99,53L99,42L100,41L125,41L125,35L100,35L99,34L99,23L100,22L126,22L126,17ZM83,20L76,17L52,17L52,59L58,59L58,47L59,46L77,46L82,44L86,40L88,35L88,29L87,25ZM58,23L59,22L74,22L77,23L82,29L81,37L75,41L59,41L58,40ZM396,20L391,25L388,32L388,44L393,54L401,59L411,60L419,57L424,50L425,51L425,59L430,59L430,38L408,38L408,42L423,42L424,43L423,49L420,52L415,54L405,54L400,52L396,48L394,42L395,30L402,23L406,22L417,23L423,28L423,32L430,32L429,25L423,19L412,16L403,17ZM22,16L14,18L10,20L6,24L2,33L2,43L5,51L10,56L16,59L26,60L34,58L41,53L45,45L46,35L44,28L39,21L31,17ZM16,23L28,22L33,24L37,28L39,32L39,44L38,47L33,52L28,54L19,54L14,52L11,49L8,42L8,35L11,27ZM203,10L194,13L185,21L182,26L180,33L180,42L183,51L191,60L196,63L203,65L212,65L221,62L230,54L233,49L235,42L235,33L232,24L224,15L219,12L212,10Z"/><path fill="black" d="M214,29L213,30L219,43L225,48L227,48L228,49L233,49L234,44L230,44L226,42L223,39L221,35L221,33L219,30L219,28ZM201,29L197,28L192,39L189,42L185,44L181,44L181,46L183,50L184,49L188,49L196,43L202,30Z"/></mask><rect width="474" height="78" fill="#FFFFFF" mask="url(#oblogo-hero)"/></g>
+<text x="69" y="279" fill="#E7EEFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="29" font-weight="600">Menos búsqueda. Mejores decisiones.</text>
+<text x="69" y="329" fill="#9FB1D1" font-family="DejaVu Sans, Arial, sans-serif" font-size="21">Inteligencia open source para construir</text>
+<text x="69" y="360" fill="#9FB1D1" font-family="DejaVu Sans, Arial, sans-serif" font-size="21">soluciones con sentido.</text>
+<line x1="69" y1="422" x2="696" y2="422" stroke="#7689A5" opacity=".25"/>
+<text x="69" y="457" fill="#B1C3DE" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" letter-spacing="1">CATÁLOGO  /  DATOS  /  RECOMENDACIÓN ASISTIDA</text>
+<g opacity=".95">
+  <path d="M788 354 C895 192, 1143 189, 1340 352" fill="none" stroke="#58E5D7" stroke-width="27" stroke-opacity=".10" filter="url(#blur)"/>
+  <path d="M782 357 C895 190, 1138 189, 1343 357" fill="none" stroke="url(#bridge)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M785 357 L1344 357" stroke="#9DB5D5" stroke-opacity=".62" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M837 289 L837 357 M904 238 L904 357 M975 211 L975 357 M1046 203 L1046 357 M1118 213 L1118 357 M1188 241 L1188 357 M1257 283 L1257 357" stroke="#71C3D7" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M786 373 L1346 373" stroke="#A59DFF" stroke-opacity=".18" stroke-width="22" stroke-linecap="round"/>
+  <path d="M785 357 L1344 357" stroke="#9FB9E1" stroke-opacity=".40" stroke-width="9" stroke-linecap="round"/>
+  <path d="M785 357 L1344 357" stroke="#D9FDF6" stroke-opacity=".78" stroke-width="2" stroke-linecap="round"/>
+</g>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+ <rect x="747" y="110" width="173" height="62" rx="16" fill="#182742" stroke="#59729A" stroke-opacity=".8"/>
+ <circle cx="777" cy="141" r="9" fill="#9A8BFF"/><text x="794" y="147" fill="#E1EBFC" font-size="16" font-weight="700">REPOS</text>
+ <path d="M830 172 L864 230" stroke="#8E8AF5" stroke-width="2" stroke-dasharray="3 7"/>
+ <rect x="1005" y="74" width="178" height="62" rx="16" fill="#182742" stroke="#59729A" stroke-opacity=".8"/>
+ <circle cx="1036" cy="105" r="9" fill="#5BE1E0"/><text x="1054" y="111" fill="#E1EBFC" font-size="16" font-weight="700">CONTEXTO</text>
+ <path d="M1095 136 L1080 206" stroke="#67CEDB" stroke-width="2" stroke-dasharray="3 7"/>
+ <rect x="1198" y="160" width="204" height="62" rx="16" fill="#182742" stroke="#59729A" stroke-opacity=".8"/>
+ <circle cx="1228" cy="191" r="9" fill="#76E7C4"/><text x="1246" y="197" fill="#E1EBFC" font-size="16" font-weight="700">ARQUITECTURA</text>
+ <path d="M1290 222 L1262 287" stroke="#67CEBA" stroke-width="2" stroke-dasharray="3 7"/>
+ <rect x="891" y="394" width="348" height="49" rx="24.5" fill="#172744" stroke="#486781" stroke-opacity=".8"/>
+ <text x="1064" y="425" font-size="16" fill="#D9E7FD" text-anchor="middle" font-weight="600">De descubrir a decidir</text>
+</g>
+</svg>
