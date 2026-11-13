@@ -6,7 +6,7 @@
 
 **OPEN SOURCE DISCOVERY · AI-ASSISTED ARCHITECTURE · DEVELOPER TOOLS**
 
-**Proyecto colaborativo · No Country 2026 · Vista de presentación / versión de prueba**
+**Proyecto colaborativo · No Country 2026 · Vista de presentación**
 
 [**El desafío**](#el-desafio) · [**Producto**](#producto) · [**Arquitectura**](#arquitectura-propuesta) · [**Documentación**](#centro-de-documentacion) · [**Equipo**](#nuestro-equipo)
 
@@ -18,7 +18,8 @@
 >
 > **OpenBridge** plantea un puente entre el universo de herramientas open source y las necesidades reales de los equipos que construyen software. Descubrir, evaluar, conectar y recomendar: **menos tiempo explorando opciones dispersas; más criterio para crear productos.**
 
-## El desafio
+<a id="el-desafio"></a>
+## El desafío
 
 En el escenario definido por **No Country**, arquitectos y líderes técnicos dedican **entre 15 y 20 horas por proyecto** a investigar manualmente librerías, herramientas y servicios open source. Comparar información dispersa dificulta valorar mantenimiento, compatibilidad y posibilidades de integración.
 
@@ -26,9 +27,9 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 > **Nota metodológica:** las 15–20 horas son un dato del [brief del desafío](docs/openbridge/docs/BRIEF_OFICIAL_NO_COUNTRY_OPENBRIDGE.pdf). No representan un ahorro medido ni un resultado obtenido por el equipo.
 
-## La solucion
+## La solución
 
-| | Capacidad propuesta | Valor para quien desarrolla |
+| | Capacidad | Valor para quien desarrolla |
 |---|---|---|
 | **01** | **Catálogo inteligente** | Descubrir proyectos según categoría, lenguaje, licencia y señales de mantenimiento. |
 | **02** | **Fichas técnicas útiles** | Revisar métricas, actividad, licencias y posibilidades de uso. |
@@ -37,7 +38,7 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 **Alcance objetivo del desafío:** catálogo de al menos **100 repositorios**, filtros y búsqueda, ficha de salud del proyecto, ingesta automatizada desde GitHub y asistente con recuperación contextual (RAG).
 
-> Estas capacidades son **objetivos de desarrollo**, no funcionalidades declaradas como terminadas.
+> Las cuatro capacidades están en la versión publicada en Railway; lo que falta o tiene límites se resume en [Estado y transparencia](#estado-y-transparencia).
 
 <a id="producto"></a>
 ## Producto desplegado · Demo en Railway
@@ -46,9 +47,9 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 <div align="center">
 
-<a href="https://youtu.be/PYENf8whpNs" title="Ver el video del recorrido de OpenBridge en YouTube"><img src="docs/openbridge/assets/showcase/OpenBridge_Recorrido_Real.gif" alt="Vista previa animada del recorrido real de OpenBridge: inicio, catálogo, categorías, fichas y filtros. Hacé clic para abrir el video publicado en YouTube." width="100%" /></a>
+<a href="https://youtu.be/PYENf8whpNs" title="Ver el video del recorrido de OpenBridge en YouTube"><img src="docs/openbridge/assets/showcase/OpenBridge_Recorrido_Real.gif" alt="Vista previa de la demo de OpenBridge: un pedido al asistente, el stack propuesto, sus conexiones y límites, el catálogo, los filtros, una ficha y sus ideas de integración. Hacé clic para abrir el video completo en YouTube." width="100%" /></a>
 
-<sub>**Evidencia visual:** el GIF resume ocho momentos de una grabación real del 27/10/2026. Al tocar la imagen se abre el video de YouTube compartido por el equipo. La copia MP4 del recorrido original permanece alojada en este GitHub.</sub>
+<sub>**Evidencia visual:** el GIF resume ocho momentos del video de la demo, grabado sobre la app publicada en Railway. Al tocar la imagen se abre el video completo en YouTube (5:38).</sub>
 
 <br />
 
@@ -61,9 +62,9 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 </div>
 
-<sub>**Accesos diferenciados:** «Ver recorrido real» abre el video publicado en YouTube; «Abrir producto» lleva al frontend de Railway y «Probar asistente» apunta a la sección `#asistente` del mismo sitio. El frontend actual también inicia en esa sección, por lo que ambos botones pueden mostrar inicialmente la misma pantalla. La guía de despliegue indica que Railway puede apagarse fuera de las demostraciones. <a href="https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/deploy/docs/deploy-railway.md">Configuración oficial del deploy</a>.</sub>
+<sub>**Accesos diferenciados:** «Ver recorrido real» abre el video publicado en YouTube; «Abrir producto» lleva al frontend de Railway y «Probar asistente» apunta a la sección `#asistente` del mismo sitio. El frontend actual también inicia en esa sección, por lo que ambos botones pueden mostrar inicialmente la misma pantalla. La app está publicada en Railway. <a href="https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/deploy/docs/deploy-railway.md">Configuración oficial del deploy</a>.</sub>
 
-<sub>**Evidencia:** el GIF y el MP4 proceden de una grabación auténtica enviada por el equipo y ya están alojados en este repositorio. En ella se observan la portada, navegación, catálogo, algunas fichas y filtros; **no demuestra una respuesta completa del asistente**, ni valida la exactitud de todos los datos. El funcionamiento puede cambiar durante el desarrollo.</sub>
+<sub>**Evidencia:** el video y el GIF están grabados sobre la app real publicada en Railway: catálogo, una ficha y un pedido al asistente con su respuesta completa. Las respuestas del asistente pueden variar de un pedido a otro.</sub>
 
 ### Recorrido de producto para quien evalúa
 
@@ -75,7 +76,7 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 </tr>
 </table>
 
-**Recorrido del producto:** [Reproducir en YouTube](https://youtu.be/PYENf8whpNs) · [Copia del recorrido original en GitHub (MP4, 57 s)](docs/openbridge/assets/showcase/OpenBridge_Recorrido_Real_57s.mp4) · [Vista previa animada (GIF)](docs/openbridge/assets/showcase/OpenBridge_Recorrido_Real.gif) · [Captura estática real (PNG)](docs/openbridge/assets/showcase/OpenBridge_Portada_Real.png). El README continúa siendo el punto central de acceso, y los recursos de respaldo están dentro del repositorio. La disponibilidad y duración exacta del video en YouTube no pudieron comprobarse automáticamente. [Evidencia y límites de la grabación](docs/openbridge/docs/09_RECORRIDO_REAL_Y_VIDEO.md) · [Protocolo de grabación](docs/openbridge/docs/08_DEMO_Y_RECORRIDO.md).
+**Recorrido del producto:** [Reproducir en YouTube](https://youtu.be/PYENf8whpNs) · [Vista previa animada (GIF)](docs/openbridge/assets/showcase/OpenBridge_Recorrido_Real.gif) · [Captura estática real (PNG)](docs/openbridge/assets/showcase/OpenBridge_Portada_Real.png). El README continúa siendo el punto central de acceso, y los recursos de respaldo están dentro del repositorio. [Evidencia y límites de la grabación](docs/openbridge/docs/09_RECORRIDO_REAL_Y_VIDEO.md) · [Protocolo de grabación](docs/openbridge/docs/08_DEMO_Y_RECORRIDO.md).
 
 ### Documentación vinculada al avance
 
@@ -91,7 +92,7 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 </div>
 
-**Lectura técnica complementaria:** [Arquitectura propuesta](#arquitectura-propuesta) · [Recorrido para la demo](docs/openbridge/docs/08_DEMO_Y_RECORRIDO.md) · [Centro de documentación](#centro-de-documentacion).
+**Lectura técnica complementaria:** [Arquitectura](#arquitectura-propuesta) · [Recorrido para la demo](docs/openbridge/docs/08_DEMO_Y_RECORRIDO.md) · [Centro de documentación](#centro-de-documentacion).
 
 <sub>**Documentación centralizada:** el brief original, las evidencias y los informes están alojados en la carpeta <a href="docs/openbridge/docs/README.md"><code>docs/</code> de este repositorio</a>. El tablero operativo está en GitHub Projects de No Country y puede requerir permisos de la organización.</sub>
 
@@ -99,47 +100,20 @@ En el escenario definido por **No Country**, arquitectos y líderes técnicos de
 
 ## De una idea a una arquitectura
 
-**Ejemplo ilustrativo, no una demostración del software:**
+**Cómo responde el asistente:** el modelo de lenguaje entiende y juzga; la búsqueda semántica le trae candidatos reales del catálogo, y el código valida que todo lo recomendado exista en él.
 
-**Necesidad:** «Estoy creando un e-commerce B2B para operaciones logísticas».
-
-```text
-NECESIDAD DEL NEGOCIO
-        │
-        ▼
-CONTEXTO + REQUISITOS
-        │
-        ▼
-CATÁLOGO DE REPOSITORIOS
-        │
-        ▼
-RELEVANCIA + MANTENIMIENTO + LICENCIA
-        │
-        ▼
-STACK SUGERIDO + PATRONES DE INTEGRACIÓN
-        │
-        ▼
-EXPLICACIÓN Y REVISIÓN HUMANA
-```
+<img src="docs/openbridge/assets/diagrams/flujo-asistente.png" width="100%" alt="Flujo del asistente de OpenBridge en cinco pasos: revisar el pedido (código), entender (modelo de lenguaje), buscar (búsqueda semántica, hasta 5 candidatos), juzgar y elegir (modelo de lenguaje) y validar (código, con reintento). Si el pedido parece una orden o es vago, pide aclaración; si no encuentra nada para ninguna necesidad, responde sin evidencia; si todo sale bien, entrega el mapa del stack y las necesidades sin herramienta." />
 
 El sistema debe apoyar decisiones técnicas, no reemplazar la evaluación de seguridad, licencias, costos, soporte o compatibilidad.
 
-## Arquitectura propuesta
+<a id="arquitectura-propuesta"></a>
+## Arquitectura
 
-```mermaid
-flowchart LR
-    U["Usuario / necesidad"] --> WEB["Interfaz web"]
-    WEB --> API["Servicios / API"]
-    G["GitHub REST / GraphQL"] --> PIPE["Ingesta y normalización"]
-    PIPE --> DB[("Catálogo y metadatos")]
-    DB --> API
-    DB --> RAG["Recuperación semántica / RAG"]
-    RAG --> IA["Recomendaciones justificadas"]
-    IA --> API
-    API --> WEB
-```
+La ingesta trae los repositorios desde GitHub a PostgreSQL; la IA los enriquece con categorías, resúmenes e ideas, y el frontend consulta dos servicios: la API del catálogo y el asistente de IA.
 
-**Puntos de diseño pendientes de validar:**
+<img src="docs/openbridge/assets/diagrams/arquitectura.png" width="100%" alt="Arquitectura de OpenBridge: la ingesta trae los repositorios de GitHub y los escribe en PostgreSQL (catálogo y tablas de la IA). La IA lee una vista del catálogo y escribe categorías, resúmenes e ideas. El frontend consulta la API del catálogo para fichas y filtros, y el asistente de IA con la descripción del negocio; los dos leen de PostgreSQL." />
+
+**Puntos de diseño trabajados** (sus límites, en [Estado y transparencia](#estado-y-transparencia)):
 
 - Estrategia de sincronización y límites de las API de GitHub.
 - Modelo de indicadores de salud y actualización del repositorio.
@@ -147,8 +121,9 @@ flowchart LR
 - Estructuración de integraciones, compatibilidad y ejemplos reproducibles.
 - Contrato frontend/backend, pruebas, despliegue y seguridad.
 
-**Tecnologías:** el desafío sugiere Next.js/React, FastAPI o Node.js, PostgreSQL/pgvector o Qdrant y herramientas para RAG. **Ninguna de estas alternativas se declara aquí como tecnología implementada sin validación del equipo.**
+**Tecnologías usadas:** Next.js y React (interfaz), FastAPI (API del catálogo y servicio de IA), PostgreSQL en Supabase con pgvector para guardar los vectores, EmbeddingGemma de Hugging Face (búsqueda semántica), Gemini como modelo de lenguaje con respaldo automático si falla, y GitHub Actions (tareas programadas). Coinciden con lo que sugería el desafío.
 
+<a id="centro-de-documentacion"></a>
 ## Centro de documentación
 
 > **Acceso centralizado:** el brief original y la documentación de OpenBridge viven en la carpeta [`docs/`](docs/openbridge/docs/README.md) de **este mismo repositorio**. La gestión activa de tareas se realiza en el [GitHub Project #566 del equipo](https://github.com/orgs/No-Country-simulation/projects/566), cuyo acceso puede depender de permisos de organización.
@@ -167,13 +142,13 @@ flowchart LR
 | [**Evidencias de demo**](docs/openbridge/docs/09_RECORRIDO_REAL_Y_VIDEO.md) | Video de recorrido real, ficha de evidencia y guía de publicación. |
 | [**Repositorio oficial del equipo**](https://github.com/No-Country-simulation/S10_26_EQUIPO_29) | Código fuente, ramas y Pull Requests del desarrollo. |
 
-**Alcance de la evidencia:** ya están vinculados el repositorio oficial, la captura real del producto, el recorrido en video y el documento técnico revisado el 11/11/2026. Las pruebas consignadas corresponden a esa revisión; todavía falta verificar desde un entorno externo el despliegue, las llamadas HTTP y la ejecución efectiva de los workflows.
+**Alcance de la evidencia:** ya están vinculados el repositorio oficial, la captura real del producto, el recorrido en video y el documento técnico revisado el 11/11/2026. Las pruebas consignadas corresponden a esa revisión. Desde entonces, la app quedó publicada en Railway y los workflows programados corren en GitHub Actions.
 
 ### Integración técnica documentada
 
 La revisión del **11 de noviembre de 2026** describe dos servicios HTTP de OpenBridge: una **API FastAPI de catálogo** que consulta PostgreSQL/Supabase en lectura (puerto local `8000`) y un **servicio FastAPI de asistente con IA** (puerto local `8001`). El frontend utiliza bases HTTP independientes para el catálogo y el asistente. El endpoint `POST /assistant` del catálogo es un placeholder; la generación corresponde al servicio de IA.
 
-El informe registra **155 pruebas aprobadas** del catálogo y **596 aprobadas, con 3 omitidas**, de IA y contratos. Son resultados reportados en la revisión, **no una comprobación de disponibilidad del despliegue público**. La sincronización diaria del catálogo está configurada en modo **dry-run**; no debe presentarse como escritura automática de datos.
+El informe registra **155 pruebas aprobadas** del catálogo y **596 aprobadas, con 3 omitidas**, de IA y contratos. Son resultados reportados en la revisión, **no una comprobación de disponibilidad del despliegue público**. La sincronización diaria del catálogo prepara cada día los cambios de GitHub; publicarlos es un paso con aprobación.
 
 [**Leer la síntesis técnica y las contribuciones**](docs/openbridge/docs/11_RESUMEN_EJECUTIVO_BACKEND_IA_CONTRIBUCIONES.md) · [**Consultar el documento completo**](docs/openbridge/docs/10_BACKEND_ENTREGA_2026-11-11.md)
 
@@ -202,7 +177,7 @@ Diseño, coordinación, inteligencia artificial y datos: conocé a las personas 
 <td align="center" width="50%" valign="top">
 <img src="docs/openbridge/assets/team/fabian-card.svg" width="100%" alt="Tarjeta OpenBridge de Fabián Martínez, Frontend y UX/UI, con fotografía real en círculo y logotipo oficial" />
 <br />
-<strong>Fabián</strong><br />
+<strong>Fabián Martínez</strong><br />
 <sub>Frontend · UX/UI</sub><br /><br />
 <a href="https://github.com/fabianmartinezcaro" title="Visitar GitHub de Fabián"><img src="docs/openbridge/assets/team/github-active.svg" width="42%" alt="Abrir GitHub de Fabián" /></a>
 <a href="https://www.linkedin.com/in/fabianmartinezcaro/" title="Conectar con Fabián en LinkedIn"><img src="docs/openbridge/assets/team/linkedin-active.svg" width="42%" alt="Conectar con Fabián en LinkedIn" /></a>
@@ -212,7 +187,7 @@ Diseño, coordinación, inteligencia artificial y datos: conocé a las personas 
 <td align="center" width="50%" valign="top">
 <img src="docs/openbridge/assets/team/andres-card.svg" width="100%" alt="Tarjeta OpenBridge de Andrés Iglesias, Ingeniería de IA, con fotografía real en círculo y logotipo oficial" />
 <br />
-<strong>Andrés</strong><br />
+<strong>Andrés Iglesias</strong><br />
 <sub>Ingeniería de IA</sub><br /><br />
 <a href="https://github.com/andigles" title="Visitar GitHub de Andrés"><img src="docs/openbridge/assets/team/github-active.svg" width="42%" alt="Abrir GitHub de Andrés" /></a>
 <a href="https://www.linkedin.com/in/andigles/es" title="Conectar con Andrés en LinkedIn"><img src="docs/openbridge/assets/team/linkedin-active.svg" width="42%" alt="Conectar con Andrés en LinkedIn" /></a>
@@ -220,15 +195,13 @@ Diseño, coordinación, inteligencia artificial y datos: conocé a las personas 
 <td align="center" width="50%" valign="top">
 <img src="docs/openbridge/assets/team/jeison-card.svg" width="100%" alt="Tarjeta OpenBridge de Jeison Pinzón, Data Engineering, con avatar ilustrado provisional y logotipo oficial" />
 <br />
-<strong>Jeison</strong><br />
-<sub>Datos · Machine Learning</sub><br /><br />
+<strong>Jeison Pinzón</strong><br />
+<sub>Data Engineering</sub><br /><br />
 <a href="https://github.com/Jeisz" title="Visitar GitHub de Jeison"><img src="docs/openbridge/assets/team/github-active.svg" width="42%" alt="Abrir GitHub de Jeison" /></a>
 <a href="https://www.linkedin.com/in/jeison-zapata-gpti" title="Conectar con Jeison en LinkedIn"><img src="docs/openbridge/assets/team/linkedin-active.svg" width="42%" alt="Conectar con Jeison en LinkedIn" /></a>
 </td>
 </tr>
 </table>
-
-> **Identidad visual actualizada:** las tarjetas existentes ahora incorporan el logotipo original de OpenBridge; David, Fabián y Andrés tienen sus fotografías compartidas por el equipo, recortadas en círculos sin alterar sus rasgos. Jeison conserva un avatar provisional hasta recibir su fotografía. Los cuatro perfiles enlazan GitHub y LinkedIn; se mantienen únicamente las redes acordadas.
 
 ### Aporte destacado · Fabián Martínez
 
@@ -246,7 +219,7 @@ Diseño, coordinación, inteligencia artificial y datos: conocé a las personas 
 
 **Data Engineering e integración del catálogo.** Jeison trabajó en la extracción y normalización de información desde GitHub, la sincronización incremental y los controles de integridad del catálogo de **127 repositorios open source**. Sus contribuciones verificables también incluyen el [PR #65 sobre el contrato de fichas](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/65), el [PR #66 de la API Backend del catálogo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/66) y el [PR #117 de integración de datos](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/117), integrado en `main`.
 
-El informe de cierre recibido del equipo documenta una ejecución autorizada del **10 de noviembre de 2026**, con **127 registros actualizados, 31 README actualizados, cero inserciones y cero duplicados**, junto con **444 pruebas aprobadas** del conjunto Ingesta + Backend + Contratos. La operación de actualización de IA para **28 entradas** quedó pendiente en ese informe; su estado posterior debe confirmarse con el área de IA.
+El informe de cierre recibido del equipo documenta una ejecución autorizada del **10 de noviembre de 2026**, con **127 registros actualizados, 31 README actualizados, cero inserciones y cero duplicados**, junto con **444 pruebas aprobadas** del conjunto Ingesta + Backend + Contratos. La actualización de los datos de la IA después de esa sincronización se hizo el mismo día ([PR #115](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/115)).
 
 > **Comentario del Project Manager:** «La contribución de Jeison fue fundamental para consolidar una base de datos confiable y estructurada para OpenBridge. Destaco especialmente su compromiso con la calidad de la información, la seguridad de las operaciones y la coordinación técnica con las demás áreas. Su trabajo fortaleció la arquitectura del proyecto y permitió avanzar hacia una plataforma más sólida, mantenible y preparada para evolucionar».
 >
@@ -254,7 +227,7 @@ El informe de cierre recibido del equipo documenta una ejecución autorizada del
 
 [**Ver análisis de Data Engineering, evidencias de sincronización y PR de Jeison**](docs/openbridge/docs/12_DATA_ENGINEERING_JEISON_127_REPOSITORIOS.md).
 
-**Transparencia:** las cifras anteriores corresponden a informes y pruebas declaradas por el equipo, no a una auditoría remota ejecutada desde este README. El workflow diario del catálogo está configurado en **dry-run**, por lo que no implica escritura automática. La propuesta de despliegue de Jeison en el [PR #125](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/125) seguía sin integrarse al momento de esta revisión.
+**Transparencia:** las cifras anteriores corresponden a informes y pruebas declaradas por el equipo, no a una auditoría remota ejecutada desde este README. El workflow diario del catálogo prepara cada día los cambios de GitHub; publicarlos es un paso con aprobación. La propuesta de despliegue de Jeison en el [PR #125](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/125) seguía sin integrarse al momento de esta revisión.
 
 
 ### Aporte destacado · Andrés Iglesias
@@ -269,7 +242,7 @@ La [documentación final de IA, incorporada mediante el PR #141](https://github.
 
 [**Consultar el análisis técnico, las pruebas y los PR de Andrés**](docs/openbridge/docs/13_IA_ANDRES_EVALUACION_Y_CONTRIBUCIONES.md).
 
-**Transparencia:** la evaluación también identificó límites en bases de datos y reportes, recomendaciones que deben abstenerse cuando falta evidencia y ataques de manipulación que no se frenan siempre (**7 de 10** resistidos en la prueba). Los cambios integrados después de la medición necesitan nuevas pruebas finales antes de comunicar otro porcentaje de acierto. Los PR documentan implementación, no garantizan funcionamiento de un servicio remoto.
+**Transparencia:** la evaluación también identificó límites en bases de datos y reportes, recomendaciones que deben abstenerse cuando falta evidencia y ataques de manipulación que no se frenan siempre (**7 de 10** resistidos en la prueba). Los cambios integrados después de la medición necesitan nuevas pruebas finales antes de comunicar otro porcentaje de acierto.
 
 ### Gestión y cierre de Project Management · David Vergara
 
@@ -289,13 +262,13 @@ La [documentación final de IA, incorporada mediante el PR #141](https://github.
 
 <div align="center">
 
-<img src="docs/openbridge/assets/team/opportunities.svg" alt="Open to Opportunities: conectemos talento con desafíos reales. Invitación a reclutadores de perfiles en Project Management, Frontend, IA y Machine Learning." width="100%" />
+<img src="docs/openbridge/assets/team/opportunities.svg" alt="Open to Opportunities: conectemos talento con desafíos reales. Invitación a reclutadores de perfiles en Project Management, Frontend, IA y Data Engineering." width="100%" />
 
 ### ¿Reclutás talento para tu próximo proyecto?
 
 **Conocé al equipo que está construyendo OpenBridge.** Explorá la propuesta, evaluá nuestras especialidades y conectá por GitHub o LinkedIn con perfiles identificados.
 
-<a href="https://github.com/marcketingdigital-cloud/marcketingdigital-cloud/tree/main/proyectos/openbridge"><img src="docs/openbridge/assets/team/cta-project.svg" width="43%" alt="Explorar OpenBridge en GitHub" /></a>
+<a href="https://github.com/No-Country-simulation/S10_26_EQUIPO_29"><img src="docs/openbridge/assets/team/cta-project.svg" width="43%" alt="Explorar OpenBridge en GitHub" /></a>
 <a href="https://github.com/marcketingdigital-cloud"><img src="docs/openbridge/assets/team/cta-pm.svg" width="43%" alt="Ver GitHub del Project Manager" /></a>
 
 <sub>La disponibilidad para oportunidades laborales debe ser confirmada por cada integrante. Los enlaces a GitHub y LinkedIn se vinculan a los perfiles compartidos por los integrantes.</sub>
@@ -307,21 +280,20 @@ La [documentación final de IA, incorporada mediante el PR #141](https://github.
 | Dimensión | Estado en esta presentación |
 |---|---|
 | Problema de negocio y requisitos | **Documentados** en el brief. |
-| Dirección del producto | **Propuesta definida**. |
+| Dirección del producto | **Producto construido:** catálogo de 127 herramientas, fichas, ideas de integración y asistente. |
 | Coordinación y documentación | **Biblioteca documental en este repositorio**; tablero operativo en GitHub Projects. |
-| Arquitectura | **Documentada** en la revisión técnica del 11/11/2026; despliegue remoto aún sin comprobación independiente. |
-| Catálogo, asistente, ingesta y datos | **Código y pruebas documentados**; operaciones de despliegue, workflows y conexiones externas aún sujetas a verificación. |
-| Despliegue en Railway | **Dominio oficial documentado por el equipo**; disponibilidad e integración real sujetas a prueba de humo. |
-| Video de producto / GIF real | **Publicados en GitHub**; basados en navegación grabada por el equipo, sin demostración completa de respuesta del asistente. |
-| README visual | **Versión de prueba publicada**, complementable por el equipo. |
+| Arquitectura | **Implementada y publicada:** ingesta, PostgreSQL, API del catálogo y servicio de IA (ver [Arquitectura](#arquitectura-propuesta)). |
+| Catálogo, asistente, ingesta y datos | **Funcionando**, con pruebas automáticas. Límites conocidos: el asistente acierta menos en bases de datos y en reportes sobre datos propios, y a veces recomienda una herramienta parecida cuando el catálogo no tiene la correcta; resiste 7 de 10 intentos de manipulación; 58 de las 127 herramientas tienen ideas de integración; publicar la sincronización diaria del catálogo requiere aprobación. |
+| Despliegue en Railway | **Publicado:** [openbridge.up.railway.app](https://openbridge.up.railway.app). |
+| Video de producto / GIF real | **Publicados:** video de la demo en YouTube (5:38) y GIF en este repositorio, grabados sobre la app en Railway. |
+| README visual | **Versión de entrega** (13/11/2026). |
 
-## Camino hacia la demo
+## Próximos pasos
 
-1. **Alinear alcance:** validar las funciones mínimas que se mostrarán.
-2. **Construir un recorrido completo:** búsqueda → ficha → recomendación.
-3. **Integrar y probar:** datos reales, contratos entre componentes y respuesta reproducible.
-4. **Documentar con evidencia:** capturas, instrucciones de ejecución, resultados y limitaciones.
-5. **Presentar al jurado:** demo, decisiones técnicas, aportes del equipo y próximos pasos.
+1. **Búsqueda:** afinarla en bases de datos y reportes sobre datos propios, donde más margen de mejora tiene.
+2. **Cobertura:** que el asistente reconozca mejor cuándo el catálogo no tiene la herramienta correcta.
+3. **Revisión:** revisar la descripción y el README de cada repositorio nuevo o cambiado antes de publicarlo, para proteger el catálogo de textos manipulados.
+4. **Proveedores:** sumar más proveedores de IA.
 
 ---
 
@@ -333,6 +305,6 @@ La [documentación final de IA, incorporada mediante el PR #141](https://github.
 
 [Inicio](#el-desafio) · [Producto](#producto) · [Documentación](#centro-de-documentacion) · [Equipo](#nuestro-equipo)
 
-<sub>Simulación laboral No Country · Documento de presentación conceptual · Octubre de 2026</sub>
+<sub>Simulación laboral No Country · Octubre–noviembre de 2026</sub>
 
 </div>
