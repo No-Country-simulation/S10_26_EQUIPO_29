@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="650" viewBox="0 0 1440 650" role="img" aria-labelledby="title desc">
+<title id="title">OpenBridge — explorá el prototipo compartido por el equipo</title>
+<desc id="desc">Portada editorial conceptual de OpenBridge con ruta descubrir, evaluar y consultar, y llamado a visitar el enlace real. No es una captura del producto.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080F23"/><stop offset=".57" stop-color="#111E36"/><stop offset="1" stop-color="#09182D"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#80ACFF"/><stop offset=".55" stop-color="#5FE6DB"/><stop offset="1" stop-color="#A6E7C6"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#3FE7D4" stop-opacity=".30"/><stop offset="1" stop-color="#3FE7D4" stop-opacity="0"/></radialGradient>
+<radialGradient id="violet"><stop stop-color="#7C79EF" stop-opacity=".21"/><stop offset="1" stop-color="#7C79EF" stop-opacity="0"/></radialGradient>
+<pattern id="dots" width="35" height="35" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.1" fill="#A7B9D4" opacity=".14"/></pattern>
+<filter id="glow"><feGaussianBlur stdDeviation="20"/></filter>
+</defs>
+<rect x="0" y="0" width="1440" height="650" rx="34" fill="url(#bg)"/>
+<rect x="0" y="0" width="1440" height="650" rx="34" fill="url(#dots)"/>
+<ellipse cx="1095" cy="326" rx="495" ry="412" fill="url(#halo)"/>
+<ellipse cx="548" cy="110" rx="450" ry="345" fill="url(#violet)"/>
+<rect x="26" y="25" width="1388" height="600" rx="27" fill="none" stroke="#85A0BC" stroke-opacity=".28" stroke-width="2"/>
+<rect x="65" y="58" width="382" height="46" rx="23" fill="#1B3144" stroke="#5B9BA4" stroke-opacity=".65"/>
+<circle cx="91" cy="81" r="7" fill="#7AF7DC"/>
+<text x="113" y="87" font-size="16" font-weight="700" letter-spacing="1.7" font-family="DejaVu Sans,Arial,sans-serif" fill="#D0E6F1">PRODUCT SHOWCASE  ·  TEAM BUILD</text>
+<text x="66" y="187" font-size="56" letter-spacing="-1.6" font-weight="800" font-family="DejaVu Sans,Arial,sans-serif" fill="#F6FAFF">OpenBridge</text>
+<text x="67" y="249" font-size="37" letter-spacing="-.5" font-weight="680" font-family="DejaVu Sans,Arial,sans-serif" fill="#A8F0E3">Del descubrimiento</text>
+<text x="67" y="295" font-size="37" letter-spacing="-.5" font-weight="680" font-family="DejaVu Sans,Arial,sans-serif" fill="#D8E8FF">a la decisión técnica.</text>
+<text x="68" y="362" font-size="22" font-family="DejaVu Sans,Arial,sans-serif" fill="#AFBED5">Un recorrido para explorar el avance</text>
+<text x="68" y="395" font-size="22" font-family="DejaVu Sans,Arial,sans-serif" fill="#AFBED5">y acceder al asistente del prototipo.</text>
+<rect x="66" y="443" width="402" height="75" rx="20" fill="#6EDDDD" fill-opacity=".12" stroke="#78EFDB" stroke-width="2"/>
+<text x="97" y="491" font-size="23" font-weight="800" font-family="DejaVu Sans,Arial,sans-serif" fill="#EDFFFA">EXPLORAR PROTOTIPO</text>
+<path d="M403 477h25m-11-10 11 10-11 10" stroke="#94FAE8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="70" y="567" font-size="15" font-weight="650" letter-spacing="1.1" font-family="DejaVu Sans,Arial,sans-serif" fill="#9DAFCB">ENLACE COMPARTIDO POR EL EQUIPO</text>
+<g>
+ <circle cx="1120" cy="302" r="238" fill="#52DAD0" fill-opacity=".07" stroke="#7CB9D2" stroke-opacity=".24" stroke-width="2"/>
+ <circle cx="1120" cy="302" r="174" fill="#4E81C3" fill-opacity=".06" stroke="#8FCAEA" stroke-opacity=".31" stroke-width="2" stroke-dasharray="6 12"/>
+ <circle cx="1120" cy="302" r="110" fill="#50DDD3" fill-opacity=".10" stroke="#75E5D7" stroke-opacity=".52" stroke-width="2"/>
+ <circle cx="1120" cy="302" r="75" fill="#68DAD4" fill-opacity=".09" stroke="#A3C8F1" stroke-opacity=".7" stroke-width="2"/>
+ <path d="M1100 268 1131 297 1100 326" fill="none" stroke="#DFFEF8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+ <rect x="1013" y="82" width="217" height="64" rx="18" fill="#1C2C49" stroke="#9A99FC" stroke-opacity=".67"/>
+ <circle cx="1042" cy="115" r="10" fill="#A09CFF"/>
+ <text x="1064" y="120" font-size="19" font-family="DejaVu Sans,Arial,sans-serif" font-weight="700" fill="#E9EDFF">01  Descubrí</text>
+ <path d="M1085 147 1106 192" stroke="#9A99FC" stroke-width="2" stroke-dasharray="5 7"/>
+ <rect x="1173" y="385" width="220" height="64" rx="18" fill="#193449" stroke="#5DE6DB" stroke-opacity=".73"/>
+ <circle cx="1202" cy="417" r="10" fill="#76E9E0"/>
+ <text x="1226" y="422" font-size="19" font-family="DejaVu Sans,Arial,sans-serif" font-weight="700" fill="#E0FFF7">02  Evaluá</text>
+ <path d="M1173 400 1190 369" stroke="#5DE6DB" stroke-width="2" stroke-dasharray="5 7"/>
+ <rect x="840" y="439" width="231" height="64" rx="18" fill="#173B49" stroke="#A3E7C8" stroke-opacity=".7"/>
+ <circle cx="872" cy="471" r="10" fill="#A2E7C8"/>
+ <text x="895" y="478" font-size="19" font-family="DejaVu Sans,Arial,sans-serif" font-weight="700" fill="#E7FFF4">03  Consultá</text>
+ <path d="M1008 439 1068 393" stroke="#A3E7C8" stroke-width="2" stroke-dasharray="5 7"/>
+</g>
+<line x1="66" y1="590" x2="1380" y2="590" stroke="#718CA8" stroke-opacity=".28"/>
+<text x="69" y="617" font-size="14" font-weight="600" font-family="DejaVu Sans,Arial,sans-serif" fill="#91ABC3">GRÁFICA CONCEPTUAL · NO ES UNA CAPTURA DE LA INTERFAZ NI UNA DEMO GRABADA</text>
+</svg>
