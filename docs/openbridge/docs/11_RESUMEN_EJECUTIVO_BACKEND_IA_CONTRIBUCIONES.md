@@ -55,9 +55,9 @@ Su contribución consolidó la **experiencia de usuario y la capa de presentaci�
 - [Documento técnico completo · Backend e IA](10_BACKEND_ENTREGA_2026-11-11.md).
 - [PR #136 · Fabián Martínez / Frontend y Design System](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/136).
 - [PR #134 · Andrés Iglesias / títulos de propuestas IA](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/134).
-- [Recorrido visual auténtico de OpenBridge](../assets/showcase/OpenBridge_Recorrido_Real_57s.mp4).
+- [Video de la demo en YouTube](https://youtu.be/PYENf8whpNs).
 
-**Antes de la entrega final:** comprobar las APIs en el despliegue accesible al jurado, los workflows ejecutados, la integración del asistente y la correspondencia entre la documentación y la versión efectivamente publicada.
+**Estado al 13/11/2026:** la app está publicada en Railway y los workflows programados corren en GitHub Actions.
 
 ---
 

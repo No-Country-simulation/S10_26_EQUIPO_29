@@ -1,6 +1,6 @@
 # OpenBridge · Centro de documentación
 
-**Repositorio de presentación:** [OpenBridge · README principal](../README.md)
+**Repositorio de presentación:** [OpenBridge · README principal](../../../README.md)
 **Proyecto:** Simulación Laboral Abierta · No Country · Equipo 29
 **Organización:** documentación del proyecto alojada en GitHub, accesible desde el propio README.
 
@@ -16,7 +16,7 @@ Este índice reúne el **brief oficial original**, las evidencias del producto, 
 | Documento | Contenido |
 |---|---|
 | [08 · Protocolo de demo y recorrido](08_DEMO_Y_RECORRIDO.md) | Guion de navegación, controles y criterios de grabación |
-| [09 · Evidencia del recorrido real](09_RECORRIDO_REAL_Y_VIDEO.md) | Material audiovisual auténtico publicado y límites de demostración |
+| [09 · Evidencia del recorrido real](09_RECORRIDO_REAL_Y_VIDEO.md) | Video de la demo, GIF y límites de lo que muestran |
 | [10 · Informe técnico completo de Backend e IA](10_BACKEND_ENTREGA_2026-11-11.md) | Arquitectura, servicios, pruebas y consideraciones operativas |
 | [11 · Síntesis Backend, IA y Frontend](11_RESUMEN_EJECUTIVO_BACKEND_IA_CONTRIBUCIONES.md) | Integración técnica y contribución de Fabián |
 | [12 · Data Engineering — Jeison](12_DATA_ENGINEERING_JEISON_127_REPOSITORIOS.md) | Ingesta, control de integridad y sincronización |
@@ -36,9 +36,8 @@ Es el destino indicado por el Project Manager para la **gestión viva**: tareas,
 
 ## Accesos relacionados
 
-- [Producto desplegado en Railway](https://openbridge.up.railway.app/) — según la guía de despliegue del equipo; puede estar apagado fuera de una demostración.
-- [Recorrido del producto — YouTube](https://youtu.be/PYENf8whpNs) (reproducción principal; acceso público pendiente de comprobación independiente).
-- [Copia MP4 del recorrido grabado — 57 segundos](../assets/showcase/OpenBridge_Recorrido_Real_57s.mp4), conservada en GitHub.
+- [Producto desplegado en Railway](https://openbridge.up.railway.app/) — producto publicado en Railway.
+- [Recorrido del producto — YouTube](https://youtu.be/PYENf8whpNs) (video público de la demo, 5:38).
 - [Repositorio oficial del código del equipo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29).
 
 ---

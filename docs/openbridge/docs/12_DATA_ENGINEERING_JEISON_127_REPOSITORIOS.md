@@ -42,7 +42,7 @@ La segunda ejecución de planificación informó **0 nuevas inserciones y 0 actu
 
 ## 3. Seguridad y consistencia de datos
 
-La sincronización programada está configurada para generar un plan en **modo `dry-run`**. No se deben presentar esas ejecuciones como escrituras automáticas en producción.
+La sincronización programada está configurada para generar un plan en **modo `dry-run`**. Publicar esos cambios requiere aprobación.
 
 La aplicación efectiva requiere una ejecución manual y autorizaciones específicas; las operaciones controlan el destino, las credenciales, la versión del hash y la integridad de la transacción. Se preservan los registros de versiones desconocidas y no se emiten sentencias `DELETE` en la sincronización.
 
@@ -52,14 +52,14 @@ Esta separación de responsabilidades reduce el riesgo de inconsistencias entre 
 
 ## 4. Integración entre Data Engineering, Backend, IA y Frontend
 
-- **Backend / contratos:** Jeison figura como autor del [PR #65 de contrato `RepoDetail`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/65) y del [PR #66 sobre API de catálogo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/66), ambos integrados en sus ramas de trabajo durante el desarrollo.
+- **Backend / contratos:** Jeison figura como autor del [PR #65 de contrato `RepoDetail`](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/65) y del [PR #66 sobre API de catálogo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/66), ambos hoy en `main` (el #66 entró a través del #65).
 - **Data Engineering:** el [PR #117](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/117) integró a `main` el pipeline del catálogo de 127 repositorios y campos operativos. El [PR #43](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/43) documenta el trabajo de sincronización incremental en la rama del área.
 - **Frontend:** el [PR #119 de Fabián](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/119) trató la integración entre ingesta y Design System, con un criterio único para el cálculo del mantenimiento.
-- **Infraestructura:** el [PR #125](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/125) propone Docker y Railway. **Seguía abierto y sin integrar en la revisión**, de modo que no se debe mencionar como despliegue realizado.
+- **Infraestructura:** el [PR #125](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/125) propone Docker y Railway y seguía abierto en la revisión; la app publicada en Railway se configuró desde la rama `deploy` ([guía de despliegue](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/deploy/docs/deploy-railway.md)).
 
-### Dependencia pendiente con IA
+### Dependencia con IA
 
-El informe de cierre del 9/11/2026, con resultados de la operación del 10/11, identifica **28 repositorios / 28 vectores** cuya entrada de IA requería reprocesamiento. Declara que ese reprocesamiento **no se ejecutó en esa operación** porque faltaban credenciales y coordinación con AI Engineering. El estado de esos 28 casos debe volver a comprobarse al preparar la entrega final; no puede inferirse su situación actual únicamente de aquel informe.
+El informe de cierre del 9/11/2026, con resultados de la operación del 10/11, identifica **28 repositorios / 28 vectores** cuya entrada de IA requería reprocesamiento. Declara que ese reprocesamiento **no se ejecutó en esa operación** porque faltaban credenciales y coordinación con AI Engineering. El reprocesamiento se hizo ese mismo día ([PR #115](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/115)); después, la comparación entre el catálogo y los datos de la IA no mostró diferencias.
 
 La integridad de los datos de IA existentes sí fue verificada **en lectura** según ese documento, pero la operación de Data Engineering **no equivale** a haber actualizado todas las recomendaciones generadas por IA.
 
@@ -73,10 +73,10 @@ La integridad de los datos de IA existentes sí fue verificada **en lectura** se
 
 ## 6. Próximos controles de gestión
 
-1. Confirmar con AI Engineering el estado actualizado del reprocesamiento de las **28 entradas** identificadas en el informe de cierre.
+1. Reprocesamiento de IA de las **28 entradas** identificadas en el informe de cierre: hecho el 10/11/2026 ([PR #115](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/115)).
 2. Verificar la ejecución de los workflows y distinguir en el reporte los modos `dry-run` de los `apply` autorizados.
 3. Confirmar con Frontend el tratamiento visual de campos `null`, `is_maintained` y `health_score` contra respuestas reales de la API.
-4. Revisar el estado de la propuesta de despliegue antes de declarar que Railway o Docker están en producción.
+4. La app está publicada en Railway; el PR #125 sigue abierto.
 5. Conservar los reportes de aplicación, pruebas y hashes como evidencias de la entrega final.
 
 **Lecturas clave:** [README de Ingesta](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/ingestion/README.md) · [Aplicación de 127](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/docs/apply_127.md) · [Dry-run posterior](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/docs/dry_run_127.md) · [Sincronización incremental](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/ingestion/docs/ADR-004_sincronizacion_incremental.md) · [Integración Frontend](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/docs/informe_fabian_campos_operativos.md).

@@ -1,15 +1,15 @@
 # OpenBridge · Producto y recorrido para evaluación
 
-> **Estado:** guía editorial y protocolo de grabación. El [recorrido real publicado](09_RECORRIDO_REAL_Y_VIDEO.md) acredita navegación visual de una versión anterior; no certifica que todas las funciones ni la integración externa estén operativas en el despliegue actual.
+> **Estado:** guía editorial y protocolo de grabación. El [video de la demo](09_RECORRIDO_REAL_Y_VIDEO.md) muestra la versión publicada en Railway.
 
 ## Acceso al producto
 
-- **Producto desplegado:** https://openbridge.up.railway.app/ (puede estar apagado fuera de las demos)
+- **Producto desplegado:** https://openbridge.up.railway.app/
 - **Acceso directo al asistente:** https://openbridge.up.railway.app/#asistente
-- **Presentación pública:** [Volver al README](../README.md#producto)
+- **Presentación pública:** [Volver al README](../../../README.md#producto)
 - **Brief del desafío:** [PDF original archivado en este repositorio](BRIEF_OFICIAL_NO_COUNTRY_OPENBRIDGE.pdf)
 
-El encabezado del README es una **composición editorial de marca**. El GIF y el MP4 de la sección Producto sí proceden de una [grabación real](09_RECORRIDO_REAL_Y_VIDEO.md). No debe confundirse una composición gráfica con evidencia funcional.
+El encabezado del README es una **composición editorial de marca**. El GIF de la sección Producto sale del [video de la demo](09_RECORRIDO_REAL_Y_VIDEO.md), grabado sobre la app real. No debe confundirse una composición gráfica con evidencia funcional.
 
 ## Recorrido recomendado para evaluadores
 

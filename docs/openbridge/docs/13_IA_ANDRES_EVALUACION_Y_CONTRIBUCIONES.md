@@ -52,7 +52,7 @@ Posteriormente se integraron mejoras para la búsqueda por categoría, la compre
 | [#141](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/141) | Documento final de IA en PDF | Integrado |
 | [#143](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/143) | Mantener el modelo en memoria mediante actividad periódica | Integrado |
 
-Estos PR acreditan trabajo sobre IA y documentación. No demuestran por sí solos que una instancia remota esté funcionando, que sus flujos programados hayan tenido éxito o que exista capacidad suficiente para carga concurrente.
+Estos PR acreditan trabajo sobre IA y documentación. El servicio está publicado en Railway y el workflow programado de la IA corre a diario en GitHub Actions; no se hizo prueba de carga.
 
 ## 4. Límites técnicos que deben acompañar la presentación
 
@@ -67,7 +67,7 @@ Estos PR acreditan trabajo sobre IA y documentación. No demuestran por sí solo
 
 La guía de highlights compartida por Andrés recomienda mostrar escenarios probados que hacen visibles las conexiones entre herramientas. Ejemplos del anexo: **gimnasio (Kill Bill + Postal)**, **tienda de ropa (Keycloak + Meilisearch)** y **pedido vago (preguntas de aclaración)**. Estas son **expectativas observadas en pruebas del equipo**, no respuestas garantizadas para cualquier despliegue.
 
-Para el jurado, preparar la consulta, comprobar `/health` y ejecutar el escenario real antes de presentarlo. No mostrar credenciales, archivos `.env` ni terminales con secretos. El video anterior de navegación no certificaba una conversación completa con IA; será útil incorporar evidencia nueva de una consulta y su respuesta.
+Para el jurado, preparar la consulta, comprobar `/health` y ejecutar el escenario real antes de presentarlo. No mostrar credenciales, archivos `.env` ni terminales con secretos. El [video de la demo](https://youtu.be/PYENf8whpNs) (5:38) muestra un pedido real y su respuesta completa.
 
 ## 6. Contribución destacada — Andrés Iglesias
 
@@ -83,9 +83,9 @@ Para el jurado, preparar la consulta, comprobar `/health` y ejecutar el escenari
 - [README técnico de IA](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/ai/README.md).
 - [Línea base y reglas de evaluación](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/blob/main/ai/eval/BASELINE_DECISION.md).
 - [Código y PR del equipo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29).
-- [Video real de navegación de OpenBridge](../assets/showcase/OpenBridge_Recorrido_Real_57s.mp4).
+- [Video de la demo en YouTube](https://youtu.be/PYENf8whpNs).
 
-**Próximo control de PM:** confirmar con Andrés si el reprocesamiento de las 28 entradas de IA identificado en el informe de Data Engineering ya se cerró, y en qué corrida quedó documentado. Una evaluación del 9/11 no responde por sí sola a ese estado operativo posterior.
+**Reprocesamiento tras la sincronización:** el reprocesamiento de los datos de la IA tras la sincronización del 10/11/2026 se hizo ese mismo día ([PR #115](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/115)); después, la comparación entre el catálogo y los datos de la IA no mostró diferencias.
 
 ---
 

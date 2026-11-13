@@ -19,7 +19,7 @@ La contribución del Project Manager se centra en la **coordinación, comunicaci
 | Coordinación de tareas | Coordinación y seguimiento de las tareas y dependencias entre las áreas, considerando las necesidades de integración del producto. | [Tablero de tareas · GitHub Projects #566](https://github.com/orgs/No-Country-simulation/projects/566) y [repositorio oficial del equipo](https://github.com/No-Country-simulation/S10_26_EQUIPO_29). |
 | Seguimiento y prioridades | Acompañamiento del avance, identificación de temas a confirmar y organización de próximos controles para la entrega. | [Registro interno de pendientes y controles](15_SEGUIMIENTO_Y_CONTROL_PM.md). Las prioridades expresadas en esta síntesis son criterios de seguimiento, no asignaciones formales nuevas. |
 | Gestión documental | Recepción, lectura, síntesis, organización y publicación de los materiales técnicos compartidos por los integrantes. | [Backend e IA](10_BACKEND_ENTREGA_2026-11-11.md), [contribución de Fabián](11_RESUMEN_EJECUTIVO_BACKEND_IA_CONTRIBUCIONES.md), [contribución de Jeison](12_DATA_ENGINEERING_JEISON_127_REPOSITORIOS.md) y [contribución de Andrés](13_IA_ANDRES_EVALUACION_Y_CONTRIBUCIONES.md). |
-| Presentación del producto | Organización de la información en un **README de presentación**, enlaces a fuentes y documentación, y publicación de un recorrido auténtico de la interfaz. | [README de OpenBridge](../README.md) y [video de recorrido real](../assets/showcase/OpenBridge_Recorrido_Real_57s.mp4). La grabación no prueba todas las funciones del asistente. |
+| Presentación del producto | Organización de la información en un **README de presentación**, enlaces a fuentes y documentación, y publicación de un recorrido auténtico de la interfaz. | [README de OpenBridge](../../../README.md). |
 | Comunicación interdisciplinaria | Puesta en común de contenidos y avances de Frontend, Data Engineering e IA para una explicación comprensible a evaluadores. | Resúmenes ejecutivos con contribuciones y límites de cada especialidad; enlaces a PR, documentación original y evidencias. |
 
 **Alcance de verificación:** la participación en dailies y la coordinación se describen según el aporte informado por David. Los enlaces señalan espacios de trabajo disponibles; no son prueba de asistencia a cada reunión ni de tareas específicas completadas en ellos. Las publicaciones citadas sí son archivos identificables del repositorio de presentación.
@@ -66,7 +66,7 @@ Estas habilidades se expresan mediante **ejemplos de trabajo**, sin atribuir cer
 | **Fabián Martínez** | UX/UI y Frontend; sistema visual, interacción y fichas del catálogo | [Síntesis técnica y contribución](11_RESUMEN_EJECUTIVO_BACKEND_IA_CONTRIBUCIONES.md) |
 | **Jeison Pinzón** | Ingesta y sincronización del catálogo; integridad de datos; aportes a contratos y Backend | [Análisis y sincronización de 127 repositorios](12_DATA_ENGINEERING_JEISON_127_REPOSITORIOS.md) |
 | **Andrés Iglesias** | Búsqueda semántica, asistente de arquitectura, enriquecimiento y evaluación de IA | [Evaluación y contribución de IA](13_IA_ANDRES_EVALUACION_Y_CONTRIBUCIONES.md) |
-| **David Vergara** | Project Management: comunicación, coordinación, seguimiento, documentación y presentación del avance | Este documento y el [README principal](../README.md) |
+| **David Vergara** | Project Management: comunicación, coordinación, seguimiento, documentación y presentación del avance | Este documento y el [README principal](../../../README.md) |
 
 El trabajo es **colaborativo**. El reconocimiento de funciones no supone que cada especialidad actuó de forma aislada ni implica que el PM desarrolló sus componentes técnicos.
 
@@ -76,10 +76,10 @@ El trabajo es **colaborativo**. El reconocimiento de funciones no supone que cad
 
 1. **Frontend y experiencia:** verificar recorrido completo y legibilidad de la interfaz en el entorno que usará el jurado, incluidas las fichas y respuestas reales del asistente.
 2. **Data Engineering:** conservar los respaldos del catálogo y distinguir las ejecuciones de sincronización autorizadas del `dry-run` programado.
-3. **AI Engineering:** confirmar el estado posterior del reprocesamiento de 28 entradas señalado en el informe del 10/11/2026; ese informe no certifica si hoy siguen pendientes.
+3. **AI Engineering:** hecho el 10/11/2026: reprocesamiento de los datos de la IA tras la sincronización ([PR #115](https://github.com/No-Country-simulation/S10_26_EQUIPO_29/pull/115)).
 4. **Integración y despliegue:** comprobar accesibilidad, URLs de servicios, credenciales configuradas y funcionamiento de endpoints, evitando exponer secretos.
 5. **Documentación y presentación:** revisar enlaces, vigencia de resultados, atribuciones y una narrativa breve para la evaluación.
-6. **Repositorio oficial:** trasladar las propuestas documentales al repositorio de equipo mediante PR cuando existan los permisos y la revisión correspondiente. La publicación actual se realiza en un **repositorio de presentación independiente**.
+6. **Repositorio oficial:** hecho: los documentos se integran al repositorio del equipo (13/11/2026).
 
 No se asignan fechas de resolución, compromisos ni estados técnicos nuevos sin confirmación de sus responsables.
 
