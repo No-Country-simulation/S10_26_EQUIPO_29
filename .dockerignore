@@ -1,0 +1,30 @@
+# Contexto Docker compartido en la raíz del repositorio.
+.git
+.github
+.worktrees
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.venv
+**/.venv
+**/__pycache__
+**/*.py[cod]
+**/node_modules
+frontend/.next
+frontend/out
+frontend/dist
+frontend/src/generated
+frontend/public/assets/elk
+
+# Nunca incluir secretos locales en imágenes.
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Directorios ajenos al runtime de producción de frontend/backend/ai.
+data-engineering
+docs
+ingestion
+pm
+ai/eval/results

@@ -15,17 +15,31 @@ CATALOG_SOURCES = ("database", "files")
 DEFAULT_RELOAD_MINUTES = 10
 
 
+def _bool_env(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None or not raw.strip():
+        return default
+    value = raw.strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    if value in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"{name}={raw!r}; opciones: true o false")
+
+
 @dataclass(frozen=True)
 class Settings:
     cors_origins: tuple[str, ...] = DEFAULT_CORS_ORIGINS
     catalog_source: str = "database"
     reload_minutes: int = DEFAULT_RELOAD_MINUTES
+    require_database: bool = False
 
     @classmethod
     def from_env(cls) -> "Settings":
         """AI_CORS_ORIGINS: orígenes separados por comas; sin definir, los de local.
         AI_CATALOG_SOURCE: database (por defecto) o files. Otro valor es un error al arrancar.
         AI_CATALOG_RELOAD_MINUTES: entero de 0 en adelante (por defecto 10). Otro valor es un error.
+        AI_REQUIRE_DATABASE: true exige leer Supabase al arrancar y falla si no está disponible.
         """
         source = os.environ.get("AI_CATALOG_SOURCE") or "database"
         if source not in CATALOG_SOURCES:
@@ -37,4 +51,9 @@ class Settings:
         minutes = int(raw_minutes) if raw_minutes.isdigit() else -1
         if minutes < 0:
             raise ValueError(f"AI_CATALOG_RELOAD_MINUTES={raw_minutes!r}; un entero de 0 en adelante")
-        return cls(cors_origins=origins, catalog_source=source, reload_minutes=minutes)
+        return cls(
+            cors_origins=origins,
+            catalog_source=source,
+            reload_minutes=minutes,
+            require_database=_bool_env("AI_REQUIRE_DATABASE", False),
+        )
